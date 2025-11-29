@@ -14,17 +14,13 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-public class WillOTheWispBlockEntity extends BlockEntity {
-    private final AABB radius;
-
+public class WillOTheWispBlockEntity extends FearfulBlockEntity {
     public WillOTheWispBlockEntity(BlockPos pos, BlockState state) {
         super(WindsweptBlockEntities.WILL_O_THE_WISP.get(), pos, state);
-        this.radius = new AABB(pos).inflate(2);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, WillOTheWispBlockEntity blockEntity) {
-        for (PathfinderMob entity : level.getEntitiesOfClass(PathfinderMob.class, blockEntity.radius))
-            ((PathfinderMobData) entity).windswept$setPanicPosition(pos);
+        FearfulBlockEntity.tick(level, pos, state, blockEntity);
 
         for (Direction direction : Direction.Plane.HORIZONTAL)
             if (state.getValue(HorizontalDirectionalBlock.FACING) != direction && level.getBlockState(pos.relative(direction)).isAir())
