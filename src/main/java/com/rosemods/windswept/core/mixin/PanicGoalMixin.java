@@ -25,7 +25,23 @@ public class PanicGoalMixin {
 
     @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
     private void canUse(CallbackInfoReturnable<Boolean> info) {
-        AABB radius = new AABB(this.mob.blockPosition()).inflate(2);
+        PathfinderMobData mobData = (PathfinderMobData) this.mob;
+        BlockPos panicPos = mobData.windswept$getPanicPosition();
+        if (panicPos != null) {
+            if (this.mob.distanceToSqr(panicPos.getX(), panicPos.getY(), panicPos.getZ()) < PathfinderMobData.BLOCK_RADIUS_SQUARE) {
+                mobData.windswept$setPanicPosition(null);
+            } else {
+                BlockState state = this.mob.level().getBlockState(panicPos);
+                if (state.is(WindsweptBlocks.CARVED_PINECONE_BLOCK.get()) || state.is(WindsweptBlocks.WILL_O_THE_WISP.get())) {
+                    info.setReturnValue(true);
+                    return;
+                } else {
+                    mobData.windswept$setPanicPosition(null);
+                }
+            }
+        }
+
+        AABB radius = new AABB(this.mob.blockPosition()).inflate(PathfinderMobData.BLOCK_RADIUS);
 
         for (LivingEntity entity : this.mob.level().getEntitiesOfClass(LivingEntity.class, radius))
             if (this.mob != entity && (entity.getItemBySlot(EquipmentSlot.HEAD)
@@ -34,21 +50,6 @@ public class PanicGoalMixin {
                 info.setReturnValue(true);
                 return;
             }
-
-        PathfinderMobData mobData = (PathfinderMobData) this.mob;
-        BlockPos panicPos = mobData.windswept$getPanicPosition();
-        if (panicPos != null) {
-            if (this.mob.distanceToSqr(panicPos.getX(), panicPos.getY(), panicPos.getZ()) < PathfinderMobData.BLOCK_RADIUS_SQUARE) {
-                mobData.windswept$setPanicPosition(null);
-                return;
-            }
-            BlockState state = this.mob.level().getBlockState(panicPos);
-            if (state.is(WindsweptBlocks.CARVED_PINECONE_BLOCK.get()) || state.is(WindsweptBlocks.WILL_O_THE_WISP.get())) {
-                info.setReturnValue(true);
-            } else {
-                mobData.windswept$setPanicPosition(null);
-            }
-        }
     }
 
 }
