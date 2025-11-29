@@ -38,7 +38,7 @@ public class PanicGoalMixin {
         PathfinderMobData mobData = (PathfinderMobData) this.mob;
         BlockPos panicPos = mobData.windswept$getPanicPosition();
         if (panicPos != null) {
-            if (this.mob.distanceToSqr(panicPos.getX(), panicPos.getY(), panicPos.getZ()) < 4.0d) {
+            if (this.mob.distanceToSqr(panicPos.getX(), panicPos.getY(), panicPos.getZ()) < PathfinderMobData.BLOCK_RADIUS_SQUARE) {
                 mobData.windswept$setPanicPosition(null);
                 return;
             }

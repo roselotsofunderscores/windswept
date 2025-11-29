@@ -14,7 +14,7 @@ public abstract class FearfulBlockEntity extends BlockEntity {
 
     public FearfulBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        this.radius = new AABB(pos).inflate(2);
+        this.radius = new AABB(pos).inflate(PathfinderMobData.BLOCK_RADIUS);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, FearfulBlockEntity blockEntity) {

@@ -6,4 +6,7 @@ import org.jetbrains.annotations.Nullable;
 public interface PathfinderMobData {
   @Nullable BlockPos windswept$getPanicPosition ();
   void windswept$setPanicPosition (@Nullable BlockPos pos);
+
+  int BLOCK_RADIUS = 2;
+  double BLOCK_RADIUS_SQUARE = BLOCK_RADIUS * BLOCK_RADIUS;
 }
