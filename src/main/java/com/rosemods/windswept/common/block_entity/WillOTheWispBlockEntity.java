@@ -1,10 +1,12 @@
 package com.rosemods.windswept.common.block_entity;
 
 import com.rosemods.windswept.common.block.WillOTheWispBlock;
+import com.rosemods.windswept.common.entity.PathfinderMobData;
 import com.rosemods.windswept.core.registry.WindsweptBlockEntities;
 import com.rosemods.windswept.core.registry.WindsweptBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -12,12 +14,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-public class WillOTheWispBlockEntity extends BlockEntity {
+public class WillOTheWispBlockEntity extends FearfulBlockEntity {
     public WillOTheWispBlockEntity(BlockPos pos, BlockState state) {
         super(WindsweptBlockEntities.WILL_O_THE_WISP.get(), pos, state);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, WillOTheWispBlockEntity blockEntity) {
+        FearfulBlockEntity.tick(level, pos, state, blockEntity);
+
         for (Direction direction : Direction.Plane.HORIZONTAL)
             if (state.getValue(HorizontalDirectionalBlock.FACING) != direction && level.getBlockState(pos.relative(direction)).isAir())
                 for (Player player : level.getEntitiesOfClass(Player.class, expandTowards(new AABB(pos.relative(direction)), direction, 6)))
@@ -25,6 +29,8 @@ public class WillOTheWispBlockEntity extends BlockEntity {
                         turn(level, pos, state, direction, player);
                         return;
                     }
+
+
     }
 
     private static void turn(Level level, BlockPos pos, BlockState state, Direction direction, Player player) {

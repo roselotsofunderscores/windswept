@@ -1,7 +1,9 @@
 package com.rosemods.windswept.core.mixin;
 
+import com.rosemods.windswept.common.entity.PathfinderMobData;
 import com.rosemods.windswept.common.entity.Frostbiter;
 import com.rosemods.windswept.core.registry.WindsweptBlocks;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
@@ -23,16 +25,28 @@ public class PanicGoalMixin {
 
     @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
     private void canUse(CallbackInfoReturnable<Boolean> info) {
-        AABB radius = new AABB(this.mob.blockPosition()).inflate(2);
+        PathfinderMobData mobData = (PathfinderMobData) this.mob;
+        BlockPos panicPos = mobData.windswept$getPanicPosition();
+        if (panicPos != null) {
+            if (this.mob.distanceToSqr(panicPos.getX(), panicPos.getY(), panicPos.getZ()) < PathfinderMobData.BLOCK_RADIUS_SQUARE) {
+                mobData.windswept$setPanicPosition(null);
+            } else {
+                BlockState state = this.mob.level().getBlockState(panicPos);
+                if (state.is(WindsweptBlocks.CARVED_PINECONE_BLOCK.get()) || state.is(WindsweptBlocks.WILL_O_THE_WISP.get())) {
+                    info.setReturnValue(true);
+                    return;
+                } else {
+                    mobData.windswept$setPanicPosition(null);
+                }
+            }
+        }
+
+        AABB radius = new AABB(this.mob.blockPosition()).inflate(PathfinderMobData.BLOCK_RADIUS);
 
         for (LivingEntity entity : this.mob.level().getEntitiesOfClass(LivingEntity.class, radius))
-            if (this.mob != entity && (entity.getItemBySlot(EquipmentSlot.HEAD).is(WindsweptBlocks.CARVED_PINECONE_BLOCK.get().asItem()) || (entity instanceof Frostbiter frostbiter && frostbiter.hasControllingPassenger()))) {
-                info.setReturnValue(true);
-                return;
-            }
-
-        for (BlockState state : this.mob.level().getBlockStatesIfLoaded(radius).toList())
-            if (state.is(WindsweptBlocks.CARVED_PINECONE_BLOCK.get()) || state.is(WindsweptBlocks.WILL_O_THE_WISP.get())) {
+            if (this.mob != entity && (entity.getItemBySlot(EquipmentSlot.HEAD)
+                .is(WindsweptBlocks.CARVED_PINECONE_BLOCK.get()
+                    .asItem()) || (entity instanceof Frostbiter frostbiter && frostbiter.hasControllingPassenger()))) {
                 info.setReturnValue(true);
                 return;
             }
