@@ -32,11 +32,11 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.registries.IForgeRegistry;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.List;
 import java.util.Map;
@@ -525,7 +525,7 @@ public class WindsweptLootTableProvider extends LootTableProvider {
                                                     .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LavenderBlock.AGE, i)))))));
         }
 
-        private static <V extends Comparable<V>> LootItemCondition.Builder stateCond(RegistryObject<? extends Block> block, Property<V> property, V v) {
+        private static <V extends Comparable<V>> LootItemCondition.Builder stateCond(DeferredHolder<? extends Block> block, Property<V> property, V v) {
             return LootItemBlockStatePropertyCondition.hasBlockStateProperties(block.get())
                     .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(property, v.toString()));
         }

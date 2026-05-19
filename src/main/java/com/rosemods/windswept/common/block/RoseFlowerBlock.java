@@ -1,10 +1,10 @@
 package com.rosemods.windswept.common.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.WorldGenLevel;
@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 public class RoseFlowerBlock extends FlowerBlock implements BonemealableBlock {
     private final Supplier<Block> tall;
 
-    public RoseFlowerBlock(Supplier<Block> tall, Supplier<MobEffect> stewEffect, int stewEffectDuration, Properties properties) {
+    public RoseFlowerBlock(Supplier<Block> tall, Holder<MobEffect> stewEffect, int stewEffectDuration, Properties properties) {
         super(stewEffect, stewEffectDuration, properties);
         this.tall = tall;
     }
@@ -33,8 +33,8 @@ public class RoseFlowerBlock extends FlowerBlock implements BonemealableBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState, boolean b) {
-        return levelReader.getBlockState(blockPos.above()).canBeReplaced();
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+        return level.getBlockState(pos.above()).canBeReplaced();
     }
 
     @Override

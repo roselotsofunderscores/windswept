@@ -24,18 +24,15 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.ThornsEnchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.event.entity.living.BabyEntitySpawnEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 import java.util.List;
 

@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.EventHooks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -31,7 +31,7 @@ public abstract class FoxEatBerriesGoalMixin extends MoveToBlockGoal {
     private void onReachedTarget(CallbackInfo ci) {
         BlockState state = this.mob.level().getBlockState(this.blockPos);
 
-        if (ForgeEventFactory.getMobGriefingEvent(this.mob.level(), this.mob) && state.is(WindsweptBlocks.WILD_BERRY_BUSH.get())) {
+        if (EventHooks.canEntityGrief(this.mob.level(), this.mob) && state.is(WindsweptBlocks.WILD_BERRY_BUSH.get())) {
             int amount = 1 + this.mob.getRandom().nextInt(2);
 
             if (this.mob.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {

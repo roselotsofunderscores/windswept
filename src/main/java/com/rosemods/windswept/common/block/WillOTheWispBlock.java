@@ -1,5 +1,6 @@
 package com.rosemods.windswept.common.block;
 
+import com.mojang.serialization.MapCodec;
 import com.rosemods.windswept.common.block_entity.WillOTheWispBlockEntity;
 import com.rosemods.windswept.core.registry.WindsweptBlockEntities;
 import com.rosemods.windswept.core.registry.WindsweptParticleTypes;
@@ -19,13 +20,20 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 public class WillOTheWispBlock extends HorizontalDirectionalBlock implements EntityBlock {
+    public static final MapCodec<WillOTheWispBlock> CODEC = simpleCodec(WillOTheWispBlock::new);
+
     public WillOTheWispBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+        return CODEC;
     }
 
     @Override

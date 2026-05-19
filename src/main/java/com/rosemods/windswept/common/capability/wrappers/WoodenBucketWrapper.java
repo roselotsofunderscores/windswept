@@ -5,21 +5,27 @@ import com.rosemods.windswept.common.item.WoodenMilkBucketItem;
 import com.rosemods.windswept.core.other.WindsweptConstants;
 import com.rosemods.windswept.core.registry.WindsweptItems;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.fml.ModList;
+import net.neoforged.neoforge.capabilities.ICapabilityProvider;
+import net.neoforged.neoforge.common.ForgeMod;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.common.capabilities.Capability;
+import net.neoforged.neoforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.common.capabilities.ICapabilityProvider;
+import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
+import net.neoforged.neoforge.fml.ModList;
+import net.neoforged.neoforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
 public class WoodenBucketWrapper implements IFluidHandlerItem, ICapabilityProvider {
     private final LazyOptional<IFluidHandlerItem> holder = LazyOptional.of(() -> this);
@@ -40,7 +46,7 @@ public class WoodenBucketWrapper implements IFluidHandlerItem, ICapabilityProvid
         if (item instanceof WoodenBucketItem bucket && !bucket.isEmpty())
             return new FluidStack(bucket.getFluid(), FluidType.BUCKET_VOLUME);
         else if (item instanceof WoodenMilkBucketItem && ForgeMod.MILK.isPresent())
-            return new FluidStack(ForgeMod.MILK.get(), FluidType.BUCKET_VOLUME);
+            return new FluidStack(NeoForgeMod.MILK.get(), FluidType.BUCKET_VOLUME);
         else
             return FluidStack.EMPTY;
     }
@@ -110,7 +116,7 @@ public class WoodenBucketWrapper implements IFluidHandlerItem, ICapabilityProvid
 
         FluidStack fluidStack = this.getFluid();
 
-        if (!fluidStack.isEmpty() && fluidStack.isFluidEqual(stack)) {
+        if (!fluidStack.isEmpty() && FluidStack.isSameFluidSameComponents(fluidStack, stack)) {
             if (action.execute())
                 this.setFluid(FluidStack.EMPTY);
 
@@ -128,10 +134,10 @@ public class WoodenBucketWrapper implements IFluidHandlerItem, ICapabilityProvid
     private static Item getBucketFromFluid(Fluid fluid) {
         if (fluid == Fluids.WATER)
             return WindsweptItems.WOODEN_WATER_BUCKET.get();
-        else if (ForgeMod.MILK.isPresent() && fluid == ForgeMod.MILK.get())
+        else if (fluid == NeoForgeMod.MILK.get())
             return WindsweptItems.WOODEN_MILK_BUCKET.get();
         else if (ModList.get().isLoaded("create")) {
-            ResourceLocation location = ForgeRegistries.FLUIDS.getKey(fluid);
+            ResourceLocation location = BuiltInRegistries.FLUID.getKey(fluid);
 
             if (location.equals(WindsweptConstants.HONEY))
                 return WindsweptItems.WOODEN_HONEY_BUCKET.get();
@@ -144,13 +150,14 @@ public class WoodenBucketWrapper implements IFluidHandlerItem, ICapabilityProvid
 
     private static boolean canFillFromFluid(Fluid fluid) {
         if (ModList.get().isLoaded("create")) {
-            ResourceLocation location = ForgeRegistries.FLUIDS.getKey(fluid);
+            ResourceLocation location = BuiltInRegistries.FLUID.getKey(fluid);
 
             if (location.equals(WindsweptConstants.HONEY) || location.equals(WindsweptConstants.CHOCOLATE))
                 return true;
         }
 
-        return fluid == Fluids.WATER || (ForgeMod.MILK.isPresent() && fluid == ForgeMod.MILK.get());
+        return fluid == Fluids.WATER || fluid == NeoForgeMod.MILK.get();
     }
+
 
 }

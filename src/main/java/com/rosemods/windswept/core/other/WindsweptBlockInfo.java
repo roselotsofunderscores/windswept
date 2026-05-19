@@ -2,13 +2,20 @@ package com.rosemods.windswept.core.other;
 
 import com.rosemods.windswept.core.Windswept;
 import com.teamabnormals.blueprint.core.util.DataUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.color.block.BlockColors;
+import net.minecraft.client.color.item.ItemColors;
+import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.level.FoliageColor;
+import net.minecraft.world.level.GrassColor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
 import static com.rosemods.windswept.core.registry.WindsweptBlocks.*;
 import static com.rosemods.windswept.core.registry.WindsweptItems.*;
 
 public final class WindsweptBlockInfo {
-
     public static void changeLocalisation() {
         DataUtil.changeBlockLocalization(Blocks.SNOW, Windswept.MOD_ID, "snow_carpet");
         DataUtil.changeBlockLocalization(Blocks.SNOW_BLOCK, "minecraft", "snow");
@@ -147,6 +154,18 @@ public final class WindsweptBlockInfo {
         DataUtil.registerFlammable(WHITE_ROSE_BUSH.get(), 60, 100);
         DataUtil.registerFlammable(YELLOW_ROSE_BUSH.get(), 60, 100);
         DataUtil.registerFlammable(LIONS_TAIL.get(), 60, 100);
+    }
+
+    public static void registerBlockColors() {
+        BlockColors blockcolors = Minecraft.getInstance().getBlockColors();
+        ItemColors itemcolors = Minecraft.getInstance().getItemColors();
+        Block[] foliage = new Block[]{CHESTNUT_LEAVES.get(), CHESTNUT_LEAF_PILE.get(), FLOWERING_ACACIA_LEAVES.get(), FLOWERING_ACACIA_LEAF_PILE.get()};
+
+        blockcolors.register((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getAverageFoliageColor(world, pos) : FoliageColor.getDefaultColor(), foliage);
+        blockcolors.register((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getAverageFoliageColor(world, pos) : GrassColor.getDefaultColor(), YELLOW_PETALS.get());
+
+        //itemcolors.register((s, c) -> c > 0 ? -1 : ((DyeableLeatherItem) s.getItem()).getColor(s), WindsweptItems.SNOW_BOOTS.get());
+        itemcolors.register((stack, tintIndex) -> blockcolors.getColor(((BlockItem) stack.getItem()).getBlock().defaultBlockState(), null, null, tintIndex), foliage);
     }
 
 }

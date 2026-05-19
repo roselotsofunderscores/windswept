@@ -9,7 +9,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Noises;
 import net.minecraft.world.level.levelgen.SurfaceRules;
-import net.minecraftforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import static net.minecraft.world.level.levelgen.SurfaceRules.*;
 

@@ -47,7 +47,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -298,7 +298,7 @@ public class Frostbiter extends TamableAnimal implements Endimatable, NeutralMob
     }
 
     @Override
-    public boolean canBeLeashed(Player player) {
+    public boolean canBeLeashed() {
         return true;
     }
 
@@ -318,11 +318,6 @@ public class Frostbiter extends TamableAnimal implements Endimatable, NeutralMob
     @Override
     public boolean isFood(ItemStack stack) {
         return stack.is(WindsweptItems.HOLLY_BERRIES.get());
-    }
-
-    @Override
-    protected float getStandingEyeHeight(Pose pos, EntityDimensions dimensions) {
-        return this.isBaby() ? dimensions.height * .95f : 1.3f;
     }
 
     @Override
@@ -442,11 +437,6 @@ public class Frostbiter extends TamableAnimal implements Endimatable, NeutralMob
     @Override
     public boolean isSaddled() {
         return this.entityData.get(SADDLED);
-    }
-
-    @Override
-    public double getPassengersRidingOffset() {
-        return super.getPassengersRidingOffset() * 1.25d;
     }
 
     protected void dropSaddle() {

@@ -10,8 +10,9 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.SnowyDirtBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.ToolActions;
+import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.common.ItemAbility;
+import org.jetbrains.annotations.Nullable;
 
 public class GelisolBlock extends SnowyDirtBlock implements BonemealableBlock {
     public GelisolBlock(Properties properties) {
@@ -19,13 +20,13 @@ public class GelisolBlock extends SnowyDirtBlock implements BonemealableBlock {
     }
 
     @Override
-    public BlockState getToolModifiedState(BlockState state, UseOnContext context, ToolAction action, boolean simulate) {
-        return action == ToolActions.SHOVEL_FLATTEN ? WindsweptBlocks.GELISOL_PATH.get().defaultBlockState() : null;
+    public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ItemAbility itemAbility, boolean simulate) {
+        return itemAbility == ItemAbilities.SHOVEL_FLATTEN ? WindsweptBlocks.GELISOL_PATH.get().defaultBlockState() : null;
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState, boolean b) {
-        BlockState above = levelReader.getBlockState(blockPos.above());
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+        BlockState above = level.getBlockState(pos.above());
         return above.canBeReplaced() && !above.is(WindsweptBlocks.GELISOL_GRASS.get());
     }
 

@@ -6,7 +6,7 @@ import com.rosemods.windswept.core.registry.datapack.WindsweptStructures;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.tags.StructureTagsProvider;
 import net.minecraft.tags.StructureTags;
-import net.minecraftforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 public class WindsweptStructureTagsProvider extends StructureTagsProvider {
     public WindsweptStructureTagsProvider(GatherDataEvent event, WindsweptDatapackProvider dataPack) {

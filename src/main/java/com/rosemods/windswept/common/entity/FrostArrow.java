@@ -10,7 +10,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.PlayMessages;
 
 public class FrostArrow extends AbstractArrow {
 
@@ -18,16 +17,12 @@ public class FrostArrow extends AbstractArrow {
         super(type, level);
     }
 
-    public FrostArrow(Level level, double x, double y, double z) {
-        super(WindsweptEntityTypes.FROST_ARROW.get(), x, y, z, level);
+    public FrostArrow(Level level, LivingEntity owner, ItemStack pickupItemStack, ItemStack firedFromWeapon) {
+        super(WindsweptEntityTypes.FROST_ARROW.get(), owner, level, pickupItemStack, firedFromWeapon);
     }
 
-    public FrostArrow(PlayMessages.SpawnEntity spawnEntity, Level world) {
-        this(WindsweptEntityTypes.FROST_ARROW.get(), world);
-    }
-
-    public FrostArrow(Level worldIn, LivingEntity shooter) {
-        super(WindsweptEntityTypes.FROST_ARROW.get(), shooter, worldIn);
+    public FrostArrow(Level level, double x, double y, double z, ItemStack pickupItemStack, ItemStack firedFromWeapon) {
+        super(WindsweptEntityTypes.FROST_ARROW.get(), x, y, z, level, pickupItemStack, firedFromWeapon);
     }
 
     @Override
@@ -59,7 +54,7 @@ public class FrostArrow extends AbstractArrow {
     }
 
     @Override
-    protected ItemStack getPickupItem() {
+    protected ItemStack getDefaultPickupItem() {
         return WindsweptItems.FROST_ARROW.get().getDefaultInstance();
     }
 

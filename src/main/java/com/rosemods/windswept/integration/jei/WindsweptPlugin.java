@@ -5,12 +5,12 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.function.Supplier;
 
@@ -35,12 +35,12 @@ public class WindsweptPlugin implements IModPlugin {
         addInfo(registration, SNOW_BOOTS);
     }
 
-    private static void addInfo(IRecipeRegistration registration, RegistryObject<? extends ItemLike> item) {
+    private static void addInfo(IRecipeRegistration registration, DeferredHolder<? extends ItemLike, ? extends ItemLike> item) {
         registration.addIngredientInfo(new ItemStack(item.get()), VanillaTypes.ITEM_STACK, Component.translatable(getDesc(item)));
     }
 
     public static String getDesc(Supplier<? extends ItemLike> item) {
-        return Windswept.MOD_ID + ".jei.info." + ForgeRegistries.ITEMS.getKey(item.get().asItem()).getPath();
+        return Windswept.MOD_ID + ".jei.info." + BuiltInRegistries.ITEM.getKey(item.get().asItem()).getPath();
     }
 
     @Override

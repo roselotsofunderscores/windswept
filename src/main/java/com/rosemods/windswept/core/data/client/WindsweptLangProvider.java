@@ -6,17 +6,18 @@ import com.rosemods.windswept.core.Windswept;
 import com.rosemods.windswept.core.registry.WindsweptAttributes;
 import com.rosemods.windswept.core.registry.WindsweptEffects;
 import com.rosemods.windswept.core.registry.WindsweptEnchantments;
-import com.rosemods.windswept.core.registry.WindsweptPaintingVariants;
 import com.rosemods.windswept.core.registry.datapack.WindsweptBiomes;
 import com.rosemods.windswept.core.registry.datapack.WindsweptDamageTypes;
+import com.rosemods.windswept.core.registry.datapack.WindsweptPaintingVariants;
 import com.rosemods.windswept.core.registry.datapack.WindsweptTrimMaterials;
 import com.rosemods.windswept.integration.jei.WindsweptPlugin;
 import com.teamabnormals.blueprint.common.block.sign.BlueprintStandingSignBlock;
 import com.teamabnormals.blueprint.common.block.sign.BlueprintWallSignBlock;
+import net.minecraft.Util;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
@@ -30,11 +31,10 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.data.LanguageProvider;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.codehaus.plexus.util.StringUtils;
 
 import java.util.List;
@@ -154,15 +154,15 @@ public class WindsweptLangProvider extends LanguageProvider {
         this.jeiInfo(SNOW_BOOTS, "Snow boots allow for faster traversal through snow, and grants the wearer the ability to walk on Powder Snow. The leather can be dyed.");
 
         // Auto Translation //
-        this.translateRegistry(ForgeRegistries.BLOCKS, Block::getDescriptionId);
-        this.translateRegistry(ForgeRegistries.ITEMS, Item::getDescriptionId);
-        this.translateRegistry(ForgeRegistries.ENTITY_TYPES, EntityType::getDescriptionId);
+        this.translateRegistry(Registries.BLOCK, Block::getDescriptionId);
+        this.translateRegistry(Registries.ITEM, Item::getDescriptionId);
+        this.translateRegistry(Registries.ENTITY_TYPE, EntityType::getDescriptionId);
     }
 
 
-    private <T> void translateRegistry(IForgeRegistry<T> registry, Function<T, String> toString) {
-        for (RegistryObject<T> object : Windswept.REGISTRY_HELPER.getSubHelper(registry).getDeferredRegister().getEntries())
-            this.add(toString.apply(object.get()), toUpper(registry, object));
+    private <T> void translateRegistry(ResourceKey<Registry<T>> registry, Function<T, String> toString) {
+        for (DeferredHolder<?, ?> object : Windswept.REGISTRY_HELPER.getSubHelper(registry).getDeferredRegister().getEntries())
+            this.add(toString.apply((T) object.get()), toUpper(object));
     }
 
     @Override
@@ -173,12 +173,12 @@ public class WindsweptLangProvider extends LanguageProvider {
         }
     }
 
-    private void translateBlock(RegistryObject<? extends Block> block) {
-        this.add(block.get(), toUpper(ForgeRegistries.BLOCKS, block));
+    private void translateBlock(DeferredBlock<? extends Block> block) {
+        this.add(block.get(), toUpper(block));
     }
 
-    private void translateEnchantment(RegistryObject<? extends Enchantment> enchantment, String name, String desc) {
-        String descId = enchantment.get().getDescriptionId();
+    private void translateEnchantment(DeferredHolder<? extends Enchantment, ? extends Enchantment> enchantment, String name, String desc) {
+        String descId = Util.makeDescriptionId("enchantment", enchantment.getId()); // ew
         this.add(descId, name);
         this.add(descId + ".desc", desc);
     }
@@ -192,32 +192,32 @@ public class WindsweptLangProvider extends LanguageProvider {
         this.add("trim_material." + material.location().toString().replace(':', '.'), name);
     }
 
-    private void translatePainting(RegistryObject<PaintingVariant> painting, String author) {
-        String name = ForgeRegistries.PAINTING_VARIANTS.getKey(painting.get()).getPath();
+    private void translatePainting(ResourceKey<PaintingVariant> painting, String author) {
+        String name = painting.location().getPath();
         this.add("painting." + Windswept.MOD_ID + "." + name + ".title", toUpper(name));
         this.add("painting." + Windswept.MOD_ID + "." + name + ".author", author);
     }
 
-    private void translateMusicDisc(RegistryObject<? extends Item> item, String desc) {
+    private void translateMusicDisc(DeferredHolder<? extends Item, ? extends Item> item, String desc) {
         this.add(item.get(), "Music Disc");
         this.addDescription(item, desc);
     }
 
-    private void translateSign(Pair<RegistryObject<BlueprintStandingSignBlock>, RegistryObject<BlueprintWallSignBlock>> sign, String name) {
+    private void translateSign(Pair<DeferredBlock<BlueprintStandingSignBlock>, DeferredBlock<BlueprintWallSignBlock>> sign, String name) {
         this.translateBlock(sign.getFirst());
-        this.add(sign.getFirst().get().getDescriptionId().replace(name, name + "_wall"), toUpper(ForgeRegistries.BLOCKS, sign.getSecond()));
+        this.add(sign.getFirst().get().getDescriptionId().replace(name, name + "_wall"), toUpper(sign.getSecond()));
     }
 
-    private void translateAttribute(RegistryObject<? extends Attribute> attribute) {
-        this.add(attribute.get().getDescriptionId(), toUpper(ForgeRegistries.ATTRIBUTES, attribute));
+    private void translateAttribute(DeferredHolder<? extends Attribute, ? extends Attribute> attribute) {
+        this.add(attribute.get().getDescriptionId(), toUpper(attribute));
     }
 
-    private void translateEffect(RegistryObject<? extends MobEffect> effect, String desc) {
-        this.add(effect.get(), toUpper(ForgeRegistries.MOB_EFFECTS, effect));
+    private void translateEffect(DeferredHolder<? extends MobEffect, ? extends MobEffect> effect, String desc) {
+        this.add(effect.get(), toUpper(effect));
         this.add(effect.get().getDescriptionId() + ".description", desc);
     }
 
-    private void translateBannerPattern(RegistryObject<? extends Item> item, String name) {
+    private void translateBannerPattern(DeferredHolder<? extends Item, ? extends Item> item, String name) {
         String desc = toUpper(name);
         this.add(item.get(), "Banner Pattern");
         this.addDescription(item, desc);
@@ -236,8 +236,8 @@ public class WindsweptLangProvider extends LanguageProvider {
         this.add("death.attack." + msgId + ".player", killed.apply("%1$s", "%2$s"));
     }
 
-    private void translatePotion(RegistryObject<? extends Potion> potion, String effect) {
-        String name = ForgeRegistries.POTIONS.getKey(potion.get()).getPath();
+    private void translatePotion(DeferredHolder<? extends Potion, ? extends Potion> potion, String effect) {
+        String name = BuiltInRegistries.POTION.getKey(potion.get()).getPath();
 
         this.add("item.minecraft.potion.effect." + name, "Potion of " + effect);
         this.add("item.minecraft.splash_potion.effect." + name, "Splash Potion of " + effect);
@@ -246,12 +246,12 @@ public class WindsweptLangProvider extends LanguageProvider {
         this.add("item.caverns_and_chasms.tether_potion.effect." + name, "Tether Potion of " + effect);
     }
 
-    private void addDescription(RegistryObject<? extends ItemLike> item, String desc) {
+    private void addDescription(DeferredHolder<? extends ItemLike, ? extends ItemLike> item, String desc) {
         this.add(item.get().asItem().getDescriptionId() + ".desc", desc);
     }
 
-    private static <T> String toUpper(IForgeRegistry<T> registry, RegistryObject<? extends T> object) {
-        return toUpper(registry.getKey(object.get()).getPath());
+    private static <T> String toUpper(DeferredHolder<?, ?> object) {
+        return toUpper(object.getId().getPath());
     }
 
     private static String toUpper(String string) {

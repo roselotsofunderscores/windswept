@@ -67,10 +67,4 @@ public class DrinkableBottleItem extends HoneyBottleItem {
         return this.drinkSound.get();
     }
 
-    @Override
-    public int getUseDuration(ItemStack stack) {
-        return 32;
-    }
-
-
 }

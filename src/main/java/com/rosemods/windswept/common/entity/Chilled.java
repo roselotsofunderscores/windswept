@@ -24,7 +24,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.ModList;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.neoforged.fml.ModList;
 
 public class Chilled extends Zombie {
 
@@ -130,12 +131,12 @@ public class Chilled extends Zombie {
     }
 
     @Override
-    protected void enchantSpawnedArmor(RandomSource rand, float difficulty, EquipmentSlot slot) {
+    protected void enchantSpawnedArmor(ServerLevelAccessor level, RandomSource random, EquipmentSlot slot, DifficultyInstance difficulty) {
         ItemStack stack = this.getItemBySlot(slot);
-        if (!stack.isEmpty() && this.random.nextFloat() < .5f * difficulty && slot == EquipmentSlot.FEET)
-            stack.enchant(WindsweptEnchantments.SLIPPING_CURSE.get(), 0);
+        if (!stack.isEmpty() && this.random.nextFloat() < .5f && slot == EquipmentSlot.FEET)
+            stack.enchant(WindsweptEnchantments.SLIPPING_CURSE, 0);
         else
-            super.enchantSpawnedArmor(rand, difficulty, slot);
+            super.enchantSpawnedArmor(level, random, slot, difficulty);
     }
 
     @Override

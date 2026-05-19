@@ -2,7 +2,7 @@ package com.rosemods.windswept.core.data.client;
 
 import com.rosemods.windswept.core.Windswept;
 import com.teamabnormals.blueprint.client.screen.splash.SplashProvider;
-import net.minecraftforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 public class WindsweptSplashProvider extends SplashProvider {
     public WindsweptSplashProvider(GatherDataEvent event) {

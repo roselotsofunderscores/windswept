@@ -1,6 +1,6 @@
 package com.rosemods.windswept.common.levelgen.tree.decorator;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.rosemods.windswept.core.registry.WindsweptBlocks;
 import com.rosemods.windswept.core.registry.WindsweptTreeDecorators;
 import net.minecraft.core.BlockPos;
@@ -9,7 +9,7 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
 
 public class MimosaDecorator extends TreeDecorator {
-    public static final Codec<MimosaDecorator> CODEC = Codec.unit(() -> MimosaDecorator.INSTANCE);
+    public static final MapCodec<MimosaDecorator> CODEC = MapCodec.unit(() -> MimosaDecorator.INSTANCE);
     public static final MimosaDecorator INSTANCE = new MimosaDecorator();
 
     @Override

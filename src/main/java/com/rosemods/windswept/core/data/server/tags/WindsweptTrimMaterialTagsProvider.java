@@ -8,7 +8,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.item.armortrim.TrimMaterial;
-import net.minecraftforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 public class WindsweptTrimMaterialTagsProvider extends TagsProvider<TrimMaterial> {
 

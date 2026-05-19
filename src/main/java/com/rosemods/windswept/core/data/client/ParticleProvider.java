@@ -6,11 +6,10 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
 import java.nio.file.Path;
@@ -34,8 +33,8 @@ public abstract class ParticleProvider implements DataProvider {
     protected abstract void addParticles();
 
     protected void add(ParticleType<?> particle, String... textures) {
-        this.particles.put(ForgeRegistries.PARTICLE_TYPES.getKey(particle).getPath(),
-                new ParticleDefinition(Arrays.stream(textures).map(s -> new ResourceLocation(this.modid, s).toString()).toList()));
+        this.particles.put(BuiltInRegistries.PARTICLE_TYPE.getKey(particle).getPath(),
+                new ParticleDefinition(Arrays.stream(textures).map(s -> this.modid + ':' + s).toList()));
     }
 
     @Override

@@ -24,8 +24,8 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyC
 import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.Collections;
 import java.util.List;
@@ -79,7 +79,7 @@ public class WindsweptLootModifierProvider extends LootModifierProvider {
                     .build()), false));
     }
 
-    private void chestEntry(String name, String target, RegistryObject<? extends ItemLike> item, Consumer<LootPoolSingletonContainer.Builder<?>> b) {
+    private void chestEntry(String name, String target, DeferredHolder<? extends ItemLike> item, Consumer<LootPoolSingletonContainer.Builder<?>> b) {
         LootPoolSingletonContainer.Builder<?> builder = LootItem.lootTableItem(item.get());
         b.accept(builder);
 

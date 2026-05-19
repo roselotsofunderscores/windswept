@@ -3,7 +3,7 @@ package com.rosemods.windswept.core.registry.datapack;
 import com.rosemods.windswept.core.Windswept;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.features.TreeFeatures;
 import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
@@ -69,7 +69,7 @@ public final class WindsweptPlacedFeatures {
     public static final ResourceKey<PlacedFeature> LUSH_CAVES_VEGETATION = createKey("lush_caves_vegetation");
     public static final ResourceKey<PlacedFeature> SHALE = createKey("shale");
 
-    public static void bootstrap(BootstapContext<PlacedFeature> context) {
+    public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         createPlantPatch(context, RED_ROSE, 16, WindsweptConfiguredFeatures.RED_ROSE);
         createPlantPatch(context, WHITE_ROSE, 20, WindsweptConfiguredFeatures.WHITE_ROSE);
         createPlantPatch(context, LARGE_WHITE_ROSE, 24, WindsweptConfiguredFeatures.LARGE_WHITE_ROSE);
@@ -121,15 +121,15 @@ public final class WindsweptPlacedFeatures {
         register(context, SHALE, WindsweptConfiguredFeatures.SHALE, PlacementUtils.countExtra(2, .1f, 4), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.absolute(64), VerticalAnchor.absolute(256)), BiomeFilter.biome());
     }
 
-    private static void register(BootstapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, ResourceKey<ConfiguredFeature<?, ?>> feature, List<PlacementModifier> modifiers) {
+    private static void register(BootstrapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, ResourceKey<ConfiguredFeature<?, ?>> feature, List<PlacementModifier> modifiers) {
         context.register(key, new PlacedFeature(context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(feature), modifiers));
     }
 
-    private static void register(BootstapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, ResourceKey<ConfiguredFeature<?, ?>> feature, PlacementModifier... modifiers) {
+    private static void register(BootstrapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, ResourceKey<ConfiguredFeature<?, ?>> feature, PlacementModifier... modifiers) {
         register(context, key, feature, List.of(modifiers));
     }
 
-    private static void createPlantPatch(BootstapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, int onceEvery, ResourceKey<ConfiguredFeature<?, ?>> feature) {
+    private static void createPlantPatch(BootstrapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, int onceEvery, ResourceKey<ConfiguredFeature<?, ?>> feature) {
         register(context, key, feature, List.of(RarityFilter.onAverageOnceEvery(onceEvery), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
     }
 

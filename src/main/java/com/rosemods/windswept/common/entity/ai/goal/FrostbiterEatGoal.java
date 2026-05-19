@@ -7,7 +7,7 @@ import com.teamabnormals.blueprint.core.util.NetworkUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.EventHooks;
 
 import java.util.EnumSet;
 
@@ -54,7 +54,7 @@ public class FrostbiterEatGoal extends Goal {
             if (this.isFoodAt(pos)) {
                 this.frostbiter.ate();
 
-                if (ForgeEventFactory.getMobGriefingEvent(this.frostbiter.level(), this.frostbiter))
+                if (EventHooks.canEntityGrief(this.frostbiter.level(), this.frostbiter))
                     this.frostbiter.level().destroyBlock(pos, false);
 
                 if (this.frostbiter.isBaby())

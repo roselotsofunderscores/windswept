@@ -60,5 +60,4 @@ public class SnowyGelisolFeature extends Feature<NoneFeatureConfiguration> {
         return generated;
     }
 
-
 }

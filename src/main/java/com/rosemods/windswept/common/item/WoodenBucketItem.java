@@ -28,7 +28,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import java.util.function.Supplier;
 
@@ -41,7 +40,7 @@ public class WoodenBucketItem extends BucketItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
-        BlockHitResult blockhitresult = getPlayerPOVHitResult(level, player, this.getFluid() == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
+        BlockHitResult blockhitresult = getPlayerPOVHitResult(level, player, this.content == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
 
         if (blockhitresult.getType() == HitResult.Type.BLOCK) {
             BlockPos blockpos = blockhitresult.getBlockPos();
@@ -49,14 +48,14 @@ public class WoodenBucketItem extends BucketItem {
             BlockPos blockpos1 = blockpos.relative(direction);
 
             if (level.mayInteract(player, blockpos) && player.mayUseItemAt(blockpos1, direction, itemstack)) {
-                if (this.getFluid() == Fluids.EMPTY) {
+                if (this.content == Fluids.EMPTY) {
                     BlockState state = level.getBlockState(blockpos);
 
                     if (state.getBlock() instanceof IWoodenBucketPickupBlock pickup && pickup.canPickupFromWoodenBucket(level, blockpos, state)) {
                         ItemStack filledBucket = getFilled(itemstack, pickup.getWoodenBucketItem(state), player);
 
                         pickup.getWoodenBucketPickupSound(state).ifPresent(soundevent -> player.playSound(soundevent, 1f, 1f));
-                        pickup.pickupBlockFromWoodenBucket(level, blockpos, state);
+                        pickup.pickupBlockFromWoodenBucket(player, level, blockpos, state);
 
                         player.awardStat(Stats.ITEM_USED.get(this));
                         level.gameEvent(player, GameEvent.FLUID_PICKUP, blockpos);
@@ -87,7 +86,7 @@ public class WoodenBucketItem extends BucketItem {
     }
 
     public boolean isEmpty() {
-        return this.getFluid() == Fluids.EMPTY;
+        return this.content == Fluids.EMPTY;
     }
 
     @Override
@@ -97,7 +96,7 @@ public class WoodenBucketItem extends BucketItem {
 
     @Override
     public boolean isRepairable(ItemStack stack) {
-        return this.getFluid() == Fluids.EMPTY;
+        return this.content == Fluids.EMPTY;
     }
 
     @Override

@@ -2,14 +2,12 @@ package com.rosemods.windswept.core.data.server.tags;
 
 import com.rosemods.windswept.core.Windswept;
 import com.rosemods.windswept.core.data.server.WindsweptDatapackProvider;
-import com.teamabnormals.blueprint.core.other.tags.BlueprintBiomeTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
-import net.minecraft.world.level.biome.Biomes;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import static com.rosemods.windswept.core.other.tags.WindsweptBiomeTags.*;
 import static com.rosemods.windswept.core.registry.datapack.WindsweptBiomes.*;
@@ -24,13 +22,13 @@ public class WindsweptBiomeTagProvider extends BiomeTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(HAS_BLUEBELLS).add(DARK_FOREST, BIRCH_FOREST, OLD_GROWTH_BIRCH_FOREST, OLD_GROWTH_SPRUCE_TAIGA, CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST);
-        this.tag(HAS_LIONS_TAIL).addTag(BiomeTags.IS_SAVANNA).add(WOODED_BADLANDS).addOptional(new ResourceLocation("atmospheric", "spiny_thicket"));
+        this.tag(HAS_LIONS_TAIL).addTag(BiomeTags.IS_SAVANNA).add(WOODED_BADLANDS).addOptional(ResourceLocation.tryBuild("atmospheric", "spiny_thicket"));
         this.tag(HAS_RARE_CHESTNUT_TREES).add(DARK_FOREST, TAIGA, FOREST, WINDSWEPT_FOREST, OLD_GROWTH_BIRCH_FOREST, OLD_GROWTH_SPRUCE_TAIGA, OLD_GROWTH_PINE_TAIGA, SNOWY_TAIGA, BIRCH_FOREST, FLOWER_FOREST, WINDSWEPT_HILLS);
         this.tag(HAS_RARE_HOLLY_TREES).add(TAIGA, SNOWY_TAIGA, OLD_GROWTH_SPRUCE_TAIGA);
-        this.tag(HAS_RARE_SNOWY_HOLLY_TREES).add(FROZEN_PEAKS, JAGGED_PEAKS).addOptional(new ResourceLocation("atmospheric", "kousa_jungle"));
+        this.tag(HAS_RARE_SNOWY_HOLLY_TREES).add(FROZEN_PEAKS, JAGGED_PEAKS).addOptional(ResourceLocation.tryBuild("atmospheric", "kousa_jungle"));
         this.tag(HAS_RED_ROSE).add(TAIGA, SNOWY_TAIGA, PINE_BARRENS, SNOWY_PINE_BARRENS, OLD_GROWTH_SPRUCE_TAIGA, OLD_GROWTH_PINE_TAIGA, CHERRY_GROVE);
-        this.tag(HAS_BLUE_ROSE).add(CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST).addOptional(new ResourceLocation("atmospheric", "kousa_jungle"));
-        this.tag(HAS_WHITE_ROSE).add(SNOWY_CHESTNUT_FOREST, SNOWY_TAIGA, CHERRY_GROVE).addOptional(new ResourceLocation("atmospheric", "kousa_jungle")).addOptional(new ResourceLocation("environmental", "blossom_woods"));
+        this.tag(HAS_BLUE_ROSE).add(CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST).addOptional(ResourceLocation.tryBuild("atmospheric", "kousa_jungle"));
+        this.tag(HAS_WHITE_ROSE).add(SNOWY_CHESTNUT_FOREST, SNOWY_TAIGA, CHERRY_GROVE).addOptional(ResourceLocation.tryBuild("atmospheric", "kousa_jungle")).addOptional(ResourceLocation.tryBuild("environmental", "blossom_woods"));
         this.tag(HAS_YELLOW_ROSE).add(DARK_FOREST, OLD_GROWTH_SPRUCE_TAIGA, OLD_GROWTH_PINE_TAIGA, PINE_BARRENS, SNOWY_PINE_BARRENS);
         this.tag(HAS_WILD_BERRIES).add(SNOWY_PLAINS, SNOWY_SLOPES, JAGGED_PEAKS, FROZEN_PEAKS, GROVE);
         this.tag(HAS_BROWN_GOAT).add(TUNDRA);
@@ -53,7 +51,7 @@ public class WindsweptBiomeTagProvider extends BiomeTagsProvider {
         this.tag(HAS_SHEEP).addTag(IS_LAVENDER).addTag(IS_PINE_BARRENS).addTag(IS_CHESTNUT_FOREST).add(FLOWERING_SAVANNA);
         this.tag(HAS_DWARF_SPRUCE_SPARSE).add(TUNDRA);
 
-        this.tag(BlueprintBiomeTags.IS_GRASSLAND).add(LAVENDER_HILLS, LAVENDER_FIELDS);
+        //this.tag(BlueprintBiomeTags.IS_GRASSLAND).add(LAVENDER_HILLS, LAVENDER_FIELDS);
         this.tag(BiomeTags.IS_SAVANNA).add(FLOWERING_SAVANNA);
         this.tag(BiomeTags.IS_MOUNTAIN).add(SNOWY_PINE_BARRENS, LAVENDER_HILLS);
         this.tag(BiomeTags.IS_OVERWORLD).add(CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST, PINE_BARRENS, SNOWY_PINE_BARRENS, LAVENDER_HILLS, LAVENDER_FIELDS, TUNDRA, FLOWERING_SAVANNA);
@@ -69,9 +67,9 @@ public class WindsweptBiomeTagProvider extends BiomeTagsProvider {
         this.tag(Tags.Biomes.IS_SNOWY).add(SNOWY_CHESTNUT_FOREST, SNOWY_PINE_BARRENS, TUNDRA, DEEP_FROZEN_OCEAN);
         this.tag(Tags.Biomes.IS_COLD).add(SNOWY_CHESTNUT_FOREST, SNOWY_PINE_BARRENS, TUNDRA);
         this.tag(Tags.Biomes.IS_HOT).add(FLOWERING_SAVANNA);
-        this.tag(Tags.Biomes.IS_CONIFEROUS).add(CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST, PINE_BARRENS, SNOWY_PINE_BARRENS);
-        this.tag(Tags.Biomes.IS_DENSE).add(CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST, PINE_BARRENS, SNOWY_PINE_BARRENS);
-        this.tag(Tags.Biomes.IS_DENSE_OVERWORLD).add(CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST, PINE_BARRENS, SNOWY_PINE_BARRENS);
+        //this.tag(Tags.Biomes.IS_CONIFEROUS).add(CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST, PINE_BARRENS, SNOWY_PINE_BARRENS);
+        //this.tag(Tags.Biomes.IS_DENSE).add(CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST, PINE_BARRENS, SNOWY_PINE_BARRENS);
+        //this.tag(Tags.Biomes.IS_DENSE_OVERWORLD).add(CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST, PINE_BARRENS, SNOWY_PINE_BARRENS);
     }
 
 }

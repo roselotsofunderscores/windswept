@@ -11,7 +11,7 @@ import com.rosemods.windswept.core.registry.WindsweptFeatures;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.TreePlacements;
@@ -89,7 +89,7 @@ public final class WindsweptConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> SNOWY_GELISOL = createKey("snowy_gelisol");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SHALE = createKey("shale");
 
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<PlacedFeature> placed = context.lookup(Registries.PLACED_FEATURE);
         HolderGetter<ConfiguredFeature<?, ?>> configured = context.lookup(Registries.CONFIGURED_FEATURE);
 

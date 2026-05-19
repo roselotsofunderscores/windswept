@@ -1,6 +1,7 @@
 package com.rosemods.windswept.common.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -19,7 +20,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class PineconeJamBlock extends HalfTransparentBlock implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -47,10 +47,10 @@ public class PineconeJamBlock extends HalfTransparentBlock implements SimpleWate
 
     @Override
     public boolean canStickTo(BlockState state, BlockState other) {
-        ResourceLocation location = ForgeRegistries.BLOCKS.getKey(other.getBlock());
+        ResourceLocation location = BuiltInRegistries.BLOCK.getKey(other.getBlock());
 
-        if (other.is(Blocks.SLIME_BLOCK) || other.is(Blocks.HONEY_BLOCK) || location.equals(new ResourceLocation("autumnity", "snail_goo_block"))
-                || location.equals(new ResourceLocation("atmospheric", "aloe_gel_block")) || location.equals(new ResourceLocation("upgrade_aquatic", "mulberry_jam_block")))
+        if (other.is(Blocks.SLIME_BLOCK) || other.is(Blocks.HONEY_BLOCK) || location.equals(ResourceLocation.tryBuild("autumnity", "snail_goo_block"))
+                || location.equals(ResourceLocation.tryBuild("atmospheric", "aloe_gel_block")) || location.equals(ResourceLocation.tryBuild("upgrade_aquatic", "mulberry_jam_block")))
             return false;
 
         return state.isStickyBlock() || other.isStickyBlock();

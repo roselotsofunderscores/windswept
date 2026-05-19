@@ -1,5 +1,6 @@
 package com.rosemods.windswept.common.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -15,6 +16,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class FeatherWingBlock extends HorizontalDirectionalBlock {
+    public static final MapCodec<FeatherWingBlock> CODEC = simpleCodec(FeatherWingBlock::new);
     private static final VoxelShape SHAPE_NORTH = Block.box(4f, 3f, 3f, 12f, 13f, 16d);
     private static final VoxelShape SHAPE_SOUTH = Block.box(4f, 3f, 0f, 12f, 13f, 13d);
     private static final VoxelShape SHAPE_EAST = Block.box(0f, 3f, 4f, 13f, 13f, 12d);
@@ -23,6 +25,11 @@ public class FeatherWingBlock extends HorizontalDirectionalBlock {
     public FeatherWingBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+        return CODEC;
     }
 
     @Override

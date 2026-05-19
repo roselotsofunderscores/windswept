@@ -8,14 +8,14 @@ import com.teamabnormals.blueprint.core.registry.BlueprintHolderSets;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.Structure;
-import net.minecraftforge.common.crafting.conditions.ICondition;
-import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.crafting.conditions.ICondition;
+import net.neoforged.neoforge.common.crafting.conditions.ModLoadedCondition;
+import net.neoforged.neoforge.registries.ForgeRegistries;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,7 +27,7 @@ import static net.minecraft.world.level.levelgen.structure.BuiltinStructures.*;
 
 public final class WindsweptStructureRepaletters {
 
-    public static void bootstrap(BootstapContext<StructureRepaletterEntry> context) {
+    public static void bootstrap(BootstrapContext<StructureRepaletterEntry> context) {
         HolderGetter<Structure> structures = context.lookup(Registries.STRUCTURE);
 
         //igloo
@@ -98,18 +98,18 @@ public final class WindsweptStructureRepaletters {
     }
 
     @SafeVarargs
-    private static void register(BootstapContext<StructureRepaletterEntry> context, HolderGetter<Structure> structures, Block replacesBlock, Block replacesWith, ICondition condition, ResourceKey<Structure>... selector) {
+    private static void register(BootstrapContext<StructureRepaletterEntry> context, HolderGetter<Structure> structures, Block replacesBlock, Block replacesWith, ICondition condition, ResourceKey<Structure>... selector) {
         register(context, getName(replacesBlock, replacesWith, selector), replacesBlock, replacesWith,
                 BlueprintHolderSets.conditional(HolderSet.direct(Stream.of(selector).map(structures::getOrThrow).collect(Collectors.toList())), condition));
     }
 
     @SafeVarargs
-    private static void register(BootstapContext<StructureRepaletterEntry> context, HolderGetter<Structure> structures, Block replacesBlock, Block replacesWith, ResourceKey<Structure>... selector) {
+    private static void register(BootstrapContext<StructureRepaletterEntry> context, HolderGetter<Structure> structures, Block replacesBlock, Block replacesWith, ResourceKey<Structure>... selector) {
         register(context, getName(replacesBlock, replacesWith, selector), replacesBlock, replacesWith,
                 HolderSet.direct(Stream.of(selector).map(structures::getOrThrow).collect(Collectors.toList())));
     }
 
-    private static void register(BootstapContext<StructureRepaletterEntry> context, String name, Block replacesBlock, Block replacesWith, HolderSet<Structure> structures) {
+    private static void register(BootstrapContext<StructureRepaletterEntry> context, String name, Block replacesBlock, Block replacesWith, HolderSet<Structure> structures) {
         context.register(createKey(name), new StructureRepaletterEntry(structures, Optional.empty(), false, new SimpleStructureRepaletter(replacesBlock, replacesWith)));
     }
 

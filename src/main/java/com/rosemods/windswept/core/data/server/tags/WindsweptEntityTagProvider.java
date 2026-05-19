@@ -6,10 +6,9 @@ import com.rosemods.windswept.core.other.tags.WindsweptEntityTypeTags;
 import com.teamabnormals.blueprint.core.other.tags.BlueprintEntityTypeTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import static com.rosemods.windswept.core.registry.WindsweptEntityTypes.*;
 

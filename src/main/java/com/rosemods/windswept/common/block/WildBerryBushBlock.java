@@ -1,5 +1,6 @@
 package com.rosemods.windswept.common.block;
 
+import com.mojang.serialization.MapCodec;
 import com.rosemods.windswept.core.registry.WindsweptItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -24,13 +25,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ForgeHooks;
+import net.neoforged.neoforge.common.CommonHooks;
 
 public class WildBerryBushBlock extends BushBlock implements BonemealableBlock {
+    public static final MapCodec<WildBerryBushBlock> CODEC = simpleCodec(WildBerryBushBlock::new);
     public static final IntegerProperty AGE = BlockStateProperties.AGE_3;
     private static final VoxelShape SMALL_SHAPE = Block.box(3f, 0f, 3f, 13f, 5f, 13f);
     private static final VoxelShape MID_SHAPE = Block.box(2f, 0f, 2f, 14f, 10f, 14f);
@@ -39,6 +42,11 @@ public class WildBerryBushBlock extends BushBlock implements BonemealableBlock {
     public WildBerryBushBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0));
+    }
+
+    @Override
+    protected MapCodec<? extends BushBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -55,10 +63,11 @@ public class WildBerryBushBlock extends BushBlock implements BonemealableBlock {
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource rand) {
         int i = state.getValue(AGE);
-        if (i < 3 && level.getRawBrightness(pos.above(), 0) >= 9 && ForgeHooks.onCropsGrowPre(level, pos, state, rand.nextInt(5) == 0)) {
+        if (i < 3 && level.getRawBrightness(pos.above(), 0) >= 9 && CommonHooks.canCropGrow(level, pos, state, rand.nextInt(5) == 0)) {
             BlockState state1 = state.setValue(AGE, i + 1);
             level.setBlock(pos, state1, 2);
-            ForgeHooks.onCropsGrowPost(level, pos, state1);
+            CommonHooks.fireCropGrowPost(level, pos, state1);
+            level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(state));
         }
     }
 
@@ -93,8 +102,8 @@ public class WildBerryBushBlock extends BushBlock implements BonemealableBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState, boolean b) {
-        return blockState.getValue(AGE) < 3;
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+        return state.getValue(AGE) < 3;
     }
 
     @Override

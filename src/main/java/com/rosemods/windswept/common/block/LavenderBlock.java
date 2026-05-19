@@ -1,5 +1,6 @@
 package com.rosemods.windswept.common.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -9,6 +10,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -30,6 +32,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class LavenderBlock extends BushBlock implements BonemealableBlock {
+    public static final MapCodec<LavenderBlock> CODEC = simpleCodec(LavenderBlock::new);
     public static final IntegerProperty AGE = BlockStateProperties.AGE_2;
     public static final BooleanProperty PERSISTENT = BlockStateProperties.PERSISTENT;
     private static final VoxelShape SHAPE = Block.box(2f, 0f, 2f, 14f, 14f, 14f);
@@ -40,24 +43,29 @@ public class LavenderBlock extends BushBlock implements BonemealableBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-        ItemStack stack = player.getItemInHand(hand);
+    protected MapCodec<? extends BushBlock> codec() {
+        return CODEC;
+    }
 
-        if (!state.getValue(PERSISTENT) && stack.is(Items.SHEARS)) {
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        ItemStack held = player.getItemInHand(hand);
+
+        if (!state.getValue(PERSISTENT) && held.is(Items.SHEARS)) {
             BlockState state1 = state.setValue(PERSISTENT, true);
 
             if (player instanceof ServerPlayer serverPlayer)
-                CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(serverPlayer, pos, stack);
+                CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(serverPlayer, pos, held);
 
             level.playSound(player, player, SoundEvents.GROWING_PLANT_CROP, SoundSource.BLOCKS, 1f, 1f);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, state1));
             level.setBlockAndUpdate(pos, state1);
-            stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
+            held.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
 
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
 
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
@@ -83,8 +91,8 @@ public class LavenderBlock extends BushBlock implements BonemealableBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState, boolean b) {
-        return blockState.getValue(AGE) < 2;
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+        return state.getValue(AGE) < 2;
     }
 
     @Override

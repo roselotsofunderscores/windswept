@@ -4,7 +4,7 @@ import com.rosemods.windswept.core.Windswept;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.biome.OverworldBiomes;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
@@ -26,7 +26,7 @@ public final class WindsweptBiomes {
     public static final ResourceKey<Biome> TUNDRA = createKey("tundra");
     public static final ResourceKey<Biome> FLOWERING_SAVANNA = createKey("flowering_savanna");
 
-    public static void bootstrap(BootstapContext<Biome> context) {
+    public static void bootstrap(BootstrapContext<Biome> context) {
         HolderGetter<PlacedFeature> features = context.lookup(Registries.PLACED_FEATURE);
         HolderGetter<ConfiguredWorldCarver<?>> carvers = context.lookup(Registries.CONFIGURED_CARVER);
 

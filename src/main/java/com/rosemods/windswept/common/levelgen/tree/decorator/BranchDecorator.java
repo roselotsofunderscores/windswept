@@ -2,6 +2,7 @@ package com.rosemods.windswept.common.levelgen.tree.decorator;
 
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.rosemods.windswept.core.WindsweptConfig;
 import com.rosemods.windswept.core.registry.WindsweptTreeDecorators;
@@ -20,7 +21,7 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorTy
 import java.util.List;
 
 public class BranchDecorator extends TreeDecorator {
-    public static final Codec<BranchDecorator> CODEC = RecordCodecBuilder.create(i -> i
+    public static final MapCodec<BranchDecorator> CODEC = RecordCodecBuilder.mapCodec(i -> i
             .group(SimpleStateProvider.CODEC.fieldOf("state").forGetter(bd -> bd.state), Codec.intRange(0, 32).fieldOf("minHeight").forGetter(bd -> bd.minHeight))
             .apply(i, BranchDecorator::new));
     private final SimpleStateProvider state;

@@ -11,8 +11,8 @@ import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import static com.rosemods.windswept.core.registry.WindsweptBlocks.*;
 import static com.rosemods.windswept.core.registry.WindsweptItems.*;
@@ -31,12 +31,11 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         this.copy(WindsweptBlockTags.CHESTNUT_LOGS, WindsweptItemTags.CHESTNUT_LOGS);
         this.copy(WindsweptBlockTags.PINE_LOGS, WindsweptItemTags.PINE_LOGS);
 
-        //forge
-        this.tag(BlueprintItemTags.BUCKETS_EMPTY).add(WOODEN_BUCKET.get());
-        this.tag(BlueprintItemTags.BUCKETS_MILK).add(WOODEN_MILK_BUCKET.get());
-        this.tag(BlueprintItemTags.BUCKETS_POWDER_SNOW).add(WOODEN_POWDER_SNOW_BUCKET.get());
-        this.tag(BlueprintItemTags.BUCKETS_WATER).add(WOODEN_WATER_BUCKET.get());
-        this.tag(WindsweptItemTags.MILK).addTag(BlueprintItemTags.BUCKETS_MILK);
+        //c
+        this.tag(Tags.Items.BUCKETS_EMPTY).add(WOODEN_BUCKET.get());
+        this.tag(Tags.Items.BUCKETS_MILK).add(WOODEN_MILK_BUCKET.get());
+        this.tag(Tags.Items.BUCKETS_POWDER_SNOW).add(WOODEN_POWDER_SNOW_BUCKET.get());
+        this.tag(Tags.Items.BUCKETS_WATER).add(WOODEN_WATER_BUCKET.get());
         this.tag(WindsweptItemTags.WILD_BERRY_SEEDS).add(WILD_BERRY_PIPS.get());
         this.tag(WindsweptItemTags.RAW_GOAT).add(GOAT.get());
         this.tag(WindsweptItemTags.COOKED_GOAT).add(COOKED_GOAT.get());
@@ -46,11 +45,11 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         this.tag(WindsweptItemTags.STRIPPED_WOOD).add(STRIPPED_HOLLY_WOOD.get().asItem(), STRIPPED_CHESTNUT_WOOD.get().asItem(), STRIPPED_PINE_WOOD.get().asItem());
         this.tag(WindsweptItemTags.HONEY_BUCKETS).add(WOODEN_HONEY_BUCKET.get());
         this.tag(WindsweptItemTags.CHOCOLATE_BUCKETS).add(WOODEN_CHOCOLATE_BUCKET.get());
-        this.tag(BlueprintItemTags.CHICKEN_FOOD).addTag(WindsweptItemTags.WILD_BERRY_SEEDS);
+        //this.tag(BlueprintItemTags.CHICKEN_FOOD).addTag(WindsweptItemTags.WILD_BERRY_SEEDS);
         this.tag(Tags.Items.SEEDS).addTag(WindsweptItemTags.WILD_BERRY_SEEDS);
-        this.tag(Tags.Items.ARMORS_HELMETS).add(ANTLER_HELMET.get(), LAVENDER_CROWN.get());
-        this.tag(Tags.Items.ARMORS_CHESTPLATES).add(FEATHER_CLOAK.get());
-        this.tag(Tags.Items.ARMORS_BOOTS).add(SNOW_BOOTS.get());
+        //this.tag(Tags.Items.ARMORS_HELMETS).add(ANTLER_HELMET.get(), LAVENDER_CROWN.get());
+        //this.tag(Tags.Items.ARMORS_CHESTPLATES).add(FEATHER_CLOAK.get());
+        //this.tag(Tags.Items.ARMORS_BOOTS).add(SNOW_BOOTS.get());
         this.tag(Tags.Items.FEATHERS).add(ELDER_FEATHER.get());
         this.copy(Tags.Blocks.BOOKSHELVES, Tags.Items.BOOKSHELVES);
         this.copy(Tags.Blocks.CHESTS_WOODEN, Tags.Items.CHESTS_WOODEN);
@@ -79,7 +78,7 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         this.tag(ItemTags.CHEST_BOATS).add(HOLLY_BOAT.getSecond().get(), CHESTNUT_BOAT.getSecond().get(), PINE_BOAT.getSecond().get());
         this.tag(ItemTags.SIGNS).add(HOLLY_SIGNS.getFirst().get().asItem(), CHESTNUT_SIGNS.getFirst().get().asItem(), PINE_SIGNS.getFirst().get().asItem());
         this.tag(ItemTags.HANGING_SIGNS).add(HOLLY_HANGING_SIGNS.getFirst().get().asItem(), CHESTNUT_HANGING_SIGNS.getFirst().get().asItem(), PINE_HANGING_SIGNS.getFirst().get().asItem());
-        this.tag(ItemTags.MUSIC_DISCS).add(MUSIC_DISC_RAIN.get(), MUSIC_DISC_SNOW.get(), MUSIC_DISC_BUMBLEBEE.get());
+        //this.tag(ItemTags.MUSIC_DISCS).add(MUSIC_DISC_RAIN.get(), MUSIC_DISC_SNOW.get(), MUSIC_DISC_BUMBLEBEE.get());
         this.copy(BlockTags.LEAVES, ItemTags.LEAVES);
         this.copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN);
         this.copy(BlockTags.PLANKS, ItemTags.PLANKS);

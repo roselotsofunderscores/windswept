@@ -2,10 +2,10 @@ package com.rosemods.windswept.core.data.client;
 
 import com.rosemods.windswept.core.Windswept;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.common.data.SoundDefinition.Sound;
-import net.minecraftforge.common.data.SoundDefinitionsProvider;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.data.SoundDefinition.Sound;
+import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.function.Consumer;
 
@@ -28,7 +28,7 @@ public class WindsweptSoundProvider extends SoundDefinitionsProvider {
         this.register(CHILLED_AMBIENT, "entity/chilled/ambient/idle", 3, 1.3f);
     }
 
-    private void register(RegistryObject<SoundEvent> soundEvent, String location, Consumer<Sound> consumer) {
+    private void register(DeferredHolder<SoundEvent, SoundEvent> soundEvent, String location, Consumer<Sound> consumer) {
         Sound sound = sound(Windswept.location(location));
         if (consumer != null)
             consumer.accept(sound);
@@ -36,7 +36,7 @@ public class WindsweptSoundProvider extends SoundDefinitionsProvider {
         this.add(soundEvent.get(), definition().with(sound));
     }
 
-    private void register(RegistryObject<SoundEvent> soundEvent, String name, int amount, float volume) {
+    private void register(DeferredHolder<SoundEvent, SoundEvent> soundEvent, String name, int amount, float volume) {
         Sound[] sounds = new Sound[amount];
 
         for (int i = 1; i <= amount; i++)

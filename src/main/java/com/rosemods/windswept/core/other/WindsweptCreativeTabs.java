@@ -2,14 +2,14 @@ package com.rosemods.windswept.core.other;
 
 import com.rosemods.windswept.core.Windswept;
 import com.teamabnormals.blueprint.core.util.item.CreativeModeTabContentsPopulator;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.fml.ModList;
 
 import java.util.function.Predicate;
 
@@ -164,7 +164,7 @@ public final class WindsweptCreativeTabs {
     }
 
     public static Predicate<ItemStack> modLoaded(ResourceLocation location, String... modids) {
-        return modLoaded(ForgeRegistries.ITEMS.getValue(location), modids);
+        return modLoaded(BuiltInRegistries.ITEM.get(location), modids);
     }
 
     private static boolean anyLoaded(String... modIds) {

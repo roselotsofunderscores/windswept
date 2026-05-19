@@ -2,14 +2,12 @@ package com.rosemods.windswept.common.item;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.rosemods.windswept.core.other.WindsweptTiers;
+import com.rosemods.windswept.core.registry.WindsweptArmorMaterials;
 import com.rosemods.windswept.core.registry.WindsweptAttributes;
-import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.UUID;
@@ -18,7 +16,7 @@ public class LavenderCrownItem extends ArmorItem {
     private static final UUID FRAGRANCE_UUID = UUID.fromString("1e2757d5-d814-4465-a958-36a6cdeeb624");
 
     public LavenderCrownItem(Properties properties) {
-        super(WindsweptTiers.LAVENDER_CROWN, Type.HELMET, properties);
+        super(WindsweptArmorMaterials.LAVENDER_CROWN, Type.HELMET, properties);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.rosemods.windswept.common.levelgen.tree.trunk_placer;
 
 import com.google.common.collect.Lists;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.rosemods.windswept.core.WindsweptConfig;
 import com.rosemods.windswept.core.registry.WindsweptBlocks;
@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 public class ChestnutTrunkPlacer extends TrunkPlacer {
-    public static final Codec<ChestnutTrunkPlacer> CODEC = RecordCodecBuilder.create(placer -> trunkPlacerParts(placer).apply(placer, ChestnutTrunkPlacer::new));
+    public static final MapCodec<ChestnutTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec(placer -> trunkPlacerParts(placer).apply(placer, ChestnutTrunkPlacer::new));
 
     public ChestnutTrunkPlacer() {
         super(0, 0, 0);

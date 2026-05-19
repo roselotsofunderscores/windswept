@@ -3,11 +3,10 @@ package com.rosemods.windswept.common.item;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.rosemods.windswept.client.model.AntlerHelmetModel;
-import com.rosemods.windswept.core.other.WindsweptTiers;
+import com.rosemods.windswept.core.registry.WindsweptArmorMaterials;
 import com.rosemods.windswept.core.registry.WindsweptAttributes;
 import com.rosemods.windswept.core.registry.WindsweptItems;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -15,11 +14,10 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -29,7 +27,7 @@ public class AntlerHelmetItem extends ArmorItem {
     private static final UUID ATTACK_DAMAGE_UUID = UUID.fromString("cd559dfd-c166-4043-b9eb-a69e85abb04b");
 
     public AntlerHelmetItem(Properties properties) {
-        super(WindsweptTiers.ANTLER_HELMET, Type.HELMET, properties);
+        super(WindsweptArmorMaterials.ANTLER_HELMET, Type.HELMET, properties);
     }
 
     @Override

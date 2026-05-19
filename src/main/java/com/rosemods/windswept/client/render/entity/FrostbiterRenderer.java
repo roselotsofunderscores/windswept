@@ -23,15 +23,12 @@ public class FrostbiterRenderer extends MobRenderer<Frostbiter, FrostbiterModel>
     public ResourceLocation getTextureLocation(Frostbiter frostbiter) {
         String name = ChatFormatting.stripFormatting(frostbiter.getName().getString());
 
-        if (name != null)
-            switch (name.toLowerCase()) {
-                case "buddy":
-                    return FROSTBITER_BUDDY_LOCATION;
-                case "binome":
-                    return FROSTBITER_BINOME_LOCATION;
-            }
+        return switch (name.toLowerCase()) {
+            case "buddy" -> FROSTBITER_BUDDY_LOCATION;
+            case "binome" -> FROSTBITER_BINOME_LOCATION;
+            default -> frostbiter.isBaby() ? FROSTBITER_BABY_LOCATION : FROSTBITER_LOCATION;
+        };
 
-        return frostbiter.isBaby() ? FROSTBITER_BABY_LOCATION : FROSTBITER_LOCATION;
     }
 
 }

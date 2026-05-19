@@ -115,32 +115,32 @@ public class FrostbiterModel extends EndimatorEntityModel<Frostbiter> implements
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
         if (this.young) {
             poseStack.pushPose();
             poseStack.scale(.55f, .55f, .55f);
             poseStack.translate(0f, 1.3f, .2f);
-            head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+            head.render(poseStack, buffer, packedLight, packedOverlay);
             poseStack.popPose();
 
             poseStack.pushPose();
             poseStack.scale(.45f, .45f, .45f);
             poseStack.translate(0f, 1.5f, 0f);
-            body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            tail.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            leftArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            rightArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            leftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            rightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+            body.render(poseStack, buffer, packedLight, packedOverlay);
+            tail.render(poseStack, buffer, packedLight, packedOverlay);
+            leftArm.render(poseStack, buffer, packedLight, packedOverlay);
+            rightArm.render(poseStack, buffer, packedLight, packedOverlay);
+            leftLeg.render(poseStack, buffer, packedLight, packedOverlay);
+            rightLeg.render(poseStack, buffer, packedLight, packedOverlay);
             poseStack.popPose();
         } else {
-            head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            tail.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            leftArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            rightArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            leftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-            rightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+            head.render(poseStack, buffer, packedLight, packedOverlay);
+            body.render(poseStack, buffer, packedLight, packedOverlay);
+            tail.render(poseStack, buffer, packedLight, packedOverlay);
+            leftArm.render(poseStack, buffer, packedLight, packedOverlay);
+            rightArm.render(poseStack, buffer, packedLight, packedOverlay);
+            leftLeg.render(poseStack, buffer, packedLight, packedOverlay);
+            rightLeg.render(poseStack, buffer, packedLight, packedOverlay);
         }
     }
 

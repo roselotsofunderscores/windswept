@@ -3,8 +3,8 @@ package com.rosemods.windswept.common.item;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.rosemods.windswept.common.entity.Frostbiter;
-import com.rosemods.windswept.core.other.WindsweptTiers;
 import com.rosemods.windswept.core.other.tags.WindsweptBlockTags;
+import com.rosemods.windswept.core.registry.WindsweptArmorMaterials;
 import com.rosemods.windswept.core.registry.WindsweptAttributes;
 import com.rosemods.windswept.core.registry.WindsweptItems;
 import net.minecraft.core.BlockPos;
@@ -15,7 +15,6 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.DyeableArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.phys.Vec3;
@@ -27,7 +26,7 @@ public class SnowBootsItem extends DyeableArmorItem {
     private static final UUID SPEED_MODIFIER_SNOW_SPEED_UUID = UUID.fromString("c51348dc-85bf-4ac5-8428-deefefec04aa");
 
     public SnowBootsItem(Properties properties) {
-        super(WindsweptTiers.SNOW_BOOTS, Type.BOOTS, properties);
+        super(WindsweptArmorMaterials.SNOW_BOOTS, Type.BOOTS, properties);
     }
 
     @Override

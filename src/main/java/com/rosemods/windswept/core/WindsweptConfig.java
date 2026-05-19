@@ -1,20 +1,17 @@
 package com.rosemods.windswept.core;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
-@EventBusSubscriber(modid = Windswept.MOD_ID)
-public class WindsweptConfig {
+public final class WindsweptConfig {
     public static final Common COMMON;
     public static final Client CLIENT;
-    public static final ForgeConfigSpec COMMON_SPEC;
-    public static final ForgeConfigSpec CLIENT_SPEC;
+    public static final ModConfigSpec COMMON_SPEC;
+    public static final ModConfigSpec CLIENT_SPEC;
 
     static {
-        final Pair<Common, ForgeConfigSpec> commonSpecPair = new ForgeConfigSpec.Builder().configure(Common::new);
-        final Pair<Client, ForgeConfigSpec> clientSpecPair = new ForgeConfigSpec.Builder().configure(Client::new);
+        final Pair<Common, ModConfigSpec> commonSpecPair = new ModConfigSpec.Builder().configure(Common::new);
+        final Pair<Client, ModConfigSpec> clientSpecPair = new ModConfigSpec.Builder().configure(Client::new);
 
         COMMON = commonSpecPair.getLeft();
         CLIENT = clientSpecPair.getLeft();
@@ -23,18 +20,18 @@ public class WindsweptConfig {
     }
 
     public static class Common {
-        public final ConfigValue<Integer> woodenBucketDurabilty;
-        public final ConfigValue<Double> bumblebeeDiscChance;
-        public final ConfigValue<Boolean> iceBoatNerf;
-        public final ConfigValue<Boolean> birchBranches;
-        public final ConfigValue<Boolean> strays;
-        public final ConfigValue<Boolean> roots;
-        public final ConfigValue<Boolean> biggerFlowerHitbox;
-        public final ConfigValue<Boolean> rabbitLitters;
-        public final ConfigValue<Boolean> rainWashSnow;
-        public final ConfigValue<Boolean> freezingWater;
+        public final ModConfigSpec.ConfigValue<Integer> woodenBucketDurabilty;
+        public final ModConfigSpec.ConfigValue<Double> bumblebeeDiscChance;
+        public final ModConfigSpec.ConfigValue<Boolean> iceBoatNerf;
+        public final ModConfigSpec.ConfigValue<Boolean> birchBranches;
+        public final ModConfigSpec.ConfigValue<Boolean> strays;
+        public final ModConfigSpec.ConfigValue<Boolean> roots;
+        public final ModConfigSpec.ConfigValue<Boolean> biggerFlowerHitbox;
+        public final ModConfigSpec.ConfigValue<Boolean> rabbitLitters;
+        public final ModConfigSpec.ConfigValue<Boolean> rainWashSnow;
+        public final ModConfigSpec.ConfigValue<Boolean> freezingWater;
 
-        private Common(ForgeConfigSpec.Builder builder) {
+        private Common(ModConfigSpec.Builder builder) {
             builder.comment("Windswept Content Tweaks").push("content");
             this.woodenBucketDurabilty = builder.comment("How much durability Wooden Buckets should have").defineInRange("Wooden Bucket Durability", 24, 1, 1000);
             this.bumblebeeDiscChance = builder.comment("The chance that the Bumblebee Music Disc should drop from Beehives and Bee Nests").defineInRange("Bumblebee Disc Chance", .01d, 0d, 1d);
@@ -58,10 +55,10 @@ public class WindsweptConfig {
     }
 
     public static class Client {
-        public final ConfigValue<Boolean> powderSnowParticles;
-        public final ConfigValue<Boolean> largerRabbits;
+        public final ModConfigSpec.ConfigValue<Boolean> powderSnowParticles;
+        public final ModConfigSpec.ConfigValue<Boolean> largerRabbits;
 
-        public Client(ForgeConfigSpec.Builder builder) {
+        public Client(ModConfigSpec.Builder builder) {
             builder.push("particles");
             this.powderSnowParticles = builder.comment("If Powder Snow should drop snow Particles if there is no block below").define("Powder Snow Particles", true);
             builder.pop();

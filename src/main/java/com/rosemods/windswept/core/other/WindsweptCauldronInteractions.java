@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraftforge.fml.ModList;
+import net.neoforged.neoforge.fml.ModList;
 
 public final class WindsweptCauldronInteractions {
 

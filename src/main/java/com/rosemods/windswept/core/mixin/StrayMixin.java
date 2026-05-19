@@ -13,8 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Stray.class)
 public class StrayMixin {
     @Inject(method = "getArrow", at = @At("HEAD"), cancellable = true)
-    private void getArrow(ItemStack stack, float damage, CallbackInfoReturnable<AbstractArrow> info) {
+    private void getArrow(ItemStack arrow, float velocity, ItemStack weapon, CallbackInfoReturnable<AbstractArrow> info) {
         LivingEntity entity = (LivingEntity) (Object) this;
-        info.setReturnValue(new FrostArrow(entity.level(), entity));
+        info.setReturnValue(new FrostArrow(entity.level(), entity, arrow.copyWithCount(1), weapon));
     }
 }
