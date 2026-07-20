@@ -26,8 +26,18 @@ public class FloorIciclesFeature extends Feature<NoneFeatureConfiguration> {
         RandomSource rand = context.random();
         boolean generated = false;
 
+        int originChunkX = origin.getX() >> 4;
+        int originChunkZ = origin.getZ() >> 4;
+
         for (int x = -1; x <= 1; x++)
-            for (int z = -1; z <= 1; z++)
+            for (int z = -1; z <= 1; z++) {
+                BlockPos columnPos = origin.offset(x, 0, z);
+                int chunkX = columnPos.getX() >> 4;
+                int chunkZ = columnPos.getZ() >> 4;
+
+                if (chunkX != originChunkX || chunkZ != originChunkZ)
+                    continue;
+
                 for (int y = -5; y <= 2; y++) {
                     BlockPos pos = origin.offset(x, y, z);
 
@@ -36,6 +46,7 @@ public class FloorIciclesFeature extends Feature<NoneFeatureConfiguration> {
                         generated = true;
                     }
                 }
+            }
 
         return generated;
     }
