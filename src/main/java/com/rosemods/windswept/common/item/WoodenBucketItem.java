@@ -147,11 +147,6 @@ public class WoodenBucketItem extends BucketItem {
         return bucket;
     }
 
-    @Override
-    public EquipmentSlot getEquipmentSlot(ItemStack stack) {
-        return this.isEmpty() ? EquipmentSlot.HEAD : null;
-    }
-
     public static ItemStack getFilled(ItemStack handStack, ItemLike filled, @Nullable Player player) {
         ItemStack bucket = new ItemStack(filled);
 
