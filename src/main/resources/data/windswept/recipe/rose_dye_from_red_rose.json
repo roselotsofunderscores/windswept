@@ -1,16 +1,13 @@
 {
   "neoforge:conditions": [
     {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:mod_loaded",
-        "modid": "dye_depot"
-      }
+      "type": "neoforge:mod_loaded",
+      "modid": "dye_depot"
     }
   ],
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
-  "group": "red_dye",
+  "group": "rose_dye",
   "ingredients": [
     {
       "item": "windswept:red_rose"
@@ -18,6 +15,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "minecraft:red_dye"
+    "id": "dye_depot:rose_dye"
   }
 }

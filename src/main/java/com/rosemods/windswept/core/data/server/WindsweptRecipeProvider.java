@@ -53,7 +53,7 @@ public class WindsweptRecipeProvider extends BlueprintRecipeProvider {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, MINTY_SNOW_CONE.get()).requires(PINECONE.get()).requires(LAVENDER.get()).requires(Items.COCOA_BEANS).requires(Items.SNOWBALL).requires(Items.SUGAR).unlockedBy(getHasName(GINGER_ROOT.get()), has(GINGER_ROOT.get())).save(output, getSaveLocation(MINTY_SNOW_CONE.get()));
 
         // dyes
-        flowerToDye(RED_ROSE.get(), Items.RED_DYE, output);
+        flowerToDyeNoDyeDepot(RED_ROSE.get(), Items.RED_DYE, output);
         flowerToDye(BLUE_ROSE.get(), Items.BLUE_DYE, output);
         flowerToDye(WHITE_ROSE.get(), Items.WHITE_DYE, output);
         flowerToDye(YELLOW_ROSE.get(), Items.YELLOW_DYE, output);
@@ -65,12 +65,12 @@ public class WindsweptRecipeProvider extends BlueprintRecipeProvider {
         flowerToDye(NIGHTSHADE.get(), Items.LIGHT_BLUE_DYE, output);
         flowerToDye(YELLOW_PETALS.get(), Items.YELLOW_DYE, output);
         flowerToDye(MIMOSA.get(), Items.YELLOW_DYE, output);
-        tallFlowerToDye(RED_ROSE_BUSH.get(), Items.RED_DYE, output);
+        tallFlowerToDyeNoDyeDepot(RED_ROSE_BUSH.get(), Items.RED_DYE, output);
         tallFlowerToDye(BLUE_ROSE_BUSH.get(), Items.BLUE_DYE, output);
         tallFlowerToDye(WHITE_ROSE_BUSH.get(), Items.WHITE_DYE, output);
         tallFlowerToDye(YELLOW_ROSE_BUSH.get(), Items.YELLOW_DYE, output);
         tallFlowerToDye(LUPINE.get(), Items.PURPLE_DYE, output);
-        tallFlowerToDye(LIONS_TAIL.get(), Items.ORANGE_DYE, output);
+        tallFlowerToDyeNoDyeDepot(LIONS_TAIL.get(), Items.ORANGE_DYE, output);
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(PINECONE.get()), RecipeCategory.MISC, Items.BROWN_DYE, .35f, 200).unlockedBy(getHasName(PINECONE.get()), has(PINECONE.get())).save(output, getSaveLocation("brown_dye_from_pinecone_smelting"));
 
         // other items
@@ -359,8 +359,17 @@ public class WindsweptRecipeProvider extends BlueprintRecipeProvider {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, dye).group(dyeName).requires(flower).unlockedBy(getHasName(flower), has(flower)).save(output, getSaveLocation(dyeName + "_from_" + getItemName(flower)));
     }
 
+    private static void flowerToDyeNoDyeDepot(Block flower, Item dye, RecipeOutput output) {
+        String dyeName = getItemName(dye);
+        conditionalRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, dye).group(dyeName).requires(flower).unlockedBy(getHasName(flower), has(flower)), new NotCondition(new ModLoadedCondition("dye_depot")), output, getSaveLocation(dyeName + "_from_" + getItemName(flower)));
+    }
+
     private static void tallFlowerToDye(Block flower, Item dye, RecipeOutput output) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, dye, 2).group(getName(dye)).requires(flower).unlockedBy(getHasName(flower), has(flower)).save(output, getSaveLocation(getName(dye) + "_from_" + getName(flower)));
+    }
+
+    private static void tallFlowerToDyeNoDyeDepot(Block flower, Item dye, RecipeOutput output) {
+        conditionalRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, dye, 2).group(getName(dye)).requires(flower).unlockedBy(getHasName(flower), has(flower)), new NotCondition(new ModLoadedCondition("dye_depot")), output, getSaveLocation(getName(dye) + "_from_" + getName(flower)));
     }
 
     private static void cooking(ItemLike ingredient, ItemLike result, RecipeOutput output) {
