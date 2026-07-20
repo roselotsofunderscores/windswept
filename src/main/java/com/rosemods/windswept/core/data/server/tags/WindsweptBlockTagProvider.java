@@ -5,6 +5,7 @@ import com.rosemods.windswept.core.data.server.WindsweptDatapackProvider;
 import com.rosemods.windswept.core.other.tags.WindsweptBlockTags;
 import com.teamabnormals.blueprint.core.other.tags.BlueprintBlockTags;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
@@ -26,7 +27,7 @@ public class WindsweptBlockTagProvider extends BlockTagsProvider {
         this.tag(WindsweptBlockTags.CHESTNUT_LOGS).add(CHESTNUT_LOG.get(), CHESTNUT_WOOD.get(), STRIPPED_CHESTNUT_LOG.get(), STRIPPED_CHESTNUT_WOOD.get());
         this.tag(WindsweptBlockTags.PINE_LOGS).add(PINE_LOG.get(), PINE_WOOD.get(), WEATHERED_PINE_LOG.get(), WEATHERED_PINE_WOOD.get(), STRIPPED_PINE_LOG.get(), STRIPPED_PINE_WOOD.get());
         this.tag(WindsweptBlockTags.LUNALITE).add(LUNALITE.get(), LUNALITE_SLAB.get(), LUNALITE_STAIRS.get(), LUNALITE_WALL.get());
-        this.tag(WindsweptBlockTags.SNOW_BOOTS_BLOCKS).addTag(BlockTags.SNOW).add(SNOWY_SPROUTS.get(), SNOWDROP.get());
+        this.tag(WindsweptBlockTags.SNOW_BOOTS_BLOCKS).addTag(BlockTags.SNOW).add(SNOWY_SPROUTS.get(), SNOWDROP.get()).addOptional(ResourceLocation.fromNamespaceAndPath("nomansland", "snow_path")).addOptional(ResourceLocation.fromNamespaceAndPath("nomansland", "snowy_grass_path"));
         this.tag(WindsweptBlockTags.FROSTBITER_FOOD).add(Blocks.SHORT_GRASS, LAVENDER.get(), SNOWY_SPROUTS.get(), DRY_MOSSY_SPROUTS.get(), MOSSY_SPROUTS.get(), GELISOL_GRASS.get()).addTag(BlockTags.FLOWERS);
         this.tag(WindsweptBlockTags.PINECONE_NOTE_BLOCKS).add(CARVED_PINECONE_BLOCK.get(), PINECONE_BLOCK.get(), PINECONE_SHINGLES.get(), WHITE_PINECONE_SHINGLES.get(), LIGHT_GRAY_PINECONE_SHINGLES.get(), GRAY_PINECONE_SHINGLES.get(), BLACK_PINECONE_SHINGLES.get(), BROWN_PINECONE_SHINGLES.get(), RED_PINECONE_SHINGLES.get(), ORANGE_PINECONE_SHINGLES.get(), YELLOW_PINECONE_SHINGLES.get(), LIME_PINECONE_SHINGLES.get(), GREEN_PINECONE_SHINGLES.get(), CYAN_PINECONE_SHINGLES.get(), LIGHT_BLUE_PINECONE_SHINGLES.get(), BLUE_PINECONE_SHINGLES.get(), PURPLE_PINECONE_SHINGLES.get(), MAGENTA_PINECONE_SHINGLES.get(), PINK_PINECONE_SHINGLES.get());
 
@@ -56,7 +57,6 @@ public class WindsweptBlockTagProvider extends BlockTagsProvider {
         this.tag(Tags.Blocks.CHESTS_WOODEN).add(HOLLY_CHEST.get(), TRAPPED_HOLLY_CHEST.get(), CHESTNUT_CHEST.get(), TRAPPED_CHESTNUT_CHEST.get(), PINE_CHEST.get(), TRAPPED_PINE_CHEST.get());
         this.tag(Tags.Blocks.CHESTS_TRAPPED).add(TRAPPED_HOLLY_CHEST.get(), TRAPPED_CHESTNUT_CHEST.get(), TRAPPED_PINE_CHEST.get());
         this.tag(Tags.Blocks.CHAINS).add(ICE_CHAIN.get());
-        //this.tag(Tags.Blocks.STONE).add(SHALE.get());
         this.tag(BlueprintBlockTags.LADDERS).add(HOLLY_LADDER.get(), CHESTNUT_LADDER.get(), PINE_LADDER.get());
 
         //vanilla
