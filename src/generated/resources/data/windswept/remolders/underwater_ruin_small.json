@@ -1,0 +1,31 @@
+{
+  "molding": "json",
+  "remolder": {
+    "type": "add",
+    "target": "pools[]",
+    "value": {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "damage": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 3.0
+              },
+              "function": "minecraft:set_damage"
+            }
+          ],
+          "name": "windswept:wooden_bucket",
+          "weight": 2
+        }
+      ],
+      "name": "windswept:underwater_ruin_small",
+      "rolls": 1.0
+    }
+  },
+  "selector": "minecraft:loot_table/chests/underwater_ruin_small"
+}
