@@ -4,10 +4,14 @@ import com.rosemods.windswept.common.block.GelisolBlock;
 import com.rosemods.windswept.core.registry.datapack.WindsweptBiomes;
 import com.rosemods.windswept.core.registry.WindsweptBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.QuartPos;
+import net.minecraft.core.Holder;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -30,32 +34,55 @@ public class SnowyGelisolFeature extends Feature<NoneFeatureConfiguration> {
         BlockState snowdrop = WindsweptBlocks.SNOWDROP.get().defaultBlockState();
         boolean generated = false;
 
+        int originChunkX = origin.getX() >> 4;
+        int originChunkZ = origin.getZ() >> 4;
+
+        ChunkAccess originChunk = level.getChunk(originChunkX, originChunkZ);
+
         for (int x = -10; x <= 10; ++x)
-            for (int z = -10; z <= 10; ++z)
+            for (int z = -10; z <= 10; ++z) {
+                BlockPos columnPos = origin.offset(x, 0, z);
+                int chunkX = columnPos.getX() >> 4;
+                int chunkZ = columnPos.getZ() >> 4;
+
+                if (chunkX != originChunkX || chunkZ != originChunkZ)
+                    continue;
+
                 for (int y = -3; y <= 3; ++y) {
                     BlockPos pos = origin.offset(x, y, z);
 
-                    if (level.getBlockState(pos).is(Blocks.SNOW_BLOCK) && level.getBiome(pos).is(WindsweptBiomes.TUNDRA)) {
-                        BlockState above = level.getBlockState(pos.above());
+                    if (!level.getBlockState(pos).is(Blocks.SNOW_BLOCK))
+                        continue;
 
-                        if (!above.isSolid()) {
-                            if (rand.nextInt(45) == 0) {
-                                level.setBlock(pos, gelisol, 2);
+                    Holder<Biome> biome = originChunk.getNoiseBiome(
+                            QuartPos.fromBlock(pos.getX()),
+                            QuartPos.fromBlock(pos.getY()),
+                            QuartPos.fromBlock(pos.getZ())
+                    );
 
-                                if (above.isAir())
-                                    level.setBlock(pos.above(), sprouts, 2);
-                            } else {
-                                level.setBlock(pos, snowyGelisol, 2);
+                    if (!biome.is(WindsweptBiomes.TUNDRA))
+                        continue;
 
-                                if (above.isAir())
-                                    level.setBlock(pos.above(), rand.nextInt(200) == 0 ? snowdrop : snow, 2);
-                            }
-                        } else
-                            level.setBlock(pos, dirt, 2);
+                    BlockState above = level.getBlockState(pos.above());
 
-                        generated = true;
-                    }
+                    if (!above.isSolid()) {
+                        if (rand.nextInt(45) == 0) {
+                            level.setBlock(pos, gelisol, 2);
+
+                            if (above.isAir())
+                                level.setBlock(pos.above(), sprouts, 2);
+                        } else {
+                            level.setBlock(pos, snowyGelisol, 2);
+
+                            if (above.isAir())
+                                level.setBlock(pos.above(), rand.nextInt(200) == 0 ? snowdrop : snow, 2);
+                        }
+                    } else
+                        level.setBlock(pos, dirt, 2);
+
+                    generated = true;
                 }
+            }
 
         return generated;
     }
