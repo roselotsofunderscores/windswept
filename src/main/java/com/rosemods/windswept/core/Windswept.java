@@ -7,10 +7,10 @@ import com.rosemods.windswept.client.render.entity.ChilledRenderer;
 import com.rosemods.windswept.client.render.entity.FrostArrowRenderer;
 import com.rosemods.windswept.client.render.entity.FrostbiterRenderer;
 import com.rosemods.windswept.client.render.gui.CarvedPineconeOverlay;
+import com.rosemods.windswept.common.capability.wrappers.WoodenBucketWrapper;
 import com.rosemods.windswept.common.entity.Chilled;
 import com.rosemods.windswept.common.entity.Frostbiter;
 import com.rosemods.windswept.core.data.client.*;
-import com.rosemods.windswept.core.capability.WindsweptCapabilities;
 import com.rosemods.windswept.core.data.server.WindsweptDatapackProvider;
 import com.rosemods.windswept.core.data.server.WindsweptLootTableProvider;
 import com.rosemods.windswept.core.data.server.WindsweptRecipeProvider;
@@ -34,10 +34,13 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
@@ -73,8 +76,8 @@ public class Windswept {
         bus.addListener(this::commonSetup);
         bus.addListener(this::registerEntityAttributes);
         bus.addListener(this::registerEntitySpawns);
+        bus.addListener(this::registerCapabilities);
         bus.addListener(this::dataSetup);
-        bus.addListener(WindsweptCapabilities::registerCapabilities);
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
             WindsweptCreativeTabs.setupTabEditors();
@@ -134,6 +137,24 @@ public class Windswept {
 
     private void registerGuiOverlays(RegisterGuiLayersEvent event) {
         event.registerAbove(VanillaGuiLayers.EFFECTS, location("carved_pinecone"), new CarvedPineconeOverlay());
+    }
+
+    private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerItem(
+                Capabilities.FluidHandler.ITEM,
+                (stack, ctx) -> new WoodenBucketWrapper(stack),
+                WindsweptItems.WOODEN_BUCKET.get(),
+                WindsweptItems.WOODEN_WATER_BUCKET.get(),
+                WindsweptItems.WOODEN_MILK_BUCKET.get()
+        );
+
+        if (ModList.get().isLoaded("create"))
+            event.registerItem(
+                    Capabilities.FluidHandler.ITEM,
+                    (stack, ctx) -> new WoodenBucketWrapper(stack),
+                    WindsweptItems.WOODEN_HONEY_BUCKET.get(),
+                    WindsweptItems.WOODEN_CHOCOLATE_BUCKET.get()
+            );
     }
 
     private void dataSetup(GatherDataEvent event) {
