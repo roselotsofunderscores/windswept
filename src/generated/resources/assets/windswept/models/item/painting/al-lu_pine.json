@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "windswept:item/painting/lu_pine"
+    "layer0": "windswept:item/painting/al-lu_pine"
   }
 }

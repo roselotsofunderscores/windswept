@@ -2,5 +2,9 @@
   {
     "type": "blueprint:literal",
     "text": "#WINDSWEEP"
+  },
+  {
+    "type": "blueprint:literal",
+    "text": "cold water fell from the top of the sky"
   }
 ]

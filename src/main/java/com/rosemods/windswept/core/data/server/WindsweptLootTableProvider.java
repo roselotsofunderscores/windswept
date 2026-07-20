@@ -199,7 +199,7 @@ public class WindsweptLootTableProvider extends LootTableProvider {
             this.dropSelf(WILL_O_THE_WISP.get());
             this.dropSelf(ELDER_WING.get());
             this.dropSelf(ELDER_ORNAMENT.get());
-            this.add(DREAM_CATCHER.get(), b -> createSinglePropConditionTable(b, DoublePlantBlock.HALF, DoubleBlockHalf.UPPER));
+            this.add(DREAM_CATCHER.get(), this::createDoorTable);
 
             // pinecone shingles
             this.dropSelf(PINECONE_SHINGLES.get());

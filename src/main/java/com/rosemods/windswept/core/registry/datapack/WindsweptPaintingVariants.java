@@ -13,7 +13,7 @@ public final class WindsweptPaintingVariants {
     public static final ResourceKey<PaintingVariant> THE_FOILS = createKey("the_foils");
     public static final ResourceKey<PaintingVariant> AURORAE = createKey("aurorae");
     public static final ResourceKey<PaintingVariant> HEARTH_RUG = createKey("hearth_rug");
-    public static final ResourceKey<PaintingVariant> ALLU_PINE = createKey("lu_pine");
+    public static final ResourceKey<PaintingVariant> ALLU_PINE = createKey("al-lu_pine");
 
     public static void bootstrap(BootstrapContext<PaintingVariant> context) {
         register(context, CLIFFSIDE, 3, 2);
