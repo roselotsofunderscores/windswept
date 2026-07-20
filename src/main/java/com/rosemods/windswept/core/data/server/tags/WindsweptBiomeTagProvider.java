@@ -22,13 +22,13 @@ public class WindsweptBiomeTagProvider extends BiomeTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(HAS_BLUEBELLS).add(DARK_FOREST, BIRCH_FOREST, OLD_GROWTH_BIRCH_FOREST, OLD_GROWTH_SPRUCE_TAIGA, CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST);
-        this.tag(HAS_LIONS_TAIL).addTag(BiomeTags.IS_SAVANNA).add(WOODED_BADLANDS).addOptional(ResourceLocation.tryBuild("atmospheric", "spiny_thicket"));
+        this.tag(HAS_LIONS_TAIL).addTag(BiomeTags.IS_SAVANNA).add(WOODED_BADLANDS).addOptional(ResourceLocation.fromNamespaceAndPath("atmospheric", "spiny_thicket"));
         this.tag(HAS_RARE_CHESTNUT_TREES).add(DARK_FOREST, TAIGA, FOREST, WINDSWEPT_FOREST, OLD_GROWTH_BIRCH_FOREST, OLD_GROWTH_SPRUCE_TAIGA, OLD_GROWTH_PINE_TAIGA, SNOWY_TAIGA, BIRCH_FOREST, FLOWER_FOREST, WINDSWEPT_HILLS);
         this.tag(HAS_RARE_HOLLY_TREES).add(TAIGA, SNOWY_TAIGA, OLD_GROWTH_SPRUCE_TAIGA);
-        this.tag(HAS_RARE_SNOWY_HOLLY_TREES).add(FROZEN_PEAKS, JAGGED_PEAKS).addOptional(ResourceLocation.tryBuild("atmospheric", "kousa_jungle"));
+        this.tag(HAS_RARE_SNOWY_HOLLY_TREES).add(FROZEN_PEAKS, JAGGED_PEAKS).addOptional(ResourceLocation.fromNamespaceAndPath("atmospheric", "kousa_jungle"));
         this.tag(HAS_RED_ROSE).add(TAIGA, SNOWY_TAIGA, PINE_BARRENS, SNOWY_PINE_BARRENS, OLD_GROWTH_SPRUCE_TAIGA, OLD_GROWTH_PINE_TAIGA, CHERRY_GROVE);
-        this.tag(HAS_BLUE_ROSE).add(CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST).addOptional(ResourceLocation.tryBuild("atmospheric", "kousa_jungle"));
-        this.tag(HAS_WHITE_ROSE).add(SNOWY_CHESTNUT_FOREST, SNOWY_TAIGA, CHERRY_GROVE).addOptional(ResourceLocation.tryBuild("atmospheric", "kousa_jungle")).addOptional(ResourceLocation.tryBuild("environmental", "blossom_woods"));
+        this.tag(HAS_BLUE_ROSE).add(CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST).addOptional(ResourceLocation.fromNamespaceAndPath("atmospheric", "kousa_jungle"));
+        this.tag(HAS_WHITE_ROSE).add(SNOWY_CHESTNUT_FOREST, SNOWY_TAIGA, CHERRY_GROVE).addOptional(ResourceLocation.fromNamespaceAndPath("atmospheric", "kousa_jungle")).addOptional(ResourceLocation.fromNamespaceAndPath("environmental", "blossom_woods"));
         this.tag(HAS_YELLOW_ROSE).add(DARK_FOREST, OLD_GROWTH_SPRUCE_TAIGA, OLD_GROWTH_PINE_TAIGA, PINE_BARRENS, SNOWY_PINE_BARRENS);
         this.tag(HAS_WILD_BERRIES).add(SNOWY_PLAINS, SNOWY_SLOPES, JAGGED_PEAKS, FROZEN_PEAKS, GROVE);
         this.tag(HAS_BROWN_GOAT).add(TUNDRA);

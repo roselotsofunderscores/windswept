@@ -16,12 +16,13 @@ import com.rosemods.windswept.core.data.server.WindsweptLootTableProvider;
 import com.rosemods.windswept.core.data.server.WindsweptRecipeProvider;
 import com.rosemods.windswept.core.data.server.modifiers.WindsweptAdvancementModifierProvider;
 import com.rosemods.windswept.core.data.server.modifiers.WindsweptChunkGeneratorModifierProvider;
-import com.rosemods.windswept.core.data.server.modifiers.WindsweptLootModifierProvider;
+import com.rosemods.windswept.core.data.server.modifiers.WindsweptDataRemolderProvider;
 import com.rosemods.windswept.core.data.server.tags.*;
 import com.rosemods.windswept.core.other.*;
 import com.rosemods.windswept.core.registry.*;
 import com.rosemods.windswept.core.registry.util.EffectSubRegistryHelper;
 import com.teamabnormals.blueprint.core.util.registry.RegistryHelper;
+import com.teamabnormals.gallery.core.data.client.GalleryItemModelProvider;
 import net.minecraft.client.particle.EndRodParticle;
 import net.minecraft.client.renderer.blockentity.BrushableBlockRenderer;
 import net.minecraft.core.registries.Registries;
@@ -168,7 +169,7 @@ public class Windswept {
         gen.addProvider(client, new WindsweptSplashProvider(event));
         gen.addProvider(client, new WindsweptParticleProvider(event));
         gen.addProvider(client, new WindsweptSpriteSourceProvider(event));
-        //gen.addProvider(client, new GalleryAssetsRemolderProvider(MOD_ID, event.getGenerator().getPackOutput(), event.getLookupProvider()));
+        gen.addProvider(client, new GalleryItemModelProvider(MOD_ID, gen.getPackOutput(), event.getExistingFileHelper(), event.getLookupProvider()));
 
         WindsweptDatapackProvider dataPack;
         WindsweptBlockTagProvider blockTags;
@@ -184,7 +185,7 @@ public class Windswept {
         gen.addProvider(server, new WindsweptLootTableProvider(event));
         gen.addProvider(server, new WindsweptRecipeProvider(event));
         gen.addProvider(server, new WindsweptAdvancementModifierProvider(event, dataPack));
-        gen.addProvider(server, new WindsweptLootModifierProvider(event));
+        gen.addProvider(server, new WindsweptDataRemolderProvider(event));
         gen.addProvider(server, new WindsweptPaintingVariantTagsProvider(event, dataPack));
         gen.addProvider(server, new WindsweptChunkGeneratorModifierProvider(event, dataPack));
     }

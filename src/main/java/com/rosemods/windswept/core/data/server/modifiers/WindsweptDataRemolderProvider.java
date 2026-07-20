@@ -33,9 +33,9 @@ import java.util.function.Consumer;
 import static com.teamabnormals.blueprint.common.remolder.util.LootRemolders.addPool;
 import static com.teamabnormals.blueprint.common.remolder.util.LootRemolders.replacePools;
 
-public class WindsweptLootModifierProvider extends RemolderProvider {
+public class WindsweptDataRemolderProvider  extends RemolderProvider {
 
-    public WindsweptLootModifierProvider(GatherDataEvent event) {
+    public WindsweptDataRemolderProvider(GatherDataEvent event) {
         super(Windswept.MOD_ID, PackOutput.Target.DATA_PACK, event.getGenerator().getPackOutput(), event.getLookupProvider());
     }
 
@@ -49,7 +49,7 @@ public class WindsweptLootModifierProvider extends RemolderProvider {
                                 EntityPredicate.Builder.entity().flags(EntityFlagsPredicate.Builder.flags().setOnFire(true)).build()))))
                 .build();
         this.entry("goat_meat")
-                .path("minecraft:loot_table/entities/goat")
+                .path("loot_table/entities/goat")
                 .remolder(addPool(goatPool));
 
         LootPool drownedPool = LootPool.lootPool().name("windswept:rain_disc")
@@ -58,7 +58,7 @@ public class WindsweptLootModifierProvider extends RemolderProvider {
                         EntityPredicate.Builder.entity().of(EntityTypeTags.SKELETONS).build()))
                 .build();
         this.entry("drowned_disc")
-                .path("minecraft:loot_table/entities/drowned")
+                .path("loot_table/entities/drowned")
                 .remolder(addPool(drownedPool));
 
         LootPool arrowPool = LootPool.lootPool().name("minecraft:arrow").setRolls(ConstantValue.exactly(1f))
@@ -78,7 +78,7 @@ public class WindsweptLootModifierProvider extends RemolderProvider {
                 .when(LootItemKilledByPlayerCondition.killedByPlayer())
                 .build();
         this.entry("stray")
-                .path("minecraft:loot_table/entities/stray")
+                .path("loot_table/entities/stray")
                 .remolder(replacePools(arrowPool, bonePool, frostArrowPool));
 
         this.chestEntry("village_taiga_house", "chests/village/village_taiga_house", WindsweptItems.MUTTON_PIE, b -> b.setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(-1, 2))));
@@ -92,7 +92,7 @@ public class WindsweptLootModifierProvider extends RemolderProvider {
                 .add(LootItem.lootTableItem(WindsweptBlocks.MIMOSA.get()).setWeight(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 7))))
                 .build();
         this.entry("village_savanna_house")
-                .path("minecraft:loot_table/chests/village/village_savanna_house")
+                .path("loot_table/chests/village/village_savanna_house")
                 .remolder(addPool(savannaPool));
     }
 
@@ -101,7 +101,7 @@ public class WindsweptLootModifierProvider extends RemolderProvider {
         b.accept(builder);
         LootPool pool = LootPool.lootPool().name(Windswept.MOD_ID + ":" + name).setRolls(ConstantValue.exactly(1f)).add(builder).build();
         this.entry(name)
-                .path("minecraft:loot_table/" + target)
+                .path("loot_table/" + target)
                 .remolder(addPool(pool));
     }
 
