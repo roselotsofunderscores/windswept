@@ -26,7 +26,7 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         //windswept
-        this.tag(WindsweptItemTags.ROSES).add(RED_ROSE.get().asItem(), BLUE_ROSE.get().asItem(), WHITE_ROSE.get().asItem(), YELLOW_ROSE.get().asItem(), Items.WITHER_ROSE, Items.ROSE_BUSH, RED_ROSE_BUSH.get().asItem(), BLUE_ROSE_BUSH.get().asItem(), WHITE_ROSE_BUSH.get().asItem(), YELLOW_ROSE_BUSH.get().asItem());
+        this.tag(WindsweptItemTags.ROSES).add(RED_ROSE.asItem(), BLUE_ROSE.asItem(), WHITE_ROSE.asItem(), YELLOW_ROSE.asItem(), Items.WITHER_ROSE, Items.ROSE_BUSH, RED_ROSE_BUSH.asItem(), BLUE_ROSE_BUSH.asItem(), WHITE_ROSE_BUSH.asItem(), YELLOW_ROSE_BUSH.asItem());
         this.copy(WindsweptBlockTags.HOLLY_LOGS, WindsweptItemTags.HOLLY_LOGS);
         this.copy(WindsweptBlockTags.CHESTNUT_LOGS, WindsweptItemTags.CHESTNUT_LOGS);
         this.copy(WindsweptBlockTags.PINE_LOGS, WindsweptItemTags.PINE_LOGS);
@@ -41,8 +41,8 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         this.tag(WindsweptItemTags.COOKED_GOAT).add(COOKED_GOAT.get());
         this.tag(WindsweptItemTags.BERRIES).add(WILD_BERRIES.get());
         this.tag(WindsweptItemTags.COOKED_MUTTON).add(Items.COOKED_MUTTON);
-        this.tag(WindsweptItemTags.STRIPPED_LOGS).add(STRIPPED_HOLLY_LOG.get().asItem(), STRIPPED_CHESTNUT_LOG.get().asItem(), STRIPPED_PINE_LOG.get().asItem());
-        this.tag(WindsweptItemTags.STRIPPED_WOOD).add(STRIPPED_HOLLY_WOOD.get().asItem(), STRIPPED_CHESTNUT_WOOD.get().asItem(), STRIPPED_PINE_WOOD.get().asItem());
+        this.tag(WindsweptItemTags.STRIPPED_LOGS).add(STRIPPED_HOLLY_LOG.asItem(), STRIPPED_CHESTNUT_LOG.asItem(), STRIPPED_PINE_LOG.asItem());
+        this.tag(WindsweptItemTags.STRIPPED_WOOD).add(STRIPPED_HOLLY_WOOD.asItem(), STRIPPED_CHESTNUT_WOOD.asItem(), STRIPPED_PINE_WOOD.asItem());
         this.tag(WindsweptItemTags.HONEY_BUCKETS).add(WOODEN_HONEY_BUCKET.get());
         this.tag(WindsweptItemTags.CHOCOLATE_BUCKETS).add(WOODEN_CHOCOLATE_BUCKET.get());
         //this.tag(BlueprintItemTags.CHICKEN_FOOD).addTag(WindsweptItemTags.WILD_BERRY_SEEDS);
@@ -63,6 +63,9 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         this.copy(BlueprintBlockTags.WOODEN_BEEHIVES, BlueprintItemTags.WOODEN_BEEHIVES);
         this.copy(BlueprintBlockTags.WOODEN_TRAPPED_CHESTS, BlueprintItemTags.WOODEN_TRAPPED_CHESTS);
         this.copy(BlueprintBlockTags.WOODEN_CHISELED_BOOKSHELVES, BlueprintItemTags.WOODEN_CHISELED_BOOKSHELVES);
+        
+        //connectable chains
+        this.tag(WindsweptItemTags.HANGABLE_ITEMS).add(FAIRY_LIGHT.asItem(), SOUL_FAIRY_LIGHT.asItem(), REDSTONE_FAIRY_LIGHT.asItem(), NIGHT_FAIRY_LIGHT.asItem(), CUPRIC_FAIRY_LIGHT.asItem(), ENDER_FAIRY_LIGHT.asItem());
 
         //snowy spirit
         this.copy(WindsweptBlockTags.GINGERBREADS, WindsweptItemTags.GINGERBREADS);
@@ -73,14 +76,13 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
 
         //vanilla
         this.tag(ItemTags.DECORATED_POT_SHERDS).add(HOOT_POTTERY_SHERD.get(), PLUMAGE_POTTERY_SHERD.get(), OFFSHOOT_POTTERY_SHERD.get(), FLAKE_POTTERY_SHERD.get(), DRUPES_POTTERY_SHERD.get());
-        this.tag(ItemTags.TRIM_MATERIALS).add(ICICLES.get().asItem(), PINECONE.get().asItem());
+        this.tag(ItemTags.TRIM_MATERIALS).add(ICICLES.asItem(), PINECONE.asItem());
         this.tag(ItemTags.ARROWS).add(FROST_ARROW.get());
         this.tag(ItemTags.FOX_FOOD).add(WILD_BERRIES.get());
         this.tag(ItemTags.BOATS).add(HOLLY_BOAT.getFirst().get(), CHESTNUT_BOAT.getFirst().get(), PINE_BOAT.getFirst().get());
         this.tag(ItemTags.CHEST_BOATS).add(HOLLY_BOAT.getSecond().get(), CHESTNUT_BOAT.getSecond().get(), PINE_BOAT.getSecond().get());
-        this.tag(ItemTags.SIGNS).add(HOLLY_SIGNS.getFirst().get().asItem(), CHESTNUT_SIGNS.getFirst().get().asItem(), PINE_SIGNS.getFirst().get().asItem());
-        this.tag(ItemTags.HANGING_SIGNS).add(HOLLY_HANGING_SIGNS.getFirst().get().asItem(), CHESTNUT_HANGING_SIGNS.getFirst().get().asItem(), PINE_HANGING_SIGNS.getFirst().get().asItem());
-        //this.tag(ItemTags.MUSIC_DISCS).add(MUSIC_DISC_RAIN.get(), MUSIC_DISC_SNOW.get(), MUSIC_DISC_BUMBLEBEE.get());
+        this.tag(ItemTags.SIGNS).add(HOLLY_SIGNS.getFirst().asItem(), CHESTNUT_SIGNS.getFirst().asItem(), PINE_SIGNS.getFirst().asItem());
+        this.tag(ItemTags.HANGING_SIGNS).add(HOLLY_HANGING_SIGNS.getFirst().asItem(), CHESTNUT_HANGING_SIGNS.getFirst().asItem(), PINE_HANGING_SIGNS.getFirst().asItem());
         this.copy(BlockTags.LEAVES, ItemTags.LEAVES);
         this.copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN);
         this.copy(BlockTags.PLANKS, ItemTags.PLANKS);
