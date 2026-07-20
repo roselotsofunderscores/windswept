@@ -10,6 +10,7 @@ import com.rosemods.windswept.client.render.gui.CarvedPineconeOverlay;
 import com.rosemods.windswept.common.entity.Chilled;
 import com.rosemods.windswept.common.entity.Frostbiter;
 import com.rosemods.windswept.core.data.client.*;
+import com.rosemods.windswept.core.capability.WindsweptCapabilities;
 import com.rosemods.windswept.core.data.server.WindsweptDatapackProvider;
 import com.rosemods.windswept.core.data.server.WindsweptLootTableProvider;
 import com.rosemods.windswept.core.data.server.WindsweptRecipeProvider;
@@ -73,6 +74,7 @@ public class Windswept {
         bus.addListener(this::registerEntityAttributes);
         bus.addListener(this::registerEntitySpawns);
         bus.addListener(this::dataSetup);
+        bus.addListener(WindsweptCapabilities::registerCapabilities);
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
             WindsweptCreativeTabs.setupTabEditors();
@@ -161,7 +163,7 @@ public class Windswept {
         gen.addProvider(server, new WindsweptLootTableProvider(event));
         gen.addProvider(server, new WindsweptRecipeProvider(event));
         gen.addProvider(server, new WindsweptAdvancementModifierProvider(event, dataPack));
-        //gen.addProvider(server, new WindsweptLootModifierProvider(event, dataPack));
+        gen.addProvider(server, new WindsweptLootModifierProvider(event));
         gen.addProvider(server, new WindsweptPaintingVariantTagsProvider(event, dataPack));
         gen.addProvider(server, new WindsweptChunkGeneratorModifierProvider(event, dataPack));
     }
