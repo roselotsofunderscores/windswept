@@ -3,6 +3,7 @@ package com.rosemods.windswept.core.mixin;
 import com.rosemods.windswept.common.entity.variant.WindsweptGoatVariant;
 import com.rosemods.windswept.core.other.tags.WindsweptBiomeTags;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
@@ -22,9 +23,14 @@ public abstract class GoatMixin extends Animal implements VariantHolder<Windswep
         super(type, level);
     }
 
+    @Inject(method = "<clinit>", at = @At("TAIL"))
+    private static void windswept$forceLoadVariant(CallbackInfo info) {
+        WindsweptGoatVariant.values();
+    }
+
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
-    private void defineSynchedData(CallbackInfo info) {
-        this.entityData.define(WindsweptGoatVariant.DATA_TYPE_ID, WindsweptGoatVariant.WHITE.id());
+    private void defineSynchedData(SynchedEntityData.Builder builder, CallbackInfo info) {
+        builder.define(WindsweptGoatVariant.DATA_TYPE_ID, WindsweptGoatVariant.WHITE.id());
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
@@ -38,7 +44,7 @@ public abstract class GoatMixin extends Animal implements VariantHolder<Windswep
     }
 
     @Inject(method = "finalizeSpawn", at = @At("HEAD"))
-    private void finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, SpawnGroupData spawnData, CompoundTag tag, CallbackInfoReturnable<SpawnGroupData> info) {
+    private void finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, SpawnGroupData spawnData, CallbackInfoReturnable<SpawnGroupData> info) {
         this.entityData.set(WindsweptGoatVariant.DATA_TYPE_ID, level.getBiome(this.blockPosition()).is(WindsweptBiomeTags.HAS_BROWN_GOAT) ? 1 : 0);
     }
 
@@ -59,5 +65,4 @@ public abstract class GoatMixin extends Animal implements VariantHolder<Windswep
     public WindsweptGoatVariant getVariant() {
         return WindsweptGoatVariant.byId(this.entityData.get(WindsweptGoatVariant.DATA_TYPE_ID));
     }
-
 }
