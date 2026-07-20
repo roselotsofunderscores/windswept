@@ -6,7 +6,7 @@
       "item": "windswept:pinecone_shingles"
     },
     "D": {
-      "item": "minecraft:light_blue_dye"
+      "tag": "c:dyes/light_blue"
     }
   },
   "pattern": [
