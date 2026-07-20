@@ -164,7 +164,7 @@ public final class WindsweptCreativeTabs {
     }
 
     public static Predicate<ItemStack> modLoaded(ResourceLocation location, String... modids) {
-        return modLoaded(BuiltInRegistries.ITEM.get(location), modids);
+        return stack -> anyLoaded(modids) && Ingredient.of(BuiltInRegistries.ITEM.get(location)).test(stack);
     }
 
     private static boolean anyLoaded(String... modIds) {
