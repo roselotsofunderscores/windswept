@@ -98,6 +98,11 @@ public class WoodenBucketItem extends BucketItem {
     }
 
     @Override
+    public EquipmentSlot getEquipmentSlot(ItemStack stack) {
+        return this.isEmpty() ? EquipmentSlot.HEAD : null;
+    }
+    
+    @Override
     public boolean isRepairable(ItemStack stack) {
         return this.isEmpty();
     }
