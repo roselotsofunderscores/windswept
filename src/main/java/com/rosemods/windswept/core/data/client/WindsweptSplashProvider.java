@@ -12,7 +12,8 @@ public class WindsweptSplashProvider extends SplashProvider {
     @Override
     protected void registerSplashes() {
         this.add("#WINDSWEEP");
-        this.add("cold water fell from the top of the sky");
+        this.add("COLDWATER FELL FROM THE TOP OF THE SKY.");
+        this.add("3-4");
     }
 
 }

@@ -5,6 +5,10 @@
   },
   {
     "type": "blueprint:literal",
-    "text": "cold water fell from the top of the sky"
+    "text": "COLDWATER FELL FROM THE TOP OF THE SKY."
+  },
+  {
+    "type": "blueprint:literal",
+    "text": "3-4"
   }
 ]
