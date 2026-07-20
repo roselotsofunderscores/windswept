@@ -30,9 +30,10 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.entity.living.BabyEntitySpawnEvent;
-import net.neoforged.neoforge.event.entity.living.LivingEvent;
-import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
+import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class WindsweptEntityEvents {
     private static final List<MobSpawnType> NATURAL_SPAWNS = List.of(MobSpawnType.NATURAL, MobSpawnType.CHUNK_GENERATION, MobSpawnType.PATROL, MobSpawnType.REINFORCEMENT, MobSpawnType.JOCKEY);
 
     @SubscribeEvent
-    public static void onEntityHurt(LivingHurtEvent event) {
+    public static void onEntityHurt(LivingIncomingDamageEvent event) {
         LivingEntity entity = event.getEntity();
         DamageSource source = event.getSource();
         Entity attacker = source.getEntity();
@@ -49,15 +50,14 @@ public class WindsweptEntityEvents {
         if (attacker == null || entity == null)
             return;
 
-        // thorns damage
-        if (entity.hasEffect(WindsweptEffects.THORNS.get())) {
-            int amplifier = entity.getEffect(WindsweptEffects.THORNS.get()).getAmplifier() + 1;
+        if (entity.hasEffect(WindsweptEffects.THORNS)) {
+            int amplifier = entity.getEffect(WindsweptEffects.THORNS).getAmplifier() + 1;
             RandomSource rand = entity.getRandom();
 
-            if (ThornsEnchantment.shouldHit(amplifier, rand))
-                attacker.hurt(attacker.damageSources().thorns(entity), ThornsEnchantment.getDamage(amplifier, rand));
+            if (rand.nextFloat() < (float) amplifier * 0.15F) {
+                attacker.hurt(entity.damageSources().thorns(entity), (float) (1 + rand.nextInt(4)));
+            }
         }
-
     }
 
     @SubscribeEvent
@@ -65,7 +65,6 @@ public class WindsweptEntityEvents {
         ItemStack stack = event.getItemStack();
         Entity target = event.getTarget();
 
-        // milk animal with wooden bucket
         if (stack.is(WindsweptItems.WOODEN_BUCKET.get()) && target.getType().is(BlueprintEntityTypeTags.MILKABLE)) {
             if (target instanceof Animal animal && animal.isBaby())
                 return;
@@ -74,13 +73,12 @@ public class WindsweptEntityEvents {
             event.setCancellationResult(InteractionResult.sidedSuccess(event.getLevel().isClientSide));
             event.setCanceled(true);
         }
-
     }
 
     @SubscribeEvent
     public static void onBabySpawn(BabyEntitySpawnEvent event) {
         if (WindsweptConfig.COMMON.rabbitLitters.get() && event.getParentA() instanceof Rabbit parent && event.getParentB() instanceof Rabbit parentB) {
-            Level level = parent.getCommandSenderWorld();
+            Level level = parent.level();
             int litter = level.random.nextInt(3);
 
             for (int i = 0; i < litter; i++) {
@@ -95,16 +93,14 @@ public class WindsweptEntityEvents {
         }
     }
 
-
     @SubscribeEvent
-    public static void onLivingSpawn(MobSpawnEvent.FinalizeSpawn event) {
+    public static void onLivingSpawn(FinalizeSpawnEvent event) {
         Mob mob = event.getEntity();
         LevelAccessor level = event.getLevel();
 
-        // convert zombies to chilled && skeletons to strays in cold biomes
-        if (NATURAL_SPAWNS.contains(event.getSpawnType()) && mob != null && level instanceof ServerLevel && event.getResult() != Event.Result.DENY && mob.getY() > 60 && level.getBiome(mob.blockPosition()).is(Tags.Biomes.IS_SNOWY)) {
+        if (NATURAL_SPAWNS.contains(event.getSpawnType()) && mob != null && level instanceof ServerLevel && mob.getY() > 60 && level.getBiome(mob.blockPosition()).is(Tags.Biomes.IS_SNOWY)) {
             if (mob.getType() == EntityType.ZOMBIE) {
-                mob = mob.convertTo(WindsweptEntityTypes.CHILLED.get(), true);
+                mob = mob.convertTo((EntityType<? extends Mob>) WindsweptEntityTypes.CHILLED.get(), true);
 
                 if (mob instanceof Chilled chilled)
                     chilled.cncCompat(level.getRandom());
@@ -118,17 +114,15 @@ public class WindsweptEntityEvents {
     }
 
     @SubscribeEvent
-    public static void onEntityTick(LivingEvent.LivingTickEvent event) {
-        LivingEntity entity = event.getEntity();
-        IDataManager data = (IDataManager) entity;
-
-        if (entity == null)
+    public static void onEntityUpdate(EntityTickEvent.Post event) {
+        Entity baseEntity = event.getEntity();
+        if (!(baseEntity instanceof LivingEntity entity))
             return;
 
-        // snow speed particles
+        IDataManager data = (IDataManager) entity;
+
         if (SnowBootsItem.canSpawnSnowParticle(entity))
             SnowBootsItem.spawnSnowParticle(entity);
-
 
         if (!entity.level().isClientSide) {
             boolean flag = entity.isCrouching() && entity.getItemBySlot(EquipmentSlot.CHEST).is(WindsweptItems.FEATHER_CLOAK.get());
@@ -139,12 +133,11 @@ public class WindsweptEntityEvents {
             }
         }
 
-        // chilled conversion in powder snow
         if (entity.getType().is(WindsweptEntityTypeTags.CONVERT_TO_CHILLED) && entity instanceof Mob mob && !mob.level().isClientSide && mob.isAlive() && !mob.isNoAi()) {
             if (data.getValue(WindsweptDataProcessors.IS_FREEZE_CONVERTING)) {
                 ammendData(data, WindsweptDataProcessors.FREEZE_CONVERT_TIME, -1);
                 if (data.getValue(WindsweptDataProcessors.FREEZE_CONVERT_TIME) < 0) {
-                    mob.convertTo(WindsweptEntityTypes.CHILLED.get(), true);
+                    mob.convertTo((EntityType<? extends Mob>) WindsweptEntityTypes.CHILLED.get(), true);
                     data.clean();
                     if (!mob.isSilent())
                         mob.level().levelEvent(null, 1048, mob.blockPosition(), 0);
@@ -155,14 +148,13 @@ public class WindsweptEntityEvents {
                     data.setValue(WindsweptDataProcessors.FREEZE_CONVERT_TIME, 300);
                     data.setValue(WindsweptDataProcessors.IS_FREEZE_CONVERTING, true);
                 }
-            } else
+            } else {
                 data.setValue(WindsweptDataProcessors.POWDER_SNOW_TIME, -1);
+            }
         }
-
     }
 
     private static void ammendData(IDataManager data, TrackedData<Integer> tracked, int change) {
         data.setValue(tracked, data.getValue(tracked) + change);
     }
-
 }

@@ -1,8 +1,0 @@
-{
-  "repaletter": {
-    "type": "blueprint:simple",
-    "replaces_block": "minecraft:oak_wall_sign",
-    "replaces_with": "windswept:holly_wall_sign"
-  },
-  "structures": "minecraft:igloo"
-}

@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#windswept:has_feature/rare_holly_trees",
+  "features": "windswept:rare_holly_trees",
+  "step": "vegetal_decoration"
+}

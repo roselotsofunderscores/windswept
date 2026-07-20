@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#windswept:has_feature/red_rose",
+  "features": "windswept:red_rose",
+  "step": "vegetal_decoration"
+}

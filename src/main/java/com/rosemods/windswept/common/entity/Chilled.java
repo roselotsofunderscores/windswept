@@ -6,6 +6,7 @@ import com.rosemods.windswept.core.registry.WindsweptBlocks;
 import com.rosemods.windswept.core.registry.WindsweptEnchantments;
 import com.rosemods.windswept.core.registry.WindsweptItems;
 import com.rosemods.windswept.core.registry.WindsweptSounds;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -134,7 +135,7 @@ public class Chilled extends Zombie {
     protected void enchantSpawnedArmor(ServerLevelAccessor level, RandomSource random, EquipmentSlot slot, DifficultyInstance difficulty) {
         ItemStack stack = this.getItemBySlot(slot);
         if (!stack.isEmpty() && this.random.nextFloat() < .5f && slot == EquipmentSlot.FEET)
-            stack.enchant(WindsweptEnchantments.SLIPPING_CURSE, 0);
+            stack.enchant(level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolderOrThrow(WindsweptEnchantments.SLIPPING_CURSE), 0);
         else
             super.enchantSpawnedArmor(level, random, slot, difficulty);
     }

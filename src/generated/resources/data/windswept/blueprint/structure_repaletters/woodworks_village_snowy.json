@@ -1,0 +1,21 @@
+{
+  "priority": 50,
+  "repaletter": [
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:chest",
+      "replaces_with": "windswept:chestnut_chest"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:bookshelf",
+      "replaces_with": "windswept:chestnut_bookshelf"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:ladder",
+      "replaces_with": "windswept:chestnut_ladder"
+    }
+  ],
+  "structures": "minecraft:village_snowy"
+}

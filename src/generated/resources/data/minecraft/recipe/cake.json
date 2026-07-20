@@ -1,0 +1,36 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:mod_loaded",
+        "modid": "neapolitan"
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:milk"
+    },
+    "B": {
+      "item": "minecraft:sugar"
+    },
+    "C": {
+      "tag": "c:crops/wheat"
+    },
+    "E": {
+      "tag": "c:eggs"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BEB",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:cake"
+  }
+}

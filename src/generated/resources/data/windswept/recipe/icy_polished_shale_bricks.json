@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "windswept:polished_shale_bricks"
+    },
+    "I": {
+      "item": "windswept:icicles"
+    }
+  },
+  "pattern": [
+    "###",
+    "#I#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "id": "windswept:icy_polished_shale_bricks"
+  }
+}

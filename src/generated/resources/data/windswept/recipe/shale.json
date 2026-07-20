@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "minecraft:cobblestone"
+    },
+    {
+      "item": "minecraft:blue_ice"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "windswept:shale"
+  }
+}

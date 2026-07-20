@@ -1,0 +1,38 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "berry_good"
+    }
+  ],
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "windswept:wild_berry_pips"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_wild_berries": {
+      "conditions": {
+        "items": [
+          {
+            "items": "windswept:wild_berries"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_wild_berries"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "windswept:wild_berry_pips"
+    ]
+  }
+}

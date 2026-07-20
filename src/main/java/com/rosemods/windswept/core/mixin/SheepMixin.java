@@ -3,7 +3,6 @@ package com.rosemods.windswept.core.mixin;
 import com.rosemods.windswept.core.other.tags.WindsweptBiomeTags;
 import com.rosemods.windswept.core.registry.datapack.WindsweptBiomes;
 import net.minecraft.core.Holder;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -21,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Sheep.class)
 public class SheepMixin {
     @Inject(method = "finalizeSpawn", at = @At("RETURN"))
-    private void finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType type, SpawnGroupData spawnGroupData, CompoundTag tag, CallbackInfoReturnable<SpawnGroupData> info) {
+    private void finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType type, SpawnGroupData spawnGroupData, CallbackInfoReturnable<SpawnGroupData> info) {
         Sheep sheep = (Sheep) (Object) this;
         RandomSource rand = level.getRandom();
         Holder<Biome> biome = level.getBiome(sheep.blockPosition());

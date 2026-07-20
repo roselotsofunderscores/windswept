@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 400,
+  "experience": 0.35,
+  "ingredient": {
+    "item": "windswept:frozen_flesh"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:leather"
+  }
+}

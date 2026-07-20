@@ -9,7 +9,6 @@ import com.rosemods.windswept.core.other.tags.WindsweptBannerPatternTags;
 import com.rosemods.windswept.core.registry.datapack.WindsweptJukeboxSongs;
 import com.rosemods.windswept.integration.boatload.WindsweptBoatTypes;
 import com.teamabnormals.blueprint.common.item.BlueprintBoatItem;
-import com.teamabnormals.blueprint.core.util.PropertyUtil;
 import com.teamabnormals.blueprint.core.util.registry.ItemSubRegistryHelper;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvents;
@@ -27,13 +26,16 @@ public final class WindsweptItems {
     public static final DeferredItem<Item> ELDER_FEATHER = ITEMS.createItem("elder_feather", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> FROST_ARROW = ITEMS.createItem("frost_arrow", () -> new FrostArrowItem(new Item.Properties()));
     public static final DeferredItem<Item> FROZEN_BRANCH = ITEMS.createItem("frozen_branch", () -> new Item(new Item.Properties()));
-    public static final DeferredItem<Item> FROZEN_FLESH = ITEMS.createItem("frozen_flesh", () -> new Item(PropertyUtil.food(WindsweptFoods.FROZEN_FLESH)));
+    public static final DeferredItem<Item> FROZEN_FLESH = ITEMS.createItem("frozen_flesh", () -> new Item(new Item.Properties().food(WindsweptFoods.FROZEN_FLESH)));
 
     // Armour //
-    public static final DeferredItem<Item> LAVENDER_CROWN = ITEMS.createItem("lavender_crown", () -> new LavenderCrownItem(new Item.Properties()));
-    public static final DeferredItem<Item> ANTLER_HELMET = ITEMS.createItem("antler_helmet", () -> new AntlerHelmetItem(new Item.Properties()));
+    // ИСПРАВЛЕНО: Добавлены материал и тип слота (3 аргумента)
+    public static final DeferredItem<Item> LAVENDER_CROWN = ITEMS.createItem("lavender_crown", () -> new LavenderCrownItem(WindsweptArmorMaterials.LAVENDER_CROWN, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final DeferredItem<Item> ANTLER_HELMET = ITEMS.createItem("antler_helmet", () -> new AntlerHelmetItem(WindsweptArmorMaterials.ANTLER_HELMET, ArmorItem.Type.HELMET, new Item.Properties()));
+
     public static final DeferredItem<Item> FEATHER_CLOAK = ITEMS.createItem("feather_cloak", () -> new FeatherCloakItem(new Item.Properties()));
-    public static final DeferredItem<Item> SNOW_BOOTS = ITEMS.createItem("snow_boots", () -> new SnowBootsItem(new Item.Properties()));
+
+    public static final DeferredItem<Item> SNOW_BOOTS = ITEMS.createItem("snow_boots", () -> new SnowBootsItem(ArmorMaterials.LEATHER, ArmorItem.Type.BOOTS, new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(5))));
 
     // Wooden Buckets //
     public static final DeferredItem<Item> WOODEN_BUCKET = ITEMS.createItem("wooden_bucket", () -> new WoodenBucketItem(() -> Fluids.EMPTY, new Item.Properties().durability(24)));
@@ -44,30 +46,30 @@ public final class WindsweptItems {
     public static final DeferredItem<Item> WOODEN_CHOCOLATE_BUCKET = ITEMS.createItem("wooden_chocolate_bucket", () -> new WoodenBucketItem(() -> BuiltInRegistries.FLUID.get(WindsweptConstants.CHOCOLATE), new Item.Properties().durability(24).craftRemainder(WOODEN_BUCKET.get())));
 
     // Food //
-    public static final DeferredItem<Item> WILD_BERRIES = ITEMS.createItem("wild_berries", ItemSubRegistryHelper.areModsLoaded("berry_good") ? () -> new Item(PropertyUtil.food(WindsweptFoods.WILD_BERRIES)) : () -> new ItemNameBlockItem(WindsweptBlocks.WILD_BERRY_BUSH.get(), PropertyUtil.food(WindsweptFoods.WILD_BERRIES)));
+    public static final DeferredItem<Item> WILD_BERRIES = ITEMS.createItem("wild_berries", ItemSubRegistryHelper.areModsLoaded("berry_good") ? () -> new Item(new Item.Properties().food(WindsweptFoods.WILD_BERRIES)) : () -> new ItemNameBlockItem(WindsweptBlocks.WILD_BERRY_BUSH.get(), new Item.Properties().food(WindsweptFoods.WILD_BERRIES)));
     public static final DeferredItem<Item> WILD_BERRY_PIPS = ITEMS.createItem("wild_berry_pips", ItemSubRegistryHelper.areModsLoaded("berry_good") ? () -> new ItemNameBlockItem(WindsweptBlocks.WILD_BERRY_BUSH.get(), new Item.Properties()) : () -> new Item(new Item.Properties()));
-    public static final DeferredItem<Item> CANDY_CANE = ITEMS.createItem("candy_cane", () -> new Item(PropertyUtil.food(WindsweptFoods.CANDY_CANE)));
+    public static final DeferredItem<Item> CANDY_CANE = ITEMS.createItem("candy_cane", () -> new Item(new Item.Properties().food(WindsweptFoods.CANDY_CANE)));
 
-    public static final DeferredItem<Item> CHESTNUTS = ITEMS.createItem("chestnuts", () -> new Item(PropertyUtil.food(WindsweptFoods.CHESTNUTS)));
-    public static final DeferredItem<Item> ROASTED_CHESTNUTS = ITEMS.createItem("roasted_chestnuts", () -> new Item(PropertyUtil.food(WindsweptFoods.ROASTED_CHESTNUTS)));
-    public static final DeferredItem<Item> CHESTNUT_SOUP = ITEMS.createItem("chestnut_soup", () -> new BowlFoodItem(PropertyUtil.food(WindsweptFoods.CHESTNUT_SOUP).craftRemainder(Items.BOWL).stacksTo(1)));
+    public static final DeferredItem<Item> CHESTNUTS = ITEMS.createItem("chestnuts", () -> new Item(new Item.Properties().food(WindsweptFoods.CHESTNUTS)));
+    public static final DeferredItem<Item> ROASTED_CHESTNUTS = ITEMS.createItem("roasted_chestnuts", () -> new Item(new Item.Properties().food(WindsweptFoods.ROASTED_CHESTNUTS)));
+    public static final DeferredItem<Item> CHESTNUT_SOUP = ITEMS.createItem("chestnut_soup", () -> new Item(new Item.Properties().food(WindsweptFoods.CHESTNUT_SOUP).stacksTo(1)));
 
-    public static final DeferredItem<Item> GINGER_ROOT = ITEMS.createItem("ginger_root", () -> new ItemNameBlockItem(WindsweptBlocks.GINGER.get(), PropertyUtil.food(WindsweptFoods.GINGER_ROOT)));
-    public static final DeferredItem<Item> GINGERBREAD_COOKIE = ITEMS.createItem("gingerbread_cookie", () -> new Item(PropertyUtil.food(WindsweptFoods.GINGERBREAD_COOKIE)));
+    public static final DeferredItem<Item> GINGER_ROOT = ITEMS.createItem("ginger_root", () -> new ItemNameBlockItem(WindsweptBlocks.GINGER.get(), new Item.Properties().food(WindsweptFoods.GINGER_ROOT)));
+    public static final DeferredItem<Item> GINGERBREAD_COOKIE = ITEMS.createItem("gingerbread_cookie", () -> new Item(new Item.Properties().food(WindsweptFoods.GINGERBREAD_COOKIE)));
     public static final DeferredItem<Item> GINGER_TEA = ITEMS.createItem("ginger_tea", () -> new DrinkableBottleItem(WindsweptFoods.GINGER_TEA));
 
-    public static final DeferredItem<Item> SPICY_SNOW_CONE = ITEMS.createItem("spicy_snow_cone", () -> new FoodRemainderItem(() -> WindsweptBlocks.PINECONE.get(), PropertyUtil.food(WindsweptFoods.SPICY_SNOW_CONE)));
-    public static final DeferredItem<Item> SWEET_SNOW_CONE = ITEMS.createItem("sweet_snow_cone", () -> new FoodRemainderItem(() -> WindsweptBlocks.PINECONE.get(), PropertyUtil.food(WindsweptFoods.SWEET_SNOW_CONE)));
-    public static final DeferredItem<Item> MINTY_SNOW_CONE = ITEMS.createItem("minty_snow_cone", () -> new FoodRemainderItem(() -> WindsweptBlocks.PINECONE.get(), PropertyUtil.food(WindsweptFoods.MINY_SNOW_CONE)));
+    public static final DeferredItem<Item> SPICY_SNOW_CONE = ITEMS.createItem("spicy_snow_cone", () -> new FoodRemainderItem(() -> WindsweptBlocks.PINECONE.get(), new Item.Properties().food(WindsweptFoods.SPICY_SNOW_CONE)));
+    public static final DeferredItem<Item> SWEET_SNOW_CONE = ITEMS.createItem("sweet_snow_cone", () -> new FoodRemainderItem(() -> WindsweptBlocks.PINECONE.get(), new Item.Properties().food(WindsweptFoods.SWEET_SNOW_CONE)));
+    public static final DeferredItem<Item> MINTY_SNOW_CONE = ITEMS.createItem("minty_snow_cone", () -> new FoodRemainderItem(() -> WindsweptBlocks.PINECONE.get(), new Item.Properties().food(WindsweptFoods.MINTY_SNOW_CONE)));
 
     public static final DeferredItem<Item> PINECONE_JAM_BOTTLE = ITEMS.createItem("pinecone_jam_bottle", () -> new DrinkableBottleItem(() -> SoundEvents.HONEY_DRINK, WindsweptFoods.PINECONE_JAM));
 
     public static final DeferredItem<Item> LAVENDER_TEA = ITEMS.createItem("lavender_tea", () -> new DrinkableBottleItem(WindsweptFoods.LAVENDER_TEA));
 
-    public static final DeferredItem<Item> GOAT = ITEMS.createItem("goat", () -> new Item(PropertyUtil.food(WindsweptFoods.GOAT)));
-    public static final DeferredItem<Item> COOKED_GOAT = ITEMS.createItem("cooked_goat", () -> new Item(PropertyUtil.food(WindsweptFoods.COOKED_GOAT)));
-    public static final DeferredItem<Item> GOAT_STEW = ITEMS.createItem("goat_stew", () -> new BowlFoodItem(PropertyUtil.food(WindsweptFoods.GOAT_STEW).craftRemainder(Items.BOWL).stacksTo(1)));
-    public static final DeferredItem<Item> MUTTON_PIE = ITEMS.createItem("mutton_pie", () -> new Item(PropertyUtil.food(WindsweptFoods.MUTTON_PIE)));
+    public static final DeferredItem<Item> GOAT = ITEMS.createItem("goat", () -> new Item(new Item.Properties().food(WindsweptFoods.GOAT)));
+    public static final DeferredItem<Item> COOKED_GOAT = ITEMS.createItem("cooked_goat", () -> new Item(new Item.Properties().food(WindsweptFoods.COOKED_GOAT)));
+    public static final DeferredItem<Item> GOAT_STEW = ITEMS.createItem("goat_stew", () -> new Item(new Item.Properties().food(WindsweptFoods.GOAT_STEW).stacksTo(1)));
+    public static final DeferredItem<Item> MUTTON_PIE = ITEMS.createItem("mutton_pie", () -> new Item(new Item.Properties().food(WindsweptFoods.MUTTON_PIE)));
 
     // Pottery Sherds //
     public static final DeferredItem<Item> HOOT_POTTERY_SHERD = ITEMS.createItem("hoot_pottery_sherd", () -> new Item(new Item.Properties()));
@@ -100,5 +102,4 @@ public final class WindsweptItems {
     public static final Pair<DeferredItem<BlueprintBoatItem>, DeferredItem<BlueprintBoatItem>> PINE_BOAT = ITEMS.createBoatAndChestBoatItem("pine", WindsweptBlocks.PINE_PLANKS);
     public static final DeferredItem<Item> PINE_FURNACE_BOAT = ITEMS.createItem("pine_furnace_boat", ItemSubRegistryHelper.areModsLoaded("boatload") ? WindsweptBoatTypes.PINE_FURNACE_BOAT : () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> LARGE_PINE_BOAT = ITEMS.createItem("large_pine_boat", ItemSubRegistryHelper.areModsLoaded("boatload") ? WindsweptBoatTypes.LARGE_PINE_BOAT : () -> new Item(new Item.Properties()));
-
 }

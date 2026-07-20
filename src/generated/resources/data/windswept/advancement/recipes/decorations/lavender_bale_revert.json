@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_lavender_bale": {
+      "conditions": {
+        "items": [
+          {
+            "items": "windswept:lavender_bale"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "windswept:lavender_bale_revert"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_lavender_bale"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "windswept:lavender_bale_revert"
+    ]
+  }
+}

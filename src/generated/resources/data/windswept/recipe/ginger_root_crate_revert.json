@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "windswept:ginger_root_crate"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "windswept:ginger_root"
+  }
+}

@@ -1,8 +1,0 @@
-{
-  "repaletter": {
-    "type": "blueprint:simple",
-    "replaces_block": "minecraft:acacia_sapling",
-    "replaces_with": "windswept:mimosa"
-  },
-  "structures": "minecraft:village_savanna"
-}

@@ -50,6 +50,7 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         //this.tag(Tags.Items.ARMORS_HELMETS).add(ANTLER_HELMET.get(), LAVENDER_CROWN.get());
         //this.tag(Tags.Items.ARMORS_CHESTPLATES).add(FEATHER_CLOAK.get());
         //this.tag(Tags.Items.ARMORS_BOOTS).add(SNOW_BOOTS.get());
+        this.tag(ItemTags.DYEABLE).add(SNOW_BOOTS.get());
         this.tag(Tags.Items.FEATHERS).add(ELDER_FEATHER.get());
         this.copy(Tags.Blocks.BOOKSHELVES, Tags.Items.BOOKSHELVES);
         this.copy(Tags.Blocks.CHESTS_WOODEN, Tags.Items.CHESTS_WOODEN);

@@ -1,0 +1,20 @@
+{
+  "repaletter": [
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:acacia_sapling",
+      "replaces_with": "windswept:mimosa"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:poppy",
+      "replaces_with": "windswept:yellow_petals"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:acacia_pressure_plate",
+      "replaces_with": "windswept:potted_mimosa"
+    }
+  ],
+  "structures": "minecraft:village_savanna"
+}

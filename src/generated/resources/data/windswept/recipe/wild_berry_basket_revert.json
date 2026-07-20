@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "windswept:wild_berry_basket"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "windswept:wild_berries"
+  }
+}

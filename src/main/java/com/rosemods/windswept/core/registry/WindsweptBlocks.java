@@ -23,7 +23,6 @@ import com.teamabnormals.blueprint.core.api.BlockSetTypeRegistryHelper;
 import com.teamabnormals.blueprint.core.api.WoodTypeRegistryHelper;
 import com.teamabnormals.blueprint.core.util.PropertyUtil;
 import com.teamabnormals.blueprint.core.util.registry.BlockSubRegistryHelper;
-import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Item;
@@ -38,16 +37,15 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 public final class WindsweptBlocks {
     public static final BlockSubRegistryHelper BLOCKS = Windswept.REGISTRY_HELPER.getBlockSubHelper();
 
-    // Holly //
-    public static final DeferredBlock<Block> HOLLY_LOG = BLOCKS.createBlock("holly_log", () -> new LogBlock(WindsweptBlocks.STRIPPED_HOLLY_LOG, Properties.HOLLY.log()));
-    public static final DeferredBlock<Block> HOLLY_WOOD = BLOCKS.createBlock("holly_wood", () -> new WoodBlock(WindsweptBlocks.STRIPPED_HOLLY_WOOD, Properties.HOLLY.log()));
     public static final DeferredBlock<Block> STRIPPED_HOLLY_LOG = BLOCKS.createBlock("stripped_holly_log", () -> new RotatedPillarBlock(Properties.HOLLY.log()));
     public static final DeferredBlock<Block> STRIPPED_HOLLY_WOOD = BLOCKS.createBlock("stripped_holly_wood", () -> new RotatedPillarBlock(Properties.HOLLY.log()));
+    public static final DeferredBlock<Block> HOLLY_LOG = BLOCKS.createBlock("holly_log", () -> new LogBlock(STRIPPED_HOLLY_LOG, Properties.HOLLY.log()));
+    public static final DeferredBlock<Block> HOLLY_WOOD = BLOCKS.createBlock("holly_wood", () -> new LogBlock(STRIPPED_HOLLY_WOOD, Properties.HOLLY.log()));
     public static final DeferredBlock<Block> HOLLY_PLANKS = BLOCKS.createBlock("holly_planks", () -> new Block(Properties.HOLLY.planks()));
     public static final DeferredBlock<Block> HOLLY_STAIRS = BLOCKS.createBlock("holly_stairs", () -> new StairBlock(HOLLY_PLANKS.get().defaultBlockState(), Properties.HOLLY.planks()));
     public static final DeferredBlock<Block> HOLLY_SLAB = BLOCKS.createBlock("holly_slab", () -> new SlabBlock(Properties.HOLLY.planks()));
-    public static final DeferredBlock<Block> HOLLY_FENCE = BLOCKS.createFuelBlock("holly_fence", () -> new FenceBlock(Properties.HOLLY.planks()), 300);
-    public static final DeferredBlock<Block> HOLLY_FENCE_GATE = BLOCKS.createFuelBlock("holly_fence_gate", () -> new FenceGateBlock(Properties.HOLLY_WOOD_TYPE, Properties.HOLLY.planks()), 300);
+    public static final DeferredBlock<Block> HOLLY_FENCE = BLOCKS.createBlock("holly_fence", () -> new FenceBlock(Properties.HOLLY.planks()));
+    public static final DeferredBlock<Block> HOLLY_FENCE_GATE = BLOCKS.createBlock("holly_fence_gate", () -> new FenceGateBlock(Properties.HOLLY_WOOD_TYPE, Properties.HOLLY.planks()));
     public static final DeferredBlock<Block> HOLLY_PRESSURE_PLATE = BLOCKS.createBlock("holly_pressure_plate", () -> new PressurePlateBlock(Properties.HOLLY_BLOCK_SET, Properties.HOLLY.pressurePlate().sound(SoundType.CHERRY_WOOD)));
     public static final DeferredBlock<Block> HOLLY_BUTTON = BLOCKS.createBlock("holly_button", () -> new ButtonBlock(Properties.HOLLY_BLOCK_SET, 30, Properties.HOLLY.button()));
     public static final DeferredBlock<Block> HOLLY_DOOR = BLOCKS.createBlock("holly_door", () -> new DoorBlock(Properties.HOLLY_BLOCK_SET, Properties.HOLLY.door()));
@@ -56,9 +54,9 @@ public final class WindsweptBlocks {
     public static final Pair<DeferredBlock<BlueprintCeilingHangingSignBlock>, DeferredBlock<BlueprintWallHangingSignBlock>> HOLLY_HANGING_SIGNS = BLOCKS.createHangingSignBlock("holly", Properties.HOLLY_WOOD_TYPE, Properties.HOLLY.hangingSign().sound(SoundType.CHERRY_WOOD_HANGING_SIGN));
 
     public static final DeferredBlock<Block> HOLLY_BEEHIVE = BLOCKS.createBlock("holly_beehive", () -> new BlueprintBeehiveBlock(Properties.HOLLY.beehive()));
-    public static final DeferredBlock<Block> HOLLY_LADDER = BLOCKS.createFuelBlock("holly_ladder", () -> new LadderBlock(Properties.HOLLY.ladder()), 300);
-    public static final DeferredBlock<Block> HOLLY_BOOKSHELF = BLOCKS.createFuelBlock("holly_bookshelf", () -> new Block(Properties.HOLLY.bookshelf()), 300);
-    public static final DeferredBlock<Block> CHISELED_HOLLY_BOOKSHELF = BLOCKS.createFuelBlock("chiseled_holly_bookshelf", () -> new BlueprintChiseledBookShelfBlock(Properties.HOLLY.chiseledBookshelf()), 300);
+    public static final DeferredBlock<Block> HOLLY_LADDER = BLOCKS.createBlock("holly_ladder", () -> new LadderBlock(Properties.HOLLY.ladder()));
+    public static final DeferredBlock<Block> HOLLY_BOOKSHELF = BLOCKS.createBlock("holly_bookshelf", () -> new Block(Properties.HOLLY.bookshelf()));
+    public static final DeferredBlock<Block> CHISELED_HOLLY_BOOKSHELF = BLOCKS.createBlock("chiseled_holly_bookshelf", () -> new BlueprintChiseledBookShelfBlock(Properties.HOLLY.chiseledBookshelf()));
     public static final DeferredBlock<Block> HOLLY_BOARDS = BLOCKS.createBlock("holly_boards", () -> new RotatedPillarBlock(Properties.HOLLY.planks()));
     public static final DeferredBlock<BlueprintChestBlock> HOLLY_CHEST = BLOCKS.createChestBlock("holly", Properties.HOLLY.chest());
     public static final DeferredBlock<BlueprintTrappedChestBlock> TRAPPED_HOLLY_CHEST = BLOCKS.createTrappedChestBlock("holly", Properties.HOLLY.chest());
@@ -68,16 +66,15 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> HOLLY_LEAVES = BLOCKS.createBlock("holly_leaves", () -> new HollyLeavesBlock(Properties.HOLLY.leaves()));
     public static final DeferredBlock<Block> HOLLY_LEAF_PILE = BLOCKS.createBlock("holly_leaf_pile", () -> new LeafPileBlock(Properties.HOLLY.leafPile()));
 
-    // Chestnut //
-    public static final DeferredBlock<Block> CHESTNUT_LOG = BLOCKS.createBlock("chestnut_log", () -> new LogBlock(WindsweptBlocks.STRIPPED_CHESTNUT_LOG, Properties.CHESTNUT.log()));
-    public static final DeferredBlock<Block> CHESTNUT_WOOD = BLOCKS.createBlock("chestnut_wood", () -> new WoodBlock(WindsweptBlocks.STRIPPED_CHESTNUT_WOOD, Properties.CHESTNUT.log()));
     public static final DeferredBlock<Block> STRIPPED_CHESTNUT_LOG = BLOCKS.createBlock("stripped_chestnut_log", () -> new RotatedPillarBlock(Properties.CHESTNUT.log()));
     public static final DeferredBlock<Block> STRIPPED_CHESTNUT_WOOD = BLOCKS.createBlock("stripped_chestnut_wood", () -> new RotatedPillarBlock(Properties.CHESTNUT.log()));
+    public static final DeferredBlock<Block> CHESTNUT_LOG = BLOCKS.createBlock("chestnut_log", () -> new LogBlock(STRIPPED_CHESTNUT_LOG, Properties.CHESTNUT.log()));
+    public static final DeferredBlock<Block> CHESTNUT_WOOD = BLOCKS.createBlock("chestnut_wood", () -> new LogBlock(STRIPPED_CHESTNUT_WOOD, Properties.CHESTNUT.log()));
     public static final DeferredBlock<Block> CHESTNUT_PLANKS = BLOCKS.createBlock("chestnut_planks", () -> new Block(Properties.CHESTNUT.planks()));
     public static final DeferredBlock<Block> CHESTNUT_STAIRS = BLOCKS.createBlock("chestnut_stairs", () -> new StairBlock(CHESTNUT_PLANKS.get().defaultBlockState(), Properties.CHESTNUT.planks()));
     public static final DeferredBlock<Block> CHESTNUT_SLAB = BLOCKS.createBlock("chestnut_slab", () -> new SlabBlock(Properties.CHESTNUT.planks()));
-    public static final DeferredBlock<Block> CHESTNUT_FENCE = BLOCKS.createFuelBlock("chestnut_fence", () -> new FenceBlock(Properties.CHESTNUT.planks()), 300);
-    public static final DeferredBlock<Block> CHESTNUT_FENCE_GATE = BLOCKS.createFuelBlock("chestnut_fence_gate", () -> new FenceGateBlock(Properties.CHESTNUT_WOOD_TYPE, Properties.CHESTNUT.planks()), 300);
+    public static final DeferredBlock<Block> CHESTNUT_FENCE = BLOCKS.createBlock("chestnut_fence", () -> new FenceBlock(Properties.CHESTNUT.planks()));
+    public static final DeferredBlock<Block> CHESTNUT_FENCE_GATE = BLOCKS.createBlock("chestnut_fence_gate", () -> new FenceGateBlock(Properties.CHESTNUT_WOOD_TYPE, Properties.CHESTNUT.planks()));
     public static final DeferredBlock<Block> CHESTNUT_PRESSURE_PLATE = BLOCKS.createBlock("chestnut_pressure_plate", () -> new PressurePlateBlock(Properties.CHESTNUT_BLOCK_SET, Properties.CHESTNUT.pressurePlate()));
     public static final DeferredBlock<Block> CHESTNUT_BUTTON = BLOCKS.createBlock("chestnut_button", () -> new ButtonBlock(Properties.CHESTNUT_BLOCK_SET, 30, Properties.CHESTNUT.button()));
     public static final DeferredBlock<Block> CHESTNUT_DOOR = BLOCKS.createBlock("chestnut_door", () -> new DoorBlock(Properties.CHESTNUT_BLOCK_SET, Properties.CHESTNUT.door()));
@@ -86,9 +83,9 @@ public final class WindsweptBlocks {
     public static final Pair<DeferredBlock<BlueprintCeilingHangingSignBlock>, DeferredBlock<BlueprintWallHangingSignBlock>> CHESTNUT_HANGING_SIGNS = BLOCKS.createHangingSignBlock("chestnut", Properties.CHESTNUT_WOOD_TYPE, Properties.CHESTNUT.hangingSign());
 
     public static final DeferredBlock<Block> CHESTNUT_BEEHIVE = BLOCKS.createBlock("chestnut_beehive", () -> new BlueprintBeehiveBlock(Properties.CHESTNUT.beehive()));
-    public static final DeferredBlock<Block> CHESTNUT_LADDER = BLOCKS.createFuelBlock("chestnut_ladder", () -> new LadderBlock(Properties.CHESTNUT.ladder()), 300);
-    public static final DeferredBlock<Block> CHESTNUT_BOOKSHELF = BLOCKS.createFuelBlock("chestnut_bookshelf", () -> new Block(Properties.CHESTNUT.bookshelf()), 300);
-    public static final DeferredBlock<Block> CHISELED_CHESTNUT_BOOKSHELF = BLOCKS.createFuelBlock("chiseled_chestnut_bookshelf", () -> new BlueprintChiseledBookShelfBlock(Properties.CHESTNUT.chiseledBookshelf()), 300);
+    public static final DeferredBlock<Block> CHESTNUT_LADDER = BLOCKS.createBlock("chestnut_ladder", () -> new LadderBlock(Properties.CHESTNUT.ladder()));
+    public static final DeferredBlock<Block> CHESTNUT_BOOKSHELF = BLOCKS.createBlock("chestnut_bookshelf", () -> new Block(Properties.CHESTNUT.bookshelf()));
+    public static final DeferredBlock<Block> CHISELED_CHESTNUT_BOOKSHELF = BLOCKS.createBlock("chiseled_chestnut_bookshelf", () -> new BlueprintChiseledBookShelfBlock(Properties.CHESTNUT.chiseledBookshelf()));
     public static final DeferredBlock<Block> CHESTNUT_BOARDS = BLOCKS.createBlock("chestnut_boards", () -> new RotatedPillarBlock(Properties.CHESTNUT.planks()));
     public static final DeferredBlock<BlueprintChestBlock> CHESTNUT_CHEST = BLOCKS.createChestBlock("chestnut", Properties.CHESTNUT.chest());
     public static final DeferredBlock<BlueprintTrappedChestBlock> TRAPPED_CHESTNUT_CHEST = BLOCKS.createTrappedChestBlock("chestnut", Properties.CHESTNUT.chest());
@@ -98,18 +95,17 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> CHESTNUT_LEAVES = BLOCKS.createBlock("chestnut_leaves", () -> new LeavesBlock(Properties.CHESTNUT.leaves()));
     public static final DeferredBlock<Block> CHESTNUT_LEAF_PILE = BLOCKS.createBlock("chestnut_leaf_pile", () -> new LeafPileBlock(Properties.CHESTNUT.leafPile()));
 
-    // Pine //
-    public static final DeferredBlock<Block> PINE_LOG = BLOCKS.createBlock("pine_log", () -> new LogBlock(WindsweptBlocks.WEATHERED_PINE_LOG, Properties.PINE.log()));
-    public static final DeferredBlock<Block> PINE_WOOD = BLOCKS.createBlock("pine_wood", () -> new WoodBlock(WindsweptBlocks.WEATHERED_PINE_WOOD, Properties.PINE.log()));
-    public static final DeferredBlock<Block> WEATHERED_PINE_LOG = BLOCKS.createBlock("weathered_pine_log", () -> new LogBlock(WindsweptBlocks.STRIPPED_PINE_LOG, Properties.PINE.log()));
-    public static final DeferredBlock<Block> WEATHERED_PINE_WOOD = BLOCKS.createBlock("weathered_pine_wood", () -> new WoodBlock(WindsweptBlocks.STRIPPED_PINE_WOOD, Properties.PINE.log()));
     public static final DeferredBlock<Block> STRIPPED_PINE_LOG = BLOCKS.createBlock("stripped_pine_log", () -> new RotatedPillarBlock(Properties.PINE.log()));
     public static final DeferredBlock<Block> STRIPPED_PINE_WOOD = BLOCKS.createBlock("stripped_pine_wood", () -> new RotatedPillarBlock(Properties.PINE.log()));
+    public static final DeferredBlock<Block> WEATHERED_PINE_LOG = BLOCKS.createBlock("weathered_pine_log", () -> new LogBlock(STRIPPED_PINE_LOG, Properties.PINE.log()));
+    public static final DeferredBlock<Block> WEATHERED_PINE_WOOD = BLOCKS.createBlock("weathered_pine_wood", () -> new LogBlock(STRIPPED_PINE_WOOD, Properties.PINE.log()));
+    public static final DeferredBlock<Block> PINE_LOG = BLOCKS.createBlock("pine_log", () -> new LogBlock(WEATHERED_PINE_LOG, Properties.PINE.log()));
+    public static final DeferredBlock<Block> PINE_WOOD = BLOCKS.createBlock("pine_wood", () -> new LogBlock(WEATHERED_PINE_WOOD, Properties.PINE.log()));
     public static final DeferredBlock<Block> PINE_PLANKS = BLOCKS.createBlock("pine_planks", () -> new Block(Properties.PINE.planks()));
     public static final DeferredBlock<Block> PINE_STAIRS = BLOCKS.createBlock("pine_stairs", () -> new StairBlock(PINE_PLANKS.get().defaultBlockState(), Properties.PINE.planks()));
     public static final DeferredBlock<Block> PINE_SLAB = BLOCKS.createBlock("pine_slab", () -> new SlabBlock(Properties.PINE.planks()));
-    public static final DeferredBlock<Block> PINE_FENCE = BLOCKS.createFuelBlock("pine_fence", () -> new FenceBlock(Properties.PINE.planks()), 300);
-    public static final DeferredBlock<Block> PINE_FENCE_GATE = BLOCKS.createFuelBlock("pine_fence_gate", () -> new FenceGateBlock(Properties.PINE_WOOD_TYPE, Properties.PINE.planks()), 300);
+    public static final DeferredBlock<Block> PINE_FENCE = BLOCKS.createBlock("pine_fence", () -> new FenceBlock(Properties.PINE.planks()));
+    public static final DeferredBlock<Block> PINE_FENCE_GATE = BLOCKS.createBlock("pine_fence_gate", () -> new FenceGateBlock(Properties.PINE_WOOD_TYPE, Properties.PINE.planks()));
     public static final DeferredBlock<Block> PINE_PRESSURE_PLATE = BLOCKS.createBlock("pine_pressure_plate", () -> new PressurePlateBlock(Properties.PINE_BLOCK_SET, Properties.PINE.pressurePlate()));
     public static final DeferredBlock<Block> PINE_BUTTON = BLOCKS.createBlock("pine_button", () -> new ButtonBlock(Properties.PINE_BLOCK_SET, 30, Properties.PINE.button()));
     public static final DeferredBlock<Block> PINE_DOOR = BLOCKS.createBlock("pine_door", () -> new DoorBlock(Properties.PINE_BLOCK_SET, Properties.PINE.door()));
@@ -118,9 +114,9 @@ public final class WindsweptBlocks {
     public static final Pair<DeferredBlock<BlueprintCeilingHangingSignBlock>, DeferredBlock<BlueprintWallHangingSignBlock>> PINE_HANGING_SIGNS = BLOCKS.createHangingSignBlock("pine", Properties.PINE_WOOD_TYPE, Properties.PINE.hangingSign());
 
     public static final DeferredBlock<Block> PINE_BEEHIVE = BLOCKS.createBlock("pine_beehive", () -> new BlueprintBeehiveBlock(Properties.PINE.beehive()));
-    public static final DeferredBlock<Block> PINE_LADDER = BLOCKS.createFuelBlock("pine_ladder", () -> new LadderBlock(Properties.PINE.ladder()), 300);
-    public static final DeferredBlock<Block> PINE_BOOKSHELF = BLOCKS.createFuelBlock("pine_bookshelf", () -> new Block(Properties.PINE.bookshelf()), 300);
-    public static final DeferredBlock<Block> CHISELED_PINE_BOOKSHELF = BLOCKS.createFuelBlock("chiseled_pine_bookshelf", () -> new BlueprintChiseledBookShelfBlock(Properties.PINE.chiseledBookshelf()), 300);
+    public static final DeferredBlock<Block> PINE_LADDER = BLOCKS.createBlock("pine_ladder", () -> new LadderBlock(Properties.PINE.ladder()));
+    public static final DeferredBlock<Block> PINE_BOOKSHELF = BLOCKS.createBlock("pine_bookshelf", () -> new Block(Properties.PINE.bookshelf()));
+    public static final DeferredBlock<Block> CHISELED_PINE_BOOKSHELF = BLOCKS.createBlock("chiseled_pine_bookshelf", () -> new BlueprintChiseledBookShelfBlock(Properties.PINE.chiseledBookshelf()));
     public static final DeferredBlock<Block> PINE_BOARDS = BLOCKS.createBlock("pine_boards", () -> new RotatedPillarBlock(Properties.PINE.planks()));
     public static final DeferredBlock<BlueprintChestBlock> PINE_CHEST = BLOCKS.createChestBlock("pine", Properties.PINE.chest());
     public static final DeferredBlock<BlueprintTrappedChestBlock> TRAPPED_PINE_CHEST = BLOCKS.createTrappedChestBlock("pine", Properties.PINE.chest());
@@ -130,18 +126,15 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> PINE_LEAVES = BLOCKS.createBlock("pine_leaves", () -> new LeavesBlock(Properties.PINE.leaves()));
     public static final DeferredBlock<Block> PINE_LEAF_PILE = BLOCKS.createBlock("pine_leaf_pile", () -> new LeafPileBlock(Properties.PINE.leafPile()));
 
-    // Moss //
     public static final DeferredBlock<Block> MOSSY_SPROUTS = BLOCKS.createBlock("mossy_sprouts", () -> new SproutsBlock(Properties.SPROUTS));
     public static final DeferredBlock<Block> DRY_MOSSY_SPROUTS = BLOCKS.createBlock("dry_mossy_sprouts", () -> new SproutsBlock(Properties.SPROUTS));
     public static final DeferredBlock<Block> DRY_MOSS_CARPET = BLOCKS.createBlock("dry_moss_carpet", () -> new CarpetBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.MOSS_CARPET)));
     public static final DeferredBlock<Block> DRY_MOSS_BLOCK = BLOCKS.createBlock("dry_moss_block", () -> new DryMossBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.MOSS_BLOCK)));
 
-    // Gelisol Blocks //
     public static final DeferredBlock<Block> GELISOL_GRASS = BLOCKS.createBlock("gelisol_grass", () -> new SproutsBlock(Properties.SPROUTS));
     public static final DeferredBlock<Block> GELISOL = BLOCKS.createBlock("gelisol", () -> new GelisolBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PODZOL)));
     public static final DeferredBlock<Block> GELISOL_PATH = BLOCKS.createBlock("gelisol_path", () -> new DirtPathBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT_PATH)));
 
-    // Plants //
     public static final DeferredBlock<Block> RED_ROSE = BLOCKS.createBlock("red_rose", () -> new RoseFlowerBlock(WindsweptBlocks.RED_ROSE_BUSH, MobEffects.WITHER, 5, PropertyUtil.flower()));
     public static final DeferredBlock<Block> BLUE_ROSE = BLOCKS.createBlock("blue_rose", () -> new RoseFlowerBlock(WindsweptBlocks.BLUE_ROSE_BUSH, MobEffects.WITHER, 5, PropertyUtil.flower()));
     public static final DeferredBlock<Block> WHITE_ROSE = BLOCKS.createBlock("white_rose", () -> new RoseFlowerBlock(WindsweptBlocks.WHITE_ROSE_BUSH, MobEffects.WITHER, 5, PropertyUtil.flower()));
@@ -155,7 +148,6 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> NIGHTSHADE = BLOCKS.createBlock("nightshade", () -> new NightshadeFlowerBlock(MobEffects.NIGHT_VISION, 5, BlockBehaviour.Properties.of().noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).lightLevel(state -> 9)));
     public static final DeferredBlock<Block> MIMOSA = BLOCKS.createBlock("mimosa", () -> new MimosaBlock(MobEffects.FIRE_RESISTANCE, 5, PropertyUtil.flower().sound(SoundType.NETHER_SPROUTS)));
 
-    // Tall Flowers//
     public static final DeferredBlock<Block> LUPINE = BLOCKS.createBlock("lupine", () -> new TallFlowerBlock(PropertyUtil.flower()));
     public static final DeferredBlock<Block> LIONS_TAIL = BLOCKS.createBlock("lions_tail", () -> new TallFlowerBlock(PropertyUtil.flower()));
     public static final DeferredBlock<Block> RED_ROSE_BUSH = BLOCKS.createBlock("red_rose_bush", () -> new TallFlowerBlock(PropertyUtil.flower()));
@@ -163,21 +155,18 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> WHITE_ROSE_BUSH = BLOCKS.createBlock("white_rose_bush", () -> new TallFlowerBlock(PropertyUtil.flower()));
     public static final DeferredBlock<Block> YELLOW_ROSE_BUSH = BLOCKS.createBlock("yellow_rose_bush", () -> new TallFlowerBlock(PropertyUtil.flower()));
 
-    // Lavender //
     public static final DeferredBlock<Block> LAVENDER = BLOCKS.createBlock("lavender", () -> new LavenderBlock(PropertyUtil.flower().sound(SoundType.AZALEA).randomTicks()));
     public static final DeferredBlock<Block> LAVENDER_BALE = BLOCKS.createBlock("lavender_bale", () -> new LavenderBaleBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.HAY_BLOCK)));
     public static final DeferredBlock<Block> LAVENDER_THATCH = BLOCKS.createBlock("lavender_thatch", () -> new ThatchBlock(Properties.LAVENDER_THATCH));
     public static final DeferredBlock<Block> LAVENDER_THATCH_STAIRS = BLOCKS.createBlock("lavender_thatch_stairs", () -> new ThatchStairBlock(LAVENDER_THATCH.get().defaultBlockState(), Properties.LAVENDER_THATCH));
     public static final DeferredBlock<Block> LAVENDER_THATCH_SLAB = BLOCKS.createBlock("lavender_thatch_slab", () -> new ThatchSlabBlock(Properties.LAVENDER_THATCH));
 
-    // Acacia //
     public static final DeferredBlock<Block> FLOWERING_ACACIA_SAPLING = BLOCKS.createBlock("flowering_acacia_sapling", () -> new SaplingBlock(WindsweptTreeGrowers.FLOWERING_ACACIA, PropertyUtil.sapling()));
     public static final DeferredBlock<Block> POTTED_FLOWERING_ACACIA_SAPLING = BLOCKS.createBlockNoItem("potted_flowering_acacia_sapling", () -> new FlowerPotBlock(FLOWERING_ACACIA_SAPLING.get(), PropertyUtil.flowerPot()));
     public static final DeferredBlock<Block> FLOWERING_ACACIA_LEAVES = BLOCKS.createBlock("flowering_acacia_leaves", () -> new FloweringAcaciaLeavesBlock(Properties.HOLLY.leaves()));
     public static final DeferredBlock<Block> FLOWERING_ACACIA_LEAF_PILE = BLOCKS.createBlock("flowering_acacia_leaf_pile", () -> new LeafPileBlock(Properties.HOLLY.leafPile()));
     public static final DeferredBlock<Block> YELLOW_PETALS = BLOCKS.createBlock("yellow_petals", () -> new PinkPetalsBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PINK_PETALS)));
 
-    // Decoration Blocks //
     public static final DeferredBlock<Block> HOLLY_WREATH = BLOCKS.createBlockWithItem("holly_wreath", () -> new WallDecorationBlock(Block.Properties.of().instabreak().sound(SoundType.AZALEA).noCollission()), () -> new WearableBlockItem(WindsweptBlocks.HOLLY_WREATH.get(), new Item.Properties()));
     public static final DeferredBlock<Block> PINECONE_WREATH = BLOCKS.createBlockWithItem("pinecone_wreath", () -> new WallDecorationBlock(Block.Properties.of().instabreak().sound(SoundType.AZALEA).noCollission()), () -> new WearableBlockItem(WindsweptBlocks.PINECONE_WREATH.get(), new Item.Properties()));
     public static final DeferredBlock<Block> VINE_WREATH = BLOCKS.createBlockWithItem("vine_wreath", () -> new WallDecorationBlock(Block.Properties.of().instabreak().sound(SoundType.AZALEA).noCollission()), () -> new WearableBlockItem(WindsweptBlocks.VINE_WREATH.get(), new Item.Properties()));
@@ -186,7 +175,6 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> FROSTBITER_TROPHY = BLOCKS.createBlock("frostbiter_trophy", () -> new WallDecorationBlock(Properties.HOLLY.ladder().sound(SoundType.WOOD)));
     public static final DeferredBlock<Block> ICE_SHEET = BLOCKS.createBlock("ice_sheet", () -> new IceSheetBlock(BlockBehaviour.Properties.of().strength(.3f).sound(SoundType.GLASS).noOcclusion().friction(.98f)));
 
-    // Pinecone Blocks //
     public static final DeferredBlock<Block> PINECONE = BLOCKS.createBlock("pinecone", () -> new PineconeBlock(Block.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(.25f).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape().noOcclusion().sound(WindsweptSoundTypes.PINECONE)));
     public static final DeferredBlock<Block> PINECONE_JAM_BLOCK = BLOCKS.createBlock("pinecone_jam_block", () -> new PineconeJamBlock(Block.Properties.of().mapColor(MapColor.COLOR_RED).noOcclusion().sound(SoundType.HONEY_BLOCK)));
 
@@ -205,7 +193,6 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> CARVED_PINECONE_BLOCK = BLOCKS.createBlockWithItem("carved_pinecone_block", () -> new CarvedPineconeBlock(BlockBehaviour.Properties.ofFullCopy(PINECONE_BLOCK.get()).randomTicks()), () -> new WearableBlockItem(WindsweptBlocks.CARVED_PINECONE_BLOCK.get(), new Item.Properties()));
     public static final DeferredBlock<Block> WILL_O_THE_WISP = BLOCKS.createBlock("will_o_the_wisp", () -> new WillOTheWispBlock(BlockBehaviour.Properties.ofFullCopy(PINECONE_BLOCK.get()).lightLevel(s -> 10)), new Item.Properties().rarity(Rarity.RARE));
 
-    // Pinecone Shingles //
     public static final DeferredBlock<Block> PINECONE_SHINGLES = BLOCKS.createBlock("pinecone_shingles", () -> new Block(Properties.PINECONE_BLOCK));
     public static final DeferredBlock<Block> PINECONE_SHINGLE_STAIRS = BLOCKS.createBlock("pinecone_shingle_stairs", () -> new StairBlock(PINECONE_SHINGLES.get().defaultBlockState(), Properties.PINECONE_BLOCK));
     public static final DeferredBlock<Block> PINECONE_SHINGLE_SLAB = BLOCKS.createBlock("pinecone_shingle_slab", () -> new SlabBlock(Properties.PINECONE_BLOCK));
@@ -258,17 +245,15 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> PINK_PINECONE_SHINGLE_STAIRS = BLOCKS.createBlock("pink_pinecone_shingle_stairs", () -> new StairBlock(PINECONE_SHINGLES.get().defaultBlockState(), Properties.PINECONE_BLOCK));
     public static final DeferredBlock<Block> PINK_PINECONE_SHINGLE_SLAB = BLOCKS.createBlock("pink_pinecone_shingle_slab", () -> new SlabBlock(Properties.PINECONE_BLOCK));
 
-    // Icicle Blocks //
     public static final DeferredBlock<Block> ICICLES = BLOCKS.createBlock("icicles", () -> new IciclesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PACKED_ICE).noOcclusion()));
     public static final DeferredBlock<Block> ICICLE_BLOCK = BLOCKS.createBlock("icicle_block", () -> new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PACKED_ICE).strength(2f)));
     public static final DeferredBlock<Block> CHISELED_ICICLE_BLOCK = BLOCKS.createBlock("chiseled_icicle_block", () -> new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PACKED_ICE).strength(2f)));
-    public static final DeferredBlock<Block> ICICLE_DOOR = BLOCKS.createBlock("icicle_door", () -> new DoorBlock(Block.Properties.of().mapColor(MapColor.ICE).strength(3f).sound(SoundType.GLASS).noOcclusion(), Properties.ICICLE_SET));
-    public static final DeferredBlock<Block> ICICLE_TRAPDOOR = BLOCKS.createBlock("icicle_trapdoor", () -> new TrapDoorBlock(Block.Properties.of().mapColor(MapColor.ICE).strength(3f).sound(SoundType.GLASS).noOcclusion().isValidSpawn(PropertyUtil::never), Properties.ICICLE_SET));
+    public static final DeferredBlock<Block> ICICLE_DOOR = BLOCKS.createBlock("icicle_door", () -> new DoorBlock(Properties.ICICLE_SET, Block.Properties.of().mapColor(MapColor.ICE).strength(3f).sound(SoundType.GLASS).noOcclusion()));
+    public static final DeferredBlock<Block> ICICLE_TRAPDOOR = BLOCKS.createBlock("icicle_trapdoor", () -> new TrapDoorBlock(Properties.ICICLE_SET, Block.Properties.of().mapColor(MapColor.ICE).strength(3f).sound(SoundType.GLASS).noOcclusion().isValidSpawn(PropertyUtil::never)));
     public static final DeferredBlock<Block> ICICLE_BARS = BLOCKS.createBlock("icicle_bars", () -> new IronBarsBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PACKED_ICE).strength(2f)));
     public static final DeferredBlock<Block> ICE_LANTERN = BLOCKS.createBlock("ice_lantern", () -> new IceLanternBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.LANTERN).lightLevel(s -> 13)));
     public static final DeferredBlock<Block> ICE_CHAIN = BLOCKS.createBlock("ice_chain", () -> new ChainBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CHAIN)));
 
-    // Shale //
     public static final DeferredBlock<Block> SHALE = BLOCKS.createBlock("shale", () -> new Block(Properties.SHALE));
     public static final DeferredBlock<Block> SHALE_STAIRS = BLOCKS.createBlock("shale_stairs", () -> new StairBlock(SHALE.get().defaultBlockState(), Properties.SHALE));
     public static final DeferredBlock<Block> SHALE_SLAB = BLOCKS.createBlock("shale_slab", () -> new SlabBlock(Properties.SHALE));
@@ -286,7 +271,6 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> POLISHED_SHALE_BRICK_SLAB = BLOCKS.createBlock("polished_shale_brick_slab", () -> new SlabBlock(Properties.SHALE));
     public static final DeferredBlock<Block> POLISHED_SHALE_BRICK_WALL = BLOCKS.createBlock("polished_shale_brick_wall", () -> new WallBlock(Properties.SHALE));
 
-    // Packed Ice Blocks //
     public static final DeferredBlock<Block> PACKED_ICE_STAIRS = BLOCKS.createBlock("packed_ice_stairs", () -> new StairBlock(Blocks.PACKED_ICE.defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(Blocks.PACKED_ICE)));
     public static final DeferredBlock<Block> PACKED_ICE_SLAB = BLOCKS.createBlock("packed_ice_slab", () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PACKED_ICE)));
 
@@ -296,7 +280,6 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> PACKED_ICE_BRICK_SLAB = BLOCKS.createBlock("packed_ice_brick_slab", () -> new SlabBlock(Properties.ICE_BRICKS));
     public static final DeferredBlock<Block> PACKED_ICE_BRICK_WALL = BLOCKS.createBlock("packed_ice_brick_wall", () -> new WallBlock(Properties.ICE_BRICKS));
 
-    // Blue Ice Blocks //
     public static final DeferredBlock<Block> BLUE_ICE_STAIRS = BLOCKS.createBlock("blue_ice_stairs", () -> new StairBlock(Blocks.BLUE_ICE.defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(Blocks.BLUE_ICE)));
     public static final DeferredBlock<Block> BLUE_ICE_SLAB = BLOCKS.createBlock("blue_ice_slab", () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BLUE_ICE)));
 
@@ -306,7 +289,6 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> BLUE_ICE_BRICK_SLAB = BLOCKS.createBlock("blue_ice_brick_slab", () -> new SlabBlock(Properties.ICE_BRICKS));
     public static final DeferredBlock<Block> BLUE_ICE_BRICK_WALL = BLOCKS.createBlock("blue_ice_brick_wall", () -> new WallBlock(Properties.ICE_BRICKS));
 
-    // Snow Blocks //
     public static final DeferredBlock<Block> SNOW_STAIRS = BLOCKS.createBlock("snow_stairs", () -> new StairBlock(Blocks.SNOW_BLOCK.defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(Blocks.SNOW_BLOCK)));
     public static final DeferredBlock<Block> SNOW_SLAB = BLOCKS.createBlock("snow_slab", () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SNOW_BLOCK)));
 
@@ -317,10 +299,8 @@ public final class WindsweptBlocks {
 
     public static final DeferredBlock<Block> SUSPICIOUS_SNOW = BLOCKS.createBlock("suspicious_snow", () -> new SuspiciousSnowBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SNOW_BLOCK).sound(WindsweptSoundTypes.SUSPICIOUS_SNOW)));
 
-    // Candy Cane Blocks //
     public static final DeferredBlock<Block> CANDY_CANE_BLOCK = BLOCKS.createBlock("candy_cane_block", () -> new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.QUARTZ_PILLAR)));
 
-    // Ginger Blocks //
     public static final DeferredBlock<Block> GINGER_SOIL = BLOCKS.createBlock("ginger_soil", () -> new GingerSoilBlock(BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).strength(.5f).sound(SoundType.GRAVEL)));
     public static final DeferredBlock<Block> GINGER = BLOCKS.createBlockNoItem("ginger", () -> new GingerCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT)));
 
@@ -341,7 +321,6 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> GLAZED_GINGERBREAD_BRICK_SLAB = BLOCKS.createBlock("glazed_gingerbread_brick_slab", () -> new SlabBlock(Properties.GINGERBREAD));
     public static final DeferredBlock<Block> GLAZED_GINGERBREAD_BRICK_WALL = BLOCKS.createBlock("glazed_gingerbread_brick_wall", () -> new WallBlock(Properties.GINGERBREAD));
 
-    // Lunalite //
     public static final DeferredBlock<Block> LUNALITE = BLOCKS.createBlock("lunalite", () -> new LunaliteBlock(Properties.LUNALITE));
     public static final DeferredBlock<Block> LUNALITE_STAIRS = BLOCKS.createBlock("lunalite_stairs", () -> new StairBlock(LUNALITE.get().defaultBlockState(), Properties.LUNALITE));
     public static final DeferredBlock<Block> LUNALITE_SLAB = BLOCKS.createBlock("lunalite_slab", () -> new LunaliteSlabBlock(Properties.LUNALITE));
@@ -362,7 +341,6 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> SMOOTH_LUNALITE_STAIRS = BLOCKS.createBlock("smooth_lunalite_stairs", () -> new StairBlock(SMOOTH_LUNALITE.get().defaultBlockState(), Properties.LUNALITE));
     public static final DeferredBlock<Block> SMOOTH_LUNALITE_SLAB = BLOCKS.createBlock("smooth_lunalite_slab", () -> new SlabBlock(Properties.LUNALITE));
 
-    // Dry Mossy Blocks //
     public static final DeferredBlock<Block> DRY_MOSSY_COBBLESTONE = BLOCKS.createBlock("dry_mossy_cobblestone", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.MOSSY_COBBLESTONE)));
     public static final DeferredBlock<Block> DRY_MOSSY_COBBLESTONE_STAIRS = BLOCKS.createBlock("dry_mossy_cobblestone_stairs", () -> new StairBlock(DRY_MOSSY_COBBLESTONE.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(Blocks.MOSSY_COBBLESTONE)));
     public static final DeferredBlock<Block> DRY_MOSSY_COBBLESTONE_SLAB = BLOCKS.createBlock("dry_mossy_cobblestone_slab", () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.MOSSY_COBBLESTONE)));
@@ -383,15 +361,13 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> DRY_MOSSY_COBBLESTONE_TILE_SLAB = BLOCKS.createBlock("dry_mossy_cobblestone_tile_slab", () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.MOSSY_STONE_BRICKS)));
     public static final DeferredBlock<Block> DRY_MOSSY_COBBLESTONE_TILE_WALL = BLOCKS.createBlock("dry_mossy_cobblestone_tile_wall", () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.MOSSY_STONE_BRICKS)));
 
-    // Compressed Blocks //
-    public static final DeferredBlock<Block> CHESTNUT_CRATE = BLOCKS.createFuelBlock("chestnut_crate", () -> new WindsweptCompressedBlock(Properties.CRATE), 300);
-    public static final DeferredBlock<Block> ROASTED_CHESTNUT_CRATE = BLOCKS.createFuelBlock("roasted_chestnut_crate", () -> new WindsweptCompressedBlock(Properties.CRATE), 300);
-    public static final DeferredBlock<Block> GINGER_ROOT_CRATE = BLOCKS.createFuelBlock("ginger_root_crate", () -> new WindsweptCompressedBlock(Properties.CRATE), 300);
-    public static final DeferredBlock<Block> HOLLY_BERRY_BASKET = BLOCKS.createFuelBlock("holly_berry_basket", () -> new WindsweptCompressedBlock(Properties.HOLLY_BERRY_BASKET), 300);
-    public static final DeferredBlock<Block> WILD_BERRY_BASKET = BLOCKS.createFuelBlock("wild_berry_basket", () -> new WindsweptCompressedBlock(Properties.CRATE), 300);
+    public static final DeferredBlock<Block> CHESTNUT_CRATE = BLOCKS.createBlock("chestnut_crate", () -> new WindsweptCompressedBlock(Properties.CRATE));
+    public static final DeferredBlock<Block> ROASTED_CHESTNUT_CRATE = BLOCKS.createBlock("roasted_chestnut_crate", () -> new WindsweptCompressedBlock(Properties.CRATE));
+    public static final DeferredBlock<Block> GINGER_ROOT_CRATE = BLOCKS.createBlock("ginger_root_crate", () -> new WindsweptCompressedBlock(Properties.CRATE));
+    public static final DeferredBlock<Block> HOLLY_BERRY_BASKET = BLOCKS.createBlock("holly_berry_basket", () -> new WindsweptCompressedBlock(Properties.HOLLY_BERRY_BASKET));
+    public static final DeferredBlock<Block> WILD_BERRY_BASKET = BLOCKS.createBlock("wild_berry_basket", () -> new WindsweptCompressedBlock(Properties.CRATE));
     public static final DeferredBlock<Block> FROZEN_FLESH_BLOCK = BLOCKS.createBlock("frozen_flesh_block", () -> new Block(BlockBehaviour.Properties.of().strength(.8f).sound(SoundType.CORAL_BLOCK)));
 
-    // Pots //
     public static final DeferredBlock<Block> POTTED_RED_ROSE = BLOCKS.createBlockNoItem("potted_red_rose", () -> new FlowerPotBlock(RED_ROSE.get(), PropertyUtil.flowerPot()));
     public static final DeferredBlock<Block> POTTED_BLUE_ROSE = BLOCKS.createBlockNoItem("potted_blue_rose", () -> new FlowerPotBlock(BLUE_ROSE.get(), PropertyUtil.flowerPot()));
     public static final DeferredBlock<Block> POTTED_WHITE_ROSE = BLOCKS.createBlockNoItem("potted_white_rose", () -> new FlowerPotBlock(WHITE_ROSE.get(), PropertyUtil.flowerPot()));
@@ -409,25 +385,23 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> POTTED_LAVENDER = BLOCKS.createBlockNoItem("potted_lavender", () -> new FlowerPotBlock(LAVENDER.get(), PropertyUtil.flowerPot()));
     public static final DeferredBlock<Block> POTTED_MIMOSA = BLOCKS.createBlockNoItem("potted_mimosa", () -> new FlowerPotBlock(MIMOSA.get(), PropertyUtil.flowerPot()));
 
-    // Misc //
     public static final DeferredBlock<Block> WILD_BERRY_BUSH = BLOCKS.createBlockNoItem("wild_berry_bush", () -> new WildBerryBushBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).randomTicks().noCollission().sound(SoundType.SWEET_BERRY_BUSH).offsetType(BlockBehaviour.OffsetType.XZ)));
 
     public static class Properties {
-        // Block Sets //
-        public static final BlockSetType HOLLY_BLOCK_SET = BlockSetTypeRegistryHelper.register(new BlockSetType(Windswept.MOD_ID + ":holly", true, SoundType.CHERRY_WOOD, SoundEvents.CHERRY_WOOD_DOOR_CLOSE, SoundEvents.CHERRY_WOOD_DOOR_OPEN, SoundEvents.CHERRY_WOOD_TRAPDOOR_CLOSE, SoundEvents.CHERRY_WOOD_TRAPDOOR_OPEN, SoundEvents.CHERRY_WOOD_PRESSURE_PLATE_CLICK_OFF, SoundEvents.CHERRY_WOOD_PRESSURE_PLATE_CLICK_ON, SoundEvents.CHERRY_WOOD_BUTTON_CLICK_OFF, SoundEvents.CHERRY_WOOD_BUTTON_CLICK_ON));
+        public static final BlockSetType HOLLY_BLOCK_SET = BlockSetTypeRegistryHelper.register(new BlockSetType(Windswept.MOD_ID + ":holly"));
         public static final BlockSetType CHESTNUT_BLOCK_SET = BlockSetTypeRegistryHelper.register(new BlockSetType(Windswept.MOD_ID + ":chestnut"));
         public static final BlockSetType PINE_BLOCK_SET = BlockSetTypeRegistryHelper.register(new BlockSetType(Windswept.MOD_ID + ":pine"));
-        public static final BlockSetType ICICLE_SET = BlockSetTypeRegistryHelper.register(new BlockSetType(Windswept.MOD_ID + ":icicles", true, SoundType.GLASS, SoundEvents.CHERRY_WOOD_DOOR_CLOSE, SoundEvents.CHERRY_WOOD_DOOR_OPEN, SoundEvents.CHERRY_WOOD_TRAPDOOR_CLOSE, SoundEvents.CHERRY_WOOD_TRAPDOOR_OPEN, SoundEvents.STONE_PRESSURE_PLATE_CLICK_OFF, SoundEvents.STONE_PRESSURE_PLATE_CLICK_ON, SoundEvents.STONE_BUTTON_CLICK_OFF, SoundEvents.STONE_BUTTON_CLICK_ON));
-        public static final BlockSetType GINGERBREAD_SET = BlockSetTypeRegistryHelper.register(new BlockSetType(Windswept.MOD_ID + ":gingerbread", true, SoundType.CHERRY_WOOD, SoundEvents.CHERRY_WOOD_DOOR_CLOSE, SoundEvents.CHERRY_WOOD_DOOR_OPEN, SoundEvents.CHERRY_WOOD_TRAPDOOR_CLOSE, SoundEvents.CHERRY_WOOD_TRAPDOOR_OPEN, SoundEvents.CHERRY_WOOD_PRESSURE_PLATE_CLICK_OFF, SoundEvents.CHERRY_WOOD_PRESSURE_PLATE_CLICK_ON, SoundEvents.CHERRY_WOOD_BUTTON_CLICK_OFF, SoundEvents.CHERRY_WOOD_BUTTON_CLICK_ON));
+        public static final BlockSetType ICICLE_SET = BlockSetTypeRegistryHelper.register(new BlockSetType(Windswept.MOD_ID + ":icicles", true, true, true, BlockSetType.PressurePlateSensitivity.EVERYTHING, SoundType.GLASS, SoundEvents.CHERRY_WOOD_DOOR_CLOSE, SoundEvents.CHERRY_WOOD_DOOR_OPEN, SoundEvents.CHERRY_WOOD_TRAPDOOR_CLOSE, SoundEvents.CHERRY_WOOD_TRAPDOOR_OPEN, SoundEvents.STONE_PRESSURE_PLATE_CLICK_OFF, SoundEvents.STONE_PRESSURE_PLATE_CLICK_ON, SoundEvents.STONE_BUTTON_CLICK_OFF, SoundEvents.STONE_BUTTON_CLICK_ON));
+        public static final BlockSetType GINGERBREAD_SET = BlockSetTypeRegistryHelper.register(new BlockSetType(Windswept.MOD_ID + ":gingerbread"));
 
-        public static final WoodType HOLLY_WOOD_TYPE = WoodTypeRegistryHelper.registerWoodType(new WoodType(Windswept.MOD_ID + ":holly", HOLLY_BLOCK_SET, SoundType.CHERRY_WOOD, SoundType.CHERRY_WOOD_HANGING_SIGN, SoundEvents.CHERRY_WOOD_FENCE_GATE_CLOSE, SoundEvents.CHERRY_WOOD_FENCE_GATE_OPEN));
+        public static final WoodType HOLLY_WOOD_TYPE = WoodTypeRegistryHelper.registerWoodType(new WoodType(Windswept.MOD_ID + ":holly", HOLLY_BLOCK_SET));
         public static final WoodType CHESTNUT_WOOD_TYPE = WoodTypeRegistryHelper.registerWoodType(new WoodType(Windswept.MOD_ID + ":chestnut", CHESTNUT_BLOCK_SET));
         public static final WoodType PINE_WOOD_TYPE = WoodTypeRegistryHelper.registerWoodType(new WoodType(Windswept.MOD_ID + ":pine", PINE_BLOCK_SET));
+
         public static final PropertyUtil.WoodSetProperties HOLLY = PropertyUtil.WoodSetProperties.builder(MapColor.COLOR_PURPLE).sound(SoundType.CHERRY_WOOD).logSound(SoundType.CHERRY_WOOD).build();
         public static final PropertyUtil.WoodSetProperties CHESTNUT = PropertyUtil.WoodSetProperties.builder(MapColor.COLOR_BROWN).build();
         public static final PropertyUtil.WoodSetProperties PINE = PropertyUtil.WoodSetProperties.builder(MapColor.TERRACOTTA_BROWN).build();
 
-        // Blocks //
         public static final BlockBehaviour.Properties SNOW_BRICKS = BlockBehaviour.Properties.of().mapColor(MapColor.SNOW).strength(.85f).sound(SoundType.SNOW);
         public static final BlockBehaviour.Properties ICE_BRICKS = BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLUE).requiresCorrectToolForDrops().strength(2.8f).sound(SoundType.STONE);
         public static final BlockBehaviour.Properties CRATE = BlockBehaviour.Properties.of().strength(1.5f).sound(SoundType.WOOD);
@@ -440,5 +414,4 @@ public final class WindsweptBlocks {
         public static final BlockBehaviour.Properties ELDER_ORNAMENT = Block.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(.1f).noOcclusion().noCollission().sound(SoundType.AZALEA);
         public static final BlockBehaviour.Properties LAVENDER_THATCH = BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(.5f).sound(SoundType.NETHER_SPROUTS).noOcclusion();
     }
-
 }

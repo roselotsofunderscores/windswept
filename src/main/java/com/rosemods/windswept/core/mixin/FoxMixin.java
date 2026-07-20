@@ -3,7 +3,6 @@ package com.rosemods.windswept.core.mixin;
 import com.rosemods.windswept.core.registry.datapack.WindsweptBiomes;
 import com.rosemods.windswept.core.registry.WindsweptBlocks;
 import com.rosemods.windswept.core.registry.WindsweptItems;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -32,7 +31,7 @@ public class FoxMixin {
     }
 
     @Inject(method = "finalizeSpawn", at = @At("RETURN"))
-    private void finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType type, SpawnGroupData spawnGroupData, CompoundTag tag, CallbackInfoReturnable<SpawnGroupData> info) {
+    private void finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType type, SpawnGroupData spawnGroupData, CallbackInfoReturnable<SpawnGroupData> info) {
         Fox fox = (Fox) (Object) this;
 
         if (level.getRandom().nextBoolean() && level.getBiome(fox.blockPosition()).is(WindsweptBiomes.TUNDRA))

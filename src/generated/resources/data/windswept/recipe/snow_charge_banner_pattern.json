@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "tag": "c:buckets/powder_snow"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "windswept:snow_charge_banner_pattern"
+  }
+}

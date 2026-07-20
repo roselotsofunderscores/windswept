@@ -1,57 +1,35 @@
 package com.rosemods.windswept.common.enchantment.curse;
 
 import com.rosemods.windswept.core.registry.WindsweptEnchantments;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Blocks;
 
-public class SlippingCurseEnchantment extends Enchantment {
-
-    public SlippingCurseEnchantment() {
-        super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR_FEET, new EquipmentSlot[]{EquipmentSlot.FEET});
-    }
-
-    @Override
-    public int getMinCost(int p_45274_) {
-        return 25;
-    }
-
-    @Override
-    public int getMaxCost(int p_45277_) {
-        return 50;
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 1;
-    }
-
-    @Override
-    public boolean isTreasureOnly() {
-        return true;
-    }
-
-    @Override
-    public boolean isCurse() {
-        return true;
-    }
-
-    // Util //
+public final class SlippingCurseEnchantment {
 
     public static float getFriction(Entity entity, float friction) {
-        return entity instanceof LivingEntity livingEntity && Blocks.ICE.getFriction() > friction && hasSlipping(livingEntity) ? Blocks.ICE.getFriction() : friction;
+        if (entity instanceof LivingEntity livingEntity && Blocks.ICE.getFriction() > friction && hasSlipping(livingEntity)) {
+            return Blocks.ICE.getFriction();
+        }
+        return friction;
     }
 
     public static void attemptDamageBoots(LivingEntity entity) {
-        if (hasSlipping(entity) && entity.level().random.nextFloat() < .02f && entity.hasItemInSlot(EquipmentSlot.FEET))
-            entity.getItemBySlot(EquipmentSlot.FEET).hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(EquipmentSlot.FEET));
+        if (hasSlipping(entity) && entity.level().random.nextFloat() < .02f) {
+            var stack = entity.getItemBySlot(EquipmentSlot.FEET);
+            if (!stack.isEmpty() && entity.level() instanceof ServerLevel serverLevel) {
+                stack.hurtAndBreak(1, serverLevel, null, (item) -> entity.onEquippedItemBroken(item, EquipmentSlot.FEET));
+            }
+        }
     }
 
     public static boolean hasSlipping(LivingEntity entity) {
-        return EnchantmentHelper.getEnchantmentLevel(WindsweptEnchantments.SLIPPING_CURSE.get(), entity) > 0;
+        var registry = entity.level().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+        var holder = registry.get(WindsweptEnchantments.SLIPPING_CURSE);
+        return holder.isPresent() && EnchantmentHelper.getEnchantmentLevel(holder.get(), entity) > 0;
     }
-
 }

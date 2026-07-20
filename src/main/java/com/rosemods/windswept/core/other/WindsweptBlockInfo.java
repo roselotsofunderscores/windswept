@@ -11,6 +11,7 @@ import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ComposterBlock;
 
 import static com.rosemods.windswept.core.registry.WindsweptBlocks.*;
 import static com.rosemods.windswept.core.registry.WindsweptItems.*;
@@ -22,58 +23,62 @@ public final class WindsweptBlockInfo {
     }
 
     public static void registerCompostables() {
-        DataUtil.registerCompostable(WILD_BERRIES.get(), .3f);
-        DataUtil.registerCompostable(WILD_BERRY_PIPS.get(), .3f);
-        DataUtil.registerCompostable(HOLLY_BERRIES.get(), .3f);
-        DataUtil.registerCompostable(CHESTNUTS.get(), .3f);
-        DataUtil.registerCompostable(GINGER_ROOT.get(), .3f);
-        DataUtil.registerCompostable(ROASTED_CHESTNUTS.get(), .3f);
-        DataUtil.registerCompostable(PINECONE.get(), .3f);
+        registerCompostable(WILD_BERRIES.get(), .3f);
+        registerCompostable(WILD_BERRY_PIPS.get(), .3f);
+        registerCompostable(HOLLY_BERRIES.get(), .3f);
+        registerCompostable(CHESTNUTS.get(), .3f);
+        registerCompostable(GINGER_ROOT.get(), .3f);
+        registerCompostable(ROASTED_CHESTNUTS.get(), .3f);
+        registerCompostable(PINECONE.get(), .3f);
 
-        DataUtil.registerCompostable(CHESTNUT_CRATE.get(), 1f);
-        DataUtil.registerCompostable(ROASTED_CHESTNUT_CRATE.get(), 1f);
-        DataUtil.registerCompostable(GINGER_ROOT_CRATE.get(), 1f);
-        DataUtil.registerCompostable(HOLLY_BERRY_BASKET.get(), 1f);
-        DataUtil.registerCompostable(WILD_BERRY_BASKET.get(), 1f);
+        registerCompostable(CHESTNUT_CRATE.get(), 1f);
+        registerCompostable(ROASTED_CHESTNUT_CRATE.get(), 1f);
+        registerCompostable(GINGER_ROOT_CRATE.get(), 1f);
+        registerCompostable(HOLLY_BERRY_BASKET.get(), 1f);
+        registerCompostable(WILD_BERRY_BASKET.get(), 1f);
 
-        DataUtil.registerCompostable(RED_ROSE.get(), .65f);
-        DataUtil.registerCompostable(BLUE_ROSE.get(), .65f);
-        DataUtil.registerCompostable(WHITE_ROSE.get(), .65f);
-        DataUtil.registerCompostable(YELLOW_ROSE.get(), .65f);
-        DataUtil.registerCompostable(FOXGLOVE.get(), .65f);
-        DataUtil.registerCompostable(SNOWDROP.get(), .65f);
-        DataUtil.registerCompostable(MOSS_CAMPION.get(), .65f);
-        DataUtil.registerCompostable(NIGHTSHADE.get(), .65f);
-        DataUtil.registerCompostable(BLUEBELLS.get(), .65f);
-        DataUtil.registerCompostable(MIMOSA.get(), .65f);
-        DataUtil.registerCompostable(YELLOW_PETALS.get(), .3f);
-        DataUtil.registerCompostable(LAVENDER.get(), .3f);
+        registerCompostable(RED_ROSE.get(), .65f);
+        registerCompostable(BLUE_ROSE.get(), .65f);
+        registerCompostable(WHITE_ROSE.get(), .65f);
+        registerCompostable(YELLOW_ROSE.get(), .65f);
+        registerCompostable(FOXGLOVE.get(), .65f);
+        registerCompostable(SNOWDROP.get(), .65f);
+        registerCompostable(MOSS_CAMPION.get(), .65f);
+        registerCompostable(NIGHTSHADE.get(), .65f);
+        registerCompostable(BLUEBELLS.get(), .65f);
+        registerCompostable(MIMOSA.get(), .65f);
+        registerCompostable(YELLOW_PETALS.get(), .3f);
+        registerCompostable(LAVENDER.get(), .3f);
 
-        DataUtil.registerCompostable(RED_ROSE_BUSH.get(), .65f);
-        DataUtil.registerCompostable(BLUE_ROSE_BUSH.get(), .65f);
-        DataUtil.registerCompostable(WHITE_ROSE_BUSH.get(), .65f);
-        DataUtil.registerCompostable(YELLOW_ROSE_BUSH.get(), .65f);
-        DataUtil.registerCompostable(LUPINE.get(), .65f);
-        DataUtil.registerCompostable(LIONS_TAIL.get(), .65f);
+        registerCompostable(RED_ROSE_BUSH.get(), .65f);
+        registerCompostable(BLUE_ROSE_BUSH.get(), .65f);
+        registerCompostable(WHITE_ROSE_BUSH.get(), .65f);
+        registerCompostable(YELLOW_ROSE_BUSH.get(), .65f);
+        registerCompostable(LUPINE.get(), .65f);
+        registerCompostable(LIONS_TAIL.get(), .65f);
 
-        DataUtil.registerCompostable(HOLLY_LEAVES.get(), .3f);
-        DataUtil.registerCompostable(CHESTNUT_LEAVES.get(), .3f);
-        DataUtil.registerCompostable(PINE_LEAVES.get(), .3f);
-        DataUtil.registerCompostable(HOLLY_SAPLING.get(), .3f);
-        DataUtil.registerCompostable(CHESTNUT_SAPLING.get(), .3f);
-        DataUtil.registerCompostable(PINE_SAPLING.get(), .3f);
+        registerCompostable(HOLLY_LEAVES.get(), .3f);
+        registerCompostable(CHESTNUT_LEAVES.get(), .3f);
+        registerCompostable(PINE_LEAVES.get(), .3f);
+        registerCompostable(HOLLY_SAPLING.get(), .3f);
+        registerCompostable(CHESTNUT_SAPLING.get(), .3f);
+        registerCompostable(PINE_SAPLING.get(), .3f);
 
-        DataUtil.registerCompostable(SNOWY_SPROUTS.get(), .5f);
-        DataUtil.registerCompostable(GELISOL_GRASS.get(), .5f);
-        DataUtil.registerCompostable(DRY_MOSSY_SPROUTS.get(), .5f);
-        DataUtil.registerCompostable(MOSSY_SPROUTS.get(), .5f);
+        registerCompostable(SNOWY_SPROUTS.get(), .5f);
+        registerCompostable(GELISOL_GRASS.get(), .5f);
+        registerCompostable(DRY_MOSSY_SPROUTS.get(), .5f);
+        registerCompostable(MOSSY_SPROUTS.get(), .5f);
 
-        DataUtil.registerCompostable(GINGERBREAD_COOKIE.get(), .85f);
-        DataUtil.registerCompostable(MUTTON_PIE.get(), 1f);
-        DataUtil.registerCompostable(CHRISTMAS_PUDDING.get(), 1f);
+        registerCompostable(GINGERBREAD_COOKIE.get(), .85f);
+        registerCompostable(MUTTON_PIE.get(), 1f);
+        registerCompostable(CHRISTMAS_PUDDING.get(), 1f);
 
-        DataUtil.registerCompostable(PINECONE_BLOCK.get(), 1f);
-        DataUtil.registerCompostable(PINECONE_JAM_BLOCK.get(), 1f);
+        registerCompostable(PINECONE_BLOCK.get(), 1f);
+        registerCompostable(PINECONE_JAM_BLOCK.get(), 1f);
+    }
+
+    private static void registerCompostable(net.minecraft.world.level.ItemLike item, float chance) {
+        ComposterBlock.COMPOSTABLES.put(item.asItem(), chance);
     }
 
     public static void registerFlammables() {
@@ -149,11 +154,15 @@ public final class WindsweptBlockInfo {
         DataUtil.registerFlammable(BLUEBELLS.get(), 60, 100);
         DataUtil.registerFlammable(MIMOSA.get(), 60, 100);
         DataUtil.registerFlammable(LUPINE.get(), 60, 100);
-        DataUtil.registerFlammable(RED_ROSE_BUSH.get(), 60, 100);
-        DataUtil.registerFlammable(BLUE_ROSE_BUSH.get(), 60, 100);
-        DataUtil.registerFlammable(WHITE_ROSE_BUSH.get(), 60, 100);
-        DataUtil.registerFlammable(YELLOW_ROSE_BUSH.get(), 60, 100);
+        registerTallFlower(RED_ROSE_BUSH.get());
+        registerTallFlower(BLUE_ROSE_BUSH.get());
+        registerTallFlower(WHITE_ROSE_BUSH.get());
+        registerTallFlower(YELLOW_ROSE_BUSH.get());
         DataUtil.registerFlammable(LIONS_TAIL.get(), 60, 100);
+    }
+
+    private static void registerTallFlower(Block block) {
+        DataUtil.registerFlammable(block, 60, 100);
     }
 
     public static void registerBlockColors() {
@@ -162,10 +171,8 @@ public final class WindsweptBlockInfo {
         Block[] foliage = new Block[]{CHESTNUT_LEAVES.get(), CHESTNUT_LEAF_PILE.get(), FLOWERING_ACACIA_LEAVES.get(), FLOWERING_ACACIA_LEAF_PILE.get()};
 
         blockcolors.register((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getAverageFoliageColor(world, pos) : FoliageColor.getDefaultColor(), foliage);
-        blockcolors.register((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getAverageFoliageColor(world, pos) : GrassColor.getDefaultColor(), YELLOW_PETALS.get());
+        blockcolors.register((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getAverageGrassColor(world, pos) : GrassColor.getDefaultColor(), YELLOW_PETALS.get());
 
-        //itemcolors.register((s, c) -> c > 0 ? -1 : ((DyeableLeatherItem) s.getItem()).getColor(s), WindsweptItems.SNOW_BOOTS.get());
         itemcolors.register((stack, tintIndex) -> blockcolors.getColor(((BlockItem) stack.getItem()).getBlock().defaultBlockState(), null, null, tintIndex), foliage);
     }
-
 }

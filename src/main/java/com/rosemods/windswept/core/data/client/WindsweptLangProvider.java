@@ -177,8 +177,8 @@ public class WindsweptLangProvider extends LanguageProvider {
         this.add(block.get(), toUpper(block));
     }
 
-    private void translateEnchantment(DeferredHolder<? extends Enchantment, ? extends Enchantment> enchantment, String name, String desc) {
-        String descId = Util.makeDescriptionId("enchantment", enchantment.getId()); // ew
+    private void translateEnchantment(ResourceKey<Enchantment> enchantment, String name, String desc) {
+        String descId = Util.makeDescriptionId("enchantment", enchantment.location());
         this.add(descId, name);
         this.add(descId + ".desc", desc);
     }

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_roses": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#windswept:roses"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "windswept:rose_flower_banner_pattern"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_roses"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "windswept:rose_flower_banner_pattern"
+    ]
+  }
+}

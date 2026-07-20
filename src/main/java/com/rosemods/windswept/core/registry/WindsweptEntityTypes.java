@@ -15,7 +15,7 @@ public final class WindsweptEntityTypes {
     public static final DeferredHolder<EntityType<?>, EntityType<Chilled>> CHILLED = ENTITIES.createEntity("chilled", Chilled::new, MobCategory.MONSTER, builder ->
             builder.sized(.6f, 2f).eyeHeight(1.74f).passengerAttachments(2.0125f).ridingOffset(-.7f).clientTrackingRange(8));
     public static final DeferredHolder<EntityType<?>, EntityType<Frostbiter>> FROSTBITER = ENTITIES.createEntity("frostbiter", Frostbiter::new, MobCategory.CREATURE, builder ->
-            builder.sized(1.05f, 1.7f).eyeHeight(1.3f).passengerAttachments(1.25f).clientTrackingRange(10));
+            builder.sized(2.0f, 2.0f).eyeHeight(1.3f).passengerAttachments(1.9f).clientTrackingRange(10));
     public static final DeferredHolder<EntityType<?>, EntityType<FrostArrow>> FROST_ARROW = ENTITIES.createEntity("frost_arrow", FrostArrow::new, MobCategory.MISC, .5f, .5f);
 
 }

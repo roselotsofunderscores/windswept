@@ -6,7 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -48,8 +47,16 @@ public class NightFairyLightBlock extends PineconeBlock implements EntityBlock {
     }
 
     @Nullable
+    @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return !level.isClientSide && level.dimensionType().hasSkyLight() ? BaseEntityBlock.createTickerHelper(type, WindsweptBlockEntities.NIGHT_FAIRY_LIGHT.get(), NightFairyLightBlockEntity::tick) : null;
+        if (level.isClientSide || !level.dimensionType().hasSkyLight()) return null;
+        return createTicker(type, WindsweptBlockEntities.NIGHT_FAIRY_LIGHT.get(), NightFairyLightBlockEntity::tick);
+    }
+
+    @Nullable
+    @SuppressWarnings("unchecked")
+    private static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTicker(BlockEntityType<A> type, BlockEntityType<E> expectedType, BlockEntityTicker<? super E> ticker) {
+        return type == expectedType ? (BlockEntityTicker<A>) ticker : null;
     }
 
     @OnlyIn(Dist.CLIENT)

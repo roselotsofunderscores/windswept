@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "windswept:holly_berries"
+    },
+    "B": {
+      "item": "windswept:frozen_branch"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#B#",
+    " # "
+  ],
+  "result": {
+    "count": 1,
+    "id": "windswept:holly_wreath"
+  }
+}

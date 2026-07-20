@@ -1,0 +1,45 @@
+{
+  "repaletter": [
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:spruce_planks",
+      "replaces_with": "windswept:chestnut_planks"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:spruce_stairs",
+      "replaces_with": "windswept:chestnut_stairs"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:spruce_slab",
+      "replaces_with": "windswept:chestnut_slab"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:stripped_spruce_log",
+      "replaces_with": "windswept:stripped_chestnut_log"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:stripped_spruce_wood",
+      "replaces_with": "windswept:stripped_chestnut_wood"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:spruce_fence",
+      "replaces_with": "windswept:chestnut_fence"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:spruce_fence_gate",
+      "replaces_with": "windswept:chestnut_fence_gate"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:spruce_door",
+      "replaces_with": "windswept:chestnut_door"
+    }
+  ],
+  "structures": "minecraft:village_snowy"
+}

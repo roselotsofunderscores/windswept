@@ -5,16 +5,22 @@ import com.rosemods.windswept.common.block.GingerCropBlock;
 import com.rosemods.windswept.common.block.LavenderBlock;
 import com.rosemods.windswept.common.block.PineconeBlock;
 import com.rosemods.windswept.core.Windswept;
+import com.rosemods.windswept.core.registry.WindsweptBlocks;
 import com.rosemods.windswept.core.registry.WindsweptEntityTypes;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import com.rosemods.windswept.core.registry.WindsweptItems;
+import net.minecraft.advancements.critereon.*;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.WritableRegistry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.loot.LootTableSubProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
@@ -34,20 +40,17 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.neoforged.neoforge.registries.ForgeRegistries;
-import net.neoforged.neoforge.registries.IForgeRegistry;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.rosemods.windswept.core.registry.WindsweptBlocks.*;
 import static com.rosemods.windswept.core.registry.WindsweptItems.*;
-import static net.minecraft.world.item.Items.*;
 
 public class WindsweptLootTableProvider extends LootTableProvider {
 
@@ -57,27 +60,29 @@ public class WindsweptLootTableProvider extends LootTableProvider {
                 new LootTableProvider.SubProviderEntry(WindsweptEntityLoot::new, LootContextParamSets.ENTITY),
                 new LootTableProvider.SubProviderEntry(WindsweptChestLoot::new, LootContextParamSets.CHEST),
                 new LootTableProvider.SubProviderEntry(WindsweptArchaeologyLoot::new, LootContextParamSets.ARCHAEOLOGY)
-        ));
+        ), event.getLookupProvider());
     }
 
     @Override
-    protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext validationtracker) {
+    protected void validate(WritableRegistry<LootTable> registry, ValidationContext context, ProblemReporter.Collector collector) {
     }
 
-    private static <T> Stream<T> getContent(IForgeRegistry<T> entry) {
-        return entry.getValues().stream().filter(i -> entry.getKey(i) != null
-                && Windswept.MOD_ID.equals(entry.getKey(i).getNamespace()));
+    private static <T> Stream<T> getContent(net.minecraft.core.Registry<T> registry) {
+        return registry.stream().filter(entry -> Windswept.MOD_ID.equals(registry.getKey(entry).getNamespace()));
     }
 
     private static class WindsweptBlockLoot extends BlockLootSubProvider {
+
         private static final Set<Item> EXPLOSION_RESISTANT = Stream.of(Blocks.DRAGON_EGG, Blocks.BEACON, Blocks.CONDUIT, Blocks.SKELETON_SKULL, Blocks.WITHER_SKELETON_SKULL, Blocks.PLAYER_HEAD, Blocks.ZOMBIE_HEAD, Blocks.CREEPER_HEAD, Blocks.DRAGON_HEAD, Blocks.PIGLIN_HEAD, Blocks.SHULKER_BOX, Blocks.BLACK_SHULKER_BOX, Blocks.BLUE_SHULKER_BOX, Blocks.BROWN_SHULKER_BOX, Blocks.CYAN_SHULKER_BOX, Blocks.GRAY_SHULKER_BOX, Blocks.GREEN_SHULKER_BOX, Blocks.LIGHT_BLUE_SHULKER_BOX, Blocks.LIGHT_GRAY_SHULKER_BOX, Blocks.LIME_SHULKER_BOX, Blocks.MAGENTA_SHULKER_BOX, Blocks.ORANGE_SHULKER_BOX, Blocks.PINK_SHULKER_BOX, Blocks.PURPLE_SHULKER_BOX, Blocks.RED_SHULKER_BOX, Blocks.WHITE_SHULKER_BOX, Blocks.YELLOW_SHULKER_BOX).map(ItemLike::asItem).collect(Collectors.toSet());
 
-        protected WindsweptBlockLoot() {
-            super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags());
+        protected WindsweptBlockLoot(HolderLookup.Provider provider) {
+            super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags(), provider);
         }
 
         @Override
         protected void generate() {
+            HolderLookup.RegistryLookup<net.minecraft.world.item.enchantment.Enchantment> enchants = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+
             // holly
             this.dropSelf(STRIPPED_HOLLY_LOG.get());
             this.dropSelf(STRIPPED_HOLLY_WOOD.get());
@@ -96,8 +101,7 @@ public class WindsweptLootTableProvider extends LootTableProvider {
             this.dropSelf(HOLLY_HANGING_SIGNS.getFirst().get());
             this.dropSelf(HOLLY_SAPLING.get());
             this.dropPottedContents(POTTED_HOLLY_SAPLING.get());
-
-            this.add(HOLLY_BEEHIVE.get(), WindsweptBlockLoot::createBeeHiveDrop);
+            this.add(HOLLY_BEEHIVE.get(), block -> createBeeHiveDrop(block));
             this.dropSelf(HOLLY_LADDER.get());
             this.bookshelf(HOLLY_BOOKSHELF.get());
             this.dropWhenSilkTouch(CHISELED_HOLLY_BOOKSHELF.get());
@@ -105,16 +109,13 @@ public class WindsweptLootTableProvider extends LootTableProvider {
             this.dropSelf(HOLLY_CHEST.get());
             this.dropSelf(TRAPPED_HOLLY_CHEST.get());
 
-            this.add(HOLLY_LEAVES.get(), b -> createLeavesDrops(b, HOLLY_SAPLING
-                    .get(), .05f, .0625f, .083333336f, .1f).withPool(LootPool.lootPool()
-                    .setRolls(ConstantValue.exactly(1f)).when(HAS_NO_SHEARS_OR_SILK_TOUCH)
+            this.add(HOLLY_LEAVES.get(), b -> createLeavesDrops(b, HOLLY_SAPLING.get(), .05f, .0625f, .083333336f, .1f).withPool(LootPool.lootPool()
+                    .setRolls(ConstantValue.exactly(1f)).when(this.doesNotHaveShearsOrSilkTouch())
                     .add(applyExplosionCondition(b, LootItem.lootTableItem(HOLLY_BERRIES.get()))
                             .apply(SetItemCountFunction.setCount(UniformGenerator.between(-6f, 1f)))
-                            .apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)))));
-
+                            .apply(ApplyBonusCount.addUniformBonusCount(enchants.getOrThrow(Enchantments.FORTUNE))))));
 
             this.leafPile(HOLLY_LEAF_PILE.get());
-
             this.dropSelf(HOLLY_BERRY_BASKET.get());
 
             // chestnut
@@ -135,8 +136,7 @@ public class WindsweptLootTableProvider extends LootTableProvider {
             this.dropSelf(CHESTNUT_HANGING_SIGNS.getFirst().get());
             this.dropSelf(CHESTNUT_SAPLING.get());
             this.dropPottedContents(POTTED_CHESTNUT_SAPLING.get());
-
-            this.add(CHESTNUT_BEEHIVE.get(), WindsweptBlockLoot::createBeeHiveDrop);
+            this.add(CHESTNUT_BEEHIVE.get(), block -> createBeeHiveDrop(block));
             this.dropSelf(CHESTNUT_LADDER.get());
             this.bookshelf(CHESTNUT_BOOKSHELF.get());
             this.dropWhenSilkTouch(CHISELED_CHESTNUT_BOOKSHELF.get());
@@ -144,19 +144,17 @@ public class WindsweptLootTableProvider extends LootTableProvider {
             this.dropSelf(CHESTNUT_CHEST.get());
             this.dropSelf(TRAPPED_CHESTNUT_CHEST.get());
 
-            this.add(CHESTNUT_LEAVES.get(), b -> createLeavesDrops(b, CHESTNUT_SAPLING
-                    .get(), .05f, .0625f, .083333336f, .1f).withPool(LootPool.lootPool()
-                    .setRolls(ConstantValue.exactly(1f)).when(HAS_NO_SHEARS_OR_SILK_TOUCH)
+            this.add(CHESTNUT_LEAVES.get(), b -> createLeavesDrops(b, CHESTNUT_SAPLING.get(), .05f, .0625f, .083333336f, .1f).withPool(LootPool.lootPool()
+                    .setRolls(ConstantValue.exactly(1f)).when(this.doesNotHaveShearsOrSilkTouch())
                     .add(applyExplosionCondition(b, LootItem.lootTableItem(CHESTNUTS.get()))
                             .apply(SetItemCountFunction.setCount(UniformGenerator.between(-4f, 1f)))
-                            .apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)))));
+                            .apply(ApplyBonusCount.addUniformBonusCount(enchants.getOrThrow(Enchantments.FORTUNE))))));
 
             this.leafPile(CHESTNUT_LEAF_PILE.get());
-
             this.dropSelf(CHESTNUT_CRATE.get());
             this.dropSelf(ROASTED_CHESTNUT_CRATE.get());
 
-            //pine
+            // pine
             this.dropSelf(STRIPPED_PINE_LOG.get());
             this.dropSelf(STRIPPED_PINE_WOOD.get());
             this.dropSelf(WEATHERED_PINE_LOG.get());
@@ -176,15 +174,13 @@ public class WindsweptLootTableProvider extends LootTableProvider {
             this.dropSelf(PINE_HANGING_SIGNS.getFirst().get());
             this.dropSelf(PINE_SAPLING.get());
             this.dropPottedContents(POTTED_PINE_SAPLING.get());
-
-            this.add(PINE_BEEHIVE.get(), WindsweptBlockLoot::createBeeHiveDrop);
+            this.add(PINE_BEEHIVE.get(), block -> createBeeHiveDrop(block));
             this.dropSelf(PINE_LADDER.get());
             this.bookshelf(PINE_BOOKSHELF.get());
             this.dropWhenSilkTouch(CHISELED_PINE_BOOKSHELF.get());
             this.dropSelf(PINE_BOARDS.get());
             this.dropSelf(PINE_CHEST.get());
             this.dropSelf(TRAPPED_PINE_CHEST.get());
-
             this.add(PINE_LEAVES.get(), b -> createLeavesDrops(b, PINE_SAPLING.get(), .05f, .0625f, .083333336f, .1f));
             this.leafPile(PINE_LEAF_PILE.get());
 
@@ -198,11 +194,9 @@ public class WindsweptLootTableProvider extends LootTableProvider {
             this.add(REDSTONE_FAIRY_LIGHT.get(), this::createPineconeTable);
 
             this.dropSelf(PINECONE_JAM_BLOCK.get());
-
             this.dropSelf(PINECONE_BLOCK.get());
             this.dropSelf(CARVED_PINECONE_BLOCK.get());
             this.dropSelf(WILL_O_THE_WISP.get());
-
             this.dropSelf(ELDER_WING.get());
             this.dropSelf(ELDER_ORNAMENT.get());
             this.add(DREAM_CATCHER.get(), b -> createSinglePropConditionTable(b, DoublePlantBlock.HALF, DoubleBlockHalf.UPPER));
@@ -267,8 +261,7 @@ public class WindsweptLootTableProvider extends LootTableProvider {
             this.dropSelf(SNOW_BRICK_STAIRS.get());
             this.add(SNOW_BRICK_SLAB.get(), this::createSlabItemTable);
             this.dropSelf(SNOW_BRICK_WALL.get());
-
-            this.add(SUSPICIOUS_SNOW.get(), noDrop());
+            this.add(SUSPICIOUS_SNOW.get(), b -> LootTable.lootTable());
 
             // packed ice blocks
             this.dropSelf(PACKED_ICE_STAIRS.get());
@@ -295,8 +288,8 @@ public class WindsweptLootTableProvider extends LootTableProvider {
             this.dropSelf(SHALE_WALL.get());
             this.dropSelf(POLISHED_SHALE.get());
             this.dropSelf(POLISHED_SHALE_STAIRS.get());
-            this.dropSelf(POLISHED_SHALE_WALL.get());
             this.add(POLISHED_SHALE_SLAB.get(), this::createSlabItemTable);
+            this.dropSelf(POLISHED_SHALE_WALL.get());
             this.dropSelf(POLISHED_SHALE_BRICKS.get());
             this.dropSelf(ICY_POLISHED_SHALE_BRICKS.get());
             this.dropSelf(CHISELED_POLISHED_SHALE_BRICKS.get());
@@ -308,11 +301,8 @@ public class WindsweptLootTableProvider extends LootTableProvider {
             this.dropSelf(CANDY_CANE_BLOCK.get());
 
             // ginger
-            this.add(GINGER.get(), applyExplosionDecay(GINGER.get(), LootTable.lootTable()
-                    .withPool(LootPool.lootPool().add(LootItem.lootTableItem(GINGER_ROOT.get())))
-                    .withPool(LootPool.lootPool().when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(GINGER.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(GingerCropBlock.AGE, 4)))
-                            .add(LootItem.lootTableItem(GINGER_ROOT.get()).apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, .5714286f, 3))))));
-            this.add(GINGER_SOIL.get(), b -> dropTwoOthers(b, Items.DIRT, GINGER_ROOT.get()));
+            this.add(GINGER.get(), b -> createGingerDrops(b));
+            this.add(GINGER_SOIL.get(), b -> dropTwoOthers(b, Blocks.DIRT, GINGER_ROOT.get()));
             this.dropSelf(GINGERBREAD_BLOCK.get());
             this.dropSelf(GLAZED_GINGERBREAD_BLOCK.get());
             this.dropSelf(GINGERBREAD_BRICKS.get());
@@ -330,17 +320,7 @@ public class WindsweptLootTableProvider extends LootTableProvider {
 
             // decoration
             this.dropSelf(FROSTBITER_TROPHY.get());
-            /*
-            this.add(CHRISTMAS_PUDDING.get(), LootTable.lootTable().withPool(LootPool.lootPool()
-                    .add(LootItem.lootTableItem(CHRISTMAS_PUDDING_SLICE.get())
-                            .apply(ChristmasPuddingBlock.STATE.getPossibleValues(), value -> SetItemCountFunction
-                                    .setCount(ConstantValue.exactly(value.getIndex() + 1), false)
-                                    .when(stateCond(CHRISTMAS_PUDDING, ChristmasPuddingBlock.STATE, value))))
-                    .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(WindsweptItemTags.KNIVES)))
-            ).withPool(LootPool.lootPool().add(LootItem.lootTableItem(HOLLY_BERRIES.get()))));
-             */
-            this.add(CHRISTMAS_PUDDING.get(), noDrop());
-
+            this.add(CHRISTMAS_PUDDING.get(), b -> LootTable.lootTable());
             this.dropSelf(HOLLY_WREATH.get());
             this.dropSelf(PINECONE_WREATH.get());
             this.dropSelf(VINE_WREATH.get());
@@ -356,10 +336,10 @@ public class WindsweptLootTableProvider extends LootTableProvider {
             this.tallFlower(YELLOW_ROSE_BUSH.get());
 
             // sprouts
-            this.add(SNOWY_SPROUTS.get(), WindsweptBlockLoot::createShearsOnlyDrop);
-            this.add(GELISOL_GRASS.get(), WindsweptBlockLoot::createShearsOnlyDrop);
-            this.add(DRY_MOSSY_SPROUTS.get(), WindsweptBlockLoot::createShearsOnlyDrop);
-            this.add(MOSSY_SPROUTS.get(), WindsweptBlockLoot::createShearsOnlyDrop);
+            this.add(SNOWY_SPROUTS.get(), BlockLootSubProvider::createShearsOnlyDrop);
+            this.add(GELISOL_GRASS.get(), BlockLootSubProvider::createShearsOnlyDrop);
+            this.add(DRY_MOSSY_SPROUTS.get(), BlockLootSubProvider::createShearsOnlyDrop);
+            this.add(MOSSY_SPROUTS.get(), BlockLootSubProvider::createShearsOnlyDrop);
 
             // flowers
             this.dropSelf(RED_ROSE.get());
@@ -407,12 +387,10 @@ public class WindsweptLootTableProvider extends LootTableProvider {
 
             // wild berry
             this.add(WILD_BERRY_BUSH.get(), b -> applyExplosionDecay(b, LootTable.lootTable().withPool(LootPool.lootPool()
-                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(b)
-                                .setProperties(StatePropertiesPredicate.Builder.properties()
-                                        .hasProperty(SweetBerryBushBlock.AGE, 3)))
-                        .add(LootItem.lootTableItem(WILD_BERRIES.get()))
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 2f)))
-                        .apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)))));
+                    .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(b).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SweetBerryBushBlock.AGE, 3)))
+                    .add(LootItem.lootTableItem(WILD_BERRIES.get()))
+                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 2f)))
+                    .apply(ApplyBonusCount.addUniformBonusCount(enchants.getOrThrow(Enchantments.FORTUNE))))));
             this.dropSelf(WILD_BERRY_BASKET.get());
 
             // icicle blocks
@@ -464,11 +442,10 @@ public class WindsweptLootTableProvider extends LootTableProvider {
             this.dropSelf(DRY_MOSSY_COBBLESTONE_TILE_WALL.get());
 
             // misc
-            this.add(GELISOL.get(), b -> createSingleItemTableWithSilkTouch(b, net.minecraft.world.level.block.Blocks.DIRT));
-            this.add(GELISOL_PATH.get(), b -> createSingleItemTableWithSilkTouch(b, net.minecraft.world.level.block.Blocks.DIRT));
+            this.add(GELISOL.get(), b -> createSingleItemTableWithSilkTouch(b, Blocks.DIRT));
+            this.add(GELISOL_PATH.get(), b -> createSingleItemTableWithSilkTouch(b, Blocks.DIRT));
             this.dropSelf(FROZEN_FLESH_BLOCK.get());
         }
-
 
         private void bookshelf(Block block) {
             this.add(block, b -> createSingleItemTableWithSilkTouch(b, Items.BOOK, ConstantValue.exactly(3f)));
@@ -479,63 +456,60 @@ public class WindsweptLootTableProvider extends LootTableProvider {
         }
 
         private void leafPile(Block block) {
-            this.add(block, b -> createMultifaceBlockDrops(b, MatchTool.toolMatches(ItemPredicate.Builder.item().of(Tags.Items.SHEARS))));
+            this.add(block, b -> createMultifaceBlockDrops(b, MatchTool.toolMatches(ItemPredicate.Builder.item().of(Tags.Items.TOOLS_SHEAR))));
         }
 
-        @Override
-        public Iterable<Block> getKnownBlocks() {
-            return getContent(ForgeRegistries.BLOCKS).collect(Collectors.toSet());
-        }
-
-        protected LootTable.Builder createWildGingerDrops(Block block) {
+        private LootTable.Builder createWildGingerDrops(Block block) {
             return createShearsDispatchTable(block, applyExplosionDecay(block, LootItem.lootTableItem(GINGER_ROOT.get())));
         }
 
         private LootTable.Builder dropTwoOthers(Block block, ItemLike other, ItemLike another) {
             return LootTable.lootTable()
-                    .withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1f)).when(HAS_SILK_TOUCH).add(LootItem.lootTableItem(block))))
-                    .withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1f)).when(HAS_NO_SILK_TOUCH).add(LootItem.lootTableItem(other))))
-                    .withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1f)).when(HAS_NO_SILK_TOUCH).add(LootItem.lootTableItem(another))));
+                    .withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1f)).when(this.hasSilkTouch()).add(LootItem.lootTableItem(block))))
+                    .withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1f)).when(this.doesNotHaveSilkTouch()).add(LootItem.lootTableItem(other))))
+                    .withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1f)).when(this.doesNotHaveSilkTouch()).add(LootItem.lootTableItem(another))));
+        }
+
+        private LootTable.Builder createGingerDrops(Block block) {
+            return applyExplosionDecay(block, LootTable.lootTable()
+                    .withPool(LootPool.lootPool().add(LootItem.lootTableItem(GINGER_ROOT.get())))
+                    .withPool(LootPool.lootPool().when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(GingerCropBlock.AGE, 4)))
+                            .add(LootItem.lootTableItem(GINGER_ROOT.get()).apply(ApplyBonusCount.addBonusBinomialDistributionCount(this.registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE), .5714286f, 3)))));
         }
 
         private LootTable.Builder createPineconeTable(Block block) {
-            return LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1f))
-                            .add(applyExplosionDecay(block, LootItem.lootTableItem(block)
-                                    .apply(List.of(2, 3, 4), i -> SetItemCountFunction.setCount(ConstantValue.exactly((float) i))
-                                            .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                                                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PineconeBlock.AMOUNT, i)))))));
+            return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1f))
+                    .add(applyExplosionDecay(block, LootItem.lootTableItem(block)
+                            .apply(List.of(2, 3, 4), i -> SetItemCountFunction.setCount(ConstantValue.exactly((float) i))
+                                    .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                            .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PineconeBlock.AMOUNT, i)))))));
         }
 
         private LootTable.Builder createPetalsTable(Block block) {
-            return LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1f))
-                            .add(applyExplosionDecay(block, LootItem.lootTableItem(block)
-                                    .apply(List.of(2, 3, 4), i -> SetItemCountFunction.setCount(ConstantValue.exactly((float) i))
-                                            .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                                                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PinkPetalsBlock.AMOUNT, i)))))));
+            return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1f))
+                    .add(applyExplosionDecay(block, LootItem.lootTableItem(block)
+                            .apply(List.of(2, 3, 4), i -> SetItemCountFunction.setCount(ConstantValue.exactly((float) i))
+                                    .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                            .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PinkPetalsBlock.AMOUNT, i)))))));
         }
 
         private LootTable.Builder createLavenderTable(Block block) {
-            return LootTable.lootTable()
-                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1f))
-                            .add(this.applyExplosionDecay(block, LootItem.lootTableItem(block)
-                                    .apply(List.of(0, 1, 2), i -> SetItemCountFunction.setCount(ConstantValue.exactly(i + 1f))
-                                            .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                                                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LavenderBlock.AGE, i)))))));
+            return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1f))
+                    .add(this.applyExplosionDecay(block, LootItem.lootTableItem(block)
+                            .apply(List.of(0, 1, 2), i -> SetItemCountFunction.setCount(ConstantValue.exactly(i + 1f))
+                                    .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                            .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LavenderBlock.AGE, i)))))));
         }
 
-        private static <V extends Comparable<V>> LootItemCondition.Builder stateCond(DeferredHolder<? extends Block> block, Property<V> property, V v) {
-            return LootItemBlockStatePropertyCondition.hasBlockStateProperties(block.get())
-                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(property, v.toString()));
+        @Override
+        public Iterable<Block> getKnownBlocks() {
+            return getContent(BuiltInRegistries.BLOCK).collect(Collectors.toSet());
         }
-
     }
 
     private static class WindsweptEntityLoot extends EntityLootSubProvider {
-
-        protected WindsweptEntityLoot() {
-            super(FeatureFlags.REGISTRY.allFlags());
+        protected WindsweptEntityLoot(HolderLookup.Provider provider) {
+            super(FeatureFlags.REGISTRY.allFlags(), provider);
         }
 
         @Override
@@ -544,60 +518,63 @@ public class WindsweptLootTableProvider extends LootTableProvider {
                     .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1f))
                             .add(LootItem.lootTableItem(FROZEN_FLESH.get())
                                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(-2f, 2f)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0f, 1f)))))
+                                    .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0f, 1f)))))
                     .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1f))
                             .add(LootItem.lootTableItem(ICICLES.get())
                                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(-3f, 1f)))
-                                    .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0f, 1f)))))
+                                    .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0f, 1f)))))
                     .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1f))
-                            .add(LootItem.lootTableItem(GOLD_INGOT))
-                            .add(LootItem.lootTableItem(BEETROOT))
-                            .add(LootItem.lootTableItem(APPLE)
-                                    .apply(SmeltItemFunction.smelted().when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, ENTITY_ON_FIRE))))
+                            .add(LootItem.lootTableItem(Items.GOLD_INGOT))
+                            .add(LootItem.lootTableItem(Items.BEETROOT))
+                            .add(LootItem.lootTableItem(Items.APPLE)
+                                    .apply(SmeltItemFunction.smelted().when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS,
+                                            EntityPredicate.Builder.entity().flags(EntityFlagsPredicate.Builder.flags().setOnFire(true))))))
                             .when(LootItemKilledByPlayerCondition.killedByPlayer())
-                            .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(.025f, .01f)))
-                    .withPool(LootPool.lootPool()
-                            .add(LootItem.lootTableItem(MUSIC_DISC_SNOW::get))
-                            .when(LootItemEntityPropertyCondition.hasProperties(
-                                    LootContext.EntityTarget.KILLER,
-                                    EntityPredicate.Builder.entity().of(EntityTypeTags.SKELETONS)))));
+                            .when(LootItemRandomChanceCondition.randomChance(.025f)))
+                    .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1f))
+                            .add(LootItem.lootTableItem(MUSIC_DISC_SNOW.get()))
+                            .when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.entity().of(EntityTypeTags.SKELETONS)))));
             this.add(WindsweptEntityTypes.FROSTBITER.get(), LootTable.lootTable());
-
         }
 
         @Override
         public Stream<EntityType<?>> getKnownEntityTypes() {
-            return getContent(ForgeRegistries.ENTITY_TYPES);
+            return getContent(BuiltInRegistries.ENTITY_TYPE);
         }
     }
 
     private static class WindsweptChestLoot implements LootTableSubProvider {
+        private final HolderLookup.Provider provider;
+
+        protected WindsweptChestLoot(HolderLookup.Provider provider) {
+            this.provider = provider;
+        }
 
         @Override
-        public void generate(BiConsumer<ResourceLocation, Builder> builder) {
+        public void generate(BiConsumer<ResourceKey<LootTable>, Builder> builder) {
             register("grove_weathered_house", LootTable.lootTable().withPool(LootPool.lootPool().setRolls(UniformGenerator.between(4f, 8f))
-                    .add(LootItem.lootTableItem(GOLD_INGOT).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
+                    .add(LootItem.lootTableItem(Items.GOLD_INGOT).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
                     .add(LootItem.lootTableItem(SNOWY_SPROUTS.get()).setWeight(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 4f))))
                     .add(LootItem.lootTableItem(SNOW_BOOTS.get()).setWeight(1).apply(SetItemDamageFunction.setDamage(UniformGenerator.between(3, 20))))
-                    .add(LootItem.lootTableItem(BOOK).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
+                    .add(LootItem.lootTableItem(Items.BOOK).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
                     .add(LootItem.lootTableItem(WOODEN_BUCKET.get()).setWeight(1).apply(SetItemDamageFunction.setDamage(UniformGenerator.between(3, 20))))
                     .add(LootItem.lootTableItem(SWEET_SNOW_CONE.get()).setWeight(1))
                     .add(LootItem.lootTableItem(WILD_BERRIES.get()).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(2f, 3f))))
                     .add(LootItem.lootTableItem(ICICLES.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
-                    .add(LootItem.lootTableItem(SNOWBALL).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
-                    .add(LootItem.lootTableItem(COBWEB).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
+                    .add(LootItem.lootTableItem(Items.SNOWBALL).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
+                    .add(LootItem.lootTableItem(Items.COBWEB).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
                     .add(LootItem.lootTableItem(HOLLY_SAPLING.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
                     .add(LootItem.lootTableItem(COOKED_GOAT.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
             ), builder);
 
             register("chestnut_weathered_house", LootTable.lootTable().withPool(LootPool.lootPool().setRolls(UniformGenerator.between(2f, 5f))
-                    .add(LootItem.lootTableItem(EMERALD).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
-                    .add(LootItem.lootTableItem(FERN).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 4f))))
-                    .add(LootItem.lootTableItem(SWEET_BERRIES).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
+                    .add(LootItem.lootTableItem(Items.EMERALD).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
+                    .add(LootItem.lootTableItem(Items.FERN).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 4f))))
+                    .add(LootItem.lootTableItem(Items.SWEET_BERRIES).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
                     .add(LootItem.lootTableItem(CHESTNUT_LOG.get()).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
-                    .add(LootItem.lootTableItem(COBWEB).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
+                    .add(LootItem.lootTableItem(Items.COBWEB).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
                     .add(LootItem.lootTableItem(CHESTNUT_SAPLING.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
-                    .add(LootItem.lootTableItem(BIRCH_SAPLING).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
+                    .add(LootItem.lootTableItem(Items.BIRCH_SAPLING).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 3f))))
                     .add(LootItem.lootTableItem(WOODEN_BUCKET.get()).setWeight(1).apply(SetItemDamageFunction.setDamage(UniformGenerator.between(3, 20))))
             ), builder);
 
@@ -607,30 +584,34 @@ public class WindsweptLootTableProvider extends LootTableProvider {
                     .add(LootItem.lootTableItem(SHALE.get()).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 7))))
                     .add(LootItem.lootTableItem(HOLLY_LOG.get()).setWeight(10).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 5))))
                     .add(LootItem.lootTableItem(BLUE_ICE_BRICKS.get()).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 3))))
-                    .add(LootItem.lootTableItem(BEETROOT_SEEDS).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4))))
-                    .add(LootItem.lootTableItem(COAL).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4))))
-                    .add(LootItem.lootTableItem(BLACK_WOOL).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4))))
-                    .add(LootItem.lootTableItem(SNOWBALL).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4))))
-                    .add(LootItem.lootTableItem(BEETROOT_SOUP))), builder);
+                    .add(LootItem.lootTableItem(Items.BEETROOT_SEEDS).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4))))
+                    .add(LootItem.lootTableItem(Items.COAL).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4))))
+                    .add(LootItem.lootTableItem(Items.BLACK_WOOL).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4))))
+                    .add(LootItem.lootTableItem(Items.SNOWBALL).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4))))
+                    .add(LootItem.lootTableItem(Items.BEETROOT_SOUP))), builder);
         }
 
-        private static void register(String name, LootTable.Builder lootTable, BiConsumer<ResourceLocation, Builder> builder) {
-            builder.accept(Windswept.location("chests/" + name), lootTable);
+        private static void register(String name, LootTable.Builder lootTable, BiConsumer<ResourceKey<LootTable>, Builder> builder) {
+            builder.accept(ResourceKey.create(Registries.LOOT_TABLE, Windswept.location("chests/" + name)), lootTable);
         }
-
     }
 
     private static class WindsweptArchaeologyLoot implements LootTableSubProvider {
+        private final HolderLookup.Provider provider;
+
+        protected WindsweptArchaeologyLoot(HolderLookup.Provider provider) {
+            this.provider = provider;
+        }
 
         @Override
-        public void generate(BiConsumer<ResourceLocation, Builder> builder) {
+        public void generate(BiConsumer<ResourceKey<LootTable>, Builder> builder) {
             register("pine_totem", LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1f))
                     .add(LootItem.lootTableItem(HOOT_POTTERY_SHERD.get()).setWeight(3))
                     .add(LootItem.lootTableItem(PLUMAGE_POTTERY_SHERD.get()).setWeight(4))
                     .add(LootItem.lootTableItem(ELDER_FEATHER.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 4))))
                     .add(LootItem.lootTableItem(PINECONE.get()).setWeight(1))
-                    .add(LootItem.lootTableItem(EMERALD).setWeight(1))
-                    .add(LootItem.lootTableItem(STICK).setWeight(1))
+                    .add(LootItem.lootTableItem(Items.EMERALD).setWeight(1))
+                    .add(LootItem.lootTableItem(Items.STICK).setWeight(1))
             ), builder);
 
             register("snowy_pine_totem", LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1f))
@@ -640,8 +621,8 @@ public class WindsweptLootTableProvider extends LootTableProvider {
                     .add(LootItem.lootTableItem(ELDER_FEATHER.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 4))))
                     .add(LootItem.lootTableItem(PINECONE.get()).setWeight(1))
                     .add(LootItem.lootTableItem(FROZEN_FLESH.get()).setWeight(1))
-                    .add(LootItem.lootTableItem(EMERALD).setWeight(1))
-                    .add(LootItem.lootTableItem(STICK).setWeight(1))
+                    .add(LootItem.lootTableItem(Items.EMERALD).setWeight(1))
+                    .add(LootItem.lootTableItem(Items.STICK).setWeight(1))
             ), builder);
 
             register("grove_weathered_house", LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1f))
@@ -651,15 +632,13 @@ public class WindsweptLootTableProvider extends LootTableProvider {
                     .add(LootItem.lootTableItem(ELDER_FEATHER.get()).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 4))))
                     .add(LootItem.lootTableItem(HOLLY_BERRIES.get()).setWeight(1))
                     .add(LootItem.lootTableItem(FROZEN_FLESH.get()).setWeight(1))
-                    .add(LootItem.lootTableItem(EMERALD).setWeight(1))
-                    .add(LootItem.lootTableItem(STICK).setWeight(1))
+                    .add(LootItem.lootTableItem(Items.EMERALD).setWeight(1))
+                    .add(LootItem.lootTableItem(Items.STICK).setWeight(1))
             ), builder);
         }
 
-        private static void register(String name, LootTable.Builder lootTable, BiConsumer<ResourceLocation, Builder> builder) {
-            builder.accept(Windswept.location("archaeology/" + name), lootTable);
+        private static void register(String name, LootTable.Builder lootTable, BiConsumer<ResourceKey<LootTable>, Builder> builder) {
+            builder.accept(ResourceKey.create(Registries.LOOT_TABLE, Windswept.location("archaeology/" + name)), lootTable);
         }
-
     }
 }
-

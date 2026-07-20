@@ -1,0 +1,47 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:or",
+      "values": [
+        {
+          "type": "neoforge:mod_loaded",
+          "modid": "quark"
+        },
+        {
+          "type": "neoforge:mod_loaded",
+          "modid": "woodworks"
+        }
+      ]
+    }
+  ],
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_holly_planks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "windswept:holly_planks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "windswept:holly_ladder"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_holly_planks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "windswept:holly_ladder"
+    ]
+  }
+}

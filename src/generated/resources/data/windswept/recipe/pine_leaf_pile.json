@@ -1,0 +1,19 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "woodworks"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "windswept:pine_leaves"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "windswept:pine_leaf_pile"
+  }
+}

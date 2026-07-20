@@ -2,6 +2,7 @@ package com.rosemods.windswept.core.data.server;
 
 import com.rosemods.windswept.core.Windswept;
 import com.rosemods.windswept.core.registry.datapack.*;
+import com.rosemods.windswept.core.registry.*;
 import com.teamabnormals.blueprint.core.registry.BlueprintDataPackRegistries;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
@@ -16,6 +17,7 @@ public class WindsweptDatapackProvider extends DatapackBuiltinEntriesProvider {
             .add(Registries.CONFIGURED_FEATURE, WindsweptConfiguredFeatures::bootstrap)
             .add(Registries.PLACED_FEATURE, WindsweptPlacedFeatures::bootstrap)
             .add(Registries.BIOME, WindsweptBiomes::bootstrap)
+            .add(Registries.ENCHANTMENT, WindsweptEnchantments::bootstrap)
             .add(BlueprintDataPackRegistries.MODDED_BIOME_SLICES, WindsweptBiomeSlices::bootstrap)
             .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, WindsweptBiomeModifiers::bootstrap)
             .add(BlueprintDataPackRegistries.STRUCTURE_REPALETTERS, WindsweptStructureRepaletters::bootstrap)

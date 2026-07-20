@@ -1,8 +1,0 @@
-{
-  "repaletter": {
-    "type": "blueprint:simple",
-    "replaces_block": "minecraft:cracked_stone_bricks",
-    "replaces_with": "minecraft:packed_ice"
-  },
-  "structures": "minecraft:igloo"
-}

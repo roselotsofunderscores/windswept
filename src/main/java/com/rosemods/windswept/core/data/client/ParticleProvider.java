@@ -58,10 +58,12 @@ public abstract class ParticleProvider implements DataProvider {
     }
 
     private record ParticleDefinition(List<String> entries) {
-        private static final Codec<ParticleDefinition> CODEC = RecordCodecBuilder.create(textures -> textures.group(Codec.STRING.listOf().fieldOf("textures").forGetter(ParticleDefinition::entries)).apply(textures, ParticleDefinition::new));
+        private static final Codec<ParticleDefinition> CODEC = RecordCodecBuilder.create(textures -> textures.group(
+                Codec.STRING.listOf().fieldOf("textures").forGetter(ParticleDefinition::entries)
+        ).apply(textures, ParticleDefinition::new));
 
         public JsonElement serialize() {
-            return CODEC.encodeStart(JsonOps.INSTANCE, this).getOrThrow(false, LOGGER::error);
+            return CODEC.encodeStart(JsonOps.INSTANCE, this).getOrThrow(s -> new IllegalStateException("Failed to encode particle: " + s));
         }
     }
 

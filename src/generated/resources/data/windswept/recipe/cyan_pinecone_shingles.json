@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "windswept:pinecone_shingles"
+    },
+    "D": {
+      "item": "minecraft:cyan_dye"
+    }
+  },
+  "pattern": [
+    "###",
+    "#D#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "id": "windswept:cyan_pinecone_shingles"
+  }
+}

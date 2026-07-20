@@ -1,33 +1,28 @@
 package com.rosemods.windswept.common.item;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
-import com.rosemods.windswept.core.registry.WindsweptArmorMaterials;
+import com.rosemods.windswept.core.Windswept;
 import com.rosemods.windswept.core.registry.WindsweptAttributes;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ItemStack;
-
-import java.util.UUID;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 
 public class LavenderCrownItem extends ArmorItem {
-    private static final UUID FRAGRANCE_UUID = UUID.fromString("1e2757d5-d814-4465-a958-36a6cdeeb624");
+    private static final ResourceLocation FRAGRANCE_ID = Windswept.location("fragrance_modifier");
 
-    public LavenderCrownItem(Properties properties) {
-        super(WindsweptArmorMaterials.LAVENDER_CROWN, Type.HELMET, properties);
+    public LavenderCrownItem(Holder<ArmorMaterial> material, ArmorItem.Type type, Properties properties) {
+        super(material, type, properties);
     }
 
+    // Использование метода без ItemStack убирает Deprecation warning
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
-        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-
-        if (this.type.getSlot() == slot)
-            builder.put(WindsweptAttributes.FRAGRANCE.get(), new AttributeModifier(FRAGRANCE_UUID, "Fragrance modifier", 1, AttributeModifier.Operation.ADDITION));
-
-        return builder.build();
-
+    public ItemAttributeModifiers getDefaultAttributeModifiers() {
+        return super.getDefaultAttributeModifiers()
+                .withModifierAdded(WindsweptAttributes.FRAGRANCE,
+                        new AttributeModifier(FRAGRANCE_ID, 1.0D, AttributeModifier.Operation.ADD_VALUE),
+                        EquipmentSlotGroup.HEAD);
     }
-
 }

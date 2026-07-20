@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "windswept:icicles"
+    },
+    "N": {
+      "item": "windswept:nightshade"
+    }
+  },
+  "pattern": [
+    "#",
+    "N",
+    "#"
+  ],
+  "result": {
+    "count": 1,
+    "id": "windswept:ice_lantern"
+  }
+}

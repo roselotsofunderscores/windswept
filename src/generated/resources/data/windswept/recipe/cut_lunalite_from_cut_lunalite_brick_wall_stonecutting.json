@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "windswept:cut_lunalite"
+  },
+  "result": {
+    "count": 1,
+    "id": "windswept:cut_lunalite_brick_wall"
+  }
+}

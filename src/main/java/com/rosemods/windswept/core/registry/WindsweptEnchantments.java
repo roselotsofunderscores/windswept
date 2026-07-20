@@ -1,14 +1,34 @@
 package com.rosemods.windswept.core.registry;
 
-import com.rosemods.windswept.common.enchantment.curse.SlippingCurseEnchantment;
 import com.rosemods.windswept.core.Windswept;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class WindsweptEnchantments {
-    public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(Registries.ENCHANTMENT, Windswept.MOD_ID);
 
-    public static final DeferredHolder<Enchantment, Enchantment> SLIPPING_CURSE = ENCHANTMENTS.register("slipping_curse", SlippingCurseEnchantment::new);
+    public static final ResourceKey<Enchantment> SLIPPING_CURSE = ResourceKey.create(
+            Registries.ENCHANTMENT,
+            ResourceLocation.fromNamespaceAndPath(Windswept.MOD_ID, "slipping_curse")
+    );
+
+    public static void bootstrap(BootstrapContext<Enchantment> context) {
+        HolderGetter<Item> items = context.lookup(Registries.ITEM);
+
+        register(context, SLIPPING_CURSE, Enchantment.enchantment(Enchantment.definition(
+                items.getOrThrow(ItemTags.FOOT_ARMOR_ENCHANTABLE), 1, 1,
+                Enchantment.constantCost(25), Enchantment.constantCost(50),
+                8, EquipmentSlotGroup.FEET
+        )));
+    }
+
+    private static void register(BootstrapContext<Enchantment> context, ResourceKey<Enchantment> key, Enchantment.Builder builder) {
+        context.register(key, builder.build(key.location()));
+    }
 }

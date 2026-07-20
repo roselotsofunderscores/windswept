@@ -11,6 +11,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -60,7 +61,7 @@ public class LavenderBlock extends BushBlock implements BonemealableBlock {
             level.playSound(player, player, SoundEvents.GROWING_PLANT_CROP, SoundSource.BLOCKS, 1f, 1f);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, state1));
             level.setBlockAndUpdate(pos, state1);
-            held.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
+            held.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
 
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }

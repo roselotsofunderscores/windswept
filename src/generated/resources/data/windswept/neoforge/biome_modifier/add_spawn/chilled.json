@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#c:is_snowy",
+  "spawners": {
+    "type": "windswept:chilled",
+    "maxCount": 7,
+    "minCount": 3,
+    "weight": 5
+  }
+}

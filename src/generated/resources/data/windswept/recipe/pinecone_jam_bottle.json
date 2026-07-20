@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "windswept:pinecone"
+    },
+    {
+      "item": "windswept:pinecone"
+    },
+    {
+      "item": "windswept:pinecone"
+    },
+    {
+      "item": "windswept:pinecone"
+    },
+    {
+      "item": "windswept:pinecone"
+    },
+    {
+      "item": "windswept:pinecone"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "windswept:pinecone_jam_bottle"
+  }
+}

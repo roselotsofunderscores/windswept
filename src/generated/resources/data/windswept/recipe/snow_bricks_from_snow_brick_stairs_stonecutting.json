@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "windswept:snow_bricks"
+  },
+  "result": {
+    "count": 1,
+    "id": "windswept:snow_brick_stairs"
+  }
+}

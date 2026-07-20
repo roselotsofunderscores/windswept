@@ -11,7 +11,7 @@ public final class WindsweptPaintingVariants {
     public static final ResourceKey<PaintingVariant> DRESS_CODES = createKey("dress_codes");
     public static final ResourceKey<PaintingVariant> ECOTONAL_PAREIDOLIA = createKey("ecotonal_pareidolia");
     public static final ResourceKey<PaintingVariant> THE_FOILS = createKey("the_foils");
-    public static final ResourceKey<PaintingVariant> AURORAE = createKey("hearth_rug");
+    public static final ResourceKey<PaintingVariant> AURORAE = createKey("aurorae");
     public static final ResourceKey<PaintingVariant> HEARTH_RUG = createKey("hearth_rug");
     public static final ResourceKey<PaintingVariant> ALLU_PINE = createKey("lu_pine");
 

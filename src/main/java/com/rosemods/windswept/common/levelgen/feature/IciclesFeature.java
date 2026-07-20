@@ -58,7 +58,7 @@ public class IciclesFeature extends Feature<NoneFeatureConfiguration> {
 
     private static boolean canPlaceOn(WorldGenLevel level, BlockPos pos) {
         BlockState state = level.getBlockState(pos);
-        return (state.is(BlockTags.ICE) && !state.is(Blocks.ICE) && !state.is(WindsweptBlocks.ICICLES.get())) || state.is(Tags.Blocks.STONE);
+        return (state.is(BlockTags.ICE) && !state.is(Blocks.ICE) && !state.is(WindsweptBlocks.ICICLES.get())) || state.is(Tags.Blocks.STONES);
     }
 
 }

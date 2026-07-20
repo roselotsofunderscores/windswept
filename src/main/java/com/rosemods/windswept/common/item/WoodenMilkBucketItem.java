@@ -1,10 +1,8 @@
 package com.rosemods.windswept.common.item;
 
-import com.rosemods.windswept.common.capability.wrappers.WoodenBucketWrapper;
 import com.rosemods.windswept.core.WindsweptConfig;
 import com.rosemods.windswept.core.registry.WindsweptItems;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
@@ -56,13 +54,6 @@ public class WoodenMilkBucketItem extends MilkBucketItem {
         return WoodenBucketItem.getEmpty(itemStack, null, null);
     }
 
-    @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
-        return new WoodenBucketWrapper(stack);
-    }
-
-    // Util //
-
     public static void milkAnimal(Player player, InteractionHand hand, ItemStack stack) {
         ItemStack milkBucket = new ItemStack(WindsweptItems.WOODEN_MILK_BUCKET.get());
         if (!player.getAbilities().instabuild)
@@ -71,5 +62,4 @@ public class WoodenMilkBucketItem extends MilkBucketItem {
         player.playSound(SoundEvents.COW_MILK, 1f, 1f);
         player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, milkBucket));
     }
-
 }

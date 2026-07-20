@@ -7,6 +7,7 @@ import com.rosemods.windswept.core.other.tags.WindsweptEntityTypeTags;
 import com.rosemods.windswept.core.registry.WindsweptEffects;
 import com.rosemods.windswept.core.registry.WindsweptItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -29,7 +30,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Override
     public void setTicksFrozen(int ticks) {
-        if (((LivingEntity) (Object) this).hasEffect(WindsweptEffects.FROST_RESISTANCE.get()) || this.getType().is(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES))
+        if (((LivingEntity) (Object) this).hasEffect(WindsweptEffects.FROST_RESISTANCE) || this.getType().is(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES))
             ticks = 0;
 
         super.setTicksFrozen(ticks);
@@ -37,7 +38,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Override
     public int getTicksFrozen() {
-        if (((LivingEntity) (Object) this).hasEffect(WindsweptEffects.FROST_RESISTANCE.get()) || this.getType().is(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES))
+        if (((LivingEntity) (Object) this).hasEffect(WindsweptEffects.FROST_RESISTANCE) || this.getType().is(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES))
             return 0;
 
         return super.getTicksFrozen();
@@ -55,11 +56,11 @@ public abstract class LivingEntityMixin extends Entity {
     private void canFreeze(CallbackInfoReturnable<Boolean> info) {
         LivingEntity entity = (LivingEntity) (Object) this;
 
-        info.setReturnValue(!entity.getType().is(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES) && !entity.isSpectator() && !entity.hasEffect(WindsweptEffects.FROST_RESISTANCE.get()));
+        info.setReturnValue(!entity.getType().is(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES) && !entity.isSpectator() && !entity.hasEffect(WindsweptEffects.FROST_RESISTANCE));
     }
 
     @Inject(method = "onChangedBlock", at = @At("TAIL"))
-    private void onChangedBlock(BlockPos pos, CallbackInfo info) {
+    private void onChangedBlock(ServerLevel level, BlockPos pos, CallbackInfo info) {
         LivingEntity entity = (LivingEntity) (Object) this;
 
         if (SnowBootsItem.canApplySnowSpeed(entity))

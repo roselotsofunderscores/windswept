@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 2,
-  "ingredient": {
-    "item": "windswept:packed_ice_bricks"
-  },
-  "result": "windswept:packed_ice_brick_slab"
-}

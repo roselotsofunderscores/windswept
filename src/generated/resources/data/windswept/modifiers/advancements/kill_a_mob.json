@@ -27,7 +27,8 @@
               "windswept:chilled"
             ]
           }
-        ]
+        ],
+        "should_replace_requirements": false
       }
     }
   ],
