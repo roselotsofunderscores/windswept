@@ -25,7 +25,7 @@ public class PineTreeFeature extends BlueprintTreeFeature {
         BlockPos origin = context.origin();
         RandomSource rand = context.random();
 
-        boolean isWeathered = rand.nextBoolean() || context.level().getBiome(context.origin()).is(Biomes.OLD_GROWTH_PINE_TAIGA);
+        boolean isWeathered = rand.nextBoolean() || !context.level().getBiome(context.origin()).is(Biomes.OLD_GROWTH_PINE_TAIGA);
         boolean isFairy = rand.nextInt(3000) == 0;
         int height = rand.nextInt(10, 14);
         int weatheredHeight = rand.nextInt(7, height - 1);
