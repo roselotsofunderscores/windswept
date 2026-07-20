@@ -255,7 +255,8 @@ public class Frostbiter extends TamableAnimal implements Endimatable, NeutralMob
                 .add(Attributes.ATTACK_DAMAGE, 5f)
                 .add(Attributes.MAX_HEALTH, 40f)
                 .add(Attributes.MOVEMENT_SPEED, 0.24f)
-                .add(Attributes.ATTACK_KNOCKBACK, 1.2f);
+                .add(Attributes.ATTACK_KNOCKBACK, 1.2f)
+                .add(Attributes.STEP_HEIGHT, 1.0d);
     }
 
     @Override public int getRemainingPersistentAngerTime() { return this.entityData.get(ANGER_TIME); }
