@@ -86,6 +86,8 @@ public class Windswept {
             bus.addListener(this::registerEntityRenderers);
             bus.addListener(this::registerSpriteSets);
             bus.addListener(this::registerGuiOverlays);
+
+            bus.addListener(WindsweptClientCompat::registerItemColors);
         }
 
         container.registerConfig(ModConfig.Type.COMMON, WindsweptConfig.COMMON_SPEC);
