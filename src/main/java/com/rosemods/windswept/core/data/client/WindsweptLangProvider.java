@@ -65,9 +65,9 @@ public class WindsweptLangProvider extends LanguageProvider {
         this.translateBannerPattern(SNOW_CHARGE_BANNER_PATTERN, "snow_charge");
         this.translateBannerPattern(SNOW_GOLEM_BANNER_PATTERN, "snow_golem");
         this.translateBannerPattern(ROSE_FLOWER_BANNER_PATTERN, "rose_flower");
-        this.translateMusicDisc(MUSIC_DISC_RAIN, "rose - rain");
-        this.translateMusicDisc(MUSIC_DISC_SNOW, "rose - snow");
-        this.translateMusicDisc(MUSIC_DISC_BUMBLEBEE, "rose - bumblebee");
+        this.translateMusicDisc(MUSIC_DISC_RAIN, "rain", "roselotsofunderscores - rain");
+        this.translateMusicDisc(MUSIC_DISC_SNOW, "snow", "roselotsofunderscores - snow");
+        this.translateMusicDisc(MUSIC_DISC_BUMBLEBEE, "bumblebee", "roselotsofunderscores - bumblebee");
         this.add(HOLLY_FURNACE_BOAT.get(), "Holly Boat with Furnace");
         this.add(CHESTNUT_FURNACE_BOAT.get(), "Chestnut Boat with Furnace");
         this.add(PINE_FURNACE_BOAT.get(), "Pine Boat with Furnace");
@@ -198,9 +198,9 @@ public class WindsweptLangProvider extends LanguageProvider {
         this.add("painting." + Windswept.MOD_ID + "." + name + ".author", author);
     }
 
-    private void translateMusicDisc(DeferredHolder<? extends Item, ? extends Item> item, String desc) {
+    private void translateMusicDisc(DeferredHolder<? extends Item, ? extends Item> item, String name, String desc) {
         this.add(item.get(), "Music Disc");
-        this.addDescription(item, desc);
+        this.add("jukebox_song." + Windswept.MOD_ID + "." + name, desc);
     }
 
     private void translateSign(Pair<DeferredBlock<BlueprintStandingSignBlock>, DeferredBlock<BlueprintWallSignBlock>> sign, String name) {
