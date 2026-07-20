@@ -52,6 +52,7 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         //this.tag(Tags.Items.ARMORS_BOOTS).add(SNOW_BOOTS.get());
         this.tag(ItemTags.DYEABLE).add(SNOW_BOOTS.get());
         this.tag(Tags.Items.FEATHERS).add(ELDER_FEATHER.get());
+        this.copy(Tags.Blocks.CHAINS, Tags.Items.CHAINS);
         this.copy(Tags.Blocks.BOOKSHELVES, Tags.Items.BOOKSHELVES);
         this.copy(Tags.Blocks.CHESTS_WOODEN, Tags.Items.CHESTS_WOODEN);
         this.copy(Tags.Blocks.CHESTS_TRAPPED, Tags.Items.CHESTS_TRAPPED);
