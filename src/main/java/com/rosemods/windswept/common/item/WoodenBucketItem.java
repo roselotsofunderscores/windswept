@@ -16,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.ItemLike;
@@ -118,6 +119,10 @@ public class WoodenBucketItem extends BucketItem {
     }
 
     public static ItemStack getEmpty(ItemStack handStack, @Nullable Player player, @Nullable InteractionHand hand) {
+        if (player != null && player.getAbilities().instabuild) {
+            return handStack;
+        }
+
         ItemStack bucket = new ItemStack(WindsweptItems.WOODEN_BUCKET.get());
         bucket.setDamageValue(handStack.getDamageValue());
 
@@ -128,9 +133,6 @@ public class WoodenBucketItem extends BucketItem {
         if (player instanceof ServerPlayer serverPlayer) {
             EquipmentSlot slot = (hand == InteractionHand.OFF_HAND) ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND;
             bucket.hurtAndBreak(1, serverPlayer, slot);
-
-            if (player.getAbilities().instabuild)
-                return handStack;
         } else {
             bucket.setDamageValue(bucket.getDamageValue() + 1);
             if (bucket.getDamageValue() >= bucket.getMaxDamage())
@@ -138,6 +140,11 @@ public class WoodenBucketItem extends BucketItem {
         }
 
         return bucket;
+    }
+
+    @Override
+    public EquipmentSlot getEquipmentSlot(ItemStack stack) {
+        return this.isEmpty() ? EquipmentSlot.HEAD : null;
     }
 
     public static ItemStack getFilled(ItemStack handStack, ItemLike filled, @Nullable Player player) {
