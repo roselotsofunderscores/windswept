@@ -31,11 +31,12 @@ public class WoodenBucketWrapper implements IFluidHandlerItem {
 
     private FluidStack getFluid() {
         Item item = this.container.getItem();
-        if (item instanceof WoodenBucketItem bucket && !bucket.isEmpty()) {
+
+        if (item instanceof WoodenBucketItem bucket && !bucket.isEmpty())
             return new FluidStack(bucket.getFluid(), FluidType.BUCKET_VOLUME);
-        } else if (item instanceof WoodenMilkBucketItem) {
+        else if (item instanceof WoodenMilkBucketItem)
             return new FluidStack(NeoForgeMod.MILK.get(), FluidType.BUCKET_VOLUME);
-        }
+
         return FluidStack.EMPTY;
     }
 
@@ -44,9 +45,8 @@ public class WoodenBucketWrapper implements IFluidHandlerItem {
             this.container = WoodenBucketItem.getEmpty(this.container, null, null);
         } else {
             Item item = getBucketFromFluid(stack.getFluid());
-            if (item != null) {
+            if (item != null)
                 this.container = WoodenBucketItem.getFilled(this.container, item, null);
-            }
         }
     }
 
@@ -72,42 +72,44 @@ public class WoodenBucketWrapper implements IFluidHandlerItem {
 
     @Override
     public int fill(FluidStack stack, FluidAction action) {
-        if (this.container.getCount() != 1 || !this.getFluid().isEmpty() || stack.getAmount() < FluidType.BUCKET_VOLUME || !canFillFromFluid(stack.getFluid())) {
+        if (this.container.getCount() != 1 || !this.getFluid().isEmpty() || stack.getAmount() < FluidType.BUCKET_VOLUME || !canFillFromFluid(stack.getFluid()))
             return 0;
-        }
-        if (action.execute()) {
+
+        if (action.execute())
             this.setFluid(stack);
-        }
+
         return FluidType.BUCKET_VOLUME;
     }
 
     @Override
     public @NotNull FluidStack drain(int maxDrain, FluidAction action) {
-        if (this.container.getCount() != 1 || maxDrain < FluidType.BUCKET_VOLUME) {
+        if (this.container.getCount() != 1 || maxDrain < FluidType.BUCKET_VOLUME)
             return FluidStack.EMPTY;
-        }
+
         FluidStack fluidStack = this.getFluid();
         if (!fluidStack.isEmpty()) {
-            if (action.execute()) {
+            if (action.execute())
                 this.setFluid(FluidStack.EMPTY);
-            }
+
             return fluidStack;
         }
+
         return FluidStack.EMPTY;
     }
 
     @Override
     public @NotNull FluidStack drain(FluidStack stack, FluidAction action) {
-        if (this.container.getCount() != 1 || stack.getAmount() < FluidType.BUCKET_VOLUME) {
+        if (this.container.getCount() != 1 || stack.getAmount() < FluidType.BUCKET_VOLUME)
             return FluidStack.EMPTY;
-        }
+
         FluidStack fluidStack = this.getFluid();
         if (!fluidStack.isEmpty() && FluidStack.isSameFluid(fluidStack, stack)) {
-            if (action.execute()) {
+            if (action.execute())
                 this.setFluid(FluidStack.EMPTY);
-            }
+
             return fluidStack;
         }
+
         return FluidStack.EMPTY;
     }
 
@@ -119,6 +121,7 @@ public class WoodenBucketWrapper implements IFluidHandlerItem {
             if (location.equals(WindsweptConstants.HONEY)) return WindsweptItems.WOODEN_HONEY_BUCKET.get();
             if (location.equals(WindsweptConstants.CHOCOLATE)) return WindsweptItems.WOODEN_CHOCOLATE_BUCKET.get();
         }
+
         return null;
     }
 
@@ -129,4 +132,5 @@ public class WoodenBucketWrapper implements IFluidHandlerItem {
         }
         return fluid == Fluids.WATER || fluid == NeoForgeMod.MILK.get();
     }
+
 }
