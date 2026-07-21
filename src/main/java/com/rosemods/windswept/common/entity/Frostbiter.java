@@ -208,14 +208,16 @@ public class Frostbiter extends TamableAnimal implements Endimatable, NeutralMob
         if (stack.is(WindsweptItems.HOLLY_BERRIES.get())) {
             if (!this.isTame()) {
                 this.usePlayerItem(player, hand, stack);
-                if (this.random.nextInt(4) == 0) {
-                    this.tame(player);
-                    this.navigation.stop();
-                    this.level().broadcastEntityEvent(this, (byte) 7);
-                } else {
-                    this.level().broadcastEntityEvent(this, (byte) 6);
+                if (!this.level().isClientSide) {
+                    if (this.random.nextInt(4) == 0) {
+                        this.tame(player);
+                        this.navigation.stop();
+                        this.level().broadcastEntityEvent(this, (byte) 7);
+                    } else {
+                        this.level().broadcastEntityEvent(this, (byte) 6);
+                    }
+                    this.level().playSound(null, this.getX(), this.getY(), this.getZ(), this.getEatingSound(stack), this.getSoundSource(), 1f, 1f + (this.random.nextFloat() - this.random.nextFloat()) * .2f);
                 }
-                this.level().playSound(null, this.getX(), this.getY(), this.getZ(), this.getEatingSound(stack), this.getSoundSource(), 1f, 1f + (this.random.nextFloat() - this.random.nextFloat()) * .2f);
                 return InteractionResult.SUCCESS;
             } else if (this.canFallInLove()) {
                 this.level().playSound(null, this.getX(), this.getY(), this.getZ(), this.getEatingSound(stack), this.getSoundSource(), 1f, 1f + (this.random.nextFloat() - this.random.nextFloat()) * .2f);
