@@ -1,6 +1,7 @@
 package com.rosemods.windswept.core.registry;
 
-import com.rosemods.windswept.client.layer.FeatherCloakLegsLayer;
+import com.rosemods.windswept.client.layer.FeatherCloakLayer;
+import com.rosemods.windswept.client.layer.WoodenBucketHeadLayer;
 import com.rosemods.windswept.client.layer.WindsweptModelLayers;
 import net.minecraft.client.model.HumanoidArmorModel;
 import net.minecraft.client.model.HumanoidModel;
@@ -17,9 +18,13 @@ public class WindsweptClientLayers {
 
     @SubscribeEvent
     public void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        MeshDefinition mesh = HumanoidArmorModel.createBodyLayer(new CubeDeformation(0.25F));
-        LayerDefinition layerDefinition = LayerDefinition.create(mesh, 64, 32);
-        event.registerLayerDefinition(WindsweptModelLayers.FEATHER_CLOAK_LEGS, () -> layerDefinition);
+        MeshDefinition legsMesh = HumanoidArmorModel.createBodyLayer(new CubeDeformation(0.25F));
+        event.registerLayerDefinition(WindsweptModelLayers.FEATHER_CLOAK_LEGS,
+                () -> LayerDefinition.create(legsMesh, 64, 32));
+
+        MeshDefinition headMesh = HumanoidModel.createMesh(new CubeDeformation(0.5F), 0.0F);
+        event.registerLayerDefinition(WindsweptModelLayers.WOODEN_BUCKET_HEAD,
+                () -> LayerDefinition.create(headMesh, 64, 32));
     }
 
     @SubscribeEvent
@@ -32,8 +37,11 @@ public class WindsweptClientLayers {
 
             HumanoidModel<AbstractClientPlayer> legsModel =
                     new HumanoidModel<>(event.getEntityModels().bakeLayer(WindsweptModelLayers.FEATHER_CLOAK_LEGS));
+            playerRenderer.addLayer(new FeatherCloakLayer<>(playerRenderer, legsModel));
 
-            playerRenderer.addLayer(new FeatherCloakLegsLayer<>(playerRenderer, legsModel));
+            HumanoidModel<AbstractClientPlayer> headModel =
+                    new HumanoidModel<>(event.getEntityModels().bakeLayer(WindsweptModelLayers.WOODEN_BUCKET_HEAD));
+            playerRenderer.addLayer(new WoodenBucketHeadLayer<>(playerRenderer, headModel));
         }
     }
 }
