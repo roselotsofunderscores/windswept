@@ -11,6 +11,7 @@ import com.rosemods.windswept.common.capability.wrappers.WoodenBucketWrapper;
 import com.rosemods.windswept.common.entity.Chilled;
 import com.rosemods.windswept.common.entity.Frostbiter;
 import com.rosemods.windswept.core.data.client.*;
+import com.rosemods.windswept.core.registry.WindsweptClientLayers;
 import com.rosemods.windswept.core.data.server.WindsweptDatapackProvider;
 import com.rosemods.windswept.core.data.server.WindsweptLootTableProvider;
 import com.rosemods.windswept.core.data.server.WindsweptRecipeProvider;
@@ -88,6 +89,10 @@ public class Windswept {
             bus.addListener(this::registerGuiOverlays);
 
             bus.addListener(WindsweptClientCompat::registerItemColors);
+
+            WindsweptClientLayers clientLayers = new WindsweptClientLayers();
+            bus.addListener(clientLayers::registerLayerDefinitions);
+            bus.addListener(clientLayers::addLayers);
         }
 
         container.registerConfig(ModConfig.Type.COMMON, WindsweptConfig.COMMON_SPEC);
