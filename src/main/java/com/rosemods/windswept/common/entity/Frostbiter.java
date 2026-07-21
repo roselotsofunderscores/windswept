@@ -28,6 +28,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -72,23 +75,6 @@ public class Frostbiter extends TamableAnimal implements Endimatable, NeutralMob
         super(type, level);
         this.steering = new ItemBasedSteering(this.entityData, BOOST_TIME, SADDLED);
         this.setTame(false, false);
-    }
-
-    public static AttributeSupplier.Builder createFrostbiterAttributes() {
-        return Mob.createMobAttributes()
-                .add(Attributes.ARMOR, 4f)
-                .add(Attributes.ATTACK_DAMAGE, 5f)
-                .add(Attributes.MAX_HEALTH, 40f)
-                .add(Attributes.MOVEMENT_SPEED, 0.24f)
-                .add(Attributes.ATTACK_KNOCKBACK, 1.2f)
-                .add(Attributes.STEP_HEIGHT, 1.0d);
-    }
-
-    public static boolean checkFrostbiterSpawnRules(EntityType<Frostbiter> frostbiter, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-        if (level.getBiome(pos).is(BiomeTags.POLAR_BEARS_SPAWN_ON_ALTERNATE_BLOCKS))
-            return level.getRawBrightness(pos, 0) > 8 && level.getBlockState(pos.below()).is(BlockTags.POLAR_BEARS_SPAWNABLE_ON_ALTERNATE);
-
-        return Animal.checkAnimalSpawnRules(frostbiter, level, spawnType, pos, random);
     }
 
     @Override
@@ -204,9 +190,9 @@ public class Frostbiter extends TamableAnimal implements Endimatable, NeutralMob
                 this.dropSaddle();
                 this.playSound(SoundEvents.SNOW_GOLEM_SHEAR);
                 stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
-            } else if (!this.level().isClientSide)
+            } else if (!this.level().isClientSide) {
                 player.startRiding(this);
-
+            }
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
         if (stack.is(Items.SADDLE) && this.isSaddleable() && !this.isSaddled()) {
@@ -226,16 +212,15 @@ public class Frostbiter extends TamableAnimal implements Endimatable, NeutralMob
                     this.tame(player);
                     this.navigation.stop();
                     this.level().broadcastEntityEvent(this, (byte) 7);
-                } else
+                } else {
                     this.level().broadcastEntityEvent(this, (byte) 6);
-
+                }
                 this.level().playSound(null, this.getX(), this.getY(), this.getZ(), this.getEatingSound(stack), this.getSoundSource(), 1f, 1f + (this.random.nextFloat() - this.random.nextFloat()) * .2f);
                 return InteractionResult.SUCCESS;
-            } else if (this.canFallInLove())
+            } else if (this.canFallInLove()) {
                 this.level().playSound(null, this.getX(), this.getY(), this.getZ(), this.getEatingSound(stack), this.getSoundSource(), 1f, 1f + (this.random.nextFloat() - this.random.nextFloat()) * .2f);
-
+            }
         }
-
         return super.mobInteract(player, hand);
     }
 
@@ -264,30 +249,21 @@ public class Frostbiter extends TamableAnimal implements Endimatable, NeutralMob
         return SoundEvents.LLAMA_EAT;
     }
 
-    @Override
-    public int getRemainingPersistentAngerTime() {
-        return this.entityData.get(ANGER_TIME);
+    public static AttributeSupplier.Builder createFrostbiterAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.ARMOR, 4f)
+                .add(Attributes.ATTACK_DAMAGE, 5f)
+                .add(Attributes.MAX_HEALTH, 40f)
+                .add(Attributes.MOVEMENT_SPEED, 0.24f)
+                .add(Attributes.ATTACK_KNOCKBACK, 1.2f)
+                .add(Attributes.STEP_HEIGHT, 1.0d);
     }
 
-    @Override
-    public void setRemainingPersistentAngerTime(int time) {
-        this.entityData.set(ANGER_TIME, time);
-    }
-
-    @Override
-    public UUID getPersistentAngerTarget() {
-        return this.lastHurtBy;
-    }
-
-    @Override
-    public void setPersistentAngerTarget(UUID target) {
-        this.lastHurtBy = target;
-    }
-
-    @Override
-    public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(ANGER_RANGE.sample(this.random));
-    }
+    @Override public int getRemainingPersistentAngerTime() { return this.entityData.get(ANGER_TIME); }
+    @Override public void setRemainingPersistentAngerTime(int time) { this.entityData.set(ANGER_TIME, time); }
+    @Override public UUID getPersistentAngerTarget() { return this.lastHurtBy; }
+    @Override public void setPersistentAngerTarget(UUID target) { this.lastHurtBy = target; }
+    @Override public void startPersistentAngerTimer() { this.setRemainingPersistentAngerTime(ANGER_RANGE.sample(this.random)); }
 
     @Override
     public LivingEntity getControllingPassenger() {
@@ -300,7 +276,7 @@ public class Frostbiter extends TamableAnimal implements Endimatable, NeutralMob
 
     @Override
     public void tick() {
-        if (this.level().getGameTime() % 5 == 1 && this.hasControllingPassenger() && this.isAlive())
+        if (this.level().getGameTime() % 5 == 1 && this.hasControllingPassenger() && this.isAlive()) {
             for (LivingEntity entity : this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(1.6d), FROSTBITER_SHOULD_KB)) {
                 entity.setTicksFrozen(entity.getTicksFrozen() + 65);
                 Vec3 deltaPos = entity.position().subtract(this.position()).with(Direction.Axis.Y, 0f).normalize().scale(1.5f + this.random.nextDouble() / 2f).scale(this.getAttributeValue(Attributes.ATTACK_KNOCKBACK));
@@ -308,14 +284,12 @@ public class Frostbiter extends TamableAnimal implements Endimatable, NeutralMob
                 entity.hurt(this.damageSources().mobAttack(this), (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE) / 2f);
                 this.playSound(SoundEvents.GOAT_RAM_IMPACT, 2f, 1f);
             }
-
+        }
         super.tick();
     }
 
     @Override
-    public boolean boost() {
-        return this.steering.boost(this.random);
-    }
+    public boolean boost() { return this.steering.boost(this.random); }
 
     @Override
     protected void tickRidden(Player player, Vec3 travelVector) {
@@ -326,40 +300,35 @@ public class Frostbiter extends TamableAnimal implements Endimatable, NeutralMob
     }
 
     @Override
-    protected Vec3 getRiddenInput(Player player, Vec3 travelVector) {
-        return new Vec3(0f, 0f, 1f);
-    }
+    protected Vec3 getRiddenInput(Player player, Vec3 travelVector) { return new Vec3(0f, 0f, 1f); }
 
     @Override
-    protected float getRiddenSpeed(Player player) {
-        return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 0.6f;
-    }
+    protected float getRiddenSpeed(Player player) { return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 0.6f; }
 
     @Override
-    public boolean isSaddleable() {
-        return this.isTame() && !this.isBaby();
-    }
+    public boolean isSaddleable() { return this.isTame() && !this.isBaby(); }
 
     @Override
     public void equipSaddle(ItemStack stack, @Nullable SoundSource sound) {
         this.setSaddled(true);
-        if (sound != null)
+        if (sound != null) {
             this.level().playSound(null, this, SoundEvents.HORSE_SADDLE, sound, 0.5f, 1f);
-
+        }
     }
 
-    @Override
-    public boolean isSaddled() {
-        return this.entityData.get(SADDLED);
-    }
-
-    private void setSaddled(boolean saddled) {
-        this.entityData.set(SADDLED, saddled);
-    }
+    private void setSaddled(boolean saddled) { this.entityData.set(SADDLED, saddled); }
+    @Override public boolean isSaddled() { return this.entityData.get(SADDLED); }
 
     protected void dropSaddle() {
         this.setSaddled(false);
         this.spawnItemFancy(Items.SADDLE, this.position().relative(Direction.UP, 2), SoundEvents.SNOW_GOLEM_SHEAR);
+    }
+
+    public static boolean checkFrostbiterSpawnRules(EntityType<Frostbiter> frostbiter, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+        if (level.getBiome(pos).is(BiomeTags.POLAR_BEARS_SPAWN_ON_ALTERNATE_BLOCKS)) {
+            return level.getRawBrightness(pos, 0) > 8 && level.getBlockState(pos.below()).is(BlockTags.POLAR_BEARS_SPAWNABLE_ON_ALTERNATE);
+        }
+        return Animal.checkAnimalSpawnRules(frostbiter, level, spawnType, pos, random);
     }
 
     @Override
@@ -367,65 +336,30 @@ public class Frostbiter extends TamableAnimal implements Endimatable, NeutralMob
         return super.finalizeSpawn(level, diff, spawnType, spawnGroupData);
     }
 
-    public void setLeftAntler(boolean has) {
-        this.entityData.set(LEFT_ANTLER, has);
-    }
+    public void setLeftAntler(boolean has) { this.entityData.set(LEFT_ANTLER, has); }
+    public void setRightAntler(boolean has) { this.entityData.set(RIGHT_ANTLER, has); }
+    public boolean hasLeftAntler() { return this.entityData.get(LEFT_ANTLER) && !this.isBaby(); }
+    public boolean hasRightAntler() { return this.entityData.get(RIGHT_ANTLER) && !this.isBaby(); }
+    public boolean hasAntlers() { return (this.entityData.get(LEFT_ANTLER) || this.entityData.get(RIGHT_ANTLER)) && !this.isBaby(); }
 
-    public void setRightAntler(boolean has) {
-        this.entityData.set(RIGHT_ANTLER, has);
-    }
-
-    public boolean hasLeftAntler() {
-        return this.entityData.get(LEFT_ANTLER) && !this.isBaby();
-    }
-
-    public boolean hasRightAntler() {
-        return this.entityData.get(RIGHT_ANTLER) && !this.isBaby();
-    }
-
-    public boolean hasAntlers() {
-        return (this.entityData.get(LEFT_ANTLER) || this.entityData.get(RIGHT_ANTLER)) && !this.isBaby();
-    }
-
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return this.isBaby() ? SoundEvents.POLAR_BEAR_AMBIENT_BABY : SoundEvents.POLAR_BEAR_AMBIENT;
-    }
-
-    @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.POLAR_BEAR_HURT;
-    }
-
-    @Override
-    protected SoundEvent getDeathSound() {
-        return SoundEvents.POLAR_BEAR_DEATH;
-    }
-
-    @Override
-    protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(SoundEvents.POLAR_BEAR_STEP, 0.15f, 1f);
-    }
-
-    @Override
-    public float getVoicePitch() {
-        return this.isBaby() ? 1.4f : 0.4f;
-    }
-
-    @Override
-    protected float getSoundVolume() {
-        return this.isBaby() ? 0.8f : 1f;
-    }
+    @Override protected SoundEvent getAmbientSound() { return this.isBaby() ? SoundEvents.POLAR_BEAR_AMBIENT_BABY : SoundEvents.POLAR_BEAR_AMBIENT; }
+    @Override protected SoundEvent getHurtSound(DamageSource source) { return SoundEvents.POLAR_BEAR_HURT; }
+    @Override protected SoundEvent getDeathSound() { return SoundEvents.POLAR_BEAR_DEATH; }
+    @Override protected void playStepSound(BlockPos pos, BlockState state) { this.playSound(SoundEvents.POLAR_BEAR_STEP, 0.15f, 1f); }
+    @Override public float getVoicePitch() { return this.isBaby() ? 1.4f : 0.4f; }
+    @Override protected float getSoundVolume() { return this.isBaby() ? 0.8f : 1f; }
 
     public class FrostbiterPanicGoal extends PanicGoal {
-        public FrostbiterPanicGoal() {
-            super(Frostbiter.this, 1.35d);
-        }
-
-        @Override
-        protected boolean shouldPanic() {
-            return this.mob.isBaby() && super.shouldPanic();
-        }
+        public FrostbiterPanicGoal() { super(Frostbiter.this, 1.35d); }
+        @Override protected boolean shouldPanic() { return this.mob.isBaby() && super.shouldPanic(); }
     }
 
+    public static void tryAddSprintDamage(LivingEntity entity) {
+        if (entity.getItemBySlot(EquipmentSlot.HEAD).is(WindsweptItems.ANTLER_HELMET.get()) && entity.isSprinting()) {
+            AttributeInstance damage = entity.getAttribute(Attributes.ATTACK_DAMAGE);
+            if (damage != null && damage.getModifier(SPRINT_BOOST_ID) == null) {
+                damage.addTransientModifier(new AttributeModifier(SPRINT_BOOST_ID, 4.0D, Operation.ADD_VALUE));
+            }
+        }
+    }
 }
