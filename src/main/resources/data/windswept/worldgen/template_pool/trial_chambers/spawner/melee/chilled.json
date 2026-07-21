@@ -3,7 +3,7 @@
     {
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "minecraft:trial_chambers/spawner/melee/chilled",
+        "location": "windswept:trial_chambers/spawner/melee/chilled",
         "processors": {
           "processors": []
         },
