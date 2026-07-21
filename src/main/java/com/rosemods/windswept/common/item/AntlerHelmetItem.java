@@ -29,6 +29,21 @@ public class AntlerHelmetItem extends ArmorItem {
         super(material, type, properties);
     }
 
+    public static void removeSprintDamage(LivingEntity entity) {
+        AttributeInstance damage = entity.getAttribute(Attributes.ATTACK_DAMAGE);
+        if (damage != null && damage.getModifier(ATTACK_DAMAGE_BOOST_ID) != null)
+            damage.removeModifier(ATTACK_DAMAGE_BOOST_ID);
+    }
+
+    public static void tryAddSprintDamage(LivingEntity entity) {
+        if (entity.getItemBySlot(EquipmentSlot.HEAD).is(WindsweptItems.ANTLER_HELMET.get()) && entity.isSprinting()) {
+            AttributeInstance damage = entity.getAttribute(Attributes.ATTACK_DAMAGE);
+
+            if (damage != null && damage.getModifier(ATTACK_DAMAGE_BOOST_ID) == null)
+                damage.addTransientModifier(new AttributeModifier(ATTACK_DAMAGE_BOOST_ID, 4.0D, AttributeModifier.Operation.ADD_VALUE));
+        }
+    }
+
     @Override
     public ItemAttributeModifiers getDefaultAttributeModifiers() {
         return super.getDefaultAttributeModifiers()
@@ -45,20 +60,5 @@ public class AntlerHelmetItem extends ArmorItem {
                 return AntlerHelmetModel.INSTANCE;
             }
         });
-    }
-
-    public static void removeSprintDamage(LivingEntity entity) {
-        AttributeInstance damage = entity.getAttribute(Attributes.ATTACK_DAMAGE);
-        if (damage != null && damage.getModifier(ATTACK_DAMAGE_BOOST_ID) != null)
-            damage.removeModifier(ATTACK_DAMAGE_BOOST_ID);
-    }
-
-    public static void tryAddSprintDamage(LivingEntity entity) {
-        if (entity.getItemBySlot(EquipmentSlot.HEAD).is(WindsweptItems.ANTLER_HELMET.get()) && entity.isSprinting()) {
-            AttributeInstance damage = entity.getAttribute(Attributes.ATTACK_DAMAGE);
-
-            if (damage != null && damage.getModifier(ATTACK_DAMAGE_BOOST_ID) == null)
-                damage.addTransientModifier(new AttributeModifier(ATTACK_DAMAGE_BOOST_ID, 4.0D, AttributeModifier.Operation.ADD_VALUE));
-        }
     }
 }

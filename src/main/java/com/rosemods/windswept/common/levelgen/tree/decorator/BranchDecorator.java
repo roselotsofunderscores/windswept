@@ -32,6 +32,10 @@ public class BranchDecorator extends TreeDecorator {
         this.minHeight = minHeight;
     }
 
+    public static BranchDecorator create(Block block, int minHeight) {
+        return new BranchDecorator(BlockStateProvider.simple(block), minHeight);
+    }
+
     @Override
     protected TreeDecoratorType<?> type() {
         return WindsweptTreeDecorators.BRANCH_DECORATOR.get();
@@ -64,10 +68,6 @@ public class BranchDecorator extends TreeDecorator {
                         return;
                 }
             }
-    }
-
-    public static BranchDecorator create(Block block, int minHeight) {
-        return new BranchDecorator(BlockStateProvider.simple(block), minHeight);
     }
 
 }

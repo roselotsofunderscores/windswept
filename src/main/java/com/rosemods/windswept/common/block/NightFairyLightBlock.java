@@ -28,6 +28,12 @@ public class NightFairyLightBlock extends PineconeBlock implements EntityBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(AMOUNT, 1).setValue(LIT, true));
     }
 
+    @Nullable
+    @SuppressWarnings("unchecked")
+    private static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTicker(BlockEntityType<A> type, BlockEntityType<E> expectedType, BlockEntityTicker<? super E> ticker) {
+        return type == expectedType ? (BlockEntityTicker<A>) ticker : null;
+    }
+
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockState state = super.getStateForPlacement(context);
@@ -51,12 +57,6 @@ public class NightFairyLightBlock extends PineconeBlock implements EntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || !level.dimensionType().hasSkyLight()) return null;
         return createTicker(type, WindsweptBlockEntities.NIGHT_FAIRY_LIGHT.get(), NightFairyLightBlockEntity::tick);
-    }
-
-    @Nullable
-    @SuppressWarnings("unchecked")
-    private static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTicker(BlockEntityType<A> type, BlockEntityType<E> expectedType, BlockEntityTicker<? super E> ticker) {
-        return type == expectedType ? (BlockEntityTicker<A>) ticker : null;
     }
 
     @OnlyIn(Dist.CLIENT)

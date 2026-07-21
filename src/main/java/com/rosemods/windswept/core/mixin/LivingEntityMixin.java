@@ -29,19 +29,19 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @Override
-    public void setTicksFrozen(int ticks) {
-        if (((LivingEntity) (Object) this).hasEffect(WindsweptEffects.FROST_RESISTANCE) || this.getType().is(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES))
-            ticks = 0;
-
-        super.setTicksFrozen(ticks);
-    }
-
-    @Override
     public int getTicksFrozen() {
         if (((LivingEntity) (Object) this).hasEffect(WindsweptEffects.FROST_RESISTANCE) || this.getType().is(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES))
             return 0;
 
         return super.getTicksFrozen();
+    }
+
+    @Override
+    public void setTicksFrozen(int ticks) {
+        if (((LivingEntity) (Object) this).hasEffect(WindsweptEffects.FROST_RESISTANCE) || this.getType().is(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES))
+            ticks = 0;
+
+        super.setTicksFrozen(ticks);
     }
 
     @Override

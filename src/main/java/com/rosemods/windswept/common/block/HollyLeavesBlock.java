@@ -21,6 +21,16 @@ public class HollyLeavesBlock extends LeavesBlock {
         super(properties);
     }
 
+    public static void entityInside(float damage, Entity entity, Level level) {
+        if (!level.isClientSide && (entity.xOld != entity.getX() || entity.zOld != entity.getZ()) && ((entity instanceof Player player && !player.isCrouching()) || entity instanceof Villager)) {
+            double d0 = Math.abs(entity.getX() - entity.xOld);
+            double d1 = Math.abs(entity.getZ() - entity.zOld);
+
+            if (d0 >= .003d || d1 >= .003d)
+                entity.hurt(entity.damageSources().source(WindsweptDamageTypes.HOLLY_LEAVES), damage);
+        }
+    }
+
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
         return AABB;
@@ -35,16 +45,6 @@ public class HollyLeavesBlock extends LeavesBlock {
     @OnlyIn(Dist.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter getter, BlockPos pos) {
         return .2f;
-    }
-
-    public static void entityInside(float damage, Entity entity, Level level) {
-        if (!level.isClientSide && (entity.xOld != entity.getX() || entity.zOld != entity.getZ()) && ((entity instanceof Player player && !player.isCrouching()) || entity instanceof Villager)) {
-            double d0 = Math.abs(entity.getX() - entity.xOld);
-            double d1 = Math.abs(entity.getZ() - entity.zOld);
-
-            if (d0 >= .003d || d1 >= .003d)
-                entity.hurt(entity.damageSources().source(WindsweptDamageTypes.HOLLY_LEAVES), damage);
-        }
     }
 
 }

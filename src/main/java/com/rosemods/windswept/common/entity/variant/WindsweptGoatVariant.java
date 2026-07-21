@@ -30,6 +30,10 @@ public enum WindsweptGoatVariant implements StringRepresentable {
         this.texture = texture;
     }
 
+    public static WindsweptGoatVariant byId(int id) {
+        return BY_ID.apply(id);
+    }
+
     public int id() {
         return this.id;
     }
@@ -41,10 +45,6 @@ public enum WindsweptGoatVariant implements StringRepresentable {
 
     public ResourceLocation getTexture() {
         return this.texture;
-    }
-
-    public static WindsweptGoatVariant byId(int id) {
-        return BY_ID.apply(id);
     }
 
 }

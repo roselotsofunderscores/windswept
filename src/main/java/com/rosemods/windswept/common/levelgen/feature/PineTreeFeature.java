@@ -110,9 +110,9 @@ public class PineTreeFeature extends BlueprintTreeFeature {
 
         for (int y = 1; y < 5; y++) {
             int i = switch (y) {
-                default -> y;
                 case 3 -> 2;
                 case 4 -> 1;
+                default -> y;
             };
 
             for (int x = -i; x <= i; x++)

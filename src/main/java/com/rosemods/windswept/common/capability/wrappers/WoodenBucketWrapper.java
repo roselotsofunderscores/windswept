@@ -24,6 +24,26 @@ public class WoodenBucketWrapper implements IFluidHandlerItem {
         this.container = container;
     }
 
+    private static Item getBucketFromFluid(Fluid fluid) {
+        if (fluid == Fluids.WATER) return WindsweptItems.WOODEN_WATER_BUCKET.get();
+        if (fluid == NeoForgeMod.MILK.get()) return WindsweptItems.WOODEN_MILK_BUCKET.get();
+        if (ModList.get().isLoaded("create")) {
+            ResourceLocation location = BuiltInRegistries.FLUID.getKey(fluid);
+            if (location.equals(WindsweptConstants.HONEY)) return WindsweptItems.WOODEN_HONEY_BUCKET.get();
+            if (location.equals(WindsweptConstants.CHOCOLATE)) return WindsweptItems.WOODEN_CHOCOLATE_BUCKET.get();
+        }
+
+        return null;
+    }
+
+    private static boolean canFillFromFluid(Fluid fluid) {
+        if (ModList.get().isLoaded("create")) {
+            ResourceLocation location = BuiltInRegistries.FLUID.getKey(fluid);
+            if (location.equals(WindsweptConstants.HONEY) || location.equals(WindsweptConstants.CHOCOLATE)) return true;
+        }
+        return fluid == Fluids.WATER || fluid == NeoForgeMod.MILK.get();
+    }
+
     @Override
     public @NotNull ItemStack getContainer() {
         return this.container;
@@ -111,26 +131,6 @@ public class WoodenBucketWrapper implements IFluidHandlerItem {
         }
 
         return FluidStack.EMPTY;
-    }
-
-    private static Item getBucketFromFluid(Fluid fluid) {
-        if (fluid == Fluids.WATER) return WindsweptItems.WOODEN_WATER_BUCKET.get();
-        if (fluid == NeoForgeMod.MILK.get()) return WindsweptItems.WOODEN_MILK_BUCKET.get();
-        if (ModList.get().isLoaded("create")) {
-            ResourceLocation location = BuiltInRegistries.FLUID.getKey(fluid);
-            if (location.equals(WindsweptConstants.HONEY)) return WindsweptItems.WOODEN_HONEY_BUCKET.get();
-            if (location.equals(WindsweptConstants.CHOCOLATE)) return WindsweptItems.WOODEN_CHOCOLATE_BUCKET.get();
-        }
-
-        return null;
-    }
-
-    private static boolean canFillFromFluid(Fluid fluid) {
-        if (ModList.get().isLoaded("create")) {
-            ResourceLocation location = BuiltInRegistries.FLUID.getKey(fluid);
-            if (location.equals(WindsweptConstants.HONEY) || location.equals(WindsweptConstants.CHOCOLATE)) return true;
-        }
-        return fluid == Fluids.WATER || fluid == NeoForgeMod.MILK.get();
     }
 
 }

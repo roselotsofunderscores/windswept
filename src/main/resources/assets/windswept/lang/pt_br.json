@@ -10,7 +10,6 @@
   "biome.windswept.snowy_chestnut_forest": "Floresta de Castanhas Nevada",
   "biome.windswept.snowy_pine_barrens": "Pinhal Nevado",
   "biome.windswept.tundra": "Tundra",
-
   "block.minecraft.banner.windswept.rose_flower.black": "Figura de Rosa Preta",
   "block.minecraft.banner.windswept.rose_flower.blue": "Figura de Rosa Azul",
   "block.minecraft.banner.windswept.rose_flower.brown": "Figura de Rosa Marrom",
@@ -361,19 +360,15 @@
   "block.windswept.yellow_pinecone_shingles": "Paralelepinhas Amarelas",
   "block.windswept.yellow_rose": "Rosa Amarela",
   "block.windswept.yellow_rose_bush": "Roseira Amarela",
-
   "effect.windswept.frost_resistance": "Resistência ao Frio",
   "effect.windswept.frost_resistance.description": "Fornece imunidade ao Frio. Permite o afetado andar em Neve Fofa, e também o deixa imune a ela.",
   "effect.windswept.thorns": "Espinhoso",
   "effect.windswept.thorns.description": "Causa dano aos inimigos que te atacam.",
-
   "enchantment.windswept.slipping_curse": "Maldição do Deslizamento",
   "enchantment.windswept.slipping_curse.desc": "Faz com que o usuário deslize em cada bloco em que pisa, ao mesmo tempo em que danifica as botas.",
-
   "entity.windswept.chilled": "Congelado",
   "entity.windswept.frost_arrow": "Flecha de Gelo",
   "entity.windswept.frostbiter": "Mordigelo",
-
   "item.caverns_and_chasms.tether_potion.effect.frost_resistance": "Faixa de Poção de Resistência ao Frio",
   "item.caverns_and_chasms.tether_potion.effect.long_frost_resistance": "Faixa de Poção de Resistência ao Frio",
   "item.caverns_and_chasms.tether_potion.effect.long_thorns": "Faixa de Poção de Espinhos",
@@ -399,7 +394,6 @@
   "item.minecraft.tipped_arrow.effect.long_thorns": "Flecha de Espinhos",
   "item.minecraft.tipped_arrow.effect.strong_thorns": "Flecha de Espinhos",
   "item.minecraft.tipped_arrow.effect.thorns": "Flecha de Espinhos",
-
   "item.windswept.antler_helmet": "Capacete de Chifres",
   "item.windswept.candy_cane": "Bengala Doce",
   "item.windswept.chestnut_boat": "Bote de Castanheiro",
@@ -466,7 +460,6 @@
   "item.windswept.wooden_milk_bucket": "Balde de Madeira com Leite",
   "item.windswept.wooden_powder_snow_bucket": "Balde de Madeira com Neve",
   "item.windswept.wooden_water_bucket": "Balde de Madeira com Água",
-
   "painting.windswept.al-lu_pine.author": "Yapettoshen",
   "painting.windswept.al-lu_pine.title": "Al-lu Pine",
   "painting.windswept.aurorae.author": "Yapettoshen",
@@ -481,10 +474,8 @@
   "painting.windswept.hearth_rug.title": "Hearth Rug",
   "painting.windswept.the_foils.author": "Yapettoshen",
   "painting.windswept.the_foils.title": "The Foils",
-
   "trim_material.windswept.icicles": "Material de Gelo",
   "trim_material.windswept.pinecone": "Material de Pinha",
-
   "windswept.jei.info.carved_pinecone_block": "O Rosto da Pinha Esculpida cria uma única nota aleatoriamente por causa do vento passando por ela. A nota produzida é mais grave dependendo do tanto de Blocos de Pinha empilhados abaixo do bloco esculpido. \n(É ativada por ticks aleatórios, clicando, ou por redstone)",
   "windswept.jei.info.elder_feather": "Penas Antigas podem ser achadas por arqueologia.",
   "windswept.jei.info.frozen_branch": "Mordigelos Domados trocam de chifres de vez em quando.",

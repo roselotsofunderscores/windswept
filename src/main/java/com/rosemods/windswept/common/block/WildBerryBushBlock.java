@@ -32,8 +32,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.CommonHooks;
 
 public class WildBerryBushBlock extends BushBlock implements BonemealableBlock {
-    public static final MapCodec<WildBerryBushBlock> CODEC = simpleCodec(WildBerryBushBlock::new);
     public static final IntegerProperty AGE = BlockStateProperties.AGE_3;
+    public static final MapCodec<WildBerryBushBlock> CODEC = simpleCodec(WildBerryBushBlock::new);
     private static final VoxelShape SMALL_SHAPE = Block.box(3f, 0f, 3f, 13f, 5f, 13f);
     private static final VoxelShape MID_SHAPE = Block.box(2f, 0f, 2f, 14f, 10f, 14f);
     private static final VoxelShape GROWN_SHAPE = Block.box(2f, 0f, 2f, 14f, 14f, 14f);

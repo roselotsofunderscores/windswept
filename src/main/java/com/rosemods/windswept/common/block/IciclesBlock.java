@@ -72,10 +72,10 @@ public class IciclesBlock extends Block implements SimpleWaterloggedBlock {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos blockpos, CollisionContext context) {
         return switch (state.getValue(STATE)) {
-            default -> SHAPE;
             case TOP -> TOP;
             case BOTTOM -> BOTTOM;
             case FLOOR -> FLOOR;
+            default -> SHAPE;
         };
     }
 

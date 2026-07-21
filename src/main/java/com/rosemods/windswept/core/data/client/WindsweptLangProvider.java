@@ -52,6 +52,14 @@ public class WindsweptLangProvider extends LanguageProvider {
         super(event.getGenerator().getPackOutput(), Windswept.MOD_ID, "en_us");
     }
 
+    private static String toUpper(DeferredHolder<?, ?> object) {
+        return toUpper(object.getId().getPath());
+    }
+
+    private static String toUpper(String string) {
+        return StringUtils.capitaliseAllWords(string.replace('_', ' '));
+    }
+
     @Override
     protected void addTranslations() {
         // Items //
@@ -159,7 +167,6 @@ public class WindsweptLangProvider extends LanguageProvider {
         this.translateRegistry(Registries.ENTITY_TYPE, EntityType::getDescriptionId);
     }
 
-
     private <T> void translateRegistry(ResourceKey<Registry<T>> registry, Function<T, String> toString) {
         for (DeferredHolder<?, ?> object : Windswept.REGISTRY_HELPER.getSubHelper(registry).getDeferredRegister().getEntries())
             this.add(toString.apply((T) object.get()), toUpper(object));
@@ -248,14 +255,6 @@ public class WindsweptLangProvider extends LanguageProvider {
 
     private void addDescription(DeferredHolder<? extends ItemLike, ? extends ItemLike> item, String desc) {
         this.add(item.get().asItem().getDescriptionId() + ".desc", desc);
-    }
-
-    private static String toUpper(DeferredHolder<?, ?> object) {
-        return toUpper(object.getId().getPath());
-    }
-
-    private static String toUpper(String string) {
-        return StringUtils.capitaliseAllWords(string.replace('_', ' '));
     }
 
 }

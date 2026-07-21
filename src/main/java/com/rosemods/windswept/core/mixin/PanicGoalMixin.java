@@ -1,7 +1,7 @@
 package com.rosemods.windswept.core.mixin;
 
-import com.rosemods.windswept.common.entity.PathfinderMobData;
 import com.rosemods.windswept.common.entity.Frostbiter;
+import com.rosemods.windswept.common.entity.PathfinderMobData;
 import com.rosemods.windswept.core.registry.WindsweptBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -45,8 +45,8 @@ public class PanicGoalMixin {
 
         for (LivingEntity entity : this.mob.level().getEntitiesOfClass(LivingEntity.class, radius))
             if (this.mob != entity && (entity.getItemBySlot(EquipmentSlot.HEAD)
-                .is(WindsweptBlocks.CARVED_PINECONE_BLOCK.get()
-                    .asItem()) || (entity instanceof Frostbiter frostbiter && frostbiter.hasControllingPassenger()))) {
+                    .is(WindsweptBlocks.CARVED_PINECONE_BLOCK.get()
+                            .asItem()) || (entity instanceof Frostbiter frostbiter && frostbiter.hasControllingPassenger()))) {
                 info.setReturnValue(true);
                 return;
             }

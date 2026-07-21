@@ -2,7 +2,6 @@
   "attribute.windswept.name.generic.fragrance": "Ароматность",
   "attribute.windswept.name.generic.snow_speed": "К скорости по снегу",
   "attribute.windswept.name.generic.sprint_damage": "Урон при беге",
-
   "biome.windswept.flowering_savanna": "Цветущая саванна",
   "biome.windswept.lavender_fields": "Лавандовые поля",
   "biome.windswept.lavender_hills": "Лавандовые холмы",
@@ -11,14 +10,12 @@
   "biome.windswept.snowy_chestnut_forest": "Заснеженный каштановый лес",
   "biome.windswept.snowy_pine_barrens": "Заснеженные сосновые пустоши",
   "biome.windswept.tundra": "Тундра",
-
   "item.windswept.wild_berries": "Дикие ягоды",
   "item.windswept.wild_berry_pips": "Косточки диких ягод",
   "block.windswept.wild_berry_bush": "Куст диких ягод",
   "block.windswept.wild_berry_basket": "Ящик с дикими ягодами",
   "item.windswept.candy_cane": "Карамельная трость",
   "block.windswept.candy_cane_block": "Блок карамельной трости",
-
   "block.windswept.ginger": "Имбирь",
   "block.windswept.ginger_root_crate": "Ящик с имбирными корнями",
   "block.windswept.ginger_soil": "Имбирная почва",
@@ -42,7 +39,6 @@
   "block.windswept.glazed_gingerbread_brick_stairs": "Ступеньки из глазурированного пряничного кирпича",
   "block.windswept.glazed_gingerbread_brick_wall": "Ограда из глазурированного пряничного кирпича",
   "block.windswept.glazed_gingerbread_bricks": "Глазурированные пряничные кирпичи",
-
   "block.windswept.shale": "Кианит",
   "block.windswept.chiseled_polished_shale_bricks": "Резные полированно-кианитовые кирпичи",
   "block.windswept.icy_polished_shale_bricks": "Ледянистые полированно-кианитовые кирпичи",
@@ -57,7 +53,6 @@
   "block.windswept.polished_shale_slab": "Плита из полированного кианита",
   "block.windswept.polished_shale_stairs": "Ступеньки из полированного кианита",
   "block.windswept.polished_shale_wall": "Ограда из полированного кианита",
-
   "block.windswept.lunalite": "Луналит",
   "block.windswept.lunalite_slab": "Луналитовая плита",
   "block.windswept.lunalite_stairs": "Луналитовые ступеньки",
@@ -73,9 +68,7 @@
   "block.windswept.cut_lunalite_bricks": "Пиленые луналитовые кирпичи",
   "block.windswept.cut_lunalite_slab": "Плита из пиленого луналита",
   "block.windswept.cut_lunalite_stairs": "Ступеньки из пиленого луналита",
- 
   "block.windswept.cut_lunalite_wall": "Ограда из пиленого луналита",
-
   "block.windswept.packed_ice_brick_slab": "Плита из плотного ледяного кирпича",
   "block.windswept.packed_ice_brick_stairs": "Ступеньки из плотного ледяного кирпича",
   "block.windswept.packed_ice_brick_wall": "Ограда из плотного ледяного кирпича",
@@ -83,7 +76,6 @@
   "block.windswept.packed_ice_slab": "Плита из плотного льда",
   "block.windswept.packed_ice_stairs": "Ступеньки из плотного льда",
   "block.windswept.chiseled_packed_ice_bricks": "Резные плотные ледяные кирпичи",
-
   "block.windswept.blue_ice_brick_slab": "Плита из синего ледяного кирпича",
   "block.windswept.blue_ice_brick_stairs": "Ступеньки из синего ледяного кирпича",
   "block.windswept.blue_ice_brick_wall": "Ограда из синего ледяного кирпича",
@@ -91,7 +83,6 @@
   "block.windswept.chiseled_blue_ice_bricks": "Резные синие ледяные кирпичи",
   "block.windswept.blue_ice_slab": "Плита из синего льда",
   "block.windswept.blue_ice_stairs": "Ступеньки из синего льда",
-
   "block.windswept.snow_brick_slab": "Плита из снежного кирпича",
   "block.windswept.snow_brick_stairs": "Ступеньки из снежного кирпича",
   "block.windswept.snow_brick_wall": "Ограда из снежного кирпича",
@@ -99,7 +90,6 @@
   "block.windswept.snow_carpet": "Снежный ковёр",
   "block.windswept.snow_slab": "Снежная плита",
   "block.windswept.snow_stairs": "Снежные ступеньки",
-
   "block.windswept.chestnut_beehive": "Каштановый улей",
   "block.windswept.chestnut_hanging_sign": "Каштановая подвесная табличка",
   "block.windswept.chestnut_boards": "Каштановый паркет",
@@ -136,7 +126,6 @@
   "item.windswept.chestnuts": "Каштаны",
   "item.windswept.roasted_chestnuts": "Жареные каштаны",
   "block.windswept.roasted_chestnut_crate": "Ящик с жареными каштанами",
-
   "block.windswept.holly_beehive": "Падубовый улей",
   "block.windswept.holly_hanging_sign": "Падубовая подвесная табличка",
   "block.windswept.holly_berry_basket": "Корзина с падубовыми ягодами",
@@ -171,7 +160,6 @@
   "item.windswept.holly_boat": "Падубовая лодка",
   "item.windswept.holly_chest_boat": "Падубовая грузовая лодка",
   "block.windswept.christmas_pudding": "Рождественский пудинг",
-
   "block.windswept.pine_beehive": "Сосновый улей",
   "block.windswept.pine_hanging_sign": "Сосновая подвесная табличка",
   "block.windswept.pine_boards": "Сосновый паркет",
@@ -202,7 +190,6 @@
   "item.windswept.large_pine_boat": "Сосновая большая лодка",
   "block.windswept.stripped_pine_log": "Обтёсанное сосновое бревно",
   "block.windswept.stripped_pine_wood": "Обтёсанная сосновая древесина",
-
   "block.windswept.pinecone": "Шишка",
   "block.windswept.pinecone_block": "Блок шишки",
   "block.windswept.pinecone_jam_block": "Блок шишкового варенья",
@@ -260,7 +247,6 @@
   "block.windswept.red_pinecone_shingle_slab": "Плита из красной шишковой черепицы",
   "block.windswept.red_pinecone_shingle_stairs": "Ступеньки из красной шишковой черепицы",
   "block.windswept.red_pinecone_shingles": "Красная шишковая черепица",
-  
   "block.windswept.chiseled_icicle_block": "Резной сосульковый блок",
   "block.windswept.icicle_bars": "Сосульковые прутья",
   "block.windswept.icicle_block": "Сосульковый блок",
@@ -270,7 +256,6 @@
   "block.windswept.ice_lantern": "Ледяной фонарь",
   "block.windswept.ice_chain": "Ледяная цепь",
   "block.windswept.ice_sheet": "Ледяная панель",
-
   "block.windswept.dry_moss_block": "Блок высохшего мха",
   "block.windswept.dry_mossy_sprouts": "Высохшие моховые отростки",
   "block.windswept.dry_moss_carpet": "Высохший моховой ковёр",
@@ -290,7 +275,6 @@
   "block.windswept.dry_mossy_stone_brick_stairs": "Ступеньки из высохшего замшелого каменного кирпича",
   "block.windswept.dry_mossy_stone_brick_wall": "Ограда из высохшего замшелого каменного кирпича",
   "block.windswept.dry_mossy_stone_bricks": "Высохшие замшелые каменные кирпичи",
-
   "block.windswept.fairy_light": "Огонёк",
   "block.windswept.soul_fairy_light": "Огонёк душ",
   "block.windswept.cupric_fairy_light": "Огонёк купороса",
@@ -305,26 +289,21 @@
   "item.windswept.feather_cloak.desc": "Носитель становится невидимым при подкрадывании",
   "block.windswept.elder_ornament": "Старейшинский орнамент",
   "block.windswept.elder_wing": "Старейшинское крыло",
-
   "block.windswept.suspicious_snow": "Подозрительный снег",
-
   "block.windswept.gelisol": "Гелизол",
   "block.windswept.gelisol_grass": "Гелизоловая трава",
   "block.windswept.gelisol_path": "Гелизоловая тропинка",
-
   "block.windswept.lavender": "Лаванда",
   "block.windswept.lavender_bale": "Тюк лаванды",
   "block.windswept.lavender_thatch": "Лавандовая солома",
   "block.windswept.lavender_thatch_slab": "Плита из лавандовой соломы",
   "block.windswept.lavender_thatch_stairs": "Ступеньки из лавандовой соломы",
   "item.windswept.lavender_tea": "Лавандовый чай",
-  
   "block.windswept.mimosa": "Мимоза",
   "block.windswept.yellow_petals": "Жёлтые лепестки",
   "block.windswept.flowering_acacia_leaf_pile": "Кучка листьев цветущей акации",
   "block.windswept.flowering_acacia_leaves": "Листья цветущей акации",
   "block.windswept.flowering_acacia_sapling": "Саженец цветущей акации",
-
   "block.windswept.foxglove": "Наперстянка",
   "block.windswept.lions_tail": "Леонотис",
   "block.windswept.nightshade": "Ночной паслён",
@@ -342,7 +321,6 @@
   "block.windswept.white_rose_bush": "Белый розовый куст",
   "block.windswept.yellow_rose": "Жёлтая роза",
   "block.windswept.yellow_rose_bush": "Жёлтый розовый куст",
-
   "block.windswept.potted_blue_rose": "Синяя роза в горшке",
   "block.windswept.potted_bluebells": "Колокольчики в горшке",
   "block.windswept.potted_chestnut_sapling": "Саженец каштана в горшке",
@@ -363,7 +341,6 @@
   "block.windswept.potted_flowering_acacia_sapling": "Саженец цветущей акации в горшке",
   "block.windswept.potted_gelisol_grass": "Гелизоловая трава в горшке",
   "block.windswept.potted_mimosa": "Мимоза в горшке",
-
   "effect.windswept.frost_resistance": "Морозостойкость",
   "effect.windswept.frost_resistance.description": "Дает иммунитет к замерзанию. Позволяет ходить по рыхлому снегу. Предотвращает превращение сущностей в рыхлом снегу.",
   "effect.windswept.thorns": "Шипастость",
@@ -393,35 +370,29 @@
   "item.minecraft.tipped_arrow.effect.long_thorns": "Стрела шипастости",
   "item.minecraft.tipped_arrow.effect.strong_thorns": "Стрела шипастости",
   "item.minecraft.tipped_arrow.effect.thorns": "Стрела шипастости",
-
   "item.windswept.snow_boots": "Снегоступы",
   "item.windswept.lavender_crown": "Лавандовая корона",
   "item.windswept.antler_helmet": "Шлем с рогами",
   "item.windswept.frost_arrow": "Ледяная стрела",
   "entity.windswept.frost_arrow": "Ледяная стрела",
-
   "item.windswept.frostbiter_spawn_egg": "Яйцо призыва хладокуса",
   "entity.windswept.frostbiter": "Хладокус",
   "block.windswept.frostbiter_trophy": "Трофей хладокуса",
   "item.windswept.frozen_branch": "Замёрзшая ветвь",
-
   "item.windswept.chilled_spawn_egg": "Яйцо призыва замёрзшего",
   "entity.windswept.chilled": "Замёрзший",
   "item.windswept.frozen_flesh": "Замёрзшая плоть",
   "block.windswept.frozen_flesh_block": "Блок замёрзшей плоти",
-
   "item.windswept.goat": "Сырая козлятина",
   "item.windswept.cooked_goat": "Жареная козлятина",
   "item.windswept.goat_stew": "Тушеная козлятина",
   "item.windswept.mutton_pie": "Бараний пирог",
-
   "item.windswept.wooden_bucket": "Деревянное ведро",
   "item.windswept.wooden_milk_bucket": "Деревянное ведро молока",
   "item.windswept.wooden_powder_snow_bucket": "Деревянное ведро с рыхлым снегом",
   "item.windswept.wooden_water_bucket": "Деревянное ведро воды",
   "item.windswept.wooden_chocolate_bucket": "Деревянное ведро шоколада",
   "item.windswept.wooden_honey_bucket": "Деревянное ведро мёда",
-
   "painting.windswept.al-lu_pine.title": "Сосна Аль-Лу",
   "painting.windswept.aurorae.title": "Сияние",
   "painting.windswept.cliffside.title": "Утёс",
@@ -429,10 +400,8 @@
   "painting.windswept.ecotonal_pareidolia.title": "Экотоническая парейдолия",
   "painting.windswept.hearth_rug.title": "Уютный коврик",
   "painting.windswept.the_foils.title": "Символика",
-	
   "trim_material.windswept.icicles": "Сосульковая",
   "trim_material.windswept.pinecone": "Шишковая",
-
   "item.windswept.music_disc_bumblebee": "Пластинка",
   "item.windswept.music_disc_rain": "Пластинка",
   "item.windswept.music_disc_snow": "Пластинка",
@@ -490,20 +459,17 @@
   "block.minecraft.banner.windswept.snow_golem.red": "Красный снеговик",
   "block.minecraft.banner.windswept.snow_golem.white": "Белый снеговик",
   "block.minecraft.banner.windswept.snow_golem.yellow": "Жёлтый снеговик",
-
   "item.windswept.hoot_pottery_sherd": "Глиняный черепок «Уханье»",
   "item.windswept.plumage_pottery_sherd": "Глиняный черепок «Оперение»",
   "item.windswept.offshoot_pottery_sherd": "Глиняный черепок «Ветвь»",
   "item.windswept.flake_pottery_sherd": "Глиняный черепок «Снежинка»",
   "item.windswept.drupes_pottery_sherd": "Глиняный черепок «Костянка»",
-
   "death.attack.holly_leaves": "%1$s изодран до смерти падубовыми листьями",
   "death.attack.holly_leaves.player": "%1$s был изодран до смерти падубовыми листьями, спасаясь от %2$s",
   "death.attack.icicle": "%1$s пронзён сосулькой",
   "death.attack.icicle.player": "%1$s был пронзён сосулькой, пока боролся с %2$s",
   "enchantment.windswept.slipping_curse": "Проклятье скольжения",
   "enchantment.windswept.slipping_curse.desc": "Заставляет надевшего скользить по блокам, словно это лёд, при этом расходуя прочность ботинков.",
-
   "windswept.jei.info.carved_pinecone_block": "Лицевая сторона вырезанного блока шишки издаёт одну случайную ноту, когда через нее проходит ветер. Нота зависит от высоты и количества блоков друг на друге.",
   "windswept.jei.info.ice_lantern": "Ледяная лампа издаёт свет, что не способен растворить снег и лёд.",
   "windswept.jei.info.music_disc_bumblebee": "С небольшим шансом выпадает при сборе пчелиных сот.",
@@ -514,6 +480,6 @@
   "windswept.jei.info.will_o_the_wisp": "Будет смотреть на вас, пока вы повернуты спиной",
   "windswept.jei.info.nightshade": "Ночные паслёны - это мистические цветы, которые изредка растут на корнях деревьев. Цветок излучает едва заметный белый свет, схожий с лунным.",
   "windswept.jei.info.snow_boots": "Снегоступы позволяют путешествовать быстрее по снегу, а также дают возможность ходить по рыхлому снегу. Окрашиваемые.",
-  "windswept.jei.info.wild_berries": "Дикие ягоды - это плоды куста диких ягод, которые способны расти в снежных условиях. Могут быть использованы для сока, что даёт регенерацию здоровья, а также заморозить для приготовления ягодного льда, дающего морозостойкость.", 
-  "windswept.jei.info.wooden_bucket": "Деревянные вёдра просты в изготовлении, но их недостатком является прочность, которая тратится каждый раз, когда вы выливаете жидкость." 
+  "windswept.jei.info.wild_berries": "Дикие ягоды - это плоды куста диких ягод, которые способны расти в снежных условиях. Могут быть использованы для сока, что даёт регенерацию здоровья, а также заморозить для приготовления ягодного льда, дающего морозостойкость.",
+  "windswept.jei.info.wooden_bucket": "Деревянные вёдра просты в изготовлении, но их недостатком является прочность, которая тратится каждый раз, когда вы выливаете жидкость."
 }

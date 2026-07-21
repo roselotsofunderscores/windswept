@@ -37,6 +37,16 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         super(event.getGenerator().getPackOutput(), Windswept.MOD_ID, event.getExistingFileHelper());
     }
 
+    private static String getItemName(ItemLike item) {
+        return BuiltInRegistries.ITEM.getKey(item.asItem()).getPath();
+    }
+
+    // Items //
+
+    private static String getBlockName(Block block) {
+        return BuiltInRegistries.BLOCK.getKey(block).getPath();
+    }
+
     @Override
     protected void registerStatesAndModels() {
         // item models
@@ -507,8 +517,6 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.itemModel(GELISOL_PATH);
     }
 
-    // Items //
-
     private void itemModel(DeferredBlock<Block> block) {
         this.itemModels().withExistingParent(getItemName(block.get()), this.blockTexture(block.get()));
     }
@@ -533,6 +541,8 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.itemModels().withExistingParent(name, "item/generated").texture("layer0", this.modLoc("item/" + name)).texture("layer1", this.modLoc("item/" + name + "_overlay"));
     }
 
+    // Blocks //
+
     private void spawnEgg(DeferredItem<? extends Item> egg) {
         this.itemModels().withExistingParent(getItemName(egg.get()), "item/template_spawn_egg");
     }
@@ -541,8 +551,6 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         String name = painting.location().getPath();
         this.itemModels().withExistingParent("item/painting/" + name, "item/generated").texture("layer0", this.modLoc("item/painting/" + name));
     }
-
-    // Blocks //
 
     private void hangingPinecone(DeferredBlock<Block> pinecone) {
         String name = getItemName(pinecone.get());
@@ -866,6 +874,8 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.itemModel(pillar);
     }
 
+    // Blueprint Models //
+
     private void wood(DeferredBlock<Block> log, ResourceLocation texture) {
         this.axisBlock((RotatedPillarBlock) log.get(), texture, texture);
         this.itemModel(log);
@@ -875,8 +885,6 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.simpleBlock(bookshelf.get(), this.models().cubeColumn(getItemName(bookshelf.get()), this.blockTexture(bookshelf.get()), this.blockTexture(planks.get())));
         this.itemModel(bookshelf);
     }
-
-    // Blueprint Models //
 
     private void chests(DeferredBlock<BlueprintChestBlock> chest, DeferredBlock<BlueprintTrappedChestBlock> trapped, ResourceLocation texture) {
         ModelFile model = this.models().getBuilder(getItemName(chest.get())).texture("particle", texture);
@@ -934,6 +942,8 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.itemModel(thatch);
     }
 
+    // Util //
+
     private void thatchSlab(DeferredBlock<Block> thatch, ResourceLocation texture) {
         String name = getItemName(thatch.get());
         ResourceLocation extrudes = ResourceLocation.tryBuild(texture.getNamespace(), texture.getPath() + "_extrudes");
@@ -973,18 +983,8 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
 
                     return ConfiguredModel.builder().modelFile(shape == StairsShape.STRAIGHT ? (half == Half.BOTTOM ? stairs : top)
                             : shape == StairsShape.INNER_LEFT || shape == StairsShape.INNER_RIGHT ? (half == Half.BOTTOM ? inner : inner_top)
-                            : (half == Half.BOTTOM ? outer : outer_top)).rotationY(yRot).uvLock(true).build();
+                              : (half == Half.BOTTOM ? outer : outer_top)).rotationY(yRot).uvLock(true).build();
                 }, StairBlock.WATERLOGGED);
-    }
-
-    // Util //
-
-    private static String getItemName(ItemLike item) {
-        return BuiltInRegistries.ITEM.getKey(item.asItem()).getPath();
-    }
-
-    private static String getBlockName(Block block) {
-        return BuiltInRegistries.BLOCK.getKey(block).getPath();
     }
 
     private enum TextureFolder {

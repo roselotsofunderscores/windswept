@@ -30,6 +30,156 @@ public class WindsweptRecipeProvider extends BlueprintRecipeProvider {
         super(Windswept.MOD_ID, event.getGenerator().getPackOutput(), event.getLookupProvider());
     }
 
+    private static void conditionalRecipe(RecipeBuilder recipe, ICondition condition, RecipeOutput output, ResourceLocation id) {
+        recipe.save(output.withConditions(condition), id);
+    }
+
+    private static void blockset(ItemLike ingredient, Block block, Block chiseled, Block slab, Block stairs, Block wall, boolean stonecutter, RecipeOutput output) {
+        if (ingredient != null)
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block, 4).define('#', ingredient).pattern("##").pattern("##").unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(block));
+
+        if (chiseled != null) {
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, chiseled).define('#', slab).pattern("#").pattern("#").unlockedBy(getHasName(block), has(block)).save(output, getSaveLocation(chiseled));
+
+            if (stonecutter)
+                stonecutting(block, chiseled, 1, output);
+        }
+
+        if (slab != null) {
+            slab(block, slab, output);
+
+            if (stonecutter)
+                stonecutting(block, slab, 2, output);
+        }
+
+        if (stairs != null) {
+            stairs(block, stairs, output);
+
+            if (stonecutter)
+                stonecutting(block, stairs, 1, output);
+        }
+
+        if (wall != null) {
+            wall(block, wall, output);
+
+            if (stonecutter)
+                stonecutting(block, wall, 1, output);
+        }
+
+    }
+
+    private static void leafPile(ItemLike leaves, ItemLike leafPile, RecipeOutput output) {
+        conditionalRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, leafPile, 4).requires(leaves).unlockedBy(getHasName(leaves), has(leaves)), new ModLoadedCondition("woodworks"), output, getSaveLocation(leafPile));
+        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, leaves).define('#', leafPile).pattern("##").pattern("##").unlockedBy(getHasName(leafPile), has(leafPile)), new ModLoadedCondition("woodworks"), output, getSaveLocation(getItemName(leaves) + "_from_leaf_pile"));
+    }
+
+    private static void compressedBlock(Block block, ItemLike item, ICondition condition, RecipeOutput output) {
+        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, block).define('#', item).pattern("###").pattern("###").pattern("###").unlockedBy(getHasName(item), has(item)), condition, output, getSaveLocation(block));
+        conditionalRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, item, 9).requires(block).unlockedBy(getHasName(block), has(block)), condition, output, getSaveLocation(getName(block) + "_revert"));
+    }
+
+    private static void compressedBlock(Block block, ItemLike item, RecipeOutput output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, block).define('#', item).pattern("###").pattern("###").pattern("###").unlockedBy(getHasName(item), has(item)).save(output, getSaveLocation(block));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, item, 9).requires(block).unlockedBy(getHasName(block), has(block)).save(output, getSaveLocation(getName(block) + "_revert"));
+    }
+
+    private static void woodSet(TagKey<Item> logs, Block planks, Block slab, Block stairs, Block log, Block wood, Block strippedLog, Block strippedWood, ItemLike boat, ItemLike chestBoat, Block button, Block door, Block trapdoor, Block fence, Block fenceGate, Block pressurePlate, Block sign, Block boards, Block beehive, Block ladder, Block bookshelf, Block chest, Block trappedChest, Item largeBoat, Item furnaceBoat, Block hangingSign, Block chiseledBookshelf, RecipeOutput output) {
+        woodenBoat(output, boat, planks);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, chestBoat).group("chest_boat").requires(Tags.Items.CHESTS_WOODEN).requires(boat).unlockedBy(getHasName(boat), has(boat)).save(output, getSaveLocation(chestBoat));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, button).group("wooden_button").requires(planks).unlockedBy(getHasName(planks), has(planks)).save(output, getSaveLocation(button));
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, door, 3).group("wooden_door").define('#', planks).pattern("##").pattern("##").pattern("##").unlockedBy(getHasName(planks), has(planks)).save(output, getSaveLocation(door));
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, fence, 3).group("wooden_fence").define('#', planks).define('S', Items.STICK).pattern("#S#").pattern("#S#").unlockedBy(getHasName(planks), has(planks)).save(output, getSaveLocation(fence));
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, fenceGate).group("wooden_fence_gate").define('#', planks).define('S', Items.STICK).pattern("S#S").pattern("S#S").unlockedBy(getHasName(planks), has(planks)).save(output, getSaveLocation(fenceGate));
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, pressurePlate).group("wooden_pressure_plate").define('#', planks).pattern("##").unlockedBy(getHasName(planks), has(planks)).save(output, getSaveLocation(pressurePlate));
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, sign, 3).group("wooden_sign").define('#', planks).define('S', Items.STICK).pattern("###").pattern("###").pattern(" S ").unlockedBy(getHasName(planks), has(planks)).save(output, getSaveLocation(sign));
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, trapdoor, 2).group("wooden_trapdoor").define('#', planks).pattern("###").pattern("###").unlockedBy(getHasName(planks), has(planks)).save(output, getSaveLocation(trapdoor));
+        hangingSign(output, hangingSign, strippedLog);
+        planksFromLogs(output, planks, logs, 4);
+        woodFromLogs(output, wood, log);
+        woodFromLogs(output, strippedWood, strippedLog);
+        slab(planks, slab, "wooden_slab", output);
+        stairs(planks, stairs, "wooden_stairs", output);
+
+        ICondition woodworks = new ModLoadedCondition("woodworks");
+        ICondition quarkOrWoodworks = new OrCondition(List.of(new ModLoadedCondition("quark"), woodworks));
+
+        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, boards).group("wooden_boards").define('#', slab).pattern("#").pattern("#").unlockedBy(getHasName(slab), has(slab)), new ModLoadedCondition("woodworks"), output, getSaveLocation(boards));
+        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, beehive).group("wooden_beehive").define('#', planks).define('H', Items.HONEYCOMB).pattern("###").pattern("HHH").pattern("###").unlockedBy(getHasName(planks), has(planks)), new ModLoadedCondition("woodworks"), output, getSaveLocation(beehive));
+        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ladder, 4).group("wooden_ladders").define('#', planks).define('S', Items.STICK).pattern("S S").pattern("S#S").pattern("S S").unlockedBy(getHasName(planks), has(planks)), quarkOrWoodworks, output, getSaveLocation(ladder));
+        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, bookshelf).group("wooden_bookshelves").define('#', planks).define('B', Items.BOOK).pattern("###").pattern("BBB").pattern("###").unlockedBy(getHasName(planks), has(planks)), quarkOrWoodworks, output, getSaveLocation(bookshelf));
+        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, chest).group("wooden_chests").define('#', planks).pattern("###").pattern("# #").pattern("###").unlockedBy(getHasName(planks), has(planks)), quarkOrWoodworks, output, getSaveLocation(chest));
+        conditionalRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, trappedChest).requires(chest).requires(Items.TRIPWIRE_HOOK).unlockedBy(getHasName(planks), has(planks)), quarkOrWoodworks, output, getSaveLocation(trappedChest));
+        conditionalRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, furnaceBoat).requires(Items.FURNACE).requires(boat).unlockedBy(getHasName(boat), has(boat)), new ModLoadedCondition("boatload"), output, getSaveLocation(furnaceBoat));
+        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, largeBoat).group("wooden_chests").define('#', planks).define('B', boat).pattern("#B#").pattern("###").unlockedBy(getHasName(boat), has(boat)), new ModLoadedCondition("boatload"), output, getSaveLocation(largeBoat));
+        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, chiseledBookshelf).group("wooden_chiseled_bookshelves").define('#', planks).define('S', slab).pattern("###").pattern("SSS").pattern("###").unlockedBy(getHasName(planks), has(planks)), woodworks, output, getSaveLocation(chiseledBookshelf));
+    }
+
+    private static void flowerToDye(Block flower, Item dye, RecipeOutput output) {
+        String dyeName = getItemName(dye);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, dye).group(dyeName).requires(flower).unlockedBy(getHasName(flower), has(flower)).save(output, getSaveLocation(dyeName + "_from_" + getItemName(flower)));
+    }
+
+    private static void flowerToDyeNoDyeDepot(Block flower, Item dye, RecipeOutput output) {
+        String dyeName = getItemName(dye);
+        conditionalRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, dye).group(dyeName).requires(flower).unlockedBy(getHasName(flower), has(flower)), new NotCondition(new ModLoadedCondition("dye_depot")), output, getSaveLocation(dyeName + "_from_" + getItemName(flower)));
+    }
+
+    private static void tallFlowerToDye(Block flower, Item dye, RecipeOutput output) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, dye, 2).group(getName(dye)).requires(flower).unlockedBy(getHasName(flower), has(flower)).save(output, getSaveLocation(getName(dye) + "_from_" + getName(flower)));
+    }
+
+    private static void tallFlowerToDyeNoDyeDepot(Block flower, Item dye, RecipeOutput output) {
+        conditionalRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, dye, 2).group(getName(dye)).requires(flower).unlockedBy(getHasName(flower), has(flower)), new NotCondition(new ModLoadedCondition("dye_depot")), output, getSaveLocation(getName(dye) + "_from_" + getName(flower)));
+    }
+
+    private static void cooking(ItemLike ingredient, ItemLike result, RecipeOutput output) {
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ingredient), RecipeCategory.FOOD, result, .35f, 200).unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(result));
+        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(ingredient), RecipeCategory.FOOD, result, .35f, 600).unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(result) + "_from_campfire_cooking"));
+        SimpleCookingRecipeBuilder.smoking(Ingredient.of(ingredient), RecipeCategory.FOOD, result, .35f, 100).unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(result) + "_from_smoking"));
+    }
+
+    private static void stonecutting(ItemLike ingredient, ItemLike result, int amount, RecipeOutput output) {
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(ingredient), RecipeCategory.BUILDING_BLOCKS, result, amount).unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(ingredient) + "_from_" + getName(result) + "_stonecutting"));
+    }
+
+    private static void stonecutting(ItemLike ingredient, ItemLike result, int amount, ICondition condition, RecipeOutput output) {
+        conditionalRecipe(SingleItemRecipeBuilder.stonecutting(Ingredient.of(ingredient), RecipeCategory.BUILDING_BLOCKS, result, amount).unlockedBy(getHasName(ingredient), has(ingredient)), condition, output, getSaveLocation(getName(ingredient) + "_from_" + getName(result) + "_stonecutting"));
+    }
+
+    private static void stairs(ItemLike ingredient, ItemLike stairs, RecipeOutput output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, stairs, 4).define('#', ingredient).pattern("#  ").pattern("## ").pattern("###").unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(stairs)));
+    }
+
+    private static void stairs(ItemLike ingredient, ItemLike stairs, String group, RecipeOutput output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, stairs, 4).group(group).define('#', ingredient).pattern("#  ").pattern("## ").pattern("###").unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(stairs)));
+    }
+
+    private static void wall(ItemLike ingredient, ItemLike wall, RecipeOutput output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, wall, 6).define('#', ingredient).pattern("###").pattern("###").unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(wall)));
+    }
+
+    private static void slab(ItemLike ingredient, ItemLike slab, RecipeOutput output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, slab, 6).define('#', ingredient).pattern("###").unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(slab)));
+    }
+
+    private static void slab(ItemLike ingredient, ItemLike slab, String group, RecipeOutput output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, slab, 6).group(group).define('#', ingredient).pattern("###").unlockedBy("has_" + getName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(slab)));
+    }
+
+    private static String getName(ItemLike object) {
+        return BuiltInRegistries.ITEM.getKey(object.asItem()).getPath();
+    }
+
+    // Util //
+
+    private static ResourceLocation getSaveLocation(ItemLike item) {
+        return BuiltInRegistries.ITEM.getKey(item.asItem());
+    }
+
+    private static ResourceLocation getSaveLocation(String name) {
+        return Windswept.location(name);
+    }
+
     @Override
     protected void buildRecipes(RecipeOutput output, HolderLookup.Provider holderLookup) {
         // foods
@@ -268,156 +418,6 @@ public class WindsweptRecipeProvider extends BlueprintRecipeProvider {
         compressedBlock(GINGERBREAD_COOKIE_BLOCK.get(), GINGERBREAD_COOKIE.get(), output);
         compressedBlock(CANDY_CANE_BLOCK.get(), CANDY_CANE.get(), output);
         compressedBlock(LAVENDER_BALE.get(), LAVENDER.get(), output);
-    }
-
-    private static void conditionalRecipe(RecipeBuilder recipe, ICondition condition, RecipeOutput output, ResourceLocation id) {
-        recipe.save(output.withConditions(condition), id);
-    }
-
-    private static void blockset(ItemLike ingredient, Block block, Block chiseled, Block slab, Block stairs, Block wall, boolean stonecutter, RecipeOutput output) {
-        if (ingredient != null)
-            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block, 4).define('#', ingredient).pattern("##").pattern("##").unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(block));
-
-        if (chiseled != null) {
-            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, chiseled).define('#', slab).pattern("#").pattern("#").unlockedBy(getHasName(block), has(block)).save(output, getSaveLocation(chiseled));
-
-            if (stonecutter)
-                stonecutting(block, chiseled, 1, output);
-        }
-
-        if (slab != null) {
-            slab(block, slab, output);
-
-            if (stonecutter)
-                stonecutting(block, slab, 2, output);
-        }
-
-        if (stairs != null) {
-            stairs(block, stairs, output);
-
-            if (stonecutter)
-                stonecutting(block, stairs, 1, output);
-        }
-
-        if (wall != null) {
-            wall(block, wall, output);
-
-            if (stonecutter)
-                stonecutting(block, wall, 1, output);
-        }
-
-    }
-
-    private static void leafPile(ItemLike leaves, ItemLike leafPile, RecipeOutput output) {
-        conditionalRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, leafPile, 4).requires(leaves).unlockedBy(getHasName(leaves), has(leaves)), new ModLoadedCondition("woodworks"), output, getSaveLocation(leafPile));
-        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, leaves).define('#', leafPile).pattern("##").pattern("##").unlockedBy(getHasName(leafPile), has(leafPile)), new ModLoadedCondition("woodworks"), output, getSaveLocation(getItemName(leaves) + "_from_leaf_pile"));
-    }
-
-    private static void compressedBlock(Block block, ItemLike item, ICondition condition, RecipeOutput output) {
-        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, block).define('#', item).pattern("###").pattern("###").pattern("###").unlockedBy(getHasName(item), has(item)), condition, output, getSaveLocation(block));
-        conditionalRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, item, 9).requires(block).unlockedBy(getHasName(block), has(block)), condition, output, getSaveLocation(getName(block) + "_revert"));
-    }
-
-    private static void compressedBlock(Block block, ItemLike item, RecipeOutput output) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, block).define('#', item).pattern("###").pattern("###").pattern("###").unlockedBy(getHasName(item), has(item)).save(output, getSaveLocation(block));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, item, 9).requires(block).unlockedBy(getHasName(block), has(block)).save(output, getSaveLocation(getName(block) + "_revert"));
-    }
-
-    private static void woodSet(TagKey<Item> logs, Block planks, Block slab, Block stairs, Block log, Block wood, Block strippedLog, Block strippedWood, ItemLike boat, ItemLike chestBoat, Block button, Block door, Block trapdoor, Block fence, Block fenceGate, Block pressurePlate, Block sign, Block boards, Block beehive, Block ladder, Block bookshelf, Block chest, Block trappedChest, Item largeBoat, Item furnaceBoat, Block hangingSign, Block chiseledBookshelf, RecipeOutput output) {
-        woodenBoat(output, boat, planks);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, chestBoat).group("chest_boat").requires(Tags.Items.CHESTS_WOODEN).requires(boat).unlockedBy(getHasName(boat), has(boat)).save(output, getSaveLocation(chestBoat));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, button).group("wooden_button").requires(planks).unlockedBy(getHasName(planks), has(planks)).save(output, getSaveLocation(button));
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, door, 3).group("wooden_door").define('#', planks).pattern("##").pattern("##").pattern("##").unlockedBy(getHasName(planks), has(planks)).save(output, getSaveLocation(door));
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, fence, 3).group("wooden_fence").define('#', planks).define('S', Items.STICK).pattern("#S#").pattern("#S#").unlockedBy(getHasName(planks), has(planks)).save(output, getSaveLocation(fence));
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, fenceGate).group("wooden_fence_gate").define('#', planks).define('S', Items.STICK).pattern("S#S").pattern("S#S").unlockedBy(getHasName(planks), has(planks)).save(output, getSaveLocation(fenceGate));
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, pressurePlate).group("wooden_pressure_plate").define('#', planks).pattern("##").unlockedBy(getHasName(planks), has(planks)).save(output, getSaveLocation(pressurePlate));
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, sign, 3).group("wooden_sign").define('#', planks).define('S', Items.STICK).pattern("###").pattern("###").pattern(" S ").unlockedBy(getHasName(planks), has(planks)).save(output, getSaveLocation(sign));
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, trapdoor, 2).group("wooden_trapdoor").define('#', planks).pattern("###").pattern("###").unlockedBy(getHasName(planks), has(planks)).save(output, getSaveLocation(trapdoor));
-        hangingSign(output, hangingSign, strippedLog);
-        planksFromLogs(output, planks, logs, 4);
-        woodFromLogs(output, wood, log);
-        woodFromLogs(output, strippedWood, strippedLog);
-        slab(planks, slab, "wooden_slab", output);
-        stairs(planks, stairs, "wooden_stairs", output);
-
-        ICondition woodworks = new ModLoadedCondition("woodworks");
-        ICondition quarkOrWoodworks = new OrCondition(List.of(new ModLoadedCondition("quark"), woodworks));
-
-        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, boards).group("wooden_boards").define('#', slab).pattern("#").pattern("#").unlockedBy(getHasName(slab), has(slab)), new ModLoadedCondition("woodworks"), output, getSaveLocation(boards));
-        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, beehive).group("wooden_beehive").define('#', planks).define('H', Items.HONEYCOMB).pattern("###").pattern("HHH").pattern("###").unlockedBy(getHasName(planks), has(planks)), new ModLoadedCondition("woodworks"), output, getSaveLocation(beehive));
-        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ladder, 4).group("wooden_ladders").define('#', planks).define('S', Items.STICK).pattern("S S").pattern("S#S").pattern("S S").unlockedBy(getHasName(planks), has(planks)), quarkOrWoodworks, output, getSaveLocation(ladder));
-        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, bookshelf).group("wooden_bookshelves").define('#', planks).define('B', Items.BOOK).pattern("###").pattern("BBB").pattern("###").unlockedBy(getHasName(planks), has(planks)), quarkOrWoodworks, output, getSaveLocation(bookshelf));
-        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, chest).group("wooden_chests").define('#', planks).pattern("###").pattern("# #").pattern("###").unlockedBy(getHasName(planks), has(planks)), quarkOrWoodworks, output, getSaveLocation(chest));
-        conditionalRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, trappedChest).requires(chest).requires(Items.TRIPWIRE_HOOK).unlockedBy(getHasName(planks), has(planks)), quarkOrWoodworks, output, getSaveLocation(trappedChest));
-        conditionalRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, furnaceBoat).requires(Items.FURNACE).requires(boat).unlockedBy(getHasName(boat), has(boat)), new ModLoadedCondition("boatload"), output, getSaveLocation(furnaceBoat));
-        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, largeBoat).group("wooden_chests").define('#', planks).define('B', boat).pattern("#B#").pattern("###").unlockedBy(getHasName(boat), has(boat)), new ModLoadedCondition("boatload"), output, getSaveLocation(largeBoat));
-        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, chiseledBookshelf).group("wooden_chiseled_bookshelves").define('#', planks).define('S', slab).pattern("###").pattern("SSS").pattern("###").unlockedBy(getHasName(planks), has(planks)), woodworks, output, getSaveLocation(chiseledBookshelf));
-    }
-
-    private static void flowerToDye(Block flower, Item dye, RecipeOutput output) {
-        String dyeName = getItemName(dye);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, dye).group(dyeName).requires(flower).unlockedBy(getHasName(flower), has(flower)).save(output, getSaveLocation(dyeName + "_from_" + getItemName(flower)));
-    }
-
-    private static void flowerToDyeNoDyeDepot(Block flower, Item dye, RecipeOutput output) {
-        String dyeName = getItemName(dye);
-        conditionalRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, dye).group(dyeName).requires(flower).unlockedBy(getHasName(flower), has(flower)), new NotCondition(new ModLoadedCondition("dye_depot")), output, getSaveLocation(dyeName + "_from_" + getItemName(flower)));
-    }
-
-    private static void tallFlowerToDye(Block flower, Item dye, RecipeOutput output) {
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, dye, 2).group(getName(dye)).requires(flower).unlockedBy(getHasName(flower), has(flower)).save(output, getSaveLocation(getName(dye) + "_from_" + getName(flower)));
-    }
-
-    private static void tallFlowerToDyeNoDyeDepot(Block flower, Item dye, RecipeOutput output) {
-        conditionalRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, dye, 2).group(getName(dye)).requires(flower).unlockedBy(getHasName(flower), has(flower)), new NotCondition(new ModLoadedCondition("dye_depot")), output, getSaveLocation(getName(dye) + "_from_" + getName(flower)));
-    }
-
-    private static void cooking(ItemLike ingredient, ItemLike result, RecipeOutput output) {
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ingredient), RecipeCategory.FOOD, result, .35f, 200).unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(result));
-        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(ingredient), RecipeCategory.FOOD, result, .35f, 600).unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(result) + "_from_campfire_cooking"));
-        SimpleCookingRecipeBuilder.smoking(Ingredient.of(ingredient), RecipeCategory.FOOD, result, .35f, 100).unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(result) + "_from_smoking"));
-    }
-
-    private static void stonecutting(ItemLike ingredient, ItemLike result, int amount, RecipeOutput output) {
-        SingleItemRecipeBuilder.stonecutting(Ingredient.of(ingredient), RecipeCategory.BUILDING_BLOCKS, result, amount).unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(ingredient) + "_from_" + getName(result) + "_stonecutting"));
-    }
-
-    private static void stonecutting(ItemLike ingredient, ItemLike result, int amount, ICondition condition, RecipeOutput output) {
-        conditionalRecipe(SingleItemRecipeBuilder.stonecutting(Ingredient.of(ingredient), RecipeCategory.BUILDING_BLOCKS, result, amount).unlockedBy(getHasName(ingredient), has(ingredient)), condition, output, getSaveLocation(getName(ingredient) + "_from_" + getName(result) + "_stonecutting"));
-    }
-
-    private static void stairs(ItemLike ingredient, ItemLike stairs, RecipeOutput output) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, stairs, 4).define('#', ingredient).pattern("#  ").pattern("## ").pattern("###").unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(stairs)));
-    }
-
-    private static void stairs(ItemLike ingredient, ItemLike stairs, String group, RecipeOutput output) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, stairs, 4).group(group).define('#', ingredient).pattern("#  ").pattern("## ").pattern("###").unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(stairs)));
-    }
-
-    private static void wall(ItemLike ingredient, ItemLike wall, RecipeOutput output) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, wall, 6).define('#', ingredient).pattern("###").pattern("###").unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(wall)));
-    }
-
-    private static void slab(ItemLike ingredient, ItemLike slab, RecipeOutput output) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, slab, 6).define('#', ingredient).pattern("###").unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(slab)));
-    }
-
-    private static void slab(ItemLike ingredient, ItemLike slab, String group, RecipeOutput output) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, slab, 6).group(group).define('#', ingredient).pattern("###").unlockedBy("has_" + getName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(slab)));
-    }
-
-    // Util //
-
-    private static String getName(ItemLike object) {
-        return BuiltInRegistries.ITEM.getKey(object.asItem()).getPath();
-    }
-
-    private static ResourceLocation getSaveLocation(ItemLike item) {
-        return BuiltInRegistries.ITEM.getKey(item.asItem());
-    }
-
-    private static ResourceLocation getSaveLocation(String name) {
-        return Windswept.location(name);
     }
 
 }

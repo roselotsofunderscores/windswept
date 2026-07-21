@@ -26,11 +26,6 @@ public class FeatherCloakItem extends ArmorItem {
         super(WindsweptArmorMaterials.FEATHER_CLOAK, Type.CHESTPLATE, properties);
     }
 
-    @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable(this.getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
-    }
-
     public static void spawnFeatherCloakParticle(LivingEntity entity) {
         for (int y = -9; y < 9; y++) {
             Vec3 angle = entity.calculateViewVector(0, y * 20f);
@@ -52,6 +47,11 @@ public class FeatherCloakItem extends ArmorItem {
 
         if (data.getValue(WindsweptDataProcessors.CLOAKED))
             event.setCanceled(true);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        tooltipComponents.add(Component.translatable(this.getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
     }
 
 }

@@ -15,7 +15,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.phys.Vec3;
@@ -28,26 +30,14 @@ public class SnowBootsItem extends ArmorItem {
         super(material, type, properties);
     }
 
-    @Override
-    public ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack) {
-        ItemAttributeModifiers modifiers = super.getDefaultAttributeModifiers(stack);
-        EquipmentSlotGroup slotGroup = EquipmentSlotGroup.bySlot(this.type.getSlot());
-
-        // В 1.21.1 с использованием DeferredHolder (getHolder() или само поле, если это DeferredHolder)
-        modifiers = modifiers.withModifierAdded(WindsweptAttributes.SNOW_SPEED,
-                new AttributeModifier(SNOW_SPEED_ID, 0.2f, AttributeModifier.Operation.ADD_MULTIPLIED_BASE), slotGroup);
-
-        return modifiers;
-    }
-
-    // Util //
-
     public static boolean canApplySnowSpeed(LivingEntity entity) {
         BlockPos below = entity.getOnPos(0.500001f);
 
         return isSnowingAt(entity) || ((entity.level().getBlockState(below).is(WindsweptBlockTags.SNOW_BOOTS_BLOCKS)
                 || entity.level().getBlockState(below.above()).is(WindsweptBlockTags.SNOW_BOOTS_BLOCKS)) && !entity.level().getBlockState(entity.getOnPos()).isAir());
     }
+
+    // Util //
 
     private static boolean isSnowingAt(LivingEntity entity) {
         BlockPos pos = entity.blockPosition();
@@ -89,5 +79,17 @@ public class SnowBootsItem extends ArmorItem {
                     boots.hurtAndBreak(1, entity, EquipmentSlot.FEET);
             }
         }
+    }
+
+    @Override
+    public ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack) {
+        ItemAttributeModifiers modifiers = super.getDefaultAttributeModifiers(stack);
+        EquipmentSlotGroup slotGroup = EquipmentSlotGroup.bySlot(this.type.getSlot());
+
+        // В 1.21.1 с использованием DeferredHolder (getHolder() или само поле, если это DeferredHolder)
+        modifiers = modifiers.withModifierAdded(WindsweptAttributes.SNOW_SPEED,
+                new AttributeModifier(SNOW_SPEED_ID, 0.2f, AttributeModifier.Operation.ADD_MULTIPLIED_BASE), slotGroup);
+
+        return modifiers;
     }
 }

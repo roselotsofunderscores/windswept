@@ -9,16 +9,16 @@ import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(PathfinderMob.class)
 public class PathfinderMobMixin implements PathfinderMobData {
-  @Unique
-  private @Nullable BlockPos windswept$potentialScarePosition = null;
+    @Unique
+    private @Nullable BlockPos windswept$potentialScarePosition = null;
 
-  @Override
-  public @Nullable BlockPos windswept$getPanicPosition() {
-    return windswept$potentialScarePosition;
-  }
+    @Override
+    public @Nullable BlockPos windswept$getPanicPosition() {
+        return windswept$potentialScarePosition;
+    }
 
-  @Override
-  public void windswept$setPanicPosition(@Nullable BlockPos pos) {
-    this.windswept$potentialScarePosition = pos;
-  }
+    @Override
+    public void windswept$setPanicPosition(@Nullable BlockPos pos) {
+        this.windswept$potentialScarePosition = pos;
+    }
 }

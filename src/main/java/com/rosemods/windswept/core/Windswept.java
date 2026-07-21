@@ -94,6 +94,10 @@ public class Windswept {
         container.registerConfig(ModConfig.Type.CLIENT, WindsweptConfig.CLIENT_SPEC);
     }
 
+    public static ResourceLocation location(String id) {
+        return ResourceLocation.tryBuild(MOD_ID, id);
+    }
+
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             DispenserBlock.registerProjectileBehavior(WindsweptItems.FROST_ARROW);
@@ -190,10 +194,6 @@ public class Windswept {
         gen.addProvider(server, new WindsweptDataRemolderProvider(event));
         gen.addProvider(server, new WindsweptPaintingVariantTagsProvider(event, dataPack));
         gen.addProvider(server, new WindsweptChunkGeneratorModifierProvider(event, dataPack));
-    }
-
-    public static ResourceLocation location(String id) {
-        return ResourceLocation.tryBuild(MOD_ID, id);
     }
 
 }

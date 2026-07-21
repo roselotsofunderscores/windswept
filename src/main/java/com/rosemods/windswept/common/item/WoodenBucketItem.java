@@ -38,6 +38,43 @@ public class WoodenBucketItem extends BucketItem {
         this.contentSupplier = supplier;
     }
 
+    public static ItemStack getEmpty(ItemStack handStack, @Nullable Player player, @Nullable InteractionHand hand) {
+        if (player != null && player.getAbilities().instabuild) {
+            return handStack;
+        }
+
+        ItemStack bucket = new ItemStack(WindsweptItems.WOODEN_BUCKET.get());
+        bucket.setDamageValue(handStack.getDamageValue());
+
+        if (handStack.has(DataComponents.ENCHANTMENTS)) {
+            bucket.set(DataComponents.ENCHANTMENTS, handStack.get(DataComponents.ENCHANTMENTS));
+        }
+
+        if (player instanceof ServerPlayer serverPlayer) {
+            EquipmentSlot slot = (hand == InteractionHand.OFF_HAND) ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND;
+            bucket.hurtAndBreak(1, serverPlayer, slot);
+        } else {
+            bucket.setDamageValue(bucket.getDamageValue() + 1);
+            if (bucket.getDamageValue() >= bucket.getMaxDamage())
+                bucket.setCount(0);
+        }
+
+        return bucket;
+    }
+
+    public static ItemStack getFilled(ItemStack handStack, ItemLike filled, @Nullable Player player) {
+        ItemStack bucket = new ItemStack(filled);
+
+        if (handStack.has(DataComponents.ENCHANTMENTS)) {
+            bucket.set(DataComponents.ENCHANTMENTS, handStack.get(DataComponents.ENCHANTMENTS));
+        }
+
+        if (player == null || !player.getAbilities().instabuild)
+            bucket.setDamageValue(handStack.getDamageValue());
+
+        return player != null ? ItemUtils.createFilledResult(handStack, player, bucket) : bucket;
+    }
+
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
@@ -101,7 +138,7 @@ public class WoodenBucketItem extends BucketItem {
     public EquipmentSlot getEquipmentSlot(ItemStack stack) {
         return this.isEmpty() ? EquipmentSlot.HEAD : null;
     }
-    
+
     @Override
     public boolean isRepairable(ItemStack stack) {
         return this.isEmpty();
@@ -120,43 +157,6 @@ public class WoodenBucketItem extends BucketItem {
     @Override
     public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
         return this.isEmpty() ? ItemStack.EMPTY : getEmpty(itemStack, null, null);
-    }
-
-    public static ItemStack getEmpty(ItemStack handStack, @Nullable Player player, @Nullable InteractionHand hand) {
-        if (player != null && player.getAbilities().instabuild) {
-            return handStack;
-        }
-
-        ItemStack bucket = new ItemStack(WindsweptItems.WOODEN_BUCKET.get());
-        bucket.setDamageValue(handStack.getDamageValue());
-
-        if (handStack.has(DataComponents.ENCHANTMENTS)) {
-            bucket.set(DataComponents.ENCHANTMENTS, handStack.get(DataComponents.ENCHANTMENTS));
-        }
-
-        if (player instanceof ServerPlayer serverPlayer) {
-            EquipmentSlot slot = (hand == InteractionHand.OFF_HAND) ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND;
-            bucket.hurtAndBreak(1, serverPlayer, slot);
-        } else {
-            bucket.setDamageValue(bucket.getDamageValue() + 1);
-            if (bucket.getDamageValue() >= bucket.getMaxDamage())
-                bucket.setCount(0);
-        }
-
-        return bucket;
-    }
-
-    public static ItemStack getFilled(ItemStack handStack, ItemLike filled, @Nullable Player player) {
-        ItemStack bucket = new ItemStack(filled);
-
-        if (handStack.has(DataComponents.ENCHANTMENTS)) {
-            bucket.set(DataComponents.ENCHANTMENTS, handStack.get(DataComponents.ENCHANTMENTS));
-        }
-
-        if (player == null || !player.getAbilities().instabuild)
-            bucket.setDamageValue(handStack.getDamageValue());
-
-        return player != null ? ItemUtils.createFilledResult(handStack, player, bucket) : bucket;
     }
 
 }

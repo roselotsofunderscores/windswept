@@ -9,8 +9,8 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
 
 public class MimosaDecorator extends TreeDecorator {
-    public static final MapCodec<MimosaDecorator> CODEC = MapCodec.unit(() -> MimosaDecorator.INSTANCE);
     public static final MimosaDecorator INSTANCE = new MimosaDecorator();
+    public static final MapCodec<MimosaDecorator> CODEC = MapCodec.unit(() -> MimosaDecorator.INSTANCE);
 
     @Override
     protected TreeDecoratorType<?> type() {

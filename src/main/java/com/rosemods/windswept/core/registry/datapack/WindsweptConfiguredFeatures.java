@@ -100,8 +100,8 @@ public final class WindsweptConfiguredFeatures {
         context.register(YELLOW_ROSE, new ConfiguredFeature<>(Feature.NO_BONEMEAL_FLOWER, Configs.createPlantPatch(48, new SimpleBlockConfiguration(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(WindsweptBlocks.YELLOW_ROSE.get().defaultBlockState(), 3).add(WindsweptBlocks.YELLOW_ROSE_BUSH.get().defaultBlockState(), 1))))));
         context.register(FOXGLOVE, new ConfiguredFeature<>(Feature.FLOWER, Configs.createPlantPatch(64, WindsweptBlocks.FOXGLOVE.get().defaultBlockState())));
         SimpleWeightedRandomList.Builder<BlockState> builder = SimpleWeightedRandomList.builder();
-        for(int i = 1; i <= 4; ++i)
-            for(Direction direction : Direction.Plane.HORIZONTAL)
+        for (int i = 1; i <= 4; ++i)
+            for (Direction direction : Direction.Plane.HORIZONTAL)
                 builder.add(WindsweptBlocks.YELLOW_PETALS.get().defaultBlockState().setValue(PinkPetalsBlock.AMOUNT, Integer.valueOf(i)).setValue(PinkPetalsBlock.FACING, direction), 1);
 
         context.register(YELLOW_PETALS, new ConfiguredFeature<>(Feature.FLOWER, new RandomPatchConfiguration(96, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(new WeightedStateProvider(builder))))));

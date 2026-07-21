@@ -34,6 +34,23 @@ public class Chilled extends Zombie {
         super(type, level);
     }
 
+    private static ItemStack randomDurability(RandomSource random, Item item) {
+        ItemStack stack = item.getDefaultInstance();
+        stack.setDamageValue(random.nextInt(1, stack.getMaxDamage()));
+
+        return stack;
+    }
+
+    public static AttributeSupplier.Builder createChilledAttributes() {
+        return Monster.createMonsterAttributes()
+                .add(Attributes.FOLLOW_RANGE, 35f)
+                .add(Attributes.MOVEMENT_SPEED, .23f)
+                .add(Attributes.ATTACK_DAMAGE, 3f)
+                .add(Attributes.ARMOR, 2f)
+                .add(Attributes.KNOCKBACK_RESISTANCE, .5f)
+                .add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
+    }
+
     @Override
     protected ItemStack getSkull() {
         return ItemStack.EMPTY;
@@ -124,13 +141,6 @@ public class Chilled extends Zombie {
         }
     }
 
-    private static ItemStack randomDurability(RandomSource random, Item item) {
-        ItemStack stack = item.getDefaultInstance();
-        stack.setDamageValue(random.nextInt(1, stack.getMaxDamage()));
-
-        return stack;
-    }
-
     @Override
     protected void enchantSpawnedArmor(ServerLevelAccessor level, RandomSource random, EquipmentSlot slot, DifficultyInstance difficulty) {
         ItemStack stack = this.getItemBySlot(slot);
@@ -146,16 +156,6 @@ public class Chilled extends Zombie {
 
         if (!this.isSilent())
             this.level().levelEvent(null, 1041, this.blockPosition(), 0);
-    }
-
-    public static AttributeSupplier.Builder createChilledAttributes() {
-        return Monster.createMonsterAttributes()
-                .add(Attributes.FOLLOW_RANGE, 35f)
-                .add(Attributes.MOVEMENT_SPEED, .23f)
-                .add(Attributes.ATTACK_DAMAGE, 3f)
-                .add(Attributes.ARMOR, 2f)
-                .add(Attributes.KNOCKBACK_RESISTANCE, .5f)
-                .add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
     }
 
 }

@@ -1,8 +1,8 @@
 package com.rosemods.windswept.core.mixin;
 
-import com.rosemods.windswept.core.registry.datapack.WindsweptBiomes;
 import com.rosemods.windswept.core.registry.WindsweptBlocks;
 import com.rosemods.windswept.core.registry.WindsweptItems;
+import com.rosemods.windswept.core.registry.datapack.WindsweptBiomes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;

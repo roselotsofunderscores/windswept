@@ -16,6 +16,11 @@ public class BluebellsFeature extends Feature<NoneFeatureConfiguration> {
         super(NoneFeatureConfiguration.CODEC);
     }
 
+    public static boolean shouldPlace(int x, int z, RandomSource rand) {
+        return (x == 0 && z == 0) || (x + z == 0 || x - z == 0 ? rand.nextBoolean()
+                : (Mth.abs(x + z) < 5 && Mth.abs(x - z) < 5) ? rand.nextInt(3) > 0 : rand.nextInt(8) == 0);
+    }
+
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         BlockPos origin = context.origin();
@@ -36,11 +41,6 @@ public class BluebellsFeature extends Feature<NoneFeatureConfiguration> {
                 }
 
         return generated;
-    }
-
-    public static boolean shouldPlace(int x, int z, RandomSource rand) {
-        return (x == 0 && z == 0) || (x + z == 0 || x - z == 0 ? rand.nextBoolean()
-                : (Mth.abs(x + z) < 5 && Mth.abs(x - z) < 5) ? rand.nextInt(3) > 0 : rand.nextInt(8) == 0);
     }
 
 }
