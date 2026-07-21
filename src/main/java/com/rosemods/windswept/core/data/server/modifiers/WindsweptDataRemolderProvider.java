@@ -24,9 +24,9 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyC
 import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import static com.teamabnormals.blueprint.common.remolder.util.LootRemolders.addPool;
@@ -34,8 +34,8 @@ import static com.teamabnormals.blueprint.common.remolder.util.LootRemolders.rep
 
 public class WindsweptDataRemolderProvider extends RemolderProvider {
 
-    public WindsweptDataRemolderProvider(GatherDataEvent event) {
-        super(Windswept.MOD_ID, PackOutput.Target.DATA_PACK, event.getGenerator().getPackOutput(), event.getLookupProvider());
+    public WindsweptDataRemolderProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registryProvider) {
+        super(Windswept.MOD_ID, PackOutput.Target.DATA_PACK, output, registryProvider);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class WindsweptDataRemolderProvider extends RemolderProvider {
                 .build();
         this.entry("goat_meat")
                 .path("loot_table/entities/goat")
-                .remolder(addPool(goatPool));
+                .remolder(replacePools(goatPool));
 
         LootPool drownedPool = LootPool.lootPool().name("windswept:rain_disc")
                 .add(LootItem.lootTableItem(WindsweptItems.MUSIC_DISC_RAIN.get()))
