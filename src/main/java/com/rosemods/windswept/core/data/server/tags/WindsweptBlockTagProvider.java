@@ -34,6 +34,9 @@ public class WindsweptBlockTagProvider extends BlockTagsProvider {
         //c
         this.tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "storage_blocks"))).add(LAVENDER_BALE.get(), CHESTNUT_CRATE.get(), ROASTED_CHESTNUT_CRATE.get(), GINGER_ROOT_CRATE.get(), HOLLY_BERRY_BASKET.get(), WILD_BERRY_BASKET.get());
 
+        //caverns and chasms
+        this.tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("caverns_and_chasms", "rat_food_blocks"))).add(FROZEN_FLESH_BLOCK.get());
+
         //environmental
         this.tag(WindsweptBlockTags.PINECONE_GOLEM_BASE_BLOCKS).add(PINECONE_BLOCK.get());
 
