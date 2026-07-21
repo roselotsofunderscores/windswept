@@ -66,11 +66,11 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         this.copy(BlueprintBlockTags.WOODEN_CHISELED_BOOKSHELVES, BlueprintItemTags.WOODEN_CHISELED_BOOKSHELVES);
 
         //foods
-        this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "foods"))).add(GINGERBREAD_COOKIE.get(), CANDY_CANE.get(), CHESTNUTS.get(), ROASTED_CHESTNUTS.get(), HOLLY_BERRIES.get());
+        this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "foods"))).add(GINGERBREAD_COOKIE.get(), CANDY_CANE.get(), CHESTNUTS.get(), ROASTED_CHESTNUTS.get(), HOLLY_BERRIES.get(), FROZEN_FLESH.asItem());
         this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "foods/cookie"))).add(GINGERBREAD_COOKIE.get());
         this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "foods/candy"))).add(CANDY_CANE.get());
         this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "foods/ginger"))).add(GINGER_ROOT.get());
-        this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "foods/food_poisoning"))).add(HOLLY_BERRIES.get());
+        this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "foods/food_poisoning"))).add(HOLLY_BERRIES.get(), FROZEN_FLESH.asItem());
 
         //crops
         this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "crops"))).add(GINGER_ROOT.get());
@@ -80,7 +80,14 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "storage_blocks"))).add(LAVENDER_BALE.asItem(), CHESTNUT_CRATE.asItem(), ROASTED_CHESTNUT_CRATE.asItem(), GINGER_ROOT_CRATE.asItem(), HOLLY_BERRY_BASKET.asItem(), WILD_BERRY_BASKET.asItem());
 
         //animal foods
-        this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "animal_foods"))).add(WILD_BERRY_PIPS.get(), HOLLY_BERRIES.get());
+        this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "animal_foods"))).add(WILD_BERRY_PIPS.get(), HOLLY_BERRIES.get(), FROZEN_FLESH.asItem());
+
+        //vanilla-style meat/wolf food
+        this.tag(ItemTags.MEAT).add(FROZEN_FLESH.asItem());
+        this.tag(ItemTags.WOLF_FOOD).add(FROZEN_FLESH.asItem());
+
+        //caverns and chasms
+        this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("caverns_and_chasms", "rat_food"))).add(FROZEN_FLESH.asItem());
 
         //connectable chains
         this.tag(WindsweptItemTags.HANGABLE_ITEMS).add(PINECONE.asItem(), FAIRY_LIGHT.asItem(), SOUL_FAIRY_LIGHT.asItem(), REDSTONE_FAIRY_LIGHT.asItem(), NIGHT_FAIRY_LIGHT.asItem(), CUPRIC_FAIRY_LIGHT.asItem(), ENDER_FAIRY_LIGHT.asItem(), ICE_LANTERN.asItem());
