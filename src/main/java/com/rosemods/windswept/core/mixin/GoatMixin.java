@@ -23,6 +23,11 @@ public abstract class GoatMixin extends Animal implements VariantHolder<Windswep
         super(type, level);
     }
 
+    @Inject(method = "<clinit>", at = @At("TAIL"))
+    private static void windswept$forceLoadVariant(CallbackInfo info) {
+        WindsweptGoatVariant.values();
+    }
+
     @Inject(method = "defineSynchedData", at = @At("TAIL"))
     private void defineSynchedData(SynchedEntityData.Builder builder, CallbackInfo info) {
         builder.define(WindsweptGoatVariant.DATA_TYPE_ID, WindsweptGoatVariant.WHITE.id());
@@ -60,5 +65,4 @@ public abstract class GoatMixin extends Animal implements VariantHolder<Windswep
     public WindsweptGoatVariant getVariant() {
         return WindsweptGoatVariant.byId(this.entityData.get(WindsweptGoatVariant.DATA_TYPE_ID));
     }
-
 }
