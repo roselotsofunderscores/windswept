@@ -250,7 +250,7 @@ public class WindsweptLangProvider extends LanguageProvider {
         this.add(item.get().asItem().getDescriptionId() + ".desc", desc);
     }
 
-    private static <T> String toUpper(DeferredHolder<?, ?> object) {
+    private static String toUpper(DeferredHolder<?, ?> object) {
         return toUpper(object.getId().getPath());
     }
 
