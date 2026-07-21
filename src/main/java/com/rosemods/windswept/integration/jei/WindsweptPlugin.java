@@ -19,6 +19,14 @@ import static com.rosemods.windswept.core.registry.WindsweptItems.*;
 
 @JeiPlugin
 public class WindsweptPlugin implements IModPlugin {
+    private static void addInfo(IRecipeRegistration registration, DeferredHolder<? extends ItemLike, ? extends ItemLike> item) {
+        registration.addIngredientInfo(new ItemStack(item.get()), VanillaTypes.ITEM_STACK, Component.translatable(getDesc(item)));
+    }
+
+    public static String getDesc(Supplier<? extends ItemLike> item) {
+        return Windswept.MOD_ID + ".jei.info." + BuiltInRegistries.ITEM.getKey(item.get().asItem()).getPath();
+    }
+
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         addInfo(registration, FROZEN_BRANCH);
@@ -33,14 +41,6 @@ public class WindsweptPlugin implements IModPlugin {
         addInfo(registration, ICE_LANTERN);
         addInfo(registration, WOODEN_BUCKET);
         addInfo(registration, SNOW_BOOTS);
-    }
-
-    private static void addInfo(IRecipeRegistration registration, DeferredHolder<? extends ItemLike, ? extends ItemLike> item) {
-        registration.addIngredientInfo(new ItemStack(item.get()), VanillaTypes.ITEM_STACK, Component.translatable(getDesc(item)));
-    }
-
-    public static String getDesc(Supplier<? extends ItemLike> item) {
-        return Windswept.MOD_ID + ".jei.info." + BuiltInRegistries.ITEM.getKey(item.get().asItem()).getPath();
     }
 
     @Override

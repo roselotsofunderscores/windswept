@@ -21,6 +21,11 @@ public class LavenderFeature extends Feature<NoneFeatureConfiguration> {
         super(NoneFeatureConfiguration.CODEC);
     }
 
+    private static Block getTallGrass(RandomSource rand) {
+        return rand.nextInt(4) == 0 && ModList.get().isLoaded("environmental")
+                ? WindsweptConstants.getBlock("environmental", "giant_tall_grass") : Blocks.TALL_GRASS;
+    }
+
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         BlockPos origin = context.origin();
@@ -46,11 +51,6 @@ public class LavenderFeature extends Feature<NoneFeatureConfiguration> {
                 }
 
         return generated;
-    }
-
-    private static Block getTallGrass(RandomSource rand) {
-        return rand.nextInt(4) == 0 && ModList.get().isLoaded("environmental")
-                ? WindsweptConstants.getBlock("environmental", "giant_tall_grass") : Blocks.TALL_GRASS;
     }
 
 }

@@ -18,12 +18,6 @@ public class NightshadeFlowerBlock extends FlowerBlock {
         super(stewEffect, stewEffectDuration, properties);
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
-        particles(level, pos, rand);
-    }
-
     public static void particles(Level level, BlockPos pos, RandomSource rand) {
         if (rand.nextInt(8) == 0) {
             double d0 = pos.getX() + .55d - (rand.nextFloat() * .1f);
@@ -35,6 +29,12 @@ public class NightshadeFlowerBlock extends FlowerBlock {
                     d1 + Direction.UP.getStepY() * d3, d2 + Direction.UP.getStepZ() * d3,
                     rand.nextGaussian() * .005D, rand.nextGaussian() * .005d, rand.nextGaussian() * .005d);
         }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
+        particles(level, pos, rand);
     }
 
 }

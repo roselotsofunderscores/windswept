@@ -9,7 +9,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -33,9 +32,9 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class LavenderBlock extends BushBlock implements BonemealableBlock {
-    public static final MapCodec<LavenderBlock> CODEC = simpleCodec(LavenderBlock::new);
     public static final IntegerProperty AGE = BlockStateProperties.AGE_2;
     public static final BooleanProperty PERSISTENT = BlockStateProperties.PERSISTENT;
+    public static final MapCodec<LavenderBlock> CODEC = simpleCodec(LavenderBlock::new);
     private static final VoxelShape SHAPE = Block.box(2f, 0f, 2f, 14f, 14f, 14f);
 
     public LavenderBlock(Properties properties) {

@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "blueprint:and",
+      "values": [
+        {
+          "type": "neoforge:mod_loaded",
+          "modid": "woodworks"
+        },
+        {
+          "type": "woodworks:config",
+          "value": "sawmill"
+        }
+      ]
+    }
+  ],
+  "type": "woodworks:sawmill",
+  "ingredient": {
+    "tag": "windswept:pine_logs"
+  },
+  "result": {
+    "id": "windswept:pine_slab",
+    "count": 8
+  }
+}

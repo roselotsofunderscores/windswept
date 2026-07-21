@@ -13,14 +13,12 @@ public class WindsweptEffects {
 
     // Effects //
     public static final DeferredHolder<MobEffect, MobEffect> THORNS = EFFECTS.createEffect("thorns", MobEffectCategory.BENEFICIAL, 0x295230);
-    public static final DeferredHolder<MobEffect, MobEffect> FROST_RESISTANCE = EFFECTS.createEffect("frost_resistance", MobEffectCategory.BENEFICIAL, 0x618cff);
-    //public static final DeferredHolder<MobEffect> PLENTY = HELPER.createEffect("plenty", MobEffectCategory.BENEFICIAL, 0xe68834);
-
     // Potions //
     public static final DeferredHolder<Potion, Potion> THORNS_POTION = EFFECTS.createPotion("thorns", THORNS, 3600, 0);
+    //public static final DeferredHolder<MobEffect> PLENTY = HELPER.createEffect("plenty", MobEffectCategory.BENEFICIAL, 0xe68834);
     public static final DeferredHolder<Potion, Potion> LONG_THORNS_POTION = EFFECTS.createPotion("long_thorns", THORNS, 9600, 0);
     public static final DeferredHolder<Potion, Potion> STRONG_THORNS_POTION = EFFECTS.createPotion("strong_thorns", THORNS, 1800, 1);
-
+    public static final DeferredHolder<MobEffect, MobEffect> FROST_RESISTANCE = EFFECTS.createEffect("frost_resistance", MobEffectCategory.BENEFICIAL, 0x618cff);
     public static final DeferredHolder<Potion, Potion> FROST_RESISTANCE_POTION = EFFECTS.createPotion("frost_resistance", FROST_RESISTANCE, 3600, 0);
     public static final DeferredHolder<Potion, Potion> LONG_FROST_RESISTANCE_POTION = EFFECTS.createPotion("long_frost_resistance", FROST_RESISTANCE, 9600, 0);
 

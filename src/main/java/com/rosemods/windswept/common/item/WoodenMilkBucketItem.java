@@ -21,6 +21,15 @@ public class WoodenMilkBucketItem extends MilkBucketItem {
         super(properties);
     }
 
+    public static void milkAnimal(Player player, InteractionHand hand, ItemStack stack) {
+        ItemStack milkBucket = new ItemStack(WindsweptItems.WOODEN_MILK_BUCKET.get());
+        if (!player.getAbilities().instabuild)
+            milkBucket.setDamageValue(stack.getDamageValue());
+
+        player.playSound(SoundEvents.COW_MILK, 1f, 1f);
+        player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, milkBucket));
+    }
+
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
         if (!level.isClientSide)
@@ -52,14 +61,5 @@ public class WoodenMilkBucketItem extends MilkBucketItem {
     @Override
     public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
         return WoodenBucketItem.getEmpty(itemStack, null, null);
-    }
-
-    public static void milkAnimal(Player player, InteractionHand hand, ItemStack stack) {
-        ItemStack milkBucket = new ItemStack(WindsweptItems.WOODEN_MILK_BUCKET.get());
-        if (!player.getAbilities().instabuild)
-            milkBucket.setDamageValue(stack.getDamageValue());
-
-        player.playSound(SoundEvents.COW_MILK, 1f, 1f);
-        player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, milkBucket));
     }
 }

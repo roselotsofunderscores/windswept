@@ -28,9 +28,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -75,6 +72,23 @@ public class Frostbiter extends TamableAnimal implements Endimatable, NeutralMob
         super(type, level);
         this.steering = new ItemBasedSteering(this.entityData, BOOST_TIME, SADDLED);
         this.setTame(false, false);
+    }
+
+    public static AttributeSupplier.Builder createFrostbiterAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.ARMOR, 4f)
+                .add(Attributes.ATTACK_DAMAGE, 5f)
+                .add(Attributes.MAX_HEALTH, 40f)
+                .add(Attributes.MOVEMENT_SPEED, 0.24f)
+                .add(Attributes.ATTACK_KNOCKBACK, 1.2f)
+                .add(Attributes.STEP_HEIGHT, 1.0d);
+    }
+
+    public static boolean checkFrostbiterSpawnRules(EntityType<Frostbiter> frostbiter, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+        if (level.getBiome(pos).is(BiomeTags.POLAR_BEARS_SPAWN_ON_ALTERNATE_BLOCKS))
+            return level.getRawBrightness(pos, 0) > 8 && level.getBlockState(pos.below()).is(BlockTags.POLAR_BEARS_SPAWNABLE_ON_ALTERNATE);
+
+        return Animal.checkAnimalSpawnRules(frostbiter, level, spawnType, pos, random);
     }
 
     @Override
@@ -250,16 +264,6 @@ public class Frostbiter extends TamableAnimal implements Endimatable, NeutralMob
         return SoundEvents.LLAMA_EAT;
     }
 
-    public static AttributeSupplier.Builder createFrostbiterAttributes() {
-        return Mob.createMobAttributes()
-                .add(Attributes.ARMOR, 4f)
-                .add(Attributes.ATTACK_DAMAGE, 5f)
-                .add(Attributes.MAX_HEALTH, 40f)
-                .add(Attributes.MOVEMENT_SPEED, 0.24f)
-                .add(Attributes.ATTACK_KNOCKBACK, 1.2f)
-                .add(Attributes.STEP_HEIGHT, 1.0d);
-    }
-
     @Override
     public int getRemainingPersistentAngerTime() {
         return this.entityData.get(ANGER_TIME);
@@ -344,25 +348,18 @@ public class Frostbiter extends TamableAnimal implements Endimatable, NeutralMob
 
     }
 
-    private void setSaddled(boolean saddled) {
-        this.entityData.set(SADDLED, saddled);
-    }
-
     @Override
     public boolean isSaddled() {
         return this.entityData.get(SADDLED);
     }
 
+    private void setSaddled(boolean saddled) {
+        this.entityData.set(SADDLED, saddled);
+    }
+
     protected void dropSaddle() {
         this.setSaddled(false);
         this.spawnItemFancy(Items.SADDLE, this.position().relative(Direction.UP, 2), SoundEvents.SNOW_GOLEM_SHEAR);
-    }
-
-    public static boolean checkFrostbiterSpawnRules(EntityType<Frostbiter> frostbiter, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-        if (level.getBiome(pos).is(BiomeTags.POLAR_BEARS_SPAWN_ON_ALTERNATE_BLOCKS))
-            return level.getRawBrightness(pos, 0) > 8 && level.getBlockState(pos.below()).is(BlockTags.POLAR_BEARS_SPAWNABLE_ON_ALTERNATE);
-
-        return Animal.checkAnimalSpawnRules(frostbiter, level, spawnType, pos, random);
     }
 
     @Override

@@ -27,13 +27,12 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import static com.teamabnormals.blueprint.common.remolder.util.LootRemolders.addPool;
 import static com.teamabnormals.blueprint.common.remolder.util.LootRemolders.replacePools;
 
-public class WindsweptDataRemolderProvider  extends RemolderProvider {
+public class WindsweptDataRemolderProvider extends RemolderProvider {
 
     public WindsweptDataRemolderProvider(GatherDataEvent event) {
         super(Windswept.MOD_ID, PackOutput.Target.DATA_PACK, event.getGenerator().getPackOutput(), event.getLookupProvider());

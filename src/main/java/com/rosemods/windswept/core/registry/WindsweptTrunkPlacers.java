@@ -4,8 +4,6 @@ import com.rosemods.windswept.common.levelgen.tree.trunk_placer.ChestnutTrunkPla
 import com.rosemods.windswept.core.Windswept;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 

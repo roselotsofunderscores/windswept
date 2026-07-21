@@ -19,6 +19,10 @@ public class LunaliteSlabBlock extends SlabBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(TYPE, SlabType.BOTTOM).setValue(WATERLOGGED, Boolean.FALSE).setValue(TOP, true));
     }
 
+    private static boolean aboveIsLunalite(BlockState thisState, LevelAccessor level, BlockPos above) {
+        return thisState.getValue(TYPE) != SlabType.BOTTOM && LunaliteBlock.aboveIsLunalite(level, above);
+    }
+
     @Override
     public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         BlockState blockState = super.updateShape(state, facing, facingState, level, currentPos, facingPos);
@@ -34,10 +38,6 @@ public class LunaliteSlabBlock extends SlabBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(TOP, TYPE, WATERLOGGED);
-    }
-
-    private static boolean aboveIsLunalite(BlockState thisState, LevelAccessor level, BlockPos above) {
-        return thisState.getValue(TYPE) != SlabType.BOTTOM && LunaliteBlock.aboveIsLunalite(level, above);
     }
 
 }

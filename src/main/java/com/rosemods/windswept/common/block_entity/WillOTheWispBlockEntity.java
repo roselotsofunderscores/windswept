@@ -1,16 +1,13 @@
 package com.rosemods.windswept.common.block_entity;
 
 import com.rosemods.windswept.common.block.WillOTheWispBlock;
-import com.rosemods.windswept.common.entity.PathfinderMobData;
 import com.rosemods.windswept.core.registry.WindsweptBlockEntities;
 import com.rosemods.windswept.core.registry.WindsweptBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 

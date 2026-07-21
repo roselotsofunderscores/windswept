@@ -18,6 +18,11 @@ public class FloorIciclesFeature extends Feature<NoneFeatureConfiguration> {
         super(NoneFeatureConfiguration.CODEC);
     }
 
+    public static boolean canPlaceOn(WorldGenLevel level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        return state.is(BlockTags.ICE) && !state.is(Blocks.ICE) && !state.is(WindsweptBlocks.ICICLES.get());
+    }
+
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         BlockPos origin = context.origin();
@@ -49,11 +54,6 @@ public class FloorIciclesFeature extends Feature<NoneFeatureConfiguration> {
             }
 
         return generated;
-    }
-
-    public static boolean canPlaceOn(WorldGenLevel level, BlockPos pos) {
-        BlockState state = level.getBlockState(pos);
-        return state.is(BlockTags.ICE) && !state.is(Blocks.ICE) && !state.is(WindsweptBlocks.ICICLES.get());
     }
 
 }

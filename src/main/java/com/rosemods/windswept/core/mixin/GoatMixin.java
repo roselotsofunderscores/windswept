@@ -57,12 +57,12 @@ public abstract class GoatMixin extends Animal implements VariantHolder<Windswep
     }
 
     @Override
-    public void setVariant(WindsweptGoatVariant variant) {
-        this.entityData.set(WindsweptGoatVariant.DATA_TYPE_ID, variant.id());
+    public WindsweptGoatVariant getVariant() {
+        return WindsweptGoatVariant.byId(this.entityData.get(WindsweptGoatVariant.DATA_TYPE_ID));
     }
 
     @Override
-    public WindsweptGoatVariant getVariant() {
-        return WindsweptGoatVariant.byId(this.entityData.get(WindsweptGoatVariant.DATA_TYPE_ID));
+    public void setVariant(WindsweptGoatVariant variant) {
+        this.entityData.set(WindsweptGoatVariant.DATA_TYPE_ID, variant.id());
     }
 }

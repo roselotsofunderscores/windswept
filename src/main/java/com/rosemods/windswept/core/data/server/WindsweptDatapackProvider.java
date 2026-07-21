@@ -1,8 +1,8 @@
 package com.rosemods.windswept.core.data.server;
 
 import com.rosemods.windswept.core.Windswept;
+import com.rosemods.windswept.core.registry.WindsweptEnchantments;
 import com.rosemods.windswept.core.registry.datapack.*;
-import com.rosemods.windswept.core.registry.*;
 import com.teamabnormals.blueprint.core.registry.BlueprintDataPackRegistries;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;

@@ -5,8 +5,8 @@ import com.rosemods.windswept.common.levelgen.tree.decorator.MimosaDecorator;
 import com.rosemods.windswept.core.Windswept;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
-import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class WindsweptTreeDecorators {
     public static final DeferredRegister<TreeDecoratorType<?>> DECORATORS = DeferredRegister.create(Registries.TREE_DECORATOR_TYPE, Windswept.MOD_ID);

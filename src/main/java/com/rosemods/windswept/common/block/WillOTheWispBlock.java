@@ -32,6 +32,12 @@ public class WillOTheWispBlock extends HorizontalDirectionalBlock implements Ent
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
+    @Nullable
+    @SuppressWarnings("unchecked")
+    private static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTicker(BlockEntityType<A> type, BlockEntityType<E> expectedType, BlockEntityTicker<? super E> ticker) {
+        return type == expectedType ? (BlockEntityTicker<A>) ticker : null;
+    }
+
     @Override
     protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
         return CODEC;
@@ -56,12 +62,6 @@ public class WillOTheWispBlock extends HorizontalDirectionalBlock implements Ent
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return !level.isClientSide ? createTicker(type, WindsweptBlockEntities.WILL_O_THE_WISP.get(), WillOTheWispBlockEntity::tick) : null;
-    }
-
-    @Nullable
-    @SuppressWarnings("unchecked")
-    private static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTicker(BlockEntityType<A> type, BlockEntityType<E> expectedType, BlockEntityTicker<? super E> ticker) {
-        return type == expectedType ? (BlockEntityTicker<A>) ticker : null;
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -22,6 +22,10 @@ public class FallenLogFeature extends Feature<SimpleBlockConfiguration> {
         super(SimpleBlockConfiguration.CODEC);
     }
 
+    private static boolean canPlaceOn(BlockState state) {
+        return state.is(BlockTags.DIRT) || state.is(Blocks.SNOW_BLOCK);
+    }
+
     @Override
     public boolean place(FeaturePlaceContext<SimpleBlockConfiguration> context) {
         BlockPos origin = context.origin();
@@ -74,10 +78,6 @@ public class FallenLogFeature extends Feature<SimpleBlockConfiguration> {
         }
 
         return false;
-    }
-
-    private static boolean canPlaceOn(BlockState state) {
-        return state.is(BlockTags.DIRT) || state.is(Blocks.SNOW_BLOCK);
     }
 
 }

@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import static com.rosemods.windswept.core.registry.datapack.WindsweptBiomes.*;
+
 public final class WindsweptBiomeSlices {
     public static final ResourceKey<ModdedBiomeSlice> CHESTNUT_SLICE = createKey("chestnut");
     public static final ResourceKey<ModdedBiomeSlice> PINE_SLICE = createKey("pine");
