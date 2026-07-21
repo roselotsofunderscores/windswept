@@ -165,14 +165,4 @@ public final class WindsweptBlockInfo {
         DataUtil.registerFlammable(block, 60, 100);
     }
 
-    public static void registerBlockColors() {
-        BlockColors blockcolors = Minecraft.getInstance().getBlockColors();
-        ItemColors itemcolors = Minecraft.getInstance().getItemColors();
-        Block[] foliage = new Block[]{CHESTNUT_LEAVES.get(), CHESTNUT_LEAF_PILE.get(), FLOWERING_ACACIA_LEAVES.get(), FLOWERING_ACACIA_LEAF_PILE.get()};
-
-        blockcolors.register((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getAverageFoliageColor(world, pos) : FoliageColor.getDefaultColor(), foliage);
-        blockcolors.register((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getAverageGrassColor(world, pos) : GrassColor.getDefaultColor(), YELLOW_PETALS.get());
-
-        itemcolors.register((stack, tintIndex) -> blockcolors.getColor(((BlockItem) stack.getItem()).getBlock().defaultBlockState(), null, null, tintIndex), foliage);
-    }
 }

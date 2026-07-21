@@ -17,11 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 import org.slf4j.Logger;
 
 public class FeatherCloakLegsLayer<T extends LivingEntity, M extends HumanoidModel<T>> extends RenderLayer<T, M> {
-
-    private static final Logger WINDSWEPT_LOG = LogUtils.getLogger();
-
-    private static final ResourceLocation TEXTURE =
-            Windswept.location("textures/models/armor/feather_cloak_layer_1.png");
+    private static final ResourceLocation TEXTURE = Windswept.location("textures/models/armor/feather_cloak_layer_1.png");
 
     private final HumanoidModel<T> legsModel;
 
@@ -31,20 +27,9 @@ public class FeatherCloakLegsLayer<T extends LivingEntity, M extends HumanoidMod
     }
 
     @Override
-    public void render(PoseStack pose, MultiBufferSource source, int packedLight, T entity,
-                       float limbSwing, float limbSwingAmount, float partialTicks,
-                       float ageInTicks, float netHeadYaw, float headPitch) {
-
-        WINDSWEPT_LOG.info("[Windswept-DEBUG] FeatherCloakLegsLayer.render() called, chest = {}",
-                entity.getItemBySlot(EquipmentSlot.CHEST).getItem());
-
-        if (!entity.getItemBySlot(EquipmentSlot.CHEST).is(WindsweptItems.FEATHER_CLOAK.get())) {
-            return;
-        }
-
-        if (entity.isInvisible()) {
-            return;
-        }
+    public void render(PoseStack pose, MultiBufferSource source, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (!entity.getItemBySlot(EquipmentSlot.CHEST).is(WindsweptItems.FEATHER_CLOAK.get())) return;
+        if (entity.isInvisible()) return;
 
         this.getParentModel().copyPropertiesTo(this.legsModel);
         this.legsModel.setAllVisible(false);
@@ -57,4 +42,5 @@ public class FeatherCloakLegsLayer<T extends LivingEntity, M extends HumanoidMod
         VertexConsumer vertexConsumer = source.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
         this.legsModel.renderToBuffer(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY);
     }
+
 }
