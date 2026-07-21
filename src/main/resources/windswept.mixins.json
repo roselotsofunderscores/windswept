@@ -38,7 +38,6 @@
   ],
   "client": [
     "client.GoatRendererMixin",
-    "client.HumanoidArmorLayerMixin",
     "client.ItemInHandRendererMixin",
     "client.LivingEntityRendererMixin",
     "client.RabbitRendererMixin"
