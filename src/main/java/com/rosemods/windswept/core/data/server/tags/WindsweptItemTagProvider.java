@@ -6,6 +6,7 @@ import com.rosemods.windswept.core.other.tags.WindsweptBlockTags;
 import com.rosemods.windswept.core.other.tags.WindsweptItemTags;
 import com.teamabnormals.blueprint.core.other.tags.BlueprintBlockTags;
 import com.teamabnormals.blueprint.core.other.tags.BlueprintItemTags;
+import com.teamabnormals.blueprint.core.util.TagUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -37,20 +38,18 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         this.tag(Tags.Items.BUCKETS_MILK).add(WOODEN_MILK_BUCKET.get());
         this.tag(Tags.Items.BUCKETS_POWDER_SNOW).add(WOODEN_POWDER_SNOW_BUCKET.get());
         this.tag(Tags.Items.BUCKETS_WATER).add(WOODEN_WATER_BUCKET.get());
-        this.tag(WindsweptItemTags.WILD_BERRY_SEEDS).add(WILD_BERRY_PIPS.get());
-        this.tag(WindsweptItemTags.RAW_GOAT).add(GOAT.get());
-        this.tag(WindsweptItemTags.COOKED_GOAT).add(COOKED_GOAT.get());
-        this.tag(WindsweptItemTags.BERRIES).add(WILD_BERRIES.get());
+        this.tag(TagUtil.itemTag("c", "seeds/wild_berry")).add(WILD_BERRY_PIPS.get());
+        this.tag(TagUtil.itemTag("c", "raw_goat")).add(GOAT.get());
+        this.tag(TagUtil.itemTag("c", "cooked_goat")).add(COOKED_GOAT.get());
+        this.tag(TagUtil.itemTag("c", "berries")).add(WILD_BERRIES.get());
         this.tag(WindsweptItemTags.COOKED_MUTTON).add(Items.COOKED_MUTTON);
-        this.tag(WindsweptItemTags.STRIPPED_LOGS).add(STRIPPED_HOLLY_LOG.asItem(), STRIPPED_CHESTNUT_LOG.asItem(), STRIPPED_PINE_LOG.asItem());
-        this.tag(WindsweptItemTags.STRIPPED_WOOD).add(STRIPPED_HOLLY_WOOD.asItem(), STRIPPED_CHESTNUT_WOOD.asItem(), STRIPPED_PINE_WOOD.asItem());
-        this.tag(WindsweptItemTags.HONEY_BUCKETS).add(WOODEN_HONEY_BUCKET.get());
-        this.tag(WindsweptItemTags.CHOCOLATE_BUCKETS).add(WOODEN_CHOCOLATE_BUCKET.get());
-        //this.tag(BlueprintItemTags.CHICKEN_FOOD).addTag(WindsweptItemTags.WILD_BERRY_SEEDS);
-        this.tag(Tags.Items.SEEDS).addTag(WindsweptItemTags.WILD_BERRY_SEEDS);
-        //this.tag(Tags.Items.ARMORS_HELMETS).add(ANTLER_HELMET.get(), LAVENDER_CROWN.get());
-        //this.tag(Tags.Items.ARMORS_CHESTPLATES).add(FEATHER_CLOAK.get());
-        //this.tag(Tags.Items.ARMORS_BOOTS).add(SNOW_BOOTS.get());
+        this.tag(TagUtil.itemTag("c", "stripped_logs")).add(STRIPPED_HOLLY_LOG.asItem(), STRIPPED_CHESTNUT_LOG.asItem(), STRIPPED_PINE_LOG.asItem());
+        this.tag(TagUtil.itemTag("c", "stripped_wood")).add(STRIPPED_HOLLY_WOOD.asItem(), STRIPPED_CHESTNUT_WOOD.asItem(), STRIPPED_PINE_WOOD.asItem());
+        this.tag(TagUtil.itemTag("c", "buckets/honey")).add(WOODEN_HONEY_BUCKET.get());
+        this.tag(TagUtil.itemTag("c", "buckets/chocolate")).add(WOODEN_CHOCOLATE_BUCKET.get());
+        this.tag(TagUtil.itemTag("c", "storage_blocks")).add(LAVENDER_BALE.asItem(), CHESTNUT_CRATE.asItem(), ROASTED_CHESTNUT_CRATE.asItem(), GINGER_ROOT_CRATE.asItem(), HOLLY_BERRY_BASKET.asItem(), WILD_BERRY_BASKET.asItem(), PINECONE_BLOCK.asItem());
+        this.tag(TagUtil.itemTag("c", "animal_foods")).add(WILD_BERRY_PIPS.get(), HOLLY_BERRIES.get(), FROZEN_FLESH.asItem());
+        this.tag(Tags.Items.SEEDS).add(WILD_BERRY_PIPS.get());
         this.tag(ItemTags.DYEABLE).add(SNOW_BOOTS.get());
         this.tag(Tags.Items.FEATHERS).add(ELDER_FEATHER.get());
         this.copy(Tags.Blocks.CHAINS, Tags.Items.CHAINS);
@@ -58,7 +57,7 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         this.copy(Tags.Blocks.CHESTS_WOODEN, Tags.Items.CHESTS_WOODEN);
         this.copy(Tags.Blocks.CHESTS_TRAPPED, Tags.Items.CHESTS_TRAPPED);
         this.copy(BlueprintBlockTags.LADDERS, BlueprintItemTags.LADDERS);
-        this.copy(WindsweptBlockTags.QUARK_LADDERS, WindsweptItemTags.QUARK_LADDERS);
+        this.copy(WindsweptBlockTags.QUARK_LADDERS, TagUtil.itemTag("quark", "ladders"));
         this.copy(BlueprintBlockTags.WOODEN_BOOKSHELVES, BlueprintItemTags.WOODEN_BOOKSHELVES);
         this.copy(BlueprintBlockTags.WOODEN_LADDERS, BlueprintItemTags.WOODEN_LADDERS);
         this.copy(BlueprintBlockTags.WOODEN_BEEHIVES, BlueprintItemTags.WOODEN_BEEHIVES);
@@ -66,34 +65,24 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         this.copy(BlueprintBlockTags.WOODEN_CHISELED_BOOKSHELVES, BlueprintItemTags.WOODEN_CHISELED_BOOKSHELVES);
 
         //foods
-        this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "foods"))).add(GINGERBREAD_COOKIE.get(), CANDY_CANE.get(), CHESTNUTS.get(), ROASTED_CHESTNUTS.get(), HOLLY_BERRIES.get(), FROZEN_FLESH.asItem());
-        this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "foods/cookie"))).add(GINGERBREAD_COOKIE.get());
-        this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "foods/candy"))).add(CANDY_CANE.get());
-        this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "foods/ginger"))).add(GINGER_ROOT.get());
-        this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "foods/food_poisoning"))).add(HOLLY_BERRIES.get(), FROZEN_FLESH.asItem());
+        this.tag(TagUtil.itemTag("c", "foods")).add(GINGERBREAD_COOKIE.get(), CANDY_CANE.get(), CHESTNUTS.get(), ROASTED_CHESTNUTS.get(), HOLLY_BERRIES.get(), FROZEN_FLESH.asItem());
+        this.tag(TagUtil.itemTag("c", "foods/cookie")).add(GINGERBREAD_COOKIE.get());
+        this.tag(TagUtil.itemTag("c", "foods/candy")).add(CANDY_CANE.get());
+        this.tag(TagUtil.itemTag("c", "foods/ginger")).add(GINGER_ROOT.get());
+        this.tag(TagUtil.itemTag("c", "foods/food_poisoning")).add(HOLLY_BERRIES.get(), FROZEN_FLESH.asItem());
 
         //crops
-        this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "crops"))).add(GINGER_ROOT.get());
-        this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "crops/ginger"))).add(GINGER_ROOT.get());
-
-        //storage blocks
-        this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "storage_blocks"))).add(LAVENDER_BALE.asItem(), CHESTNUT_CRATE.asItem(), ROASTED_CHESTNUT_CRATE.asItem(), GINGER_ROOT_CRATE.asItem(), HOLLY_BERRY_BASKET.asItem(), WILD_BERRY_BASKET.asItem());
-
-        //animal foods
-        this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "animal_foods"))).add(WILD_BERRY_PIPS.get(), HOLLY_BERRIES.get(), FROZEN_FLESH.asItem());
-
-        //vanilla-style meat/wolf food
-        this.tag(ItemTags.MEAT).add(FROZEN_FLESH.asItem());
-        this.tag(ItemTags.WOLF_FOOD).add(FROZEN_FLESH.asItem());
+        this.tag(TagUtil.itemTag("c", "crops")).add(GINGER_ROOT.get());
+        this.tag(TagUtil.itemTag("c", "crops/ginger")).add(GINGER_ROOT.get());
 
         //caverns and chasms
-        this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("caverns_and_chasms", "rat_food"))).add(FROZEN_FLESH.asItem());
+        this.tag(TagUtil.itemTag("caverns_and_chasms", "rat_food")).add(FROZEN_FLESH.asItem());
 
         //connectable chains
-        this.tag(WindsweptItemTags.HANGABLE_ITEMS).add(PINECONE.asItem(), FAIRY_LIGHT.asItem(), SOUL_FAIRY_LIGHT.asItem(), REDSTONE_FAIRY_LIGHT.asItem(), NIGHT_FAIRY_LIGHT.asItem(), CUPRIC_FAIRY_LIGHT.asItem(), ENDER_FAIRY_LIGHT.asItem(), ICE_LANTERN.asItem());
+        this.tag(TagUtil.itemTag("connectiblechains", "hangable_items")).add(PINECONE.asItem(), FAIRY_LIGHT.asItem(), SOUL_FAIRY_LIGHT.asItem(), REDSTONE_FAIRY_LIGHT.asItem(), NIGHT_FAIRY_LIGHT.asItem(), CUPRIC_FAIRY_LIGHT.asItem(), ENDER_FAIRY_LIGHT.asItem(), ICE_LANTERN.asItem());
 
         //snowy spirit
-        this.copy(WindsweptBlockTags.GINGERBREADS, WindsweptItemTags.GINGERBREADS);
+        this.copy(WindsweptBlockTags.GINGERBREADS, TagUtil.itemTag("snowyspirit", "gingerbreads"));
 
         //boatload
         this.tag(BlueprintItemTags.FURNACE_BOATS).add(HOLLY_FURNACE_BOAT.get(), CHESTNUT_FURNACE_BOAT.get(), PINE_FURNACE_BOAT.get());
@@ -108,6 +97,8 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         this.tag(ItemTags.CHEST_BOATS).add(HOLLY_BOAT.getSecond().get(), CHESTNUT_BOAT.getSecond().get(), PINE_BOAT.getSecond().get());
         this.tag(ItemTags.SIGNS).add(HOLLY_SIGNS.getFirst().asItem(), CHESTNUT_SIGNS.getFirst().asItem(), PINE_SIGNS.getFirst().asItem());
         this.tag(ItemTags.HANGING_SIGNS).add(HOLLY_HANGING_SIGNS.getFirst().asItem(), CHESTNUT_HANGING_SIGNS.getFirst().asItem(), PINE_HANGING_SIGNS.getFirst().asItem());
+        this.tag(ItemTags.MEAT).add(FROZEN_FLESH.asItem(), GOAT.asItem(), COOKED_GOAT.asItem());
+        this.tag(ItemTags.WOLF_FOOD).add(FROZEN_FLESH.asItem());
         this.copy(BlockTags.LEAVES, ItemTags.LEAVES);
         this.copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN);
         this.copy(BlockTags.PLANKS, ItemTags.PLANKS);
