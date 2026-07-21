@@ -1,10 +1,12 @@
 {
   "values": [
+    "windswept:pinecone",
     "windswept:fairy_light",
     "windswept:soul_fairy_light",
     "windswept:redstone_fairy_light",
     "windswept:night_fairy_light",
     "windswept:cupric_fairy_light",
-    "windswept:ender_fairy_light"
+    "windswept:ender_fairy_light",
+    "windswept:ice_lantern"
   ]
 }

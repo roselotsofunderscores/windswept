@@ -65,7 +65,7 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         this.copy(BlueprintBlockTags.WOODEN_CHISELED_BOOKSHELVES, BlueprintItemTags.WOODEN_CHISELED_BOOKSHELVES);
         
         //connectable chains
-        this.tag(WindsweptItemTags.HANGABLE_ITEMS).add(FAIRY_LIGHT.asItem(), SOUL_FAIRY_LIGHT.asItem(), REDSTONE_FAIRY_LIGHT.asItem(), NIGHT_FAIRY_LIGHT.asItem(), CUPRIC_FAIRY_LIGHT.asItem(), ENDER_FAIRY_LIGHT.asItem());
+        this.tag(WindsweptItemTags.HANGABLE_ITEMS).add(PINECONE.asItem(), FAIRY_LIGHT.asItem(), SOUL_FAIRY_LIGHT.asItem(), REDSTONE_FAIRY_LIGHT.asItem(), NIGHT_FAIRY_LIGHT.asItem(), CUPRIC_FAIRY_LIGHT.asItem(), ENDER_FAIRY_LIGHT.asItem(), ICE_LANTERN.asItem());
 
         //snowy spirit
         this.copy(WindsweptBlockTags.GINGERBREADS, WindsweptItemTags.GINGERBREADS);
