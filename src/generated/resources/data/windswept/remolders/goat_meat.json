@@ -1,53 +1,55 @@
 {
   "molding": "json",
   "remolder": {
-    "type": "add",
-    "target": "pools[]",
-    "value": {
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 3.0,
-                "min": 1.0
+    "type": "replace",
+    "target": "pools",
+    "value": [
+      {
+        "bonus_rolls": 0.0,
+        "entries": [
+          {
+            "type": "minecraft:item",
+            "functions": [
+              {
+                "add": false,
+                "count": {
+                  "type": "minecraft:uniform",
+                  "max": 3.0,
+                  "min": 1.0
+                },
+                "function": "minecraft:set_count"
               },
-              "function": "minecraft:set_count"
-            },
-            {
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 1.0,
-                "min": 0.0
+              {
+                "count": {
+                  "type": "minecraft:uniform",
+                  "max": 1.0,
+                  "min": 0.0
+                },
+                "enchantment": "minecraft:looting",
+                "function": "minecraft:enchanted_count_increase"
               },
-              "enchantment": "minecraft:looting",
-              "function": "minecraft:enchanted_count_increase"
-            },
-            {
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "flags": {
-                      "is_on_fire": true
+              {
+                "conditions": [
+                  {
+                    "condition": "minecraft:entity_properties",
+                    "entity": "this",
+                    "predicate": {
+                      "flags": {
+                        "is_on_fire": true
+                      }
                     }
                   }
-                }
-              ],
-              "function": "minecraft:furnace_smelt"
-            }
-          ],
-          "name": "windswept:goat"
-        }
-      ],
-      "name": "windswept:goat",
-      "rolls": 1.0
-    }
+                ],
+                "function": "minecraft:furnace_smelt"
+              }
+            ],
+            "name": "windswept:goat"
+          }
+        ],
+        "name": "windswept:goat",
+        "rolls": 1.0
+      }
+    ]
   },
   "selector": "minecraft:loot_table/entities/goat"
 }
