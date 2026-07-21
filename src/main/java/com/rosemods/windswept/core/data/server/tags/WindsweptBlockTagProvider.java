@@ -31,6 +31,9 @@ public class WindsweptBlockTagProvider extends BlockTagsProvider {
         this.tag(WindsweptBlockTags.FROSTBITER_FOOD).add(Blocks.SHORT_GRASS, LAVENDER.get(), SNOWY_SPROUTS.get(), DRY_MOSSY_SPROUTS.get(), MOSSY_SPROUTS.get(), GELISOL_GRASS.get()).addTag(BlockTags.FLOWERS);
         this.tag(WindsweptBlockTags.PINECONE_NOTE_BLOCKS).add(CARVED_PINECONE_BLOCK.get(), PINECONE_BLOCK.get(), PINECONE_SHINGLES.get(), WHITE_PINECONE_SHINGLES.get(), LIGHT_GRAY_PINECONE_SHINGLES.get(), GRAY_PINECONE_SHINGLES.get(), BLACK_PINECONE_SHINGLES.get(), BROWN_PINECONE_SHINGLES.get(), RED_PINECONE_SHINGLES.get(), ORANGE_PINECONE_SHINGLES.get(), YELLOW_PINECONE_SHINGLES.get(), LIME_PINECONE_SHINGLES.get(), GREEN_PINECONE_SHINGLES.get(), CYAN_PINECONE_SHINGLES.get(), LIGHT_BLUE_PINECONE_SHINGLES.get(), BLUE_PINECONE_SHINGLES.get(), PURPLE_PINECONE_SHINGLES.get(), MAGENTA_PINECONE_SHINGLES.get(), PINK_PINECONE_SHINGLES.get());
 
+        //c
+        this.tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "storage_blocks"))).add(LAVENDER_BALE.get(), CHESTNUT_CRATE.get(), ROASTED_CHESTNUT_CRATE.get(), GINGER_ROOT_CRATE.get(), HOLLY_BERRY_BASKET.get(), WILD_BERRY_BASKET.get());
+
         //environmental
         this.tag(WindsweptBlockTags.PINECONE_GOLEM_BASE_BLOCKS).add(PINECONE_BLOCK.get());
 
