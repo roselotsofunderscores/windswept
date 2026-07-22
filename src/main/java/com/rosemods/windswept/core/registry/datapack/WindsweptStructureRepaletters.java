@@ -25,6 +25,7 @@ public final class WindsweptStructureRepaletters {
     public static final ResourceKey<StructureRepaletterEntry> VILLAGE_TAIGA = create("village_taiga");
     public static final ResourceKey<StructureRepaletterEntry> VILLAGE_SAVANNA = create("village_savanna");
     public static final ResourceKey<StructureRepaletterEntry> VILLAGE_SNOWY = create("village_snowy");
+    public static final ResourceKey<StructureRepaletterEntry> VILLAGE_DESERT = create("village_desert");
     public static final ResourceKey<StructureRepaletterEntry> SHIPWRECK = create("shipwreck");
 
     public static final ResourceKey<StructureRepaletterEntry> WOODWORKS_IGLOO = create("woodworks_igloo");
@@ -77,6 +78,15 @@ public final class WindsweptStructureRepaletters {
                 simple(Blocks.SPRUCE_FENCE_GATE, WindsweptBlocks.CHESTNUT_FENCE_GATE.get()),
                 simple(Blocks.SPRUCE_DOOR, WindsweptBlocks.CHESTNUT_DOOR.get())
         ).select(holder(structures, BuiltinStructures.VILLAGE_SNOWY)));
+
+        context.register(VILLAGE_DESERT, repalette().repaletters(
+                simple(Blocks.POTTED_CACTUS, WindsweptBlocks.POTTED_BRITTLEBUSH.get()),
+                simple(Blocks.SEA_PICKLE, WindsweptBlocks.POTTED_VERBENA.get()),
+                simple(Blocks.POTTED_DEAD_BUSH, WindsweptBlocks.POTTED_SANDY_SPROUTS.get()),
+                simple(Blocks.TERRACOTTA, WindsweptBlocks.ARKOSE_TILES.get()),
+                simple(Blocks.SMOOTH_SANDSTONE_STAIRS, WindsweptBlocks.ARKOSE_BRICK_STAIRS.get()),
+                simple(Blocks.COBBLESTONE, WindsweptBlocks.ARKOSE.get())
+        ).select(holder(structures, BuiltinStructures.VILLAGE_DESERT)));
 
         context.register(SHIPWRECK, repalette().repaletters(
                 simple(Blocks.JUNGLE_DOOR, WindsweptBlocks.PINE_DOOR.get()),

@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#c:is_desert",
+  "features": "windswept:sandy_sprouts",
+  "step": "vegetal_decoration"
+}

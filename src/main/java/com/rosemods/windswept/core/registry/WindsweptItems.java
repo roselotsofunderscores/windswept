@@ -25,7 +25,7 @@ public final class WindsweptItems {
     public static final DeferredItem<Item> HOLLY_BERRIES_ON_A_STICK = ITEMS.createItem("holly_berries_on_a_stick", () -> new HollyBerriesOnAStickItem(new Item.Properties().durability(25)));
     public static final DeferredItem<Item> ELDER_FEATHER = ITEMS.createItem("elder_feather", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> FROST_ARROW = ITEMS.createItem("frost_arrow", () -> new FrostArrowItem(new Item.Properties()));
-    public static final DeferredItem<Item> FROZEN_BRANCH = ITEMS.createItem("frozen_branch", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> FROZEN_BRANCH = ITEMS.createItem("frozen_branch", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final DeferredItem<Item> FROZEN_FLESH = ITEMS.createItem("frozen_flesh", () -> new Item(new Item.Properties().food(WindsweptFoods.FROZEN_FLESH)));
 
     // Armour //

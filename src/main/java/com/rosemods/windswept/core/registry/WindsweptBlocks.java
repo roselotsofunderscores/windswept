@@ -141,15 +141,21 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> YELLOW_ROSE = BLOCKS.createBlock("yellow_rose", () -> new RoseFlowerBlock(WindsweptBlocks.YELLOW_ROSE_BUSH, MobEffects.WITHER, 5, PropertyUtil.flower()));
     public static final DeferredBlock<Block> FOXGLOVE = BLOCKS.createBlock("foxglove", () -> new FlowerBlock(MobEffects.MOVEMENT_SPEED, 5, PropertyUtil.flower()));
     public static final DeferredBlock<Block> BLUEBELLS = BLOCKS.createBlock("bluebells", () -> new FlowerBlock(MobEffects.SLOW_FALLING, 5, PropertyUtil.flower()));
-    public static final DeferredBlock<Block> SNOWY_SPROUTS = BLOCKS.createBlock("snowy_sprouts", () -> new SproutsBlock(Properties.SPROUTS));
     public static final DeferredBlock<Block> SNOWDROP = BLOCKS.createBlock("snowdrop", () -> new SnowdropBlock(WindsweptEffects.FROST_RESISTANCE, 5, PropertyUtil.flower().sound(SoundType.NETHER_SPROUTS)));
+    public static final DeferredBlock<Block> SNOWY_SPROUTS = BLOCKS.createBlock("snowy_sprouts", () -> new SproutsBlock(Properties.SPROUTS));
+    public static final DeferredBlock<Block> SANDY_SPROUTS = BLOCKS.createBlock("sandy_sprouts", () -> new SproutsBlock(Properties.SPROUTS));
+    public static final DeferredBlock<Block> MIMOSA = BLOCKS.createBlock("mimosa", () -> new MimosaBlock(MobEffects.FIRE_RESISTANCE, 5, PropertyUtil.flower().sound(SoundType.NETHER_SPROUTS)));
     public static final DeferredBlock<Block> MOSS_CAMPION = BLOCKS.createBlock("moss_campion", () -> new MossCampionBlock(WindsweptEffects.THORNS, 5, PropertyUtil.flower().sound(SoundType.AZALEA)));
     public static final DeferredBlock<Block> WILD_GINGER = BLOCKS.createBlock("wild_ginger", () -> new FlowerBlock(MobEffects.DAMAGE_BOOST, 5, PropertyUtil.flower()));
     public static final DeferredBlock<Block> NIGHTSHADE = BLOCKS.createBlock("nightshade", () -> new NightshadeFlowerBlock(MobEffects.NIGHT_VISION, 5, BlockBehaviour.Properties.of().noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).lightLevel(state -> 9)));
-    public static final DeferredBlock<Block> MIMOSA = BLOCKS.createBlock("mimosa", () -> new MimosaBlock(MobEffects.FIRE_RESISTANCE, 5, PropertyUtil.flower().sound(SoundType.NETHER_SPROUTS)));
+
+    public static final DeferredBlock<Block> BRITTLEBUSH = BLOCKS.createBlock("brittlebush", () -> new DesertFlowerBlock(MobEffects.FIRE_RESISTANCE, 5, PropertyUtil.flower().sound(SoundType.AZALEA)));
+    public static final DeferredBlock<Block> LARKSPUR = BLOCKS.createBlock("larkspur", () -> new DesertFlowerBlock(MobEffects.FIRE_RESISTANCE, 5, PropertyUtil.flower().sound(SoundType.AZALEA)));
+    public static final DeferredBlock<Block> VERBENA = BLOCKS.createBlock("verbena", () -> new DesertFlowerBlock(MobEffects.FIRE_RESISTANCE, 5, PropertyUtil.flower().sound(SoundType.AZALEA)));
 
     public static final DeferredBlock<Block> LUPINE = BLOCKS.createBlock("lupine", () -> new TallFlowerBlock(PropertyUtil.flower()));
     public static final DeferredBlock<Block> LIONS_TAIL = BLOCKS.createBlock("lions_tail", () -> new TallFlowerBlock(PropertyUtil.flower()));
+    public static final DeferredBlock<Block> DESERT_LILY = BLOCKS.createBlock("desert_lily", () -> new TallDesertFlowerBlock(PropertyUtil.flower().sound(SoundType.AZALEA)));
     public static final DeferredBlock<Block> RED_ROSE_BUSH = BLOCKS.createBlock("red_rose_bush", () -> new TallFlowerBlock(PropertyUtil.flower()));
     public static final DeferredBlock<Block> BLUE_ROSE_BUSH = BLOCKS.createBlock("blue_rose_bush", () -> new TallFlowerBlock(PropertyUtil.flower()));
     public static final DeferredBlock<Block> WHITE_ROSE_BUSH = BLOCKS.createBlock("white_rose_bush", () -> new TallFlowerBlock(PropertyUtil.flower()));
@@ -401,11 +407,15 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> POTTED_WILD_GINGER = BLOCKS.createBlockNoItem("potted_wild_ginger", () -> new FlowerPotBlock(WILD_GINGER.get(), PropertyUtil.flowerPot()));
     public static final DeferredBlock<Block> POTTED_NIGHTSHADE = BLOCKS.createBlockNoItem("potted_nightshade", () -> new NightShadeFlowerPotBlock(NIGHTSHADE.get(), BlockBehaviour.Properties.of().instabreak().noOcclusion().lightLevel(state -> 9)));
     public static final DeferredBlock<Block> POTTED_SNOWY_SPROUTS = BLOCKS.createBlockNoItem("potted_snowy_sprouts", () -> new FlowerPotBlock(SNOWY_SPROUTS.get(), PropertyUtil.flowerPot()));
+    public static final DeferredBlock<Block> POTTED_SANDY_SPROUTS = BLOCKS.createBlockNoItem("potted_sandy_sprouts", () -> new FlowerPotBlock(SANDY_SPROUTS.get(), PropertyUtil.flowerPot()));
     public static final DeferredBlock<Block> POTTED_GELISOL_GRASS = BLOCKS.createBlockNoItem("potted_gelisol_grass", () -> new FlowerPotBlock(GELISOL_GRASS.get(), PropertyUtil.flowerPot()));
     public static final DeferredBlock<Block> POTTED_DRY_MOSSY_SPROUTS = BLOCKS.createBlockNoItem("potted_dry_mossy_sprouts", () -> new FlowerPotBlock(DRY_MOSSY_SPROUTS.get(), PropertyUtil.flowerPot()));
     public static final DeferredBlock<Block> POTTED_MOSSY_SPROUTS = BLOCKS.createBlockNoItem("potted_mossy_sprouts", () -> new FlowerPotBlock(MOSSY_SPROUTS.get(), PropertyUtil.flowerPot()));
     public static final DeferredBlock<Block> POTTED_LAVENDER = BLOCKS.createBlockNoItem("potted_lavender", () -> new FlowerPotBlock(LAVENDER.get(), PropertyUtil.flowerPot()));
     public static final DeferredBlock<Block> POTTED_MIMOSA = BLOCKS.createBlockNoItem("potted_mimosa", () -> new FlowerPotBlock(MIMOSA.get(), PropertyUtil.flowerPot()));
+    public static final DeferredBlock<Block> POTTED_BRITTLEBUSH = BLOCKS.createBlockNoItem("potted_brittlebush", () -> new FlowerPotBlock(BRITTLEBUSH.get(), PropertyUtil.flowerPot()));
+    public static final DeferredBlock<Block> POTTED_LARKSPUR = BLOCKS.createBlockNoItem("potted_larkspur", () -> new FlowerPotBlock(LARKSPUR.get(), PropertyUtil.flowerPot()));
+    public static final DeferredBlock<Block> POTTED_VERBENA = BLOCKS.createBlockNoItem("potted_verbena", () -> new FlowerPotBlock(VERBENA.get(), PropertyUtil.flowerPot()));
 
     public static final DeferredBlock<Block> WILD_BERRY_BUSH = BLOCKS.createBlockNoItem("wild_berry_bush", () -> new WildBerryBushBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).randomTicks().noCollission().sound(SoundType.SWEET_BERRY_BUSH).offsetType(BlockBehaviour.OffsetType.XZ)));
 

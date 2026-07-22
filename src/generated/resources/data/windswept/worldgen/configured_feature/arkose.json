@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:disk",
+  "config": {
+    "half_height": 2,
+    "radius": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 6,
+      "min_inclusive": 3
+    },
+    "state_provider": {
+      "fallback": {
+        "type": "minecraft:simple_state_provider",
+        "state": {
+          "Name": "windswept:arkose"
+        }
+      },
+      "rules": []
+    },
+    "target": {
+      "type": "minecraft:matching_block_tag",
+      "tag": "c:sands/colorless"
+    }
+  }
+}

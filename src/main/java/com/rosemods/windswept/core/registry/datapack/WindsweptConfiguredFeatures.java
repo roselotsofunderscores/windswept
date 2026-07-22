@@ -23,6 +23,7 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PinkPetalsBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature;
@@ -32,6 +33,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.AcaciaFoliagePl
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BushFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedBlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.level.levelgen.feature.treedecorators.BeehiveDecorator;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.ForkingTrunkPlacer;
@@ -39,6 +41,7 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlac
 import net.minecraft.world.level.levelgen.placement.CaveSurface;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
+import net.neoforged.neoforge.common.Tags;
 
 import java.util.List;
 
@@ -88,6 +91,8 @@ public final class WindsweptConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> GELISOL_PATCH = createKey("gelisol_patch_large");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SNOWY_GELISOL = createKey("snowy_gelisol");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SHALE = createKey("shale");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ARKOSE = createKey("arkose");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SANDY_SPROUTS = createKey("sandy_sprouts");
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<PlacedFeature> placed = context.lookup(Registries.PLACED_FEATURE);
@@ -102,7 +107,7 @@ public final class WindsweptConfiguredFeatures {
         SimpleWeightedRandomList.Builder<BlockState> builder = SimpleWeightedRandomList.builder();
         for (int i = 1; i <= 4; ++i)
             for (Direction direction : Direction.Plane.HORIZONTAL)
-                builder.add(WindsweptBlocks.YELLOW_PETALS.get().defaultBlockState().setValue(PinkPetalsBlock.AMOUNT, Integer.valueOf(i)).setValue(PinkPetalsBlock.FACING, direction), 1);
+                builder.add(WindsweptBlocks.YELLOW_PETALS.get().defaultBlockState().setValue(PinkPetalsBlock.AMOUNT, i).setValue(PinkPetalsBlock.FACING, direction), 1);
 
         context.register(YELLOW_PETALS, new ConfiguredFeature<>(Feature.FLOWER, new RandomPatchConfiguration(96, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(new WeightedStateProvider(builder))))));
         context.register(FERNS, new ConfiguredFeature<>(Feature.FLOWER, FeatureUtils.simpleRandomPatchConfiguration(4, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.FERN))))));
@@ -141,6 +146,8 @@ public final class WindsweptConfiguredFeatures {
         context.register(GELISOL_PATCH, new ConfiguredFeature<>(Feature.VEGETATION_PATCH, new VegetationPatchConfiguration(BlockTags.DIRT, BlockStateProvider.simple(WindsweptBlocks.GELISOL.get()), PlacementUtils.inlinePlaced(configured.getOrThrow(GELISOL_VEGETATION)), CaveSurface.FLOOR, ConstantInt.of(1), 0f, 5, .8f, UniformInt.of(2, 3), .45f)));
         context.register(SNOWY_GELISOL, new ConfiguredFeature<>(WindsweptFeatures.SNOWY_GELISOL.get(), NoneFeatureConfiguration.NONE));
         context.register(SHALE, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(new TagMatchTest(BlockTags.BASE_STONE_OVERWORLD), WindsweptBlocks.SHALE.get().defaultBlockState(), 64)));
+        context.register(ARKOSE, new ConfiguredFeature<>(Feature.DISK, new DiskConfiguration(RuleBasedBlockStateProvider.simple(WindsweptBlocks.ARKOSE.get()), BlockPredicate.matchesTag(Tags.Blocks.SANDS_COLORLESS), UniformInt.of(3, 6), 2)));
+        context.register(SANDY_SPROUTS, new ConfiguredFeature<>(Feature.RANDOM_PATCH, FeatureUtils.simpleRandomPatchConfiguration(32, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(WindsweptBlocks.SANDY_SPROUTS.get()))))));
     }
 
     private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {

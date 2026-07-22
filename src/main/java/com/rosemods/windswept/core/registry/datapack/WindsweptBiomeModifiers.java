@@ -53,6 +53,8 @@ public final class WindsweptBiomeModifiers {
         addFeature(context, "rare_flowering_acacia_trees", BiomeTags.IS_SAVANNA, Decoration.VEGETAL_DECORATION, RARE_FLOWERING_ACACIA_TREES);
         addFeature(context, "lions_tails", WindsweptBiomeTags.HAS_LIONS_TAIL, Decoration.VEGETAL_DECORATION, LIONS_TAIL);
         addFeature(context, "rare_yellow_petals", BiomeTags.IS_SAVANNA, Decoration.VEGETAL_DECORATION, RARE_YELLOW_PETALS);
+        addFeature(context, "arkose", Tags.Biomes.IS_DESERT, Decoration.UNDERGROUND_ORES, ARKOSE);
+        addFeature(context, "sandy_sprouts", Tags.Biomes.IS_DESERT, Decoration.VEGETAL_DECORATION, SANDY_SPROUTS);
 
         // spawns
         addSpawn(context, "chilled", Tags.Biomes.IS_SNOWY, new MobSpawnSettings.SpawnerData(WindsweptEntityTypes.CHILLED.get(), 5, 3, 7));

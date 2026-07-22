@@ -15,6 +15,7 @@ import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
+import net.minecraft.world.level.material.Fluids;
 
 import java.util.List;
 
@@ -68,6 +69,8 @@ public final class WindsweptPlacedFeatures {
     public static final ResourceKey<PlacedFeature> PINE_FALLEN_LOG = createKey("pine_fallen_log");
     public static final ResourceKey<PlacedFeature> LUSH_CAVES_VEGETATION = createKey("lush_caves_vegetation");
     public static final ResourceKey<PlacedFeature> SHALE = createKey("shale");
+    public static final ResourceKey<PlacedFeature> ARKOSE = createKey("arkose");
+    public static final ResourceKey<PlacedFeature> SANDY_SPROUTS = createKey("sandy_sprouts");
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         createPlantPatch(context, RED_ROSE, 16, WindsweptConfiguredFeatures.RED_ROSE);
@@ -119,6 +122,8 @@ public final class WindsweptPlacedFeatures {
         register(context, PINE_FALLEN_LOG, WindsweptConfiguredFeatures.PINE_FALLEN_LOG, PlacementUtils.countExtra(0, .1f, 2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
         register(context, LUSH_CAVES_VEGETATION, WindsweptConfiguredFeatures.MOSS_PATCH, CountPlacement.of(125), InSquarePlacement.spread(), PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT, EnvironmentScanPlacement.scanningFor(Direction.DOWN, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12), RandomOffsetPlacement.vertical(ConstantInt.of(1)), BiomeFilter.biome());
         register(context, SHALE, WindsweptConfiguredFeatures.SHALE, PlacementUtils.countExtra(2, .1f, 4), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.absolute(64), VerticalAnchor.absolute(256)), BiomeFilter.biome());
+        register(context, ARKOSE, WindsweptConfiguredFeatures.ARKOSE, InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BlockPredicateFilter.forPredicate(BlockPredicate.matchesFluids(Fluids.WATER)), BiomeFilter.biome());
+        register(context, SANDY_SPROUTS, WindsweptConfiguredFeatures.SANDY_SPROUTS, VegetationPlacements.worldSurfaceSquaredWithCount(2));
     }
 
     private static void register(BootstrapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, ResourceKey<ConfiguredFeature<?, ?>> feature, List<PlacementModifier> modifiers) {

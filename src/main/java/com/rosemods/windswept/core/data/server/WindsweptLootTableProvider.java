@@ -346,6 +346,7 @@ public class WindsweptLootTableProvider extends LootTableProvider {
             // tall plants
             this.tallFlower(LUPINE.get());
             this.tallFlower(LIONS_TAIL.get());
+            this.tallFlower(DESERT_LILY.get());
             this.tallFlower(RED_ROSE_BUSH.get());
             this.tallFlower(BLUE_ROSE_BUSH.get());
             this.tallFlower(WHITE_ROSE_BUSH.get());
@@ -353,6 +354,7 @@ public class WindsweptLootTableProvider extends LootTableProvider {
 
             // sprouts
             this.add(SNOWY_SPROUTS.get(), BlockLootSubProvider::createShearsOnlyDrop);
+            this.add(SANDY_SPROUTS.get(), BlockLootSubProvider::createShearsOnlyDrop);
             this.add(GELISOL_GRASS.get(), BlockLootSubProvider::createShearsOnlyDrop);
             this.add(DRY_MOSSY_SPROUTS.get(), BlockLootSubProvider::createShearsOnlyDrop);
             this.add(MOSSY_SPROUTS.get(), BlockLootSubProvider::createShearsOnlyDrop);
@@ -370,6 +372,9 @@ public class WindsweptLootTableProvider extends LootTableProvider {
             this.dropSelf(NIGHTSHADE.get());
             this.add(LAVENDER.get(), this::createLavenderTable);
             this.dropSelf(MIMOSA.get());
+            this.dropSelf(BRITTLEBUSH.get());
+            this.dropSelf(LARKSPUR.get());
+            this.dropSelf(VERBENA.get());
 
             this.dropSelf(FLOWERING_ACACIA_SAPLING.get());
             this.dropPottedContents(POTTED_FLOWERING_ACACIA_SAPLING.get());
@@ -389,11 +394,15 @@ public class WindsweptLootTableProvider extends LootTableProvider {
             this.dropPottedContents(POTTED_WILD_GINGER.get());
             this.dropPottedContents(POTTED_NIGHTSHADE.get());
             this.dropPottedContents(POTTED_SNOWY_SPROUTS.get());
+            this.dropPottedContents(POTTED_SANDY_SPROUTS.get());
             this.dropPottedContents(POTTED_GELISOL_GRASS.get());
             this.dropPottedContents(POTTED_DRY_MOSSY_SPROUTS.get());
             this.dropPottedContents(POTTED_MOSSY_SPROUTS.get());
             this.dropPottedContents(POTTED_LAVENDER.get());
             this.dropPottedContents(POTTED_MIMOSA.get());
+            this.dropPottedContents(POTTED_BRITTLEBUSH.get());
+            this.dropPottedContents(POTTED_VERBENA.get());
+            this.dropPottedContents(POTTED_LARKSPUR.get());
 
             // lavender thatch
             this.dropSelf(LAVENDER_BALE.get());
