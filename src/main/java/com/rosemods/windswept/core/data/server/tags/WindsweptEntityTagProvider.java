@@ -21,6 +21,7 @@ public class WindsweptEntityTagProvider extends EntityTypeTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(WindsweptEntityTypeTags.CONVERT_TO_CHILLED).add(EntityType.ZOMBIE, EntityType.HUSK, EntityType.DROWNED);
+        this.tag(EntityTypeTags.ZOMBIES).add(CHILLED.get());
         this.tag(BlueprintEntityTypeTags.MILKABLE).add(FROSTBITER.get());
         this.tag(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS).add(CHILLED.get(), FROSTBITER.get(), EntityType.GOAT);
         this.tag(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES).add(CHILLED.get(), FROSTBITER.get());
