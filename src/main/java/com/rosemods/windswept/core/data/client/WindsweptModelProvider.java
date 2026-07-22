@@ -312,7 +312,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.wall(SHALE_WALL, this.blockTexture(SHALE.get()));
         this.cubeAll(POLISHED_SHALE);
         this.stairs(POLISHED_SHALE_STAIRS, this.blockTexture(POLISHED_SHALE.get()));
-        this.slab(POLISHED_SHALE_SLAB, this.blockTexture(POLISHED_SHALE.get()));
+        this.doubleSlab(POLISHED_SHALE_SLAB, this.blockTexture(POLISHED_SHALE.get()));
         this.wall(POLISHED_SHALE_WALL, this.blockTexture(POLISHED_SHALE.get()));
         this.cubeAll(POLISHED_SHALE_BRICKS);
         this.cubeAll(ICY_POLISHED_SHALE_BRICKS);
@@ -328,7 +328,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.wall(ARKOSE_WALL, this.blockTexture(ARKOSE.get()));
         this.cubeAll(POLISHED_ARKOSE);
         this.stairs(POLISHED_ARKOSE_STAIRS, this.blockTexture(POLISHED_ARKOSE.get()));
-        this.slab(POLISHED_ARKOSE_SLAB, this.blockTexture(POLISHED_ARKOSE.get()));
+        this.doubleSlab(POLISHED_ARKOSE_SLAB, this.blockTexture(POLISHED_ARKOSE.get()));
         this.wall(POLISHED_ARKOSE_WALL, this.blockTexture(POLISHED_ARKOSE.get()));
         this.cubeAll(ARKOSE_BRICKS);
         this.stairs(ARKOSE_BRICK_STAIRS, this.blockTexture(ARKOSE_BRICKS.get()));
@@ -777,6 +777,14 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
     private void slab(DeferredBlock<Block> slab, ResourceLocation fullModel, ResourceLocation side, ResourceLocation bottom, ResourceLocation top) {
         this.slabBlock((SlabBlock) slab.get(), fullModel, side, bottom, top);
         this.itemModel(slab);
+    }
+
+    private void doubleSlab(DeferredBlock<Block> slab, ResourceLocation texture) {
+        ResourceLocation slabTexture = this.blockTexture(slab.get());
+        String name = getBlockName(slab.get());
+
+        this.models().cubeBottomTop(name + "_double", slabTexture, texture, texture);
+        this.slab(slab, this.modLoc("block/" + name + "_double"), slabTexture, texture, texture);
     }
 
     private void stairs(DeferredBlock<Block> stairs, ResourceLocation texture) {

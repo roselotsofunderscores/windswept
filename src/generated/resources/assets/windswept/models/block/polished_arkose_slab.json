@@ -2,7 +2,7 @@
   "parent": "minecraft:block/slab",
   "textures": {
     "bottom": "windswept:block/polished_arkose",
-    "side": "windswept:block/polished_arkose",
+    "side": "windswept:block/polished_arkose_slab",
     "top": "windswept:block/polished_arkose"
   }
 }

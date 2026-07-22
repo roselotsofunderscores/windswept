@@ -4,7 +4,7 @@
       "model": "windswept:block/polished_arkose_slab"
     },
     "type=double": {
-      "model": "windswept:block/polished_arkose"
+      "model": "windswept:block/polished_arkose_slab_double"
     },
     "type=top": {
       "model": "windswept:block/polished_arkose_slab_top"
