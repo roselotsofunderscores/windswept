@@ -30,7 +30,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.neoforged.fml.ModList;
 
-public class Chilled extends Zombie {
+public class Chilled extends Zombie implements VillagerHostileData {
 
     public Chilled(EntityType<? extends Zombie> type, Level level) {
         super(type, level);

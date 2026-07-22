@@ -1,6 +1,6 @@
 package com.rosemods.windswept.core.mixin;
 
-import com.rosemods.windswept.core.registry.WindsweptEntityTypes;
+import com.rosemods.windswept.common.entity.VillagerHostileData;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.sensing.VillagerHostilesSensor;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,9 +13,9 @@ public abstract class VillagerHostilesSensorMixin {
 
     @Inject(method = "isMatchingEntity", at = @At("HEAD"), cancellable = true)
     private void windswept$isMatchingEntity(LivingEntity attacker, LivingEntity target, CallbackInfoReturnable<Boolean> cir) {
-        if (target.getType() == WindsweptEntityTypes.CHILLED.get()) {
-            double acceptableDistance = 10.0D;
-            cir.setReturnValue(target.distanceToSqr(attacker) <= acceptableDistance * acceptableDistance);
+        if (target instanceof VillagerHostileData hostileData) {
+            double dist = hostileData.windswept$getVillagerHostileDistance();
+            cir.setReturnValue(target.distanceToSqr(attacker) <= dist * dist);
         }
     }
 }
