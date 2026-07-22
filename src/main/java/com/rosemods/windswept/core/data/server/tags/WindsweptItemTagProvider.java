@@ -46,6 +46,7 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         this.tag(TagUtil.itemTag("c", "buckets/chocolate")).add(WOODEN_CHOCOLATE_BUCKET.get());
         this.tag(TagUtil.itemTag("c", "storage_blocks")).add(LAVENDER_BALE.asItem(), CHESTNUT_CRATE.asItem(), ROASTED_CHESTNUT_CRATE.asItem(), GINGER_ROOT_CRATE.asItem(), HOLLY_BERRY_BASKET.asItem(), WILD_BERRY_BASKET.asItem(), PINECONE_BLOCK.asItem());
         this.tag(TagUtil.itemTag("c", "animal_foods")).add(WILD_BERRY_PIPS.get(), HOLLY_BERRIES.get(), FROZEN_FLESH.asItem());
+        this.tag(TagUtil.itemTag("c", "music_discs")).add(MUSIC_DISC_RAIN.get(), MUSIC_DISC_SNOW.get(), MUSIC_DISC_BUMBLEBEE.get());
         this.tag(Tags.Items.SEEDS).add(WILD_BERRY_PIPS.get());
         this.tag(ItemTags.DYEABLE).add(SNOW_BOOTS.get());
         this.tag(Tags.Items.FEATHERS).add(ELDER_FEATHER.get());
@@ -73,7 +74,7 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         this.tag(TagUtil.itemTag("c", "cooked_meat")).add(COOKED_GOAT.get());
         this.tag(TagUtil.itemTag("c", "cooked_goat")).add(COOKED_GOAT.get());
         this.tag(TagUtil.itemTag("c", "foods/berry")).add(WILD_BERRIES.get());
-        
+
         //crops
         this.tag(TagUtil.itemTag("c", "crops")).add(GINGER_ROOT.get());
         this.tag(TagUtil.itemTag("c", "crops/ginger")).add(GINGER_ROOT.get());
