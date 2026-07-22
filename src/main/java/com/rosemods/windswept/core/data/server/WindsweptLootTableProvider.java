@@ -317,7 +317,7 @@ public class WindsweptLootTableProvider extends LootTableProvider {
             this.dropSelf(CANDY_CANE_BLOCK.get());
 
             // ginger
-            this.add(GINGER.get(), b -> createGingerDrops(b));
+            this.add(GINGER.get(), this::createGingerDrops);
             this.add(GINGER_SOIL.get(), b -> dropTwoOthers(b, Blocks.DIRT, GINGER_ROOT.get()));
             this.dropSelf(GINGERBREAD_BLOCK.get());
             this.dropSelf(GLAZED_GINGERBREAD_BLOCK.get());
