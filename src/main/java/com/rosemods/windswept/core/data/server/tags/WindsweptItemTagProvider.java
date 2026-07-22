@@ -68,7 +68,9 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         this.tag(TagUtil.itemTag("c", "foods/ginger")).add(GINGER_ROOT.get());
         this.tag(TagUtil.itemTag("c", "foods/food_poisoning")).add(HOLLY_BERRIES.get(), FROZEN_FLESH.asItem());
         this.tag(TagUtil.itemTag("c", "seeds/wild_berry")).add(WILD_BERRY_PIPS.get());
+        this.tag(TagUtil.itemTag("c", "raw_meat")).add(GOAT.get());
         this.tag(TagUtil.itemTag("c", "raw_goat")).add(GOAT.get());
+        this.tag(TagUtil.itemTag("c", "cooked_meat")).add(COOKED_GOAT.get());
         this.tag(TagUtil.itemTag("c", "cooked_goat")).add(COOKED_GOAT.get());
         this.tag(TagUtil.itemTag("c", "foods/berry")).add(WILD_BERRIES.get());
         
