@@ -30,12 +30,11 @@ public final class WindsweptItems {
 
     // Armour //
 
-    public static final DeferredItem<Item> LAVENDER_CROWN = ITEMS.createItem("lavender_crown", () -> new LavenderCrownItem(WindsweptArmorMaterials.LAVENDER_CROWN, ArmorItem.Type.HELMET, new Item.Properties()));
-    public static final DeferredItem<Item> ANTLER_HELMET = ITEMS.createItem("antler_helmet", () -> new AntlerHelmetItem(WindsweptArmorMaterials.ANTLER_HELMET, ArmorItem.Type.HELMET, new Item.Properties()));
-
-    public static final DeferredItem<Item> FEATHER_CLOAK = ITEMS.createItem("feather_cloak", () -> new FeatherCloakItem(new Item.Properties()));
-
+    public static final DeferredItem<Item> LAVENDER_CROWN = ITEMS.createItem("lavender_crown", () -> new LavenderCrownItem(WindsweptArmorMaterials.LAVENDER_CROWN, ArmorItem.Type.HELMET, new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(5))));
+    public static final DeferredItem<Item> ANTLER_HELMET = ITEMS.createItem("antler_helmet", () -> new AntlerHelmetItem(WindsweptArmorMaterials.ANTLER_HELMET, ArmorItem.Type.HELMET, new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(8))));
+    public static final DeferredItem<Item> FEATHER_CLOAK = ITEMS.createItem("feather_cloak", () -> new FeatherCloakItem(new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(8))));
     public static final DeferredItem<Item> SNOW_BOOTS = ITEMS.createItem("snow_boots", () -> new SnowBootsItem(WindsweptArmorMaterials.SNOW_BOOTS, ArmorItem.Type.BOOTS, new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(5))));
+
     // Wooden Buckets //
     public static final DeferredItem<Item> WOODEN_BUCKET = ITEMS.createItem("wooden_bucket", () -> new WoodenBucketItem(() -> Fluids.EMPTY, new Item.Properties().durability(24)));
     public static final DeferredItem<Item> WOODEN_WATER_BUCKET = ITEMS.createItem("wooden_water_bucket", () -> new WoodenBucketItem(() -> Fluids.WATER, new Item.Properties().durability(24).craftRemainder(WOODEN_BUCKET.get())));
