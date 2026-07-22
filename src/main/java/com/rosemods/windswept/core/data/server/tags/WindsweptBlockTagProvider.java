@@ -4,6 +4,7 @@ import com.rosemods.windswept.core.Windswept;
 import com.rosemods.windswept.core.data.server.WindsweptDatapackProvider;
 import com.rosemods.windswept.core.other.tags.WindsweptBlockTags;
 import com.teamabnormals.blueprint.core.other.tags.BlueprintBlockTags;
+import com.teamabnormals.blueprint.core.util.TagUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -31,8 +32,14 @@ public class WindsweptBlockTagProvider extends BlockTagsProvider {
         this.tag(WindsweptBlockTags.FROSTBITER_FOOD).add(Blocks.SHORT_GRASS, LAVENDER.get(), SNOWY_SPROUTS.get(), DRY_MOSSY_SPROUTS.get(), MOSSY_SPROUTS.get(), GELISOL_GRASS.get()).addTag(BlockTags.FLOWERS);
         this.tag(WindsweptBlockTags.PINECONE_NOTE_BLOCKS).add(CARVED_PINECONE_BLOCK.get(), PINECONE_BLOCK.get(), PINECONE_SHINGLES.get(), WHITE_PINECONE_SHINGLES.get(), LIGHT_GRAY_PINECONE_SHINGLES.get(), GRAY_PINECONE_SHINGLES.get(), BLACK_PINECONE_SHINGLES.get(), BROWN_PINECONE_SHINGLES.get(), RED_PINECONE_SHINGLES.get(), ORANGE_PINECONE_SHINGLES.get(), YELLOW_PINECONE_SHINGLES.get(), LIME_PINECONE_SHINGLES.get(), GREEN_PINECONE_SHINGLES.get(), CYAN_PINECONE_SHINGLES.get(), LIGHT_BLUE_PINECONE_SHINGLES.get(), BLUE_PINECONE_SHINGLES.get(), PURPLE_PINECONE_SHINGLES.get(), MAGENTA_PINECONE_SHINGLES.get(), PINK_PINECONE_SHINGLES.get());
 
+        //c
+        this.tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "storage_blocks"))).add(LAVENDER_BALE.get(), CHESTNUT_CRATE.get(), ROASTED_CHESTNUT_CRATE.get(), GINGER_ROOT_CRATE.get(), HOLLY_BERRY_BASKET.get(), WILD_BERRY_BASKET.get());
+
+        //caverns and chasms
+        this.tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("caverns_and_chasms", "rat_food_blocks"))).add(FROZEN_FLESH_BLOCK.get());
+
         //environmental
-        this.tag(WindsweptBlockTags.PINECONE_GOLEM_BASE_BLOCKS).add(PINECONE_BLOCK.get());
+        this.tag(TagUtil.blockTag("environmental", "pinecone_golem_base_blocks")).add(PINECONE_BLOCK.get());
 
         //snowy spirit
         this.tag(WindsweptBlockTags.GINGERBREADS).add(GINGERBREAD_BLOCK.get(), GLAZED_GINGERBREAD_BLOCK.get());
@@ -47,7 +54,7 @@ public class WindsweptBlockTagProvider extends BlockTagsProvider {
         this.tag(BlueprintBlockTags.WOODEN_CHISELED_BOOKSHELVES).add(CHISELED_HOLLY_BOOKSHELF.get(), CHISELED_CHESTNUT_BOOKSHELF.get(), CHISELED_PINE_BOOKSHELF.get());
 
         //create
-        this.tag(WindsweptBlockTags.CHEST_MOUNTED_STORAGE).add(HOLLY_CHEST.get(), TRAPPED_HOLLY_CHEST.get(), CHESTNUT_CHEST.get(), TRAPPED_CHESTNUT_CHEST.get(), PINE_CHEST.get(), TRAPPED_PINE_CHEST.get());
+        this.tag(TagUtil.blockTag("create", "chest_mounted_storage")).add(HOLLY_CHEST.get(), TRAPPED_HOLLY_CHEST.get(), CHESTNUT_CHEST.get(), TRAPPED_CHESTNUT_CHEST.get(), PINE_CHEST.get(), TRAPPED_PINE_CHEST.get());
 
         //quark
         this.tag(WindsweptBlockTags.QUARK_LADDERS).add(HOLLY_LADDER.get(), CHESTNUT_LADDER.get(), PINE_LADDER.get());

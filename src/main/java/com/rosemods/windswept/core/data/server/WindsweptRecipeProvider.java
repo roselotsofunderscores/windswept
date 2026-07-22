@@ -3,6 +3,7 @@ package com.rosemods.windswept.core.data.server;
 import com.rosemods.windswept.core.Windswept;
 import com.rosemods.windswept.core.other.tags.WindsweptItemTags;
 import com.teamabnormals.blueprint.core.data.server.BlueprintRecipeProvider;
+import com.teamabnormals.blueprint.core.util.TagUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.*;
@@ -184,7 +185,7 @@ public class WindsweptRecipeProvider extends BlueprintRecipeProvider {
     protected void buildRecipes(RecipeOutput output, HolderLookup.Provider holderLookup) {
         // foods
         conditionalRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, CHESTNUT_SOUP.get()).requires(Items.BOWL).requires(ROASTED_CHESTNUTS.get(), 2).requires(Items.CARROT).requires(Items.POTATO).unlockedBy(getHasName(ROASTED_CHESTNUTS.get()), has(ROASTED_CHESTNUTS.get())), new NotCondition(new ModLoadedCondition("windswept_delights")), output, getSaveLocation(CHESTNUT_SOUP.get()));
-        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Blocks.CAKE).define('A', WindsweptItemTags.MILK).define('B', Items.SUGAR).define('C', Tags.Items.CROPS_WHEAT).define('E', Tags.Items.EGGS).pattern("AAA").pattern("BEB").pattern("CCC").unlockedBy(getHasName(Items.EGG), has(Tags.Items.EGGS)), new NotCondition(new ModLoadedCondition("neapolitan")), output, getSaveLocation(Items.CAKE));
+        conditionalRecipe(ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Blocks.CAKE).define('A', TagUtil.itemTag("c", "milk")).define('B', Items.SUGAR).define('C', Tags.Items.CROPS_WHEAT).define('E', Tags.Items.EGGS).pattern("AAA").pattern("BEB").pattern("CCC").unlockedBy(getHasName(Items.EGG), has(Tags.Items.EGGS)), new NotCondition(new ModLoadedCondition("neapolitan")), output, getSaveLocation(Items.CAKE));
         cooking(CHESTNUTS.get(), ROASTED_CHESTNUTS.get(), output);
         cooking(GOAT.get(), COOKED_GOAT.get(), output);
         conditionalRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, GOAT_STEW.get()).requires(Items.BOWL).requires(COOKED_GOAT.get()).requires(Items.BAKED_POTATO).requires(Items.CARROT).requires(Items.BROWN_MUSHROOM).unlockedBy(getHasName(COOKED_GOAT.get()), has(COOKED_GOAT.get())), new NotCondition(new ModLoadedCondition("windswept_delights")), output, getSaveLocation(GOAT_STEW.get()));

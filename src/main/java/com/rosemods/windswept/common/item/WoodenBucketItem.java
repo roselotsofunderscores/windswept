@@ -39,10 +39,6 @@ public class WoodenBucketItem extends BucketItem {
     }
 
     public static ItemStack getEmpty(ItemStack handStack, @Nullable Player player, @Nullable InteractionHand hand) {
-        if (player != null && player.getAbilities().instabuild) {
-            return handStack;
-        }
-
         ItemStack bucket = new ItemStack(WindsweptItems.WOODEN_BUCKET.get());
         bucket.setDamageValue(handStack.getDamageValue());
 
@@ -50,13 +46,19 @@ public class WoodenBucketItem extends BucketItem {
             bucket.set(DataComponents.ENCHANTMENTS, handStack.get(DataComponents.ENCHANTMENTS));
         }
 
-        if (player instanceof ServerPlayer serverPlayer) {
-            EquipmentSlot slot = (hand == InteractionHand.OFF_HAND) ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND;
-            bucket.hurtAndBreak(1, serverPlayer, slot);
+        if (player != null) {
+            EquipmentSlot slot = hand == InteractionHand.OFF_HAND ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND;
+            bucket.hurtAndBreak(1, player, slot);
+
+            if (player.getAbilities().instabuild) {
+                return handStack;
+            }
         } else {
-            bucket.setDamageValue(bucket.getDamageValue() + 1);
-            if (bucket.getDamageValue() >= bucket.getMaxDamage())
+            int newDamage = bucket.getDamageValue() + 1;
+            bucket.setDamageValue(newDamage);
+            if (newDamage >= bucket.getMaxDamage()) {
                 bucket.setCount(0);
+            }
         }
 
         return bucket;

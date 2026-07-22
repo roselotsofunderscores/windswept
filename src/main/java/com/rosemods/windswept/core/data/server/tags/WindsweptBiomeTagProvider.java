@@ -2,6 +2,7 @@ package com.rosemods.windswept.core.data.server.tags;
 
 import com.rosemods.windswept.core.Windswept;
 import com.rosemods.windswept.core.data.server.WindsweptDatapackProvider;
+import com.teamabnormals.blueprint.core.util.TagUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -33,23 +34,23 @@ public class WindsweptBiomeTagProvider extends BiomeTagsProvider {
         this.tag(HAS_WILD_BERRIES).add(SNOWY_PLAINS, SNOWY_SLOPES, JAGGED_PEAKS, FROZEN_PEAKS, GROVE);
         this.tag(HAS_BROWN_GOAT).add(TUNDRA);
 
-        this.tag(HAS_GROVE_WEATHERED_HOUSE).add(GROVE, FROZEN_PEAKS, JAGGED_PEAKS);
-        this.tag(HAS_CHESTNUT_WEATHERED_HOUSE).add(CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST);
-        this.tag(HAS_FROZEN_VILLAGE).add(TUNDRA);
-        this.tag(HAS_PINE_TOTEM).add(PINE_BARRENS);
-        this.tag(HAS_SNOWY_PINE_TOTEM).add(SNOWY_PINE_BARRENS);
+        this.tag(TagUtil.biomeTag(Windswept.MOD_ID, "has_structure/grove_weathered_house")).add(GROVE, FROZEN_PEAKS, JAGGED_PEAKS);
+        this.tag(TagUtil.biomeTag(Windswept.MOD_ID, "has_structure/chestnut_weathered_house")).add(CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST);
+        this.tag(TagUtil.biomeTag(Windswept.MOD_ID, "has_structure/frozen_village")).add(TUNDRA);
+        this.tag(TagUtil.biomeTag(Windswept.MOD_ID, "has_structure/pine_totem")).add(PINE_BARRENS);
+        this.tag(TagUtil.biomeTag(Windswept.MOD_ID, "has_structure/snowy_pine_totem")).add(SNOWY_PINE_BARRENS);
 
         this.tag(IS_CHESTNUT_FOREST).add(CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST);
         this.tag(IS_PINE_BARRENS).add(PINE_BARRENS, SNOWY_PINE_BARRENS, OLD_GROWTH_PINE_TAIGA);
         this.tag(IS_LAVENDER).add(LAVENDER_HILLS, LAVENDER_FIELDS);
 
-        this.tag(HAS_SPOTTED_ORANGE_MAPLE_TREES).add(CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST);
-        this.tag(HAS_SPOTTED_RED_MAPLE_TREES).add(PINE_BARRENS, SNOWY_PINE_BARRENS);
+        this.tag(TagUtil.biomeTag("autumnity", "has_feature/spotted_maple_tree/orange")).add(CHESTNUT_FOREST, SNOWY_CHESTNUT_FOREST);
+        this.tag(TagUtil.biomeTag("autumnity", "has_feature/spotted_maple_tree/red")).add(PINE_BARRENS, SNOWY_PINE_BARRENS);
 
-        this.tag(HAS_YAK).add(TUNDRA, PINE_BARRENS, SNOWY_PINE_BARRENS);
-        this.tag(HAS_REINDEER).add(TUNDRA);
-        this.tag(HAS_SHEEP).addTag(IS_LAVENDER).addTag(IS_PINE_BARRENS).addTag(IS_CHESTNUT_FOREST).add(FLOWERING_SAVANNA);
-        this.tag(HAS_DWARF_SPRUCE_SPARSE).add(TUNDRA);
+        this.tag(TagUtil.biomeTag("environmental", "has_spawn/yak")).add(TUNDRA, PINE_BARRENS, SNOWY_PINE_BARRENS);
+        this.tag(TagUtil.biomeTag("environmental", "has_spawn/reindeer")).add(TUNDRA);
+        this.tag(TagUtil.biomeTag("environmental", "has_spawn/sheep")).addTag(IS_LAVENDER).addTag(IS_PINE_BARRENS).addTag(IS_CHESTNUT_FOREST).add(FLOWERING_SAVANNA);
+        this.tag(TagUtil.biomeTag("environmental", "has_feature/dwarf_spruce_sparse")).add(TUNDRA);
 
         //this.tag(BlueprintBiomeTags.IS_GRASSLAND).add(LAVENDER_HILLS, LAVENDER_FIELDS);
         this.tag(BiomeTags.IS_SAVANNA).add(FLOWERING_SAVANNA);

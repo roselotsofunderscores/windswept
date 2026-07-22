@@ -6,12 +6,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.fml.ModList;
 
 import static com.rosemods.windswept.core.registry.WindsweptItems.*;
@@ -37,6 +41,9 @@ public final class WindsweptDispenseBehaviors {
         if (state.getBlock() instanceof IWoodenBucketPickupBlock pickupBlock && pickupBlock.canPickupFromWoodenBucket(level, pos, state)) {
             level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 
+            pickupBlock.getWoodenBucketPickupSound(state).ifPresent(sound -> level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, 1.0F));
+            level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
+
             ItemStack filled = pickupBlock.getWoodenBucketItem(state).getDefaultInstance();
             filled.setDamageValue(stack.getDamageValue());
 
@@ -46,13 +53,15 @@ public final class WindsweptDispenseBehaviors {
         return stack;
     }
 
-    private static ItemStack emptyBucket(Block fill, BlockSource source, ItemStack stack) {
+    private static ItemStack emptyBucket(Block fill, SoundEvent sound, BlockSource source, ItemStack stack) {
         Direction direction = source.state().getValue(DispenserBlock.FACING);
         Level level = source.level().getLevel();
         BlockPos pos = source.pos().relative(direction);
 
         if (level.getBlockState(pos).isAir()) {
             level.setBlockAndUpdate(pos, fill.defaultBlockState());
+            level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
 
             return WoodenBucketItem.getEmpty(stack, null, null);
         }
@@ -61,19 +70,19 @@ public final class WindsweptDispenseBehaviors {
     }
 
     private static ItemStack emptyWaterBucket(BlockSource source, ItemStack stack) {
-        return emptyBucket(Blocks.WATER, source, stack);
+        return emptyBucket(Blocks.WATER, SoundEvents.BUCKET_EMPTY, source, stack);
     }
 
     private static ItemStack emptyPowderSnowBucket(BlockSource source, ItemStack stack) {
-        return emptyBucket(Blocks.POWDER_SNOW, source, stack);
+        return emptyBucket(Blocks.POWDER_SNOW, SoundEvents.BUCKET_EMPTY_POWDER_SNOW, source, stack);
     }
 
     private static ItemStack emptyHoneyBucket(BlockSource source, ItemStack stack) {
-        return emptyBucket(BuiltInRegistries.BLOCK.get(WindsweptConstants.HONEY), source, stack);
+        return emptyBucket(BuiltInRegistries.BLOCK.get(WindsweptConstants.HONEY), SoundEvents.BUCKET_EMPTY, source, stack);
     }
 
     private static ItemStack emptyChocolateBucket(BlockSource source, ItemStack stack) {
-        return emptyBucket(BuiltInRegistries.BLOCK.get(WindsweptConstants.CHOCOLATE), source, stack);
+        return emptyBucket(BuiltInRegistries.BLOCK.get(WindsweptConstants.CHOCOLATE), SoundEvents.BUCKET_EMPTY, source, stack);
     }
 
 }
