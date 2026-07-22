@@ -14,6 +14,10 @@
     "windswept:gingerbread_brick_wall",
     "windswept:glazed_gingerbread_brick_wall",
     "windswept:dry_mossy_cobblestone_brick_wall",
-    "windswept:dry_mossy_cobblestone_tile_wall"
+    "windswept:dry_mossy_cobblestone_tile_wall",
+    "windswept:arkose_wall",
+    "windswept:arkose_brick_wall",
+    "windswept:polished_arkose_wall",
+    "windswept:arkose_tile_wall"
   ]
 }

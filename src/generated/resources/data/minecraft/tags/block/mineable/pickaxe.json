@@ -72,6 +72,23 @@
     "windswept:dry_mossy_cobblestone_tile_slab",
     "windswept:dry_mossy_cobblestone_tile_stairs",
     "windswept:dry_mossy_cobblestone_tile_wall",
-    "windswept:ice_chain"
+    "windswept:ice_chain",
+    "windswept:arkose",
+    "windswept:arkose_stairs",
+    "windswept:arkose_slab",
+    "windswept:arkose_wall",
+    "windswept:polished_arkose",
+    "windswept:polished_arkose_stairs",
+    "windswept:polished_arkose_slab",
+    "windswept:polished_arkose_wall",
+    "windswept:arkose_bricks",
+    "windswept:arkose_brick_stairs",
+    "windswept:arkose_brick_slab",
+    "windswept:arkose_brick_wall",
+    "windswept:arkose_tiles",
+    "windswept:arkose_tile_stairs",
+    "windswept:arkose_tile_slab",
+    "windswept:arkose_tile_wall",
+    "windswept:arkose_pillar"
   ]
 }

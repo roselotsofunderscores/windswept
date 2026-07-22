@@ -36,6 +36,10 @@
     "windswept:blue_pinecone_shingle_slab",
     "windswept:purple_pinecone_shingle_slab",
     "windswept:magenta_pinecone_shingle_slab",
-    "windswept:pink_pinecone_shingle_slab"
+    "windswept:pink_pinecone_shingle_slab",
+    "windswept:arkose_slab",
+    "windswept:polished_arkose_slab",
+    "windswept:arkose_brick_slab",
+    "windswept:arkose_tile_slab"
   ]
 }

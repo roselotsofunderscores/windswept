@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "windswept:block/arkose_tiles",
+    "side": "windswept:block/arkose_tiles",
+    "top": "windswept:block/arkose_tiles"
+  }
+}

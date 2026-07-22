@@ -40,7 +40,7 @@ public class WindsweptRecipeProvider extends BlueprintRecipeProvider {
             ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block, 4).define('#', ingredient).pattern("##").pattern("##").unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(block));
 
         if (chiseled != null) {
-            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, chiseled).define('#', slab).pattern("#").pattern("#").unlockedBy(getHasName(block), has(block)).save(output, getSaveLocation(chiseled));
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, chiseled).define('#', slab).pattern("#").pattern("#").unlockedBy(getHasName(block), has(block)).save(output, getSaveLocation(getName(chiseled) + "_from_" + getName(block)));
 
             if (stonecutter)
                 stonecutting(block, chiseled, 1, output);
@@ -140,7 +140,7 @@ public class WindsweptRecipeProvider extends BlueprintRecipeProvider {
     }
 
     private static void stonecutting(ItemLike ingredient, ItemLike result, int amount, RecipeOutput output) {
-        SingleItemRecipeBuilder.stonecutting(Ingredient.of(ingredient), RecipeCategory.BUILDING_BLOCKS, result, amount).unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(ingredient) + "_from_" + getName(result) + "_stonecutting"));
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(ingredient), RecipeCategory.BUILDING_BLOCKS, result, amount).unlockedBy(getHasName(ingredient), has(ingredient)).save(output, getSaveLocation(getName(result) + "_from_" + getName(ingredient) + "_stonecutting"));
     }
 
     private static void stonecutting(ItemLike ingredient, ItemLike result, int amount, ICondition condition, RecipeOutput output) {
@@ -255,6 +255,7 @@ public class WindsweptRecipeProvider extends BlueprintRecipeProvider {
         woodFromLogs(output, WEATHERED_PINE_WOOD.get(), WEATHERED_PINE_LOG.get());
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, WILL_O_THE_WISP.get()).define('#', CARVED_PINECONE_BLOCK.get()).define('N', NIGHTSHADE.get()).pattern("#").pattern("N").unlockedBy(getHasName(CARVED_PINECONE_BLOCK.get()), has(CARVED_PINECONE_BLOCK.get())).save(output, getSaveLocation(WILL_O_THE_WISP.get()));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, SHALE.get()).requires(Items.COBBLESTONE).requires(Items.BLUE_ICE).unlockedBy(getHasName(SHALE.get()), has(SHALE.get())).save(output, getSaveLocation(SHALE.get()));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ARKOSE.get()).requires(Items.GRANITE).requires(Items.SANDSTONE).unlockedBy(getHasName(ARKOSE.get()), has(ARKOSE.get())).save(output, getSaveLocation(ARKOSE.get()));
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(LUNALITE.get()), RecipeCategory.BUILDING_BLOCKS, SMOOTH_LUNALITE.get(), .1f, 200).unlockedBy(getHasName(LUNALITE.get()), has(LUNALITE.get())).save(output, getSaveLocation(SMOOTH_LUNALITE.get()));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, GINGERBREAD_BLOCK.get()).define('#', GINGERBREAD_COOKIE.get()).pattern("##").pattern("##").unlockedBy(getHasName(GINGERBREAD_COOKIE.get()), has(GINGERBREAD_COOKIE.get())).save(output, getSaveLocation(GINGERBREAD_BLOCK.get()));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, LAVENDER_THATCH.get()).define('#', LAVENDER.get()).pattern("##").pattern("##").unlockedBy(getHasName(LAVENDER.get()), has(LAVENDER.get())).save(output, getSaveLocation(LAVENDER_THATCH.get()));
@@ -329,6 +330,33 @@ public class WindsweptRecipeProvider extends BlueprintRecipeProvider {
         stonecutting(POLISHED_SHALE.get(), POLISHED_SHALE_BRICK_STAIRS.get(), 1, output);
         stonecutting(POLISHED_SHALE.get(), POLISHED_SHALE_BRICK_WALL.get(), 1, output);
 
+        stonecutting(ARKOSE.get(), ARKOSE_BRICKS.get(), 1, output);
+        stonecutting(ARKOSE.get(), ARKOSE_PILLAR.get(), 1, output);
+        stonecutting(ARKOSE.get(), ARKOSE_BRICK_SLAB.get(), 2, output);
+        stonecutting(ARKOSE.get(), ARKOSE_BRICK_STAIRS.get(), 1, output);
+        stonecutting(ARKOSE.get(), ARKOSE_BRICK_WALL.get(), 1, output);
+        stonecutting(ARKOSE.get(), POLISHED_ARKOSE.get(), 1, output);
+        stonecutting(ARKOSE.get(), POLISHED_ARKOSE_SLAB.get(), 2, output);
+        stonecutting(ARKOSE.get(), POLISHED_ARKOSE_STAIRS.get(), 1, output);
+        stonecutting(ARKOSE.get(), POLISHED_ARKOSE_WALL.get(), 1, output);
+        stonecutting(ARKOSE.get(), ARKOSE_TILES.get(), 1, output);
+        stonecutting(ARKOSE.get(), ARKOSE_TILE_SLAB.get(), 2, output);
+        stonecutting(ARKOSE.get(), ARKOSE_TILE_STAIRS.get(), 1, output);
+        stonecutting(ARKOSE.get(), ARKOSE_TILE_WALL.get(), 1, output);
+        stonecutting(POLISHED_ARKOSE.get(), ARKOSE_BRICKS.get(), 1, output);
+        stonecutting(POLISHED_ARKOSE.get(), ARKOSE_PILLAR.get(), 1, output);
+        stonecutting(POLISHED_ARKOSE.get(), ARKOSE_BRICK_SLAB.get(), 2, output);
+        stonecutting(POLISHED_ARKOSE.get(), ARKOSE_BRICK_STAIRS.get(), 1, output);
+        stonecutting(POLISHED_ARKOSE.get(), ARKOSE_BRICK_WALL.get(), 1, output);
+        stonecutting(POLISHED_ARKOSE.get(), ARKOSE_TILES.get(), 1, output);
+        stonecutting(POLISHED_ARKOSE.get(), ARKOSE_TILE_SLAB.get(), 2, output);
+        stonecutting(POLISHED_ARKOSE.get(), ARKOSE_TILE_STAIRS.get(), 1, output);
+        stonecutting(POLISHED_ARKOSE.get(), ARKOSE_TILE_WALL.get(), 1, output);
+        stonecutting(ARKOSE_BRICKS.get(), ARKOSE_TILES.get(), 1, output);
+        stonecutting(ARKOSE_BRICKS.get(), ARKOSE_TILE_SLAB.get(), 2, output);
+        stonecutting(ARKOSE_BRICKS.get(), ARKOSE_TILE_STAIRS.get(), 1, output);
+        stonecutting(ARKOSE_BRICKS.get(), ARKOSE_TILE_WALL.get(), 1, output);
+
         stonecutting(LUNALITE.get(), CUT_LUNALITE_BRICKS.get(), 1, output);
         stonecutting(LUNALITE.get(), CHISELED_CUT_LUNALITE_BRICKS.get(), 1, output);
         stonecutting(LUNALITE.get(), CUT_LUNALITE_BRICK_SLAB.get(), 2, output);
@@ -354,6 +382,10 @@ public class WindsweptRecipeProvider extends BlueprintRecipeProvider {
         blockset(null, SHALE.get(), null, SHALE_SLAB.get(), SHALE_STAIRS.get(), SHALE_WALL.get(), true, output);
         blockset(SHALE.get(), POLISHED_SHALE.get(), null, POLISHED_SHALE_SLAB.get(), POLISHED_SHALE_STAIRS.get(), POLISHED_SHALE_WALL.get(), true, output);
         blockset(POLISHED_SHALE.get(), POLISHED_SHALE_BRICKS.get(), CHISELED_POLISHED_SHALE_BRICKS.get(), POLISHED_SHALE_BRICK_SLAB.get(), POLISHED_SHALE_BRICK_STAIRS.get(), POLISHED_SHALE_BRICK_WALL.get(), true, output);
+        blockset(null, ARKOSE.get(), null, ARKOSE_SLAB.get(), ARKOSE_STAIRS.get(), ARKOSE_WALL.get(), true, output);
+        blockset(ARKOSE.get(), POLISHED_ARKOSE.get(), null, POLISHED_ARKOSE_SLAB.get(), POLISHED_ARKOSE_STAIRS.get(), POLISHED_ARKOSE_WALL.get(), true, output);
+        blockset(POLISHED_ARKOSE.get(), ARKOSE_BRICKS.get(), ARKOSE_PILLAR.get(), ARKOSE_BRICK_SLAB.get(), ARKOSE_BRICK_STAIRS.get(), ARKOSE_BRICK_WALL.get(), true, output);
+        blockset(ARKOSE_BRICKS.get(), ARKOSE_TILES.get(), ARKOSE_PILLAR.get(), ARKOSE_TILE_SLAB.get(), ARKOSE_TILE_STAIRS.get(), ARKOSE_TILE_WALL.get(), true, output);
         blockset(null, PINECONE_SHINGLES.get(), null, PINECONE_SHINGLE_SLAB.get(), PINECONE_SHINGLE_STAIRS.get(), null, false, output);
         blockset(null, LUNALITE.get(), null, LUNALITE_SLAB.get(), LUNALITE_STAIRS.get(), LUNALITE_WALL.get(), true, output);
         blockset(LUNALITE.get(), CUT_LUNALITE.get(), null, CUT_LUNALITE_SLAB.get(), CUT_LUNALITE_STAIRS.get(), CUT_LUNALITE_WALL.get(), true, output);
@@ -399,7 +431,7 @@ public class WindsweptRecipeProvider extends BlueprintRecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, MAGENTA_PINECONE_SHINGLES.get(), 8).define('D', Tags.Items.DYES_MAGENTA).define('#', PINECONE_SHINGLES.get()).pattern("###").pattern("#D#").pattern("###").unlockedBy(getHasName(PINECONE_SHINGLES.get()), has(PINECONE_SHINGLES.get())).save(output, getSaveLocation(MAGENTA_PINECONE_SHINGLES.get()));
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, PINK_PINECONE_SHINGLES.get(), 8).define('D', Tags.Items.DYES_PINK).define('#', PINECONE_SHINGLES.get()).pattern("###").pattern("#D#").pattern("###").unlockedBy(getHasName(PINECONE_SHINGLES.get()), has(PINECONE_SHINGLES.get())).save(output, getSaveLocation(PINK_PINECONE_SHINGLES.get()));
 
-        // wood sets
+        // woodsets
         woodSet(WindsweptItemTags.HOLLY_LOGS, HOLLY_PLANKS.get(), HOLLY_SLAB.get(), HOLLY_STAIRS.get(), HOLLY_LOG.get(), HOLLY_WOOD.get(), STRIPPED_HOLLY_LOG.get(), STRIPPED_HOLLY_WOOD.get(), HOLLY_BOAT.getFirst().get(), HOLLY_BOAT.getSecond().get(), HOLLY_BUTTON.get(), HOLLY_DOOR.get(), HOLLY_TRAPDOOR.get(), HOLLY_FENCE.get(), HOLLY_FENCE_GATE.get(), HOLLY_PRESSURE_PLATE.get(), HOLLY_SIGNS.getFirst().get(), HOLLY_BOARDS.get(), HOLLY_BEEHIVE.get(), HOLLY_LADDER.get(), HOLLY_BOOKSHELF.get(), HOLLY_CHEST.get(), TRAPPED_HOLLY_CHEST.get(), LARGE_HOLLY_BOAT.get(), HOLLY_FURNACE_BOAT.get(), HOLLY_HANGING_SIGNS.getFirst().get(), CHISELED_HOLLY_BOOKSHELF.get(), output);
         woodSet(WindsweptItemTags.CHESTNUT_LOGS, CHESTNUT_PLANKS.get(), CHESTNUT_SLAB.get(), CHESTNUT_STAIRS.get(), CHESTNUT_LOG.get(), CHESTNUT_WOOD.get(), STRIPPED_CHESTNUT_LOG.get(), STRIPPED_CHESTNUT_WOOD.get(), CHESTNUT_BOAT.getFirst().get(), CHESTNUT_BOAT.getSecond().get(), CHESTNUT_BUTTON.get(), CHESTNUT_DOOR.get(), CHESTNUT_TRAPDOOR.get(), CHESTNUT_FENCE.get(), CHESTNUT_FENCE_GATE.get(), CHESTNUT_PRESSURE_PLATE.get(), CHESTNUT_SIGNS.getFirst().get(), CHESTNUT_BOARDS.get(), CHESTNUT_BEEHIVE.get(), CHESTNUT_LADDER.get(), CHESTNUT_BOOKSHELF.get(), CHESTNUT_CHEST.get(), TRAPPED_CHESTNUT_CHEST.get(), LARGE_CHESTNUT_BOAT.get(), CHESTNUT_FURNACE_BOAT.get(), CHESTNUT_HANGING_SIGNS.getFirst().get(), CHISELED_CHESTNUT_BOOKSHELF.get(), output);
         woodSet(WindsweptItemTags.PINE_LOGS, PINE_PLANKS.get(), PINE_SLAB.get(), PINE_STAIRS.get(), PINE_LOG.get(), PINE_WOOD.get(), STRIPPED_PINE_LOG.get(), STRIPPED_PINE_WOOD.get(), PINE_BOAT.getFirst().get(), PINE_BOAT.getSecond().get(), PINE_BUTTON.get(), PINE_DOOR.get(), PINE_TRAPDOOR.get(), PINE_FENCE.get(), PINE_FENCE_GATE.get(), PINE_PRESSURE_PLATE.get(), PINE_SIGNS.getFirst().get(), PINE_BOARDS.get(), PINE_BEEHIVE.get(), PINE_LADDER.get(), PINE_BOOKSHELF.get(), PINE_CHEST.get(), TRAPPED_PINE_CHEST.get(), LARGE_PINE_BOAT.get(), PINE_FURNACE_BOAT.get(), PINE_HANGING_SIGNS.getFirst().get(), CHISELED_PINE_BOOKSHELF.get(), output);

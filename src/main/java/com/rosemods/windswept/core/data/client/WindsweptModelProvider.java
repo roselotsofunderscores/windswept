@@ -321,6 +321,25 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.slab(POLISHED_SHALE_BRICK_SLAB, this.blockTexture(POLISHED_SHALE_BRICKS.get()));
         this.wall(POLISHED_SHALE_BRICK_WALL, this.blockTexture(POLISHED_SHALE_BRICKS.get()));
 
+        // arkose
+        this.cubeAll(ARKOSE);
+        this.stairs(ARKOSE_STAIRS, this.blockTexture(ARKOSE.get()));
+        this.slab(ARKOSE_SLAB, this.blockTexture(ARKOSE.get()));
+        this.wall(ARKOSE_WALL, this.blockTexture(ARKOSE.get()));
+        this.cubeAll(POLISHED_ARKOSE);
+        this.stairs(POLISHED_ARKOSE_STAIRS, this.blockTexture(POLISHED_ARKOSE.get()));
+        this.slab(POLISHED_ARKOSE_SLAB, this.blockTexture(POLISHED_ARKOSE.get()));
+        this.wall(POLISHED_ARKOSE_WALL, this.blockTexture(POLISHED_ARKOSE.get()));
+        this.cubeAll(ARKOSE_BRICKS);
+        this.stairs(ARKOSE_BRICK_STAIRS, this.blockTexture(ARKOSE_BRICKS.get()));
+        this.slab(ARKOSE_BRICK_SLAB, this.blockTexture(ARKOSE_BRICKS.get()));
+        this.wall(ARKOSE_BRICK_WALL, this.blockTexture(ARKOSE_BRICKS.get()));
+        this.cubeAll(ARKOSE_TILES);
+        this.stairs(ARKOSE_TILE_STAIRS, this.blockTexture(ARKOSE_TILES.get()));
+        this.slab(ARKOSE_TILE_SLAB, this.blockTexture(ARKOSE_TILES.get()));
+        this.wall(ARKOSE_TILE_WALL, this.blockTexture(ARKOSE_TILES.get()));
+        this.pillar(ARKOSE_PILLAR);
+
         // decorations
         this.wreath(HOLLY_WREATH);
         this.wreath(PINECONE_WREATH);

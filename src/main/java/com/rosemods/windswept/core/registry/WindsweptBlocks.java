@@ -271,6 +271,28 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> POLISHED_SHALE_BRICK_SLAB = BLOCKS.createBlock("polished_shale_brick_slab", () -> new SlabBlock(Properties.SHALE));
     public static final DeferredBlock<Block> POLISHED_SHALE_BRICK_WALL = BLOCKS.createBlock("polished_shale_brick_wall", () -> new WallBlock(Properties.SHALE));
 
+    public static final DeferredBlock<Block> ARKOSE = BLOCKS.createBlock("arkose", () -> new Block(Properties.ARKOSE));
+    public static final DeferredBlock<Block> ARKOSE_STAIRS = BLOCKS.createBlock("arkose_stairs", () -> new StairBlock(ARKOSE.get().defaultBlockState(), Properties.ARKOSE));
+    public static final DeferredBlock<Block> ARKOSE_SLAB = BLOCKS.createBlock("arkose_slab", () -> new SlabBlock(Properties.ARKOSE));
+    public static final DeferredBlock<Block> ARKOSE_WALL = BLOCKS.createBlock("arkose_wall", () -> new WallBlock(Properties.ARKOSE));
+
+    public static final DeferredBlock<Block> POLISHED_ARKOSE = BLOCKS.createBlock("polished_arkose", () -> new Block(Properties.ARKOSE));
+    public static final DeferredBlock<Block> POLISHED_ARKOSE_STAIRS = BLOCKS.createBlock("polished_arkose_stairs", () -> new StairBlock(POLISHED_ARKOSE.get().defaultBlockState(), Properties.ARKOSE));
+    public static final DeferredBlock<Block> POLISHED_ARKOSE_SLAB = BLOCKS.createBlock("polished_arkose_slab", () -> new SlabBlock(Properties.ARKOSE));
+    public static final DeferredBlock<Block> POLISHED_ARKOSE_WALL = BLOCKS.createBlock("polished_arkose_wall", () -> new WallBlock(Properties.ARKOSE));
+
+    public static final DeferredBlock<Block> ARKOSE_BRICKS = BLOCKS.createBlock("arkose_bricks", () -> new Block(Properties.ARKOSE));
+    public static final DeferredBlock<Block> ARKOSE_BRICK_STAIRS = BLOCKS.createBlock("arkose_brick_stairs", () -> new StairBlock(ARKOSE_BRICKS.get().defaultBlockState(), Properties.ARKOSE));
+    public static final DeferredBlock<Block> ARKOSE_BRICK_SLAB = BLOCKS.createBlock("arkose_brick_slab", () -> new SlabBlock(Properties.ARKOSE));
+    public static final DeferredBlock<Block> ARKOSE_BRICK_WALL = BLOCKS.createBlock("arkose_brick_wall", () -> new WallBlock(Properties.ARKOSE));
+
+    public static final DeferredBlock<Block> ARKOSE_TILES = BLOCKS.createBlock("arkose_tiles", () -> new Block(Properties.ARKOSE));
+    public static final DeferredBlock<Block> ARKOSE_TILE_STAIRS = BLOCKS.createBlock("arkose_tile_stairs", () -> new StairBlock(ARKOSE_TILES.get().defaultBlockState(), Properties.ARKOSE));
+    public static final DeferredBlock<Block> ARKOSE_TILE_SLAB = BLOCKS.createBlock("arkose_tile_slab", () -> new SlabBlock(Properties.ARKOSE));
+    public static final DeferredBlock<Block> ARKOSE_TILE_WALL = BLOCKS.createBlock("arkose_tile_wall", () -> new WallBlock(Properties.ARKOSE));
+
+    public static final DeferredBlock<Block> ARKOSE_PILLAR = BLOCKS.createBlock("arkose_pillar", () -> new RotatedPillarBlock(Properties.ARKOSE));
+
     public static final DeferredBlock<Block> PACKED_ICE_STAIRS = BLOCKS.createBlock("packed_ice_stairs", () -> new StairBlock(Blocks.PACKED_ICE.defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(Blocks.PACKED_ICE)));
     public static final DeferredBlock<Block> PACKED_ICE_SLAB = BLOCKS.createBlock("packed_ice_slab", () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PACKED_ICE)));
 
@@ -409,6 +431,7 @@ public final class WindsweptBlocks {
         public static final BlockBehaviour.Properties SPROUTS = BlockBehaviour.Properties.of().noCollission().instabreak().sound(SoundType.NETHER_SPROUTS).offsetType(BlockBehaviour.OffsetType.XZ).replaceable();
         public static final BlockBehaviour.Properties PINECONE_BLOCK = Block.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(2f, 3f).sound(WindsweptSoundTypes.PINECONE);
         public static final BlockBehaviour.Properties SHALE = BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_BLUE).sound(SoundType.DRIPSTONE_BLOCK).requiresCorrectToolForDrops().strength(1.5f, 1f);
+        public static final BlockBehaviour.Properties ARKOSE = BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_YELLOW).sound(SoundType.DRIPSTONE_BLOCK).requiresCorrectToolForDrops().strength(1.5f, 1f);
         public static final BlockBehaviour.Properties LUNALITE = BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_LIGHT_BLUE).sound(SoundType.CALCITE).requiresCorrectToolForDrops().strength(.8f);
         public static final BlockBehaviour.Properties GINGERBREAD = Block.Properties.of().mapColor(MapColor.TERRACOTTA_ORANGE).strength(2f, 3f).sound(SoundType.CHERRY_WOOD);
         public static final BlockBehaviour.Properties ELDER_ORNAMENT = Block.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(.1f).noOcclusion().noCollission().sound(SoundType.AZALEA);
