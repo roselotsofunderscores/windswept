@@ -23,7 +23,7 @@ public class WindsweptEffects {
     public static final DeferredHolder<Potion, Potion> LONG_FROST_RESISTANCE_POTION = EFFECTS.createPotion("long_frost_resistance", FROST_RESISTANCE, 9600, 0);
 
     public static void registerPotionRecipes() {
-        //DataUtil.addMix(Potions.AWKWARD, WindsweptBlocks.NIGHTSHADE.get().asItem(), Potions.NIGHT_VISION);
+        //DataUtil.addMix(Potions.AWKWARD, WindsweptBlocks.NIGHTSHADE.asItem(), Potions.NIGHT_VISION);
 
         //DataUtil.addMix(Potions.AWKWARD, WindsweptItems.HOLLY_BERRIES.get(), THORNS_POTION.get());
         //DataUtil.addMix(THORNS_POTION.get(), Items.REDSTONE, LONG_THORNS_POTION.get());

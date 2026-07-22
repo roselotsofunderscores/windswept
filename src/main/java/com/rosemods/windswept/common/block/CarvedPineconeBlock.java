@@ -1,10 +1,7 @@
 package com.rosemods.windswept.common.block;
 
 import com.mojang.serialization.MapCodec;
-import com.rosemods.windswept.common.block_entity.CarvedPineconeBlockEntity;
-import com.rosemods.windswept.common.block_entity.FearfulBlockEntity;
 import com.rosemods.windswept.core.other.tags.WindsweptBlockTags;
-import com.rosemods.windswept.core.registry.WindsweptBlockEntities;
 import com.rosemods.windswept.core.registry.WindsweptSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,17 +16,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.Nullable;
 
-public class CarvedPineconeBlock extends HorizontalDirectionalBlock implements EntityBlock {
+public class CarvedPineconeBlock extends HorizontalDirectionalBlock {
     public static final MapCodec<CarvedPineconeBlock> CODEC = simpleCodec(CarvedPineconeBlock::new);
     private static final int[] KEY = new int[]{0, 3, 5, 10, 14, 15, 21, 22};
 
@@ -90,14 +82,4 @@ public class CarvedPineconeBlock extends HorizontalDirectionalBlock implements E
         builder.add(FACING);
     }
 
-    @Override
-    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new CarvedPineconeBlockEntity(pos, state);
-    }
-
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide) return null;
-        return type == WindsweptBlockEntities.CARVED_PINECONE.get() ? (level1, pos, state1, blockEntity) -> FearfulBlockEntity.tick(level1, pos, state1, (FearfulBlockEntity) blockEntity) : null;
-    }
 }

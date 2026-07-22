@@ -25,12 +25,12 @@ public class WindsweptTradeEvents {
     @SubscribeEvent
     public static void wandererTrades(WandererTradesEvent event) {
         TradeUtil.addWandererTrades(event,
-                new BlueprintTrade(5, WindsweptBlocks.HOLLY_SAPLING.get().asItem(), 1, 8, 1),
-                new BlueprintTrade(5, WindsweptBlocks.CHESTNUT_SAPLING.get().asItem(), 1, 8, 1),
-                new BlueprintTrade(5, WindsweptBlocks.PINE_SAPLING.get().asItem(), 1, 8, 1),
+                new BlueprintTrade(5, WindsweptBlocks.HOLLY_SAPLING.asItem(), 1, 8, 1),
+                new BlueprintTrade(5, WindsweptBlocks.CHESTNUT_SAPLING.asItem(), 1, 8, 1),
+                new BlueprintTrade(5, WindsweptBlocks.PINE_SAPLING.asItem(), 1, 8, 1),
                 new BlueprintTrade(1, WindsweptItems.WILD_BERRIES.get(), 4, 12, 10),
                 new BlueprintTrade(1, WindsweptItems.HOLLY_BERRIES.get(), 1, 4, 10),
-                new BlueprintTrade(1, WindsweptBlocks.PINECONE.get().asItem(), 1, 4, 10),
+                new BlueprintTrade(1, WindsweptBlocks.PINECONE.asItem(), 1, 4, 10),
                 new BlueprintTrade(1, WindsweptItems.ROASTED_CHESTNUTS.get(), 1, 4, 10));
     }
 

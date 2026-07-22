@@ -22,8 +22,8 @@ public final class WindsweptTrimMaterials {
     public static final ResourceKey<TrimMaterial> PINECONE = createKey("pinecone");
 
     public static void bootstrap(BootstrapContext<TrimMaterial> context) {
-        register(context, ICICLES, WindsweptBlocks.ICICLES.get().asItem(), Style.EMPTY.withColor(0x6d91d7), Map.of());
-        register(context, PINECONE, WindsweptBlocks.PINECONE.get().asItem(), Style.EMPTY.withColor(0x7c5741), Map.of());
+        register(context, ICICLES, WindsweptBlocks.ICICLES.asItem(), Style.EMPTY.withColor(0x6d91d7), Map.of());
+        register(context, PINECONE, WindsweptBlocks.PINECONE.asItem(), Style.EMPTY.withColor(0x7c5741), Map.of());
     }
 
     private static ResourceKey<TrimMaterial> createKey(String name) {

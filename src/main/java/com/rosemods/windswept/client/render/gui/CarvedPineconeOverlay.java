@@ -19,7 +19,7 @@ public class CarvedPineconeOverlay implements LayeredDraw.Layer {
     public void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         Minecraft minecraft = Minecraft.getInstance();
 
-        if (minecraft.player != null && minecraft.options.getCameraType().isFirstPerson() && minecraft.player.getInventory().getArmor(3).is(WindsweptBlocks.CARVED_PINECONE_BLOCK.get().asItem()))
+        if (minecraft.player != null && minecraft.options.getCameraType().isFirstPerson() && minecraft.player.getInventory().getArmor(3).is(WindsweptBlocks.CARVED_PINECONE_BLOCK.asItem()))
             this.renderTextureOverlay(guiGraphics, PINECONE_BLUR_LOCATION, 1f);
     }
 

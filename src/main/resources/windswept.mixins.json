@@ -20,7 +20,6 @@
     "LlamaMixin",
     "MossBlockMixin",
     "PanicGoalMixin",
-    "PathfinderMobMixin",
     "PlayerMixin",
     "PowderSnowBlockMixin",
     "SheepMixin",
