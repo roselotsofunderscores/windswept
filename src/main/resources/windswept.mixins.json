@@ -1,6 +1,7 @@
 {
   "required": true,
   "package": "com.rosemods.windswept.core.mixin",
+  "refmap": "windswept.refmap.json",
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
   "mixins": [
@@ -34,6 +35,7 @@
     "TemptGoalMixin",
     "TreeFeatureMixin",
     "TrunkPlacerMixin",
+    "VillagerHostilesSensorMixin",
     "ZombieMixin"
   ],
   "client": [

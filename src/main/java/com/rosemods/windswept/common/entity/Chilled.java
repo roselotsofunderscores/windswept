@@ -1,5 +1,6 @@
 package com.rosemods.windswept.common.entity;
 
+import com.rosemods.windswept.common.entity.ai.ChilledPathNavigation;
 import com.rosemods.windswept.core.other.WindsweptConstants;
 import com.rosemods.windswept.core.other.tags.WindsweptBiomeTags;
 import com.rosemods.windswept.core.registry.WindsweptBlocks;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.Item;
@@ -28,7 +30,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.neoforged.fml.ModList;
 
-public class Chilled extends Zombie {
+public class Chilled extends Zombie implements VillagerHostileData {
 
     public Chilled(EntityType<? extends Zombie> type, Level level) {
         super(type, level);
@@ -89,6 +91,11 @@ public class Chilled extends Zombie {
         }
 
         return false;
+    }
+
+    @Override
+    protected PathNavigation createNavigation(Level level) {
+        return new ChilledPathNavigation(this, level);
     }
 
     @Override
