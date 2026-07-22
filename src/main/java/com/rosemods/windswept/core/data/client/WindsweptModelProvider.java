@@ -416,7 +416,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
                 .partialState().with(IceLanternBlock.FACING, Direction.EAST).addModels(ConfiguredModel.builder().modelFile(this.models().getExistingFile(this.modLoc("block/ice_lantern_side"))).rotationY(90).build())
                 .partialState().with(IceLanternBlock.FACING, Direction.WEST).addModels(ConfiguredModel.builder().modelFile(this.models().getExistingFile(this.modLoc("block/ice_lantern_side"))).rotationY(270).build());
         this.generatedItem(ICE_LANTERN.get(), TextureFolder.ITEM);
-        this.chain(ICE_CHAIN);
+        this.iceChain(ICE_CHAIN);
 
         // lunalite
         this.getVariantBuilder(LUNALITE.get())
@@ -603,9 +603,8 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
                 .partialState().with(WildBerryBushBlock.AGE, 3).addModels(new ConfiguredModel(model.apply(3), 0, 0, true));
     }
 
-    private void chain(DeferredBlock<Block> chain) {
-        ResourceLocation texture = this.blockTexture(chain.get());
-        ModelFile model = this.models().withExistingParent(getItemName(chain.get()), this.mcLoc("block/chain")).texture("all", texture).texture("particle", texture).renderType("cutout");
+    private void iceChain(DeferredBlock<Block> chain) {
+        ModelFile model = this.models().getExistingFile(this.modLoc("block/ice_chain"));
 
         this.generatedItem(chain.get(), TextureFolder.ITEM);
         this.getVariantBuilder(chain.get())
@@ -618,10 +617,10 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         String name = getItemName(petals.get());
         ResourceLocation texture = this.blockTexture(petals.get());
         ResourceLocation stem = ResourceLocation.tryBuild(texture.getNamespace(), texture.getPath() + "_stem");
-        ModelFile model1 = this.models().withExistingParent(name + "_1", this.mcLoc("block/flowerbed_1")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
-        ModelFile model2 = this.models().withExistingParent(name + "_2", this.mcLoc("block/flowerbed_2")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
-        ModelFile model3 = this.models().withExistingParent(name + "_3", this.mcLoc("block/flowerbed_3")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
-        ModelFile model4 = this.models().withExistingParent(name + "_4", this.mcLoc("block/flowerbed_4")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
+        this.models().withExistingParent(name + "_1", this.mcLoc("block/flowerbed_1")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
+        this.models().withExistingParent(name + "_2", this.mcLoc("block/flowerbed_2")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
+        this.models().withExistingParent(name + "_3", this.mcLoc("block/flowerbed_3")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
+        this.models().withExistingParent(name + "_4", this.mcLoc("block/flowerbed_4")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
 
         this.generatedItem(petals.get(), TextureFolder.ITEM);
     }
