@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "windswept:arkose"
+  },
+  "result": {
+    "count": 1,
+    "id": "windswept:arkose_pillar"
+  }
+}

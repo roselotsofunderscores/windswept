@@ -312,7 +312,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.wall(SHALE_WALL, this.blockTexture(SHALE.get()));
         this.cubeAll(POLISHED_SHALE);
         this.stairs(POLISHED_SHALE_STAIRS, this.blockTexture(POLISHED_SHALE.get()));
-        this.slab(POLISHED_SHALE_SLAB, this.blockTexture(POLISHED_SHALE.get()));
+        this.doubleSlab(POLISHED_SHALE_SLAB, this.blockTexture(POLISHED_SHALE.get()));
         this.wall(POLISHED_SHALE_WALL, this.blockTexture(POLISHED_SHALE.get()));
         this.cubeAll(POLISHED_SHALE_BRICKS);
         this.cubeAll(ICY_POLISHED_SHALE_BRICKS);
@@ -320,6 +320,25 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.stairs(POLISHED_SHALE_BRICK_STAIRS, this.blockTexture(POLISHED_SHALE_BRICKS.get()));
         this.slab(POLISHED_SHALE_BRICK_SLAB, this.blockTexture(POLISHED_SHALE_BRICKS.get()));
         this.wall(POLISHED_SHALE_BRICK_WALL, this.blockTexture(POLISHED_SHALE_BRICKS.get()));
+
+        // arkose
+        this.cubeAll(ARKOSE);
+        this.stairs(ARKOSE_STAIRS, this.blockTexture(ARKOSE.get()));
+        this.slab(ARKOSE_SLAB, this.blockTexture(ARKOSE.get()));
+        this.wall(ARKOSE_WALL, this.blockTexture(ARKOSE.get()));
+        this.cubeAll(POLISHED_ARKOSE);
+        this.stairs(POLISHED_ARKOSE_STAIRS, this.blockTexture(POLISHED_ARKOSE.get()));
+        this.doubleSlab(POLISHED_ARKOSE_SLAB, this.blockTexture(POLISHED_ARKOSE.get()));
+        this.wall(POLISHED_ARKOSE_WALL, this.blockTexture(POLISHED_ARKOSE.get()));
+        this.cubeAll(ARKOSE_BRICKS);
+        this.stairs(ARKOSE_BRICK_STAIRS, this.blockTexture(ARKOSE_BRICKS.get()));
+        this.slab(ARKOSE_BRICK_SLAB, this.blockTexture(ARKOSE_BRICKS.get()));
+        this.wall(ARKOSE_BRICK_WALL, this.blockTexture(ARKOSE_BRICKS.get()));
+        this.cubeAll(ARKOSE_TILES);
+        this.stairs(ARKOSE_TILE_STAIRS, this.blockTexture(ARKOSE_TILES.get()));
+        this.slab(ARKOSE_TILE_SLAB, this.blockTexture(ARKOSE_TILES.get()));
+        this.wall(ARKOSE_TILE_WALL, this.blockTexture(ARKOSE_TILES.get()));
+        this.pillar(ARKOSE_PILLAR);
 
         // decorations
         this.wreath(HOLLY_WREATH);
@@ -416,7 +435,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
                 .partialState().with(IceLanternBlock.FACING, Direction.EAST).addModels(ConfiguredModel.builder().modelFile(this.models().getExistingFile(this.modLoc("block/ice_lantern_side"))).rotationY(90).build())
                 .partialState().with(IceLanternBlock.FACING, Direction.WEST).addModels(ConfiguredModel.builder().modelFile(this.models().getExistingFile(this.modLoc("block/ice_lantern_side"))).rotationY(270).build());
         this.generatedItem(ICE_LANTERN.get(), TextureFolder.ITEM);
-        this.chain(ICE_CHAIN);
+        this.iceChain(ICE_CHAIN);
 
         // lunalite
         this.getVariantBuilder(LUNALITE.get())
@@ -603,9 +622,8 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
                 .partialState().with(WildBerryBushBlock.AGE, 3).addModels(new ConfiguredModel(model.apply(3), 0, 0, true));
     }
 
-    private void chain(DeferredBlock<Block> chain) {
-        ResourceLocation texture = this.blockTexture(chain.get());
-        ModelFile model = this.models().withExistingParent(getItemName(chain.get()), this.mcLoc("block/chain")).texture("all", texture).texture("particle", texture).renderType("cutout");
+    private void iceChain(DeferredBlock<Block> chain) {
+        ModelFile model = this.models().getExistingFile(this.modLoc("block/ice_chain"));
 
         this.generatedItem(chain.get(), TextureFolder.ITEM);
         this.getVariantBuilder(chain.get())
@@ -618,10 +636,10 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         String name = getItemName(petals.get());
         ResourceLocation texture = this.blockTexture(petals.get());
         ResourceLocation stem = ResourceLocation.tryBuild(texture.getNamespace(), texture.getPath() + "_stem");
-        ModelFile model1 = this.models().withExistingParent(name + "_1", this.mcLoc("block/flowerbed_1")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
-        ModelFile model2 = this.models().withExistingParent(name + "_2", this.mcLoc("block/flowerbed_2")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
-        ModelFile model3 = this.models().withExistingParent(name + "_3", this.mcLoc("block/flowerbed_3")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
-        ModelFile model4 = this.models().withExistingParent(name + "_4", this.mcLoc("block/flowerbed_4")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
+        this.models().withExistingParent(name + "_1", this.mcLoc("block/flowerbed_1")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
+        this.models().withExistingParent(name + "_2", this.mcLoc("block/flowerbed_2")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
+        this.models().withExistingParent(name + "_3", this.mcLoc("block/flowerbed_3")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
+        this.models().withExistingParent(name + "_4", this.mcLoc("block/flowerbed_4")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
 
         this.generatedItem(petals.get(), TextureFolder.ITEM);
     }
@@ -759,6 +777,14 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
     private void slab(DeferredBlock<Block> slab, ResourceLocation fullModel, ResourceLocation side, ResourceLocation bottom, ResourceLocation top) {
         this.slabBlock((SlabBlock) slab.get(), fullModel, side, bottom, top);
         this.itemModel(slab);
+    }
+
+    private void doubleSlab(DeferredBlock<Block> slab, ResourceLocation texture) {
+        ResourceLocation slabTexture = this.blockTexture(slab.get());
+        String name = getBlockName(slab.get());
+
+        this.models().cubeBottomTop(name + "_double", slabTexture, texture, texture);
+        this.slab(slab, this.modLoc("block/" + name + "_double"), slabTexture, texture, texture);
     }
 
     private void stairs(DeferredBlock<Block> stairs, ResourceLocation texture) {

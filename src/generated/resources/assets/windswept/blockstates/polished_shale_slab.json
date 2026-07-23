@@ -4,7 +4,7 @@
       "model": "windswept:block/polished_shale_slab"
     },
     "type=double": {
-      "model": "windswept:block/polished_shale"
+      "model": "windswept:block/polished_shale_slab_double"
     },
     "type=top": {
       "model": "windswept:block/polished_shale_slab_top"

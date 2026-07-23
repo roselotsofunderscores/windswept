@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "windswept:block/arkose_slab"
+    },
+    "type=double": {
+      "model": "windswept:block/arkose"
+    },
+    "type=top": {
+      "model": "windswept:block/arkose_slab_top"
+    }
+  }
+}

@@ -2,7 +2,7 @@
   "parent": "minecraft:block/slab_top",
   "textures": {
     "bottom": "windswept:block/polished_shale",
-    "side": "windswept:block/polished_shale",
+    "side": "windswept:block/polished_shale_slab",
     "top": "windswept:block/polished_shale"
   }
 }

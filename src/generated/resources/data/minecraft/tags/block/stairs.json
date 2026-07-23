@@ -36,6 +36,10 @@
     "windswept:blue_pinecone_shingle_stairs",
     "windswept:purple_pinecone_shingle_stairs",
     "windswept:magenta_pinecone_shingle_stairs",
-    "windswept:pink_pinecone_shingle_stairs"
+    "windswept:pink_pinecone_shingle_stairs",
+    "windswept:arkose_stairs",
+    "windswept:polished_arkose_stairs",
+    "windswept:arkose_brick_stairs",
+    "windswept:arkose_tile_stairs"
   ]
 }

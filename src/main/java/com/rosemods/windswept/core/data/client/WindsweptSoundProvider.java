@@ -22,10 +22,9 @@ public class WindsweptSoundProvider extends SoundDefinitionsProvider {
         this.register(MUSIC_DISC_SNOW, "records/snow", Sound::stream);
         this.register(MUSIC_DISC_BUMBLEBEE, "records/bumblebee", Sound::stream);
         this.register(PINECONE_NOTE, "pinecone_note", Sound::stream);
-
-        this.register(CHILLED_DEATH, "entity/chilled/death/death", 4, 1.6f);
-        this.register(CHILLED_HURT, "entity/chilled/hurt/hurt", 3, 1.5f);
-        this.register(CHILLED_AMBIENT, "entity/chilled/ambient/idle", 3, 1.3f);
+        this.register(CHILLED_DEATH, "entity/chilled/death/death", 4, 2.25f);
+        this.register(CHILLED_HURT, "entity/chilled/hurt/hurt", 3, 2.25f);
+        this.register(CHILLED_AMBIENT, "entity/chilled/ambient/idle", 3, 2f);
     }
 
     private void register(DeferredHolder<SoundEvent, SoundEvent> soundEvent, String location, Consumer<Sound> consumer) {

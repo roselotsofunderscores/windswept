@@ -30,7 +30,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.neoforged.fml.ModList;
 
-public class Chilled extends Zombie implements VillagerHostileData {
+public class Chilled extends Zombie {
 
     public Chilled(EntityType<? extends Zombie> type, Level level) {
         super(type, level);
@@ -121,7 +121,7 @@ public class Chilled extends Zombie implements VillagerHostileData {
         }
 
         if (rand.nextFloat() < .1f && this.level().getBiome(this.blockPosition()).is(WindsweptBiomeTags.IS_PINE_BARRENS)) {
-            this.setItemSlot(EquipmentSlot.HEAD, WindsweptBlocks.CARVED_PINECONE_BLOCK.get().asItem().getDefaultInstance());
+            this.setItemSlot(EquipmentSlot.HEAD, WindsweptBlocks.CARVED_PINECONE_BLOCK.asItem().getDefaultInstance());
             this.armorDropChances[EquipmentSlot.HEAD.getIndex()] = .5f;
         }
 

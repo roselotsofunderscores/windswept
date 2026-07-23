@@ -294,11 +294,30 @@ public class WindsweptLootTableProvider extends LootTableProvider {
             this.add(POLISHED_SHALE_BRICK_SLAB.get(), this::createSlabItemTable);
             this.dropSelf(POLISHED_SHALE_BRICK_WALL.get());
 
+            // arkose
+            this.dropSelf(ARKOSE.get());
+            this.dropSelf(ARKOSE_STAIRS.get());
+            this.add(ARKOSE_SLAB.get(), this::createSlabItemTable);
+            this.dropSelf(ARKOSE_WALL.get());
+            this.dropSelf(POLISHED_ARKOSE.get());
+            this.dropSelf(POLISHED_ARKOSE_STAIRS.get());
+            this.add(POLISHED_ARKOSE_SLAB.get(), this::createSlabItemTable);
+            this.dropSelf(POLISHED_ARKOSE_WALL.get());
+            this.dropSelf(ARKOSE_BRICKS.get());
+            this.dropSelf(ARKOSE_BRICK_STAIRS.get());
+            this.add(ARKOSE_BRICK_SLAB.get(), this::createSlabItemTable);
+            this.dropSelf(ARKOSE_BRICK_WALL.get());
+            this.dropSelf(ARKOSE_TILES.get());
+            this.dropSelf(ARKOSE_TILE_STAIRS.get());
+            this.add(ARKOSE_TILE_SLAB.get(), this::createSlabItemTable);
+            this.dropSelf(ARKOSE_TILE_WALL.get());
+            this.dropSelf(ARKOSE_PILLAR.get());
+
             // candy cane
             this.dropSelf(CANDY_CANE_BLOCK.get());
 
             // ginger
-            this.add(GINGER.get(), b -> createGingerDrops(b));
+            this.add(GINGER.get(), this::createGingerDrops);
             this.add(GINGER_SOIL.get(), b -> dropTwoOthers(b, Blocks.DIRT, GINGER_ROOT.get()));
             this.dropSelf(GINGERBREAD_BLOCK.get());
             this.dropSelf(GLAZED_GINGERBREAD_BLOCK.get());

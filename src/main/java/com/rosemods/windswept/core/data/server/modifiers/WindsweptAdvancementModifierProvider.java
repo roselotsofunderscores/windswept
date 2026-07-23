@@ -25,7 +25,6 @@ import java.util.Collection;
 import java.util.List;
 
 public class WindsweptAdvancementModifierProvider extends AdvancementModifierProvider {
-
     public WindsweptAdvancementModifierProvider(GatherDataEvent event, WindsweptDatapackProvider dataPack) {
         super(Windswept.MOD_ID, event.getGenerator().getPackOutput(), dataPack.getRegistryProvider());
     }

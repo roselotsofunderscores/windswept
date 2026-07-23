@@ -29,7 +29,7 @@ public class ZombieMixin extends Monster {
         boolean chance = rand.nextFloat() < .1f;
 
         if (chance && biome.is(WindsweptBiomeTags.IS_PINE_BARRENS)) {
-            this.setItemSlot(EquipmentSlot.HEAD, WindsweptBlocks.CARVED_PINECONE_BLOCK.get().asItem().getDefaultInstance());
+            this.setItemSlot(EquipmentSlot.HEAD, WindsweptBlocks.CARVED_PINECONE_BLOCK.asItem().getDefaultInstance());
             this.armorDropChances[EquipmentSlot.HEAD.getIndex()] = .5f;
         } else if (chance && biome.is(WindsweptBiomeTags.IS_LAVENDER)) {
             this.setItemSlot(EquipmentSlot.HEAD, WindsweptItems.LAVENDER_CROWN.get().getDefaultInstance());
