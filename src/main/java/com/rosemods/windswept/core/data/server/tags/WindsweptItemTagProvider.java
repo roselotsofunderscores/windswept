@@ -95,6 +95,8 @@ public class WindsweptItemTagProvider extends ItemTagsProvider {
         //vanilla
         this.tag(ItemTags.DECORATED_POT_SHERDS).add(HOOT_POTTERY_SHERD.get(), PLUMAGE_POTTERY_SHERD.get(), OFFSHOOT_POTTERY_SHERD.get(), FLAKE_POTTERY_SHERD.get(), DRUPES_POTTERY_SHERD.get());
         this.tag(ItemTags.TRIM_MATERIALS).add(ICICLES.asItem(), PINECONE.asItem());
+        this.tag(TagUtil.itemTag("minecraft", "lanterns")).add(ICE_LANTERN.asItem());
+        this.tag(TagUtil.itemTag("minecraft", "chains")).add(ICE_CHAIN.asItem());
         this.tag(ItemTags.ARROWS).add(FROST_ARROW.get());
         this.tag(ItemTags.FOX_FOOD).add(WILD_BERRIES.get());
         this.tag(ItemTags.BOATS).add(HOLLY_BOAT.getFirst().get(), CHESTNUT_BOAT.getFirst().get(), PINE_BOAT.getFirst().get());
