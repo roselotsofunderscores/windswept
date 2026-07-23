@@ -148,7 +148,6 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> MOSS_CAMPION = BLOCKS.createBlock("moss_campion", () -> new MossCampionBlock(WindsweptEffects.THORNS, 5, PropertyUtil.flower().sound(SoundType.AZALEA)));
     public static final DeferredBlock<Block> WILD_GINGER = BLOCKS.createBlock("wild_ginger", () -> new FlowerBlock(MobEffects.DAMAGE_BOOST, 5, PropertyUtil.flower()));
     public static final DeferredBlock<Block> NIGHTSHADE = BLOCKS.createBlock("nightshade", () -> new NightshadeFlowerBlock(MobEffects.NIGHT_VISION, 5, BlockBehaviour.Properties.of().noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).lightLevel(state -> 9)));
-
     public static final DeferredBlock<Block> BRITTLEBUSH = BLOCKS.createBlock("brittlebush", () -> new DesertFlowerBlock(MobEffects.FIRE_RESISTANCE, 5, PropertyUtil.flower().sound(SoundType.AZALEA)));
     public static final DeferredBlock<Block> LARKSPUR = BLOCKS.createBlock("larkspur", () -> new DesertFlowerBlock(MobEffects.FIRE_RESISTANCE, 5, PropertyUtil.flower().sound(SoundType.AZALEA)));
     public static final DeferredBlock<Block> VERBENA = BLOCKS.createBlock("verbena", () -> new DesertFlowerBlock(MobEffects.FIRE_RESISTANCE, 5, PropertyUtil.flower().sound(SoundType.AZALEA)));

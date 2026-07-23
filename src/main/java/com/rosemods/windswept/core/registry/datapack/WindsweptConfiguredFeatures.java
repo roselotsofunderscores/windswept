@@ -93,6 +93,9 @@ public final class WindsweptConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> SHALE = createKey("shale");
     public static final ResourceKey<ConfiguredFeature<?, ?>> ARKOSE = createKey("arkose");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SANDY_SPROUTS = createKey("sandy_sprouts");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BRITTLEBUSHES = createKey("brittlebushes");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> LARKSPURS = createKey("larkspurs");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> VERBENAS = createKey("verbena");
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<PlacedFeature> placed = context.lookup(Registries.PLACED_FEATURE);
@@ -147,7 +150,10 @@ public final class WindsweptConfiguredFeatures {
         context.register(SNOWY_GELISOL, new ConfiguredFeature<>(WindsweptFeatures.SNOWY_GELISOL.get(), NoneFeatureConfiguration.NONE));
         context.register(SHALE, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(new TagMatchTest(BlockTags.BASE_STONE_OVERWORLD), WindsweptBlocks.SHALE.get().defaultBlockState(), 64)));
         context.register(ARKOSE, new ConfiguredFeature<>(Feature.DISK, new DiskConfiguration(RuleBasedBlockStateProvider.simple(WindsweptBlocks.ARKOSE.get()), BlockPredicate.matchesTag(Tags.Blocks.SANDS_COLORLESS), UniformInt.of(3, 6), 2)));
-        context.register(SANDY_SPROUTS, new ConfiguredFeature<>(Feature.RANDOM_PATCH, FeatureUtils.simpleRandomPatchConfiguration(32, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(WindsweptBlocks.SANDY_SPROUTS.get()))))));
+        context.register(SANDY_SPROUTS, new ConfiguredFeature<>(Feature.RANDOM_PATCH, FeatureUtils.simpleRandomPatchConfiguration(22, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(WindsweptBlocks.SANDY_SPROUTS.get()))))));
+        context.register(BRITTLEBUSHES, new ConfiguredFeature<>(Feature.FLOWER, Configs.createPlantPatch(24, WindsweptBlocks.BRITTLEBUSH.get().defaultBlockState())));
+        context.register(LARKSPURS, new ConfiguredFeature<>(Feature.FLOWER, Configs.createPlantPatch(6, WindsweptBlocks.LARKSPUR.get().defaultBlockState())));
+        context.register(VERBENAS, new ConfiguredFeature<>(Feature.FLOWER, Configs.createPlantPatch(6, WindsweptBlocks.VERBENA.get().defaultBlockState())));
     }
 
     private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {

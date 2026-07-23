@@ -71,6 +71,9 @@ public final class WindsweptPlacedFeatures {
     public static final ResourceKey<PlacedFeature> SHALE = createKey("shale");
     public static final ResourceKey<PlacedFeature> ARKOSE = createKey("arkose");
     public static final ResourceKey<PlacedFeature> SANDY_SPROUTS = createKey("sandy_sprouts");
+    public static final ResourceKey<PlacedFeature> BRITTLEBUSHES = createKey("brittlebushes");
+    public static final ResourceKey<PlacedFeature> LARKSPURS = createKey("larkspurs");
+    public static final ResourceKey<PlacedFeature> VERBENAS = createKey("verbena");
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         createPlantPatch(context, RED_ROSE, 16, WindsweptConfiguredFeatures.RED_ROSE);
@@ -124,6 +127,9 @@ public final class WindsweptPlacedFeatures {
         register(context, SHALE, WindsweptConfiguredFeatures.SHALE, PlacementUtils.countExtra(2, .1f, 4), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.absolute(64), VerticalAnchor.absolute(256)), BiomeFilter.biome());
         register(context, ARKOSE, WindsweptConfiguredFeatures.ARKOSE, InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_TOP_SOLID, BlockPredicateFilter.forPredicate(BlockPredicate.matchesFluids(Fluids.WATER)), BiomeFilter.biome());
         register(context, SANDY_SPROUTS, WindsweptConfiguredFeatures.SANDY_SPROUTS, VegetationPlacements.worldSurfaceSquaredWithCount(2));
+        createPlantPatch(context, BRITTLEBUSHES, 12, WindsweptConfiguredFeatures.BRITTLEBUSHES);
+        createPlantPatch(context, LARKSPURS, 32, WindsweptConfiguredFeatures.LARKSPURS);
+        createPlantPatch(context, VERBENAS, 32, WindsweptConfiguredFeatures.VERBENAS);
     }
 
     private static void register(BootstrapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, ResourceKey<ConfiguredFeature<?, ?>> feature, List<PlacementModifier> modifiers) {

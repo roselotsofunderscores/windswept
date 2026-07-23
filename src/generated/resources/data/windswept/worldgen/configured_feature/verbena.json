@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:random_patch",
+  "type": "minecraft:flower",
   "config": {
     "feature": {
       "feature": {
@@ -8,7 +8,7 @@
           "to_place": {
             "type": "minecraft:simple_state_provider",
             "state": {
-              "Name": "windswept:sandy_sprouts"
+              "Name": "windswept:verbena"
             }
           }
         }
@@ -23,8 +23,8 @@
         }
       ]
     },
-    "tries": 22,
-    "xz_spread": 7,
-    "y_spread": 3
+    "tries": 6,
+    "xz_spread": 5,
+    "y_spread": 2
   }
 }
