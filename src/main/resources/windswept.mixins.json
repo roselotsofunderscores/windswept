@@ -6,6 +6,7 @@
   "minVersion": "0.8",
   "mixins": [
     "BeehiveBlockMixin",
+    "BlockItemMixin",
     "BlockMixin",
     "BoatMixin",
     "DrownedMixin",

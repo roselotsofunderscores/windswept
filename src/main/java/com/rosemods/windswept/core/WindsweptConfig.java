@@ -3,6 +3,8 @@ package com.rosemods.windswept.core;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.List;
+
 public final class WindsweptConfig {
     public static final Common COMMON;
     public static final Client CLIENT;
@@ -30,6 +32,7 @@ public final class WindsweptConfig {
         public final ModConfigSpec.ConfigValue<Boolean> rabbitLitters;
         public final ModConfigSpec.ConfigValue<Boolean> rainWashSnow;
         public final ModConfigSpec.ConfigValue<Boolean> freezingWater;
+        public final ModConfigSpec.ConfigValue<List<? extends String>> dryNetherBlocks;
 
         private Common(ModConfigSpec.Builder builder) {
             builder.comment("Windswept Content Tweaks").push("content");
@@ -45,6 +48,27 @@ public final class WindsweptConfig {
             this.rabbitLitters = builder.comment("If Rabbits should have litters of 1-3").define("Rabbit Litters", true);
             this.rainWashSnow = builder.comment("If Rain should wash away Snow Layers").define("Rain Wash Away Snow", true);
             this.freezingWater = builder.comment("If Water in Snowy Biomes should slowly give the Frost Effect").define("Freezing Water", true);
+            this.dryNetherBlocks = builder.comment("Customisable List of Blocks That should Dry Out in when Placed in the Nether").define("Dry Nether Blocks", List.of(
+                    "minecraft:moss_block=windswept:dry_moss_block",
+                    "minecraft:moss_carpet=windswept:dry_moss_carpet",
+                    "windswept:mossy_sprouts=windswept:dry_mossy_sprouts",
+                    "minecraft:mossy_stone_bricks=windswept:dry_mossy_stone_bricks",
+                    "minecraft:mossy_stone_brick_stairs=windswept:dry_mossy_stone_brick_stairs",
+                    "minecraft:mossy_stone_brick_slab=windswept:dry_mossy_stone_brick_slab",
+                    "minecraft:mossy_stone_brick_wall=windswept:dry_mossy_stone_brick_wall",
+                    "minecraft:mossy_cobblestone=windswept:dry_mossy_cobblestone",
+                    "minecraft:mossy_cobblestone_stairs=windswept:dry_mossy_cobblestone_stairs",
+                    "minecraft:mossy_cobblestone_slab=windswept:dry_mossy_cobblestone_slab",
+                    "minecraft:mossy_cobblestone_wall=windswept:dry_mossy_cobblestone_wall",
+                    "caverns_and_chasms:mossy_cobblestone_bricks=windswept:dry_mossy_cobblestone_bricks",
+                    "caverns_and_chasms:mossy_cobblestone_brick_stairs=windswept:dry_mossy_cobblestone_brick_stairs",
+                    "caverns_and_chasms:mossy_cobblestone_brick_slab=windswept:dry_mossy_cobblestone_brick_slab",
+                    "caverns_and_chasms:mossy_cobblestone_brick_wall=windswept:dry_mossy_cobblestone_brick_wall",
+                    "caverns_and_chasms:mossy_cobblestone_tiles=windswept:dry_mossy_cobblestone_tiles",
+                    "caverns_and_chasms:mossy_cobblestone_tile_stairs=windswept:dry_mossy_cobblestone_tile_stairs",
+                    "caverns_and_chasms:mossy_cobblestone_tile_slab=windswept:dry_mossy_cobblestone_tile_slab",
+                    "caverns_and_chasms:mossy_cobblestone_tile_wall=windswept:dry_mossy_cobblestone_tile_wall"
+            ));
             builder.pop();
 
             builder.comment("Tweaks to Windswept Worldgen").push("worldgen");
