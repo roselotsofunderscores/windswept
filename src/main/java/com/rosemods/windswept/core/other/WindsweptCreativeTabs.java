@@ -107,7 +107,7 @@ public final class WindsweptCreativeTabs {
                 .addItemsAfter(modLoaded(WindsweptConstants.SWEET_BERRY_PIPS, "berry_good"), WILD_BERRY_PIPS)
                 .addItemsAfter(Ingredient.of(Blocks.HAY_BLOCK), LAVENDER_BALE, CHESTNUT_CRATE, ROASTED_CHESTNUT_CRATE, GINGER_ROOT_CRATE, HOLLY_BERRY_BASKET, WILD_BERRY_BASKET)
                 .addItemsBefore(modLoaded(Blocks.COBWEB, "caverns_and_chasms"), FROZEN_FLESH_BLOCK)
-                .addItemsAfter(Ingredient.of(Blocks.FLOWERING_AZALEA), HOLLY_WREATH, VINE_WREATH, PINECONE_WREATH, CHERRY_WREATH)
+                .addItemsAfter(Ingredient.of(Blocks.FLOWERING_AZALEA), HOLLY_WREATH, VINE_WREATH, PINECONE_WREATH, CHERRY_WREATH, NIGHTSHADE_BOUQUET)
                 .addItemsAfter(Ingredient.of(Blocks.ACACIA_SAPLING), FLOWERING_ACACIA_SAPLING)
                 .addItemsAfter(modLoaded(Blocks.ACACIA_LEAVES, "woodworks"), FLOWERING_ACACIA_LEAF_PILE)
                 .addItemsAfter(Ingredient.of(Blocks.ACACIA_LEAVES), FLOWERING_ACACIA_LEAVES)

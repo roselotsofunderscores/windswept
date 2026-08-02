@@ -247,6 +247,7 @@ public class WindsweptRecipeProvider extends BlueprintRecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, PINECONE_WREATH.get()).define('#', PINECONE.get()).define('B', FROZEN_BRANCH.get()).pattern(" # ").pattern("#B#").pattern(" # ").unlockedBy(getHasName(PINECONE.get()), has(PINECONE.get())).save(output, getSaveLocation(PINECONE_WREATH.get()));
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, VINE_WREATH.get()).define('#', Items.VINE).define('B', FROZEN_BRANCH.get()).pattern(" # ").pattern("#B#").pattern(" # ").unlockedBy(getHasName(Items.VINE), has(Items.VINE)).save(output, getSaveLocation(VINE_WREATH.get()));
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, CHERRY_WREATH.get()).define('#', Items.CHERRY_LEAVES).define('B', FROZEN_BRANCH.get()).pattern(" # ").pattern("#B#").pattern(" # ").unlockedBy(getHasName(Items.CHERRY_LEAVES), has(Items.CHERRY_LEAVES)).save(output, getSaveLocation(CHERRY_WREATH.get()));
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, NIGHTSHADE_BOUQUET.get(), 2).define('#', Items.STICK).define('S', Items.STRING).define('N', NIGHTSHADE.get()).pattern(" # ").pattern("NSN").pattern(" N ").unlockedBy(getHasName(NIGHTSHADE.get()), has(NIGHTSHADE.get())).save(output, getSaveLocation(NIGHTSHADE_BOUQUET.get()));
 
         trimRecipes(output, STARE_ARMOR_TRIM_SMITHING_TEMPLATE.get(), PINECONE_BLOCK.get());
 
@@ -275,7 +276,7 @@ public class WindsweptRecipeProvider extends BlueprintRecipeProvider {
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ELDER_WING.get(), 8).define('#', Items.STICK).define('F', ELDER_FEATHER.get()).pattern("#FF").unlockedBy(getHasName(ELDER_FEATHER.get()), has(ELDER_FEATHER.get())).save(output, getSaveLocation(ELDER_WING.get()));
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ELDER_ORNAMENT.get(), 12).define('#', Items.STICK).define('F', ELDER_FEATHER.get()).pattern("##").pattern("FF").unlockedBy(getHasName(ELDER_FEATHER.get()), has(ELDER_FEATHER.get())).save(output, getSaveLocation(ELDER_ORNAMENT.get()));
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DREAM_CATCHER.get(), 1).define('#', Items.STICK).define('S', Items.STRING).define('F', ELDER_FEATHER.get()).pattern(" # ").pattern("FSF").pattern(" F ").unlockedBy(getHasName(ELDER_FEATHER.get()), has(ELDER_FEATHER.get())).save(output, getSaveLocation(DREAM_CATCHER.get()));
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DREAM_CATCHER.get()).define('#', Items.STICK).define('S', Items.STRING).define('F', ELDER_FEATHER.get()).pattern(" # ").pattern("FSF").pattern(" F ").unlockedBy(getHasName(ELDER_FEATHER.get()), has(ELDER_FEATHER.get())).save(output, getSaveLocation(DREAM_CATCHER.get()));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, FAIRY_LIGHT.get()).requires(PINECONE.get()).requires(Items.TORCH).unlockedBy(getHasName(PINECONE.get()), has(PINECONE.get())).save(output, getSaveLocation(FAIRY_LIGHT.get()));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, SOUL_FAIRY_LIGHT.get()).requires(PINECONE.get()).requires(Items.SOUL_TORCH).unlockedBy(getHasName(PINECONE.get()), has(PINECONE.get())).save(output, getSaveLocation(SOUL_FAIRY_LIGHT.get()));
