@@ -346,6 +346,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.wreath(PINECONE_WREATH);
         this.wreath(VINE_WREATH);
         this.wreath(CHERRY_WREATH);
+        this.wreath(NIGHTSHADE_BOUQUET);
 
         MultiPartBlockStateBuilder builder = this.getMultipartBuilder(CHRISTMAS_PUDDING.get());
         builder.part().modelFile(new ModelFile.ExistingModelFile(this.modLoc("block/christmas_pudding_4"), this.models().existingFileHelper)).addModel().condition(ChristmasPuddingBlock.STATE, ChristmasPuddingBlock.PuddingStates.FOUR);

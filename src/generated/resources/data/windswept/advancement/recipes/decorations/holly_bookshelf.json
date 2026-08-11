@@ -5,11 +5,15 @@
       "values": [
         {
           "type": "neoforge:mod_loaded",
+          "modid": "woodworks"
+        },
+        {
+          "type": "neoforge:mod_loaded",
           "modid": "quark"
         },
         {
           "type": "neoforge:mod_loaded",
-          "modid": "woodworks"
+          "modid": "nomansland"
         }
       ]
     }

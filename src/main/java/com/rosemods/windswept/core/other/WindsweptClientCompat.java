@@ -34,13 +34,16 @@ import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+
 import static com.rosemods.windswept.core.registry.WindsweptBlocks.*;
 
 @EventBusSubscriber(modid = Windswept.MOD_ID, value = Dist.CLIENT)
 public class WindsweptClientCompat {
 
-    public static void init() {
-        WindsweptCreativeTabs.setupTabEditors();
+    @SubscribeEvent
+    public static void clientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(WindsweptCreativeTabs::setupTabEditors);
     }
 
     @SubscribeEvent
