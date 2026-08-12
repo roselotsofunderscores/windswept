@@ -56,6 +56,7 @@ public class WindsweptDataMapProvider extends DataMapProvider {
                 .add(LUPINE.getId(), new Compostable(0.65F), false)
                 .add(LIONS_TAIL.getId(), new Compostable(0.65F), false)
                 .add(DESERT_LILY.getId(), new Compostable(0.65F), false)
+                .add(YELLOW_PETALS.getId(), new Compostable(0.30F), false)
                 .add(RED_ROSE_BUSH.getId(), new Compostable(0.65F), false)
                 .add(BLUE_ROSE_BUSH.getId(), new Compostable(0.65F), false)
                 .add(WHITE_ROSE_BUSH.getId(), new Compostable(0.65F), false)
@@ -66,10 +67,13 @@ public class WindsweptDataMapProvider extends DataMapProvider {
                 .add(LAVENDER_THATCH_STAIRS.getId(), new Compostable(0.65F), false)
                 .add(LAVENDER_THATCH_SLAB.getId(), new Compostable(0.65F), false)
                 .add(PINECONE.getId(), new Compostable(0.65F), false)
+                .add(PINECONE_BLOCK.getId(), new Compostable(1.0F), false)
+                .add(PINECONE_JAM_BLOCK.getId(), new Compostable(1.0F), false)
                 .add(HOLLY_WREATH.getId(), new Compostable(0.65F), false)
                 .add(PINECONE_WREATH.getId(), new Compostable(0.65F), false)
                 .add(VINE_WREATH.getId(), new Compostable(0.65F), false)
                 .add(CHERRY_WREATH.getId(), new Compostable(0.65F), false)
+                .add(NIGHTSHADE_BOUQUET.getId(), new Compostable(0.65F), false)
                 .add(CHESTNUT_CRATE.getId(), new Compostable(1.0F), false)
                 .add(ROASTED_CHESTNUT_CRATE.getId(), new Compostable(1.0F), false)
                 .add(GINGER_ROOT_CRATE.getId(), new Compostable(1.0F), false)
@@ -81,6 +85,8 @@ public class WindsweptDataMapProvider extends DataMapProvider {
                 .add(CHESTNUTS, new Compostable(0.65F), false)
                 .add(ROASTED_CHESTNUTS, new Compostable(0.85F), false)
                 .add(GINGER_ROOT, new Compostable(0.65F), false)
-                .add(GINGERBREAD_COOKIE, new Compostable(0.85F), false);
+                .add(GINGERBREAD_COOKIE, new Compostable(0.85F), false)
+                .add(MUTTON_PIE.getId(), new Compostable(1.0F), false)
+                .add(CHRISTMAS_PUDDING.getId(), new Compostable(1.0F), false);
     }
 }
