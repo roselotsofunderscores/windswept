@@ -4,6 +4,7 @@ import com.rosemods.windswept.common.capability.wrappers.WoodenBucketWrapper;
 import com.rosemods.windswept.common.entity.Chilled;
 import com.rosemods.windswept.common.entity.Frostbiter;
 import com.rosemods.windswept.core.data.client.*;
+import com.rosemods.windswept.core.data.server.WindsweptDataMapProvider;
 import com.rosemods.windswept.core.data.server.WindsweptDatapackProvider;
 import com.rosemods.windswept.core.data.server.WindsweptLootTableProvider;
 import com.rosemods.windswept.core.data.server.WindsweptRecipeProvider;
@@ -140,6 +141,7 @@ public class Windswept {
         gen.addProvider(server, new WindsweptLootTableProvider(event));
         gen.addProvider(server, new WindsweptRecipeProvider(event));
         gen.addProvider(server, new WindsweptAdvancementModifierProvider(event, dataPack));
+        gen.addProvider(server, new WindsweptDataMapProvider(gen.getPackOutput(), event.getLookupProvider()));
         gen.addProvider(server, new WindsweptDataRemolderProvider(gen.getPackOutput(), dataPack.getRegistryProvider()));
         gen.addProvider(server, new WindsweptPaintingVariantTagsProvider(event, dataPack));
         gen.addProvider(server, new WindsweptChunkGeneratorModifierProvider(event, dataPack));
