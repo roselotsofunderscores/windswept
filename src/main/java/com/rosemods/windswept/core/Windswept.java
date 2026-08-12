@@ -24,15 +24,12 @@ import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -77,9 +74,8 @@ public class Windswept {
         event.enqueueWork(() -> {
             DispenserBlock.registerProjectileBehavior(WindsweptItems.FROST_ARROW);
             WindsweptVillagerTypes.registerVillagerBiomes();
+            WindsweptCompat.register();
             WindsweptBlockInfo.changeLocalisation();
-            WindsweptBlockInfo.registerCompostables();
-            WindsweptBlockInfo.registerFlammables();
             WindsweptDispenseBehaviors.registerDispenseBehaviors();
             WindsweptCauldronInteractions.registerCauldronInteractions();
             WindsweptPotPatterns.registerPatterns();
