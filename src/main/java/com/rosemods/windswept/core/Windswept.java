@@ -75,7 +75,7 @@ public class Windswept {
             DispenserBlock.registerProjectileBehavior(WindsweptItems.FROST_ARROW);
             WindsweptVillagerTypes.registerVillagerBiomes();
             WindsweptCompat.register();
-            WindsweptBlockInfo.changeLocalisation();
+            WindsweptCompat.changeLocalisation();
             WindsweptDispenseBehaviors.registerDispenseBehaviors();
             WindsweptCauldronInteractions.registerCauldronInteractions();
             WindsweptPotPatterns.registerPatterns();

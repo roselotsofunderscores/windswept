@@ -1,10 +1,17 @@
 package com.rosemods.windswept.core.other;
 
+import com.rosemods.windswept.core.Windswept;
 import com.teamabnormals.blueprint.core.util.DataUtil;
+import net.minecraft.world.level.block.Blocks;
 
 import static com.rosemods.windswept.core.registry.WindsweptBlocks.*;
 
 public class WindsweptCompat {
+
+    public static void changeLocalisation() {
+        DataUtil.changeBlockLocalization(Blocks.SNOW, Windswept.MOD_ID, "snow_carpet");
+        DataUtil.changeBlockLocalization(Blocks.SNOW_BLOCK, "minecraft", "snow");
+    }
 
     public static void register() {
         registerFlammables();
