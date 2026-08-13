@@ -30,7 +30,8 @@ public class WindsweptDatapackProvider extends DatapackBuiltinEntriesProvider {
             .add(Registries.JUKEBOX_SONG, WindsweptJukeboxSongs::bootstrap);
 
     public WindsweptDatapackProvider(GatherDataEvent event) {
-        super(event.getGenerator().getPackOutput(), event.getLookupProvider(), BUILDER, Set.of(Windswept.MOD_ID));
+        super(event.getGenerator().getPackOutput(), event.getLookupProvider(), BUILDER,
+                WindsweptStructureRepaletters::applyConditions, Set.of(Windswept.MOD_ID));
     }
 
 }
