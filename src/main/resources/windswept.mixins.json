@@ -9,6 +9,7 @@
     "BlockItemMixin",
     "BlockMixin",
     "BoatMixin",
+    "BubbleColumnBlockMixin",
     "DrownedMixin",
     "EnderManMixin",
     "FlowerBlockMixin",
