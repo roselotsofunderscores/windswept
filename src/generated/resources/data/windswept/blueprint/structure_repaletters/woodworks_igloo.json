@@ -1,8 +1,17 @@
 {
   "neoforge:conditions": [
     {
-      "type": "neoforge:mod_loaded",
-      "modid": "woodworks"
+      "type": "neoforge:or",
+      "values": [
+        {
+          "type": "neoforge:mod_loaded",
+          "modid": "woodworks"
+        },
+        {
+          "type": "neoforge:mod_loaded",
+          "modid": "quark"
+        }
+      ]
     }
   ],
   "priority": 50,

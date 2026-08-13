@@ -1,0 +1,24 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:or",
+      "values": [
+        {
+          "type": "neoforge:mod_loaded",
+          "modid": "woodworks"
+        },
+        {
+          "type": "neoforge:mod_loaded",
+          "modid": "quark"
+        }
+      ]
+    }
+  ],
+  "priority": 50,
+  "repaletter": {
+    "type": "blueprint:simple",
+    "replaces_block": "minecraft:ladder",
+    "replaces_with": "windswept:chestnut_ladder"
+  },
+  "structures": "windswept:chestnut_weathered_house"
+}
