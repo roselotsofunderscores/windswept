@@ -3,6 +3,7 @@ package com.rosemods.windswept.common.entity;
 import com.rosemods.windswept.core.registry.WindsweptEntityTypes;
 import com.rosemods.windswept.core.registry.WindsweptItems;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -12,6 +13,8 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
 public class FrostArrow extends AbstractArrow {
+
+    private static final int FREEZE_AMOUNT = 100;
 
     public FrostArrow(EntityType<? extends FrostArrow> type, Level level) {
         super(type, level);
@@ -47,10 +50,27 @@ public class FrostArrow extends AbstractArrow {
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
-        if (result.getEntity() instanceof LivingEntity livingEntity && !livingEntity.level().isClientSide)
-            livingEntity.setTicksFrozen((int) ((livingEntity.getTicksFrozen() + 100) * this.getDeltaMovement().length()));
+        if (result.getEntity() instanceof LivingEntity livingEntity && !livingEntity.level().isClientSide && !this.isBlockedByShield(livingEntity)) {
+            double speedFactor = Mth.clamp(this.getDeltaMovement().length(), 0.5D, 1.5D);
+            int freezeAmount = (int) (FREEZE_AMOUNT * speedFactor);
+            int maxFreezeTicks = livingEntity.getTicksRequiredToFreeze() * 2;
+
+            livingEntity.setTicksFrozen(Math.min(livingEntity.getTicksFrozen() + freezeAmount, maxFreezeTicks));
+        }
 
         super.onHitEntity(result);
+    }
+
+    private boolean isBlockedByShield(LivingEntity livingEntity) {
+        if (!livingEntity.isBlocking())
+            return false;
+
+        Vec3 sourcePos = this.position();
+        Vec3 viewVector = livingEntity.calculateViewVector(0.0F, livingEntity.getYHeadRot());
+        Vec3 toDefender = sourcePos.vectorTo(livingEntity.position());
+        toDefender = new Vec3(toDefender.x, 0.0D, toDefender.z).normalize();
+
+        return toDefender.dot(viewVector) < 0.0D;
     }
 
     @Override
