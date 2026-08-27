@@ -1,0 +1,208 @@
+{
+  "values": {
+    "windswept:blue_rose": {
+      "chance": 0.65
+    },
+    "windswept:blue_rose_bush": {
+      "chance": 0.65
+    },
+    "windswept:bluebells": {
+      "chance": 0.65
+    },
+    "windswept:brittlebush": {
+      "chance": 0.65
+    },
+    "windswept:cherry_wreath": {
+      "chance": 0.65
+    },
+    "windswept:chestnut_crate": {
+      "chance": 1.0
+    },
+    "windswept:chestnut_leaf_pile": {
+      "chance": 0.3
+    },
+    "windswept:chestnut_leaves": {
+      "chance": 0.3
+    },
+    "windswept:chestnut_sapling": {
+      "chance": 0.3
+    },
+    "windswept:chestnuts": {
+      "chance": 0.65
+    },
+    "windswept:christmas_pudding": {
+      "chance": 1.0
+    },
+    "windswept:desert_lily": {
+      "chance": 0.65
+    },
+    "windswept:dry_moss_block": {
+      "chance": 0.65
+    },
+    "windswept:dry_moss_carpet": {
+      "chance": 0.3
+    },
+    "windswept:dry_mossy_sprouts": {
+      "chance": 0.5
+    },
+    "windswept:flowering_acacia_leaf_pile": {
+      "chance": 0.3
+    },
+    "windswept:flowering_acacia_leaves": {
+      "chance": 0.3
+    },
+    "windswept:flowering_acacia_sapling": {
+      "chance": 0.3
+    },
+    "windswept:foxglove": {
+      "chance": 0.65
+    },
+    "windswept:gelisol_grass": {
+      "chance": 0.5
+    },
+    "windswept:ginger_root": {
+      "chance": 0.65
+    },
+    "windswept:ginger_root_crate": {
+      "chance": 1.0
+    },
+    "windswept:gingerbread_cookie": {
+      "chance": 0.85
+    },
+    "windswept:holly_berries": {
+      "chance": 0.65
+    },
+    "windswept:holly_berry_basket": {
+      "chance": 1.0
+    },
+    "windswept:holly_leaf_pile": {
+      "chance": 0.3
+    },
+    "windswept:holly_leaves": {
+      "chance": 0.3
+    },
+    "windswept:holly_sapling": {
+      "chance": 0.3
+    },
+    "windswept:holly_wreath": {
+      "chance": 0.65
+    },
+    "windswept:larkspur": {
+      "chance": 0.65
+    },
+    "windswept:lavender": {
+      "chance": 0.65
+    },
+    "windswept:lavender_bale": {
+      "chance": 0.85
+    },
+    "windswept:lavender_thatch": {
+      "chance": 0.65
+    },
+    "windswept:lavender_thatch_slab": {
+      "chance": 0.65
+    },
+    "windswept:lavender_thatch_stairs": {
+      "chance": 0.65
+    },
+    "windswept:lions_tail": {
+      "chance": 0.65
+    },
+    "windswept:lupine": {
+      "chance": 0.65
+    },
+    "windswept:mimosa": {
+      "chance": 0.65
+    },
+    "windswept:moss_campion": {
+      "chance": 0.65
+    },
+    "windswept:mossy_sprouts": {
+      "chance": 0.5
+    },
+    "windswept:mutton_pie": {
+      "chance": 1.0
+    },
+    "windswept:nightshade": {
+      "chance": 0.65
+    },
+    "windswept:nightshade_bouquet": {
+      "chance": 0.65
+    },
+    "windswept:pine_leaf_pile": {
+      "chance": 0.3
+    },
+    "windswept:pine_leaves": {
+      "chance": 0.3
+    },
+    "windswept:pine_sapling": {
+      "chance": 0.3
+    },
+    "windswept:pinecone": {
+      "chance": 0.65
+    },
+    "windswept:pinecone_block": {
+      "chance": 1.0
+    },
+    "windswept:pinecone_jam_block": {
+      "chance": 1.0
+    },
+    "windswept:pinecone_wreath": {
+      "chance": 0.65
+    },
+    "windswept:red_rose": {
+      "chance": 0.65
+    },
+    "windswept:red_rose_bush": {
+      "chance": 0.65
+    },
+    "windswept:roasted_chestnut_crate": {
+      "chance": 1.0
+    },
+    "windswept:roasted_chestnuts": {
+      "chance": 0.85
+    },
+    "windswept:sandy_sprouts": {
+      "chance": 0.5
+    },
+    "windswept:snowdrop": {
+      "chance": 0.65
+    },
+    "windswept:snowy_sprouts": {
+      "chance": 0.5
+    },
+    "windswept:verbena": {
+      "chance": 0.65
+    },
+    "windswept:vine_wreath": {
+      "chance": 0.65
+    },
+    "windswept:white_rose": {
+      "chance": 0.65
+    },
+    "windswept:white_rose_bush": {
+      "chance": 0.65
+    },
+    "windswept:wild_berries": {
+      "chance": 0.65
+    },
+    "windswept:wild_berry_basket": {
+      "chance": 1.0
+    },
+    "windswept:wild_berry_pips": {
+      "chance": 0.3
+    },
+    "windswept:wild_ginger": {
+      "chance": 0.65
+    },
+    "windswept:yellow_petals": {
+      "chance": 0.3
+    },
+    "windswept:yellow_rose": {
+      "chance": 0.65
+    },
+    "windswept:yellow_rose_bush": {
+      "chance": 0.65
+    }
+  }
+}

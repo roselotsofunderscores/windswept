@@ -48,7 +48,7 @@ public final class WindsweptConfig {
             this.rabbitLitters = builder.comment("If Rabbits should have litters of 1-3").define("Rabbit Litters", true);
             this.rainWashSnow = builder.comment("If Rain should wash away Snow Layers").define("Rain Wash Away Snow", true);
             this.freezingWater = builder.comment("If Water in Snowy Biomes should slowly give the Frost Effect").define("Freezing Water", true);
-            this.dryNetherBlocks = builder.comment("Customisable List of Blocks That should Dry Out in when Placed in the Nether").define("Dry Nether Blocks", List.of(
+            this.dryNetherBlocks = builder.comment("Customisable List of Blocks That should Dry Out in when Placed in the Nether").defineListAllowEmpty(List.of("Dry Nether Blocks"), () -> List.of(
                     "minecraft:moss_block=windswept:dry_moss_block",
                     "minecraft:moss_carpet=windswept:dry_moss_carpet",
                     "windswept:mossy_sprouts=windswept:dry_mossy_sprouts",
@@ -68,7 +68,9 @@ public final class WindsweptConfig {
                     "caverns_and_chasms:mossy_cobblestone_tile_stairs=windswept:dry_mossy_cobblestone_tile_stairs",
                     "caverns_and_chasms:mossy_cobblestone_tile_slab=windswept:dry_mossy_cobblestone_tile_slab",
                     "caverns_and_chasms:mossy_cobblestone_tile_wall=windswept:dry_mossy_cobblestone_tile_wall"
-            ));
+                        ),
+                            obj -> obj instanceof String s && s.contains("=")
+                    );
             builder.pop();
 
             builder.comment("Tweaks to Windswept Worldgen").push("worldgen");
