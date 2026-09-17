@@ -2,5 +2,10 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "windswept:item/wooden_bucket"
+  },
+  "display": {
+    "head": {
+      "scale": [0, 0, 0]
+    }
   }
 }
