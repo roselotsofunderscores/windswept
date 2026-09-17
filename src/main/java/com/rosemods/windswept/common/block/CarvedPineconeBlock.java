@@ -1,5 +1,6 @@
 package com.rosemods.windswept.common.block;
 
+import com.mojang.serialization.MapCodec;
 import com.rosemods.windswept.core.other.tags.WindsweptBlockTags;
 import com.rosemods.windswept.core.registry.WindsweptSounds;
 import net.minecraft.core.BlockPos;
@@ -10,8 +11,11 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -19,12 +23,20 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 
+import java.util.function.BiConsumer;
+
 public class CarvedPineconeBlock extends HorizontalDirectionalBlock {
+    public static final MapCodec<CarvedPineconeBlock> CODEC = simpleCodec(CarvedPineconeBlock::new);
     private static final int[] KEY = new int[]{0, 3, 5, 10, 14, 15, 21, 22};
 
     public CarvedPineconeBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -39,27 +51,45 @@ public class CarvedPineconeBlock extends HorizontalDirectionalBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-        return player.getItemInHand(hand).isEmpty() && this.triggerEvent(state, level, pos, 0, 0) ? InteractionResult.SUCCESS : InteractionResult.PASS;
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (level.isClientSide) {
+            return ItemInteractionResult.SUCCESS;
+        }
+        if (this.canPlayNote(state, level, pos)) {
+            level.blockEvent(pos, this, 0, 0);
+            return ItemInteractionResult.SUCCESS;
+        }
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (level.isClientSide) {
+            return InteractionResult.SUCCESS;
+        }
+        if (this.canPlayNote(state, level, pos)) {
+            level.blockEvent(pos, this, 0, 0);
+            return InteractionResult.CONSUME;
+        }
+        return InteractionResult.PASS;
+    }
+
+    private boolean canPlayNote(BlockState state, Level level, BlockPos pos) {
+        return !level.getBlockState(pos.relative(state.getValue(FACING))).isSolid();
     }
 
     @Override
     public boolean triggerEvent(BlockState state, Level level, BlockPos pos, int i0, int i1) {
-        if (!level.getBlockState(pos.relative(state.getValue(FACING))).isSolid()) {
+        if (this.canPlayNote(state, level, pos)) {
             int below = 0;
             int above = 0;
-
             for (; level.getBlockState(pos.below(below + 1)).is(WindsweptBlockTags.PINECONE_NOTE_BLOCKS); below++) ;
             for (; level.getBlockState(pos.above(above + 1)).is(WindsweptBlockTags.PINECONE_NOTE_BLOCKS); above++) ;
-
             int pitch = KEY[(KEY.length - 1) - ((below + above) % KEY.length)];
-
             level.playSound(null, pos, WindsweptSounds.PINECONE_NOTE.get(), SoundSource.RECORDS, .35f, (float) Math.pow(2d, (pitch - 10d) / 12d));
             level.addParticle(ParticleTypes.NOTE, (double) pos.getX() + .5d, (double) pos.getY() + (double) above + 1.2d, (double) pos.getZ() + .5d, (double) pitch / KEY.length, 0d, 0d);
-
             return true;
         }
-
         return false;
     }
 
@@ -67,6 +97,13 @@ public class CarvedPineconeBlock extends HorizontalDirectionalBlock {
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos nextPos, boolean p_60514_) {
         if (!level.isClientSide && level.hasNeighborSignal(pos))
             level.scheduleTick(pos, this, 2);
+    }
+
+    @Override
+    protected void onExplosionHit(BlockState state, Level level, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> dropConsumer) {
+        if (!level.isClientSide) {
+            level.blockEvent(pos, this, 0, 0);
+        }
     }
 
     @Override

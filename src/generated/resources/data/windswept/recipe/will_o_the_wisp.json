@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "windswept:carved_pinecone_block"
+    },
+    "N": {
+      "item": "windswept:nightshade"
+    }
+  },
+  "pattern": [
+    "#",
+    "N"
+  ],
+  "result": {
+    "count": 1,
+    "id": "windswept:will_o_the_wisp"
+  }
+}

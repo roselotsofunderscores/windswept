@@ -19,17 +19,6 @@ public class AntlerHelmetModel extends HumanoidModel<LivingEntity> {
         this.helmet = root.getChild("helmet");
     }
 
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.helmet.copyFrom(this.head);
-        super.renderToBuffer(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-    }
-
-    @Override
-    protected Iterable<ModelPart> headParts() {
-        return List.of(this.helmet);
-    }
-
     private static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = HumanoidModel.createMesh(CubeDeformation.NONE, 0f);
         PartDefinition root = meshdefinition.getRoot();
@@ -38,6 +27,17 @@ public class AntlerHelmetModel extends HumanoidModel<LivingEntity> {
         helmet.addOrReplaceChild("antlers", CubeListBuilder.create().texOffs(0, 15).addBox(-10f, -10.5f, -.25f, 30f, 14f, 0f, new CubeDeformation(0f)), PartPose.offsetAndRotation(-5f, -6f, 1f, .2618f, 0f, 0f));
 
         return LayerDefinition.create(meshdefinition, 64, 32);
+    }
+
+    @Override
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
+        this.helmet.copyFrom(this.head);
+        super.renderToBuffer(poseStack, buffer, packedLight, packedOverlay, color);
+    }
+
+    @Override
+    protected Iterable<ModelPart> headParts() {
+        return List.of(this.helmet);
     }
 
 }

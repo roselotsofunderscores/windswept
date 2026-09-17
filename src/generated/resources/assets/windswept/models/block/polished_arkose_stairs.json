@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "windswept:block/polished_arkose",
+    "side": "windswept:block/polished_arkose",
+    "top": "windswept:block/polished_arkose"
+  }
+}

@@ -5,9 +5,9 @@ import com.rosemods.windswept.core.data.server.WindsweptDatapackProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.tags.PaintingVariantTagsProvider;
 import net.minecraft.tags.PaintingVariantTags;
-import net.minecraftforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
-import static com.rosemods.windswept.core.registry.WindsweptPaintingVariants.*;
+import static com.rosemods.windswept.core.registry.datapack.WindsweptPaintingVariants.*;
 
 public class WindsweptPaintingVariantTagsProvider extends PaintingVariantTagsProvider {
 
@@ -17,8 +17,7 @@ public class WindsweptPaintingVariantTagsProvider extends PaintingVariantTagsPro
 
     @Override
     public void addTags(HolderLookup.Provider provider) {
-        this.tag(PaintingVariantTags.PLACEABLE).add(CLIFFSIDE.getKey(), DRESS_CODES.getKey(),
-                ECOTONAL_PAREIDOLIA.getKey(), THE_FOILS.getKey(), AURORAE.getKey(), HEARTH_RUG.getKey(), ALLU_PINE.getKey());
+        this.tag(PaintingVariantTags.PLACEABLE).add(CLIFFSIDE, DRESS_CODES, ECOTONAL_PAREIDOLIA, THE_FOILS, AURORAE, HEARTH_RUG, ALLU_PINE);
     }
 
 }

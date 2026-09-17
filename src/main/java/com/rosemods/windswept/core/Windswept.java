@@ -1,72 +1,113 @@
 package com.rosemods.windswept.core;
 
+import com.rosemods.windswept.common.capability.wrappers.WoodenBucketWrapper;
+import com.rosemods.windswept.common.entity.Chilled;
+import com.rosemods.windswept.common.entity.Frostbiter;
 import com.rosemods.windswept.core.data.client.*;
+import com.rosemods.windswept.core.data.server.WindsweptDataMapProvider;
 import com.rosemods.windswept.core.data.server.WindsweptDatapackProvider;
 import com.rosemods.windswept.core.data.server.WindsweptLootTableProvider;
 import com.rosemods.windswept.core.data.server.WindsweptRecipeProvider;
 import com.rosemods.windswept.core.data.server.modifiers.WindsweptAdvancementModifierProvider;
 import com.rosemods.windswept.core.data.server.modifiers.WindsweptChunkGeneratorModifierProvider;
-import com.rosemods.windswept.core.data.server.modifiers.WindsweptLootModifierProvider;
+import com.rosemods.windswept.core.data.server.modifiers.WindsweptDataRemolderProvider;
 import com.rosemods.windswept.core.data.server.tags.*;
 import com.rosemods.windswept.core.other.*;
 import com.rosemods.windswept.core.registry.*;
 import com.rosemods.windswept.core.registry.util.EffectSubRegistryHelper;
 import com.teamabnormals.blueprint.core.util.registry.RegistryHelper;
+import com.teamabnormals.gallery.core.data.client.GalleryItemModelProvider;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 
 @Mod(Windswept.MOD_ID)
 public class Windswept {
     public static final String MOD_ID = "windswept";
-    public static final RegistryHelper REGISTRY_HELPER = RegistryHelper.create(MOD_ID, h -> h.putSubHelper(ForgeRegistries.MOB_EFFECTS, new EffectSubRegistryHelper(h)));
+    public static final RegistryHelper REGISTRY_HELPER = RegistryHelper.create(MOD_ID, h -> h.putSubHelper(Registries.MOB_EFFECT, new EffectSubRegistryHelper(h)));
 
-    public Windswept() {
-        final IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        final ModLoadingContext context = ModLoadingContext.get();
-
+    public Windswept(IEventBus bus, ModContainer container) {
         WindsweptDataProcessors.registerData();
-        MinecraftForge.EVENT_BUS.register(this);
 
-        REGISTRY_HELPER.register(bus);
+        WindsweptBlocks.BLOCKS.register(bus);
+        WindsweptItems.ITEMS.register(bus);
+        WindsweptEntityTypes.ENTITIES.register(bus);
+        WindsweptBlockEntities.BLOCK_ENTITIES.register(bus);
+        WindsweptEffects.EFFECTS.register(bus);
+        WindsweptSounds.SOUNDS.register(bus);
         WindsweptTreeDecorators.DECORATORS.register(bus);
         WindsweptFoliagePlacers.FOLIAGE_PLACERS.register(bus);
         WindsweptFeatures.FEATURES.register(bus);
-        WindsweptEnchantments.ENCHANTMENTS.register(bus);
         WindsweptAttributes.ATTRIBUTES.register(bus);
-        WindsweptBannerPatterns.BANNER_PATTERNS.register(bus);
         WindsweptTrunkPlacers.TRUNK_PLACERS.register(bus);
-        WindsweptPaintingVariants.PAINTING_VARIANTS.register(bus);
         WindsweptParticleTypes.PARTICLE_TYPES.register(bus);
         WindsweptPotPatterns.DECORATED_POT_PATTERNS.register(bus);
+        WindsweptVillagerTypes.VILLAGER_TYPES.register(bus);
+        WindsweptArmorMaterials.ARMOR_MATERIALS.register(bus);
 
         bus.addListener(this::commonSetup);
+        bus.addListener(this::registerEntityAttributes);
+        bus.addListener(this::registerEntitySpawns);
+        bus.addListener(this::registerCapabilities);
         bus.addListener(this::dataSetup);
 
-        context.registerConfig(ModConfig.Type.COMMON, WindsweptConfig.COMMON_SPEC);
-        context.registerConfig(ModConfig.Type.CLIENT, WindsweptConfig.CLIENT_SPEC);
+        container.registerConfig(ModConfig.Type.COMMON, WindsweptConfig.COMMON_SPEC);
+        container.registerConfig(ModConfig.Type.CLIENT, WindsweptConfig.CLIENT_SPEC);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            WindsweptVillagerTypes.registerVillagerTypes();
-            WindsweptBlockInfo.changeLocalisation();
-            WindsweptBlockInfo.registerCompostables();
-            WindsweptBlockInfo.registerFlammables();
-            WindsweptEffects.registerPotionRecipes();
+            DispenserBlock.registerProjectileBehavior(WindsweptItems.FROST_ARROW);
+            WindsweptVillagerTypes.registerVillagerBiomes();
+            WindsweptCompat.register();
+            WindsweptCompat.changeLocalisation();
             WindsweptDispenseBehaviors.registerDispenseBehaviors();
             WindsweptCauldronInteractions.registerCauldronInteractions();
-            WindsweptCreativeTabs.setupTabEditors();
             WindsweptPotPatterns.registerPatterns();
         });
+    }
+
+    private void registerEntityAttributes(EntityAttributeCreationEvent event) {
+        event.put(WindsweptEntityTypes.CHILLED.get(), Chilled.createChilledAttributes().build());
+        event.put(WindsweptEntityTypes.FROSTBITER.get(), Frostbiter.createFrostbiterAttributes().build());
+    }
+
+    private void registerEntitySpawns(RegisterSpawnPlacementsEvent event) {
+        event.register(WindsweptEntityTypes.CHILLED.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, RegisterSpawnPlacementsEvent.Operation.AND);
+        event.register(WindsweptEntityTypes.FROSTBITER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Frostbiter::checkFrostbiterSpawnRules, RegisterSpawnPlacementsEvent.Operation.AND);
+    }
+
+    private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerItem(
+                Capabilities.FluidHandler.ITEM,
+                (stack, ctx) -> new WoodenBucketWrapper(stack),
+                WindsweptItems.WOODEN_BUCKET.get(),
+                WindsweptItems.WOODEN_WATER_BUCKET.get(),
+                WindsweptItems.WOODEN_MILK_BUCKET.get()
+        );
+
+        if (ModList.get().isLoaded("create"))
+            event.registerItem(
+                    Capabilities.FluidHandler.ITEM,
+                    (stack, ctx) -> new WoodenBucketWrapper(stack),
+                    WindsweptItems.WOODEN_HONEY_BUCKET.get(),
+                    WindsweptItems.WOODEN_CHOCOLATE_BUCKET.get()
+            );
     }
 
     private void dataSetup(GatherDataEvent event) {
@@ -80,12 +121,14 @@ public class Windswept {
         gen.addProvider(client, new WindsweptSplashProvider(event));
         gen.addProvider(client, new WindsweptParticleProvider(event));
         gen.addProvider(client, new WindsweptSpriteSourceProvider(event));
+        gen.addProvider(client, new GalleryItemModelProvider(MOD_ID, gen.getPackOutput(), event.getExistingFileHelper(), event.getLookupProvider()));
 
         WindsweptDatapackProvider dataPack;
         WindsweptBlockTagProvider blockTags;
         gen.addProvider(server, dataPack = new WindsweptDatapackProvider(event));
         gen.addProvider(server, blockTags = new WindsweptBlockTagProvider(event, dataPack));
         gen.addProvider(server, new WindsweptItemTagProvider(event, blockTags, dataPack));
+        gen.addProvider(server, new WindsweptEnchantmentTagsProvider(event, blockTags, dataPack));
         gen.addProvider(server, new WindsweptEntityTagProvider(event, dataPack));
         gen.addProvider(server, new WindsweptBiomeTagProvider(event, dataPack));
         gen.addProvider(server, new WindsweptStructureTagsProvider(event, dataPack));
@@ -94,13 +137,14 @@ public class Windswept {
         gen.addProvider(server, new WindsweptLootTableProvider(event));
         gen.addProvider(server, new WindsweptRecipeProvider(event));
         gen.addProvider(server, new WindsweptAdvancementModifierProvider(event, dataPack));
-        gen.addProvider(server, new WindsweptLootModifierProvider(event, dataPack));
+        gen.addProvider(server, new WindsweptDataMapProvider(gen.getPackOutput(), event.getLookupProvider()));
+        gen.addProvider(server, new WindsweptDataRemolderProvider(gen.getPackOutput(), dataPack.getRegistryProvider()));
         gen.addProvider(server, new WindsweptPaintingVariantTagsProvider(event, dataPack));
         gen.addProvider(server, new WindsweptChunkGeneratorModifierProvider(event, dataPack));
     }
 
     public static ResourceLocation location(String id) {
-        return new ResourceLocation(MOD_ID, id);
+        return ResourceLocation.tryBuild(MOD_ID, id);
     }
 
 }

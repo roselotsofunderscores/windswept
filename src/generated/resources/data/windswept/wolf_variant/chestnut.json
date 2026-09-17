@@ -1,0 +1,9 @@
+{
+  "angry_texture": "windswept:entity/wolf/wolf_chestnut_angry",
+  "biomes": [
+    "windswept:chestnut_forest",
+    "windswept:snowy_chestnut_forest"
+  ],
+  "tame_texture": "windswept:entity/wolf/wolf_chestnut_tame",
+  "wild_texture": "windswept:entity/wolf/wolf_chestnut"
+}

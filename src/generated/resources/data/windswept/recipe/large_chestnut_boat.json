@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "boatload"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "wooden_chests",
+  "key": {
+    "#": {
+      "item": "windswept:chestnut_planks"
+    },
+    "B": {
+      "item": "windswept:chestnut_boat"
+    }
+  },
+  "pattern": [
+    "#B#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "windswept:large_chestnut_boat"
+  }
+}

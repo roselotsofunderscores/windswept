@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_moss_campion": {
+      "conditions": {
+        "items": [
+          {
+            "items": "windswept:moss_campion"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "windswept:magenta_dye_from_moss_campion"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_moss_campion"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "windswept:magenta_dye_from_moss_campion"
+    ]
+  }
+}

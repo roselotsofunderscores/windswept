@@ -24,7 +24,8 @@
               "windswept:wild_berry_bush"
             ]
           }
-        ]
+        ],
+        "should_replace_requirements": false
       }
     }
   ],

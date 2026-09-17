@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "windswept:holly_berries"
+    },
+    {
+      "item": "windswept:ginger_root"
+    },
+    {
+      "item": "windswept:roasted_chestnuts"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "tag": "c:eggs"
+    },
+    {
+      "tag": "c:crops/wheat"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "windswept:christmas_pudding"
+  }
+}

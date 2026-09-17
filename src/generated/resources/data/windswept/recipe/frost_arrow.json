@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "windswept:frozen_branch"
+    },
+    "I": {
+      "item": "windswept:icicles"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "#",
+    "S",
+    "I"
+  ],
+  "result": {
+    "count": 6,
+    "id": "windswept:frost_arrow"
+  }
+}

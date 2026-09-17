@@ -1,0 +1,30 @@
+{
+  "repaletter": [
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:potted_spruce_sapling",
+      "replaces_with": "windswept:potted_bluebells"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:potted_poppy",
+      "replaces_with": "windswept:potted_red_rose"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:poppy",
+      "replaces_with": "windswept:red_rose"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:light_gray_wool",
+      "replaces_with": "windswept:snow_bricks"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:blue_ice",
+      "replaces_with": "windswept:packed_ice_bricks"
+    }
+  ],
+  "structures": "minecraft:village_taiga"
+}

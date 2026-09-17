@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_desert_lily": {
+      "conditions": {
+        "items": [
+          {
+            "items": "windswept:desert_lily"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "windswept:lime_dye_from_desert_lily"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_desert_lily"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "windswept:lime_dye_from_desert_lily"
+    ]
+  }
+}

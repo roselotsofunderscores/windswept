@@ -23,10 +23,11 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 public class IciclesBlock extends Block implements SimpleWaterloggedBlock {
     public static final EnumProperty<IcicleStates> STATE = EnumProperty.create("state", IcicleStates.class);
@@ -72,10 +73,10 @@ public class IciclesBlock extends Block implements SimpleWaterloggedBlock {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos blockpos, CollisionContext context) {
         return switch (state.getValue(STATE)) {
-            default -> SHAPE;
             case TOP -> TOP;
             case BOTTOM -> BOTTOM;
             case FLOOR -> FLOOR;
+            default -> SHAPE;
         };
     }
 
@@ -91,9 +92,12 @@ public class IciclesBlock extends Block implements SimpleWaterloggedBlock {
 
     @Override
     public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float damage) {
-        if (state.getValue(STATE) == IcicleStates.FLOOR)
+        if (state.getValue(STATE) == IcicleStates.FLOOR) {
+            Vec3 motion = entity.getDeltaMovement();
             entity.causeFallDamage(damage + 2f, 2f, entity.damageSources().source(WindsweptDamageTypes.ICICLE));
-        else
+            entity.setDeltaMovement(motion);
+            entity.hurtMarked = false;
+        } else
             super.fallOn(level, state, pos, entity, damage);
     }
 

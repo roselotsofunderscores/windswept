@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "F": {
+      "item": "windswept:elder_feather"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    " # ",
+    "FSF",
+    " F "
+  ],
+  "result": {
+    "count": 1,
+    "id": "windswept:dream_catcher"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "blueprint:and",
+      "values": [
+        {
+          "type": "neoforge:mod_loaded",
+          "modid": "clayworks"
+        },
+        {
+          "type": "clayworks:config",
+          "value": "kiln"
+        }
+      ]
+    }
+  ],
+  "type": "clayworks:baking",
+  "experience": 0.1,
+  "cookingtime": 100,
+  "ingredient": {
+    "item": "windswept:lunalite"
+  },
+  "result": {
+    "count": 1,
+    "id": "windswept:smooth_lunalite"
+  }
+}

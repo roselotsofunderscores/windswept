@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class EnderManMixin {
     @Inject(method = "isLookingAtMe", at = @At("HEAD"), cancellable = true)
     private void isLookingAtMe(Player player, CallbackInfoReturnable<Boolean> info) {
-        if (player.getInventory().armor.get(3).is(WindsweptBlocks.CARVED_PINECONE_BLOCK.get().asItem()))
+        if (player.getInventory().armor.get(3).is(WindsweptBlocks.CARVED_PINECONE_BLOCK.asItem()))
             info.setReturnValue(true);
     }
 

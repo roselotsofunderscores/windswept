@@ -1,0 +1,8 @@
+{
+  "comparator_output": 9,
+  "description": {
+    "translate": "jukebox_song.windswept.bumblebee"
+  },
+  "length_in_seconds": 55.0,
+  "sound_event": "windswept:music_disc.bumblebee"
+}

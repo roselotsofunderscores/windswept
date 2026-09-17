@@ -3,6 +3,7 @@ package com.rosemods.windswept.core.data.client;
 import com.mojang.datafixers.util.Pair;
 import com.rosemods.windswept.common.block.*;
 import com.rosemods.windswept.core.Windswept;
+import com.rosemods.windswept.core.registry.datapack.WindsweptPaintingVariants;
 import com.teamabnormals.blueprint.common.block.chest.BlueprintChestBlock;
 import com.teamabnormals.blueprint.common.block.chest.BlueprintTrappedChestBlock;
 import com.teamabnormals.blueprint.common.block.sign.BlueprintStandingSignBlock;
@@ -10,17 +11,20 @@ import com.teamabnormals.blueprint.common.block.sign.BlueprintWallSignBlock;
 import com.teamabnormals.blueprint.core.Blueprint;
 import com.teamabnormals.blueprint.core.data.client.BlueprintBlockStateProvider;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.decoration.PaintingVariant;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.*;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.MultiPartBlockStateBuilder;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -33,6 +37,16 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         super(event.getGenerator().getPackOutput(), Windswept.MOD_ID, event.getExistingFileHelper());
     }
 
+    private static String getItemName(ItemLike item) {
+        return BuiltInRegistries.ITEM.getKey(item.asItem()).getPath();
+    }
+
+    // Items //
+
+    private static String getBlockName(Block block) {
+        return BuiltInRegistries.BLOCK.getKey(block).getPath();
+    }
+
     @Override
     protected void registerStatesAndModels() {
         // item models
@@ -43,7 +57,6 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.generatedItem(PINE_BOAT.getFirst().get(), TextureFolder.ITEM);
         this.generatedItem(PINE_BOAT.getSecond().get(), TextureFolder.ITEM);
         this.generatedItem(HOLLY_BERRIES.get(), TextureFolder.ITEM);
-        this.generatedItem(WOODEN_BUCKET.get(), TextureFolder.ITEM);
         this.generatedItem(WOODEN_MILK_BUCKET.get(), TextureFolder.ITEM);
         this.generatedItem(WOODEN_POWDER_SNOW_BUCKET.get(), TextureFolder.ITEM);
         this.generatedItem(WOODEN_WATER_BUCKET.get(), TextureFolder.ITEM);
@@ -67,6 +80,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.generatedItem(OFFSHOOT_POTTERY_SHERD.get(), TextureFolder.ITEM);
         this.generatedItem(FLAKE_POTTERY_SHERD.get(), TextureFolder.ITEM);
         this.generatedItem(DRUPES_POTTERY_SHERD.get(), TextureFolder.ITEM);
+        this.generatedItem(STARE_ARMOR_TRIM_SMITHING_TEMPLATE.get(), TextureFolder.ITEM);
         this.generatedItem(SNOW_GOLEM_BANNER_PATTERN.get(), TextureFolder.ITEM);
         this.generatedItem(SNOW_CHARGE_BANNER_PATTERN.get(), TextureFolder.ITEM);
         this.generatedItem(ROSE_FLOWER_BANNER_PATTERN.get(), TextureFolder.ITEM);
@@ -96,6 +110,14 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.generatedItem(ANTLER_HELMET.get(), TextureFolder.ITEM);
         this.generatedItem(PINECONE_JAM_BOTTLE.get(), TextureFolder.ITEM);
 
+        this.painting(WindsweptPaintingVariants.CLIFFSIDE);
+        this.painting(WindsweptPaintingVariants.DRESS_CODES);
+        this.painting(WindsweptPaintingVariants.ECOTONAL_PAREIDOLIA);
+        this.painting(WindsweptPaintingVariants.THE_FOILS);
+        this.painting(WindsweptPaintingVariants.AURORAE);
+        this.painting(WindsweptPaintingVariants.HEARTH_RUG);
+        this.painting(WindsweptPaintingVariants.ALLU_PINE);
+
         // holly
         this.pillar(STRIPPED_HOLLY_LOG);
         this.wood(STRIPPED_HOLLY_WOOD, this.blockTexture(STRIPPED_HOLLY_LOG.get()));
@@ -117,6 +139,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.leafPile(HOLLY_LEAF_PILE, this.blockTexture(HOLLY_LEAVES.get()), false);
         this.ladder(HOLLY_LADDER);
         this.bookshelf(HOLLY_BOOKSHELF, HOLLY_PLANKS);
+        this.chiseledBookshelfBlock(CHISELED_HOLLY_BOOKSHELF);
         this.boards(HOLLY_BOARDS);
         this.chests(HOLLY_CHEST, TRAPPED_HOLLY_CHEST, this.blockTexture(HOLLY_PLANKS.get()));
         this.compressedBlock(HOLLY_BERRY_BASKET);
@@ -143,6 +166,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.leafPile(CHESTNUT_LEAF_PILE, this.blockTexture(CHESTNUT_LEAVES.get()), true);
         this.ladder(CHESTNUT_LADDER);
         this.bookshelf(CHESTNUT_BOOKSHELF, CHESTNUT_PLANKS);
+        this.chiseledBookshelfBlock(CHISELED_CHESTNUT_BOOKSHELF);
         this.boards(CHESTNUT_BOARDS);
         this.chests(CHESTNUT_CHEST, TRAPPED_CHESTNUT_CHEST, this.blockTexture(CHESTNUT_PLANKS.get()));
         this.hangingSignBlocks(STRIPPED_CHESTNUT_LOG, CHESTNUT_HANGING_SIGNS);
@@ -170,6 +194,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.leafPile(PINE_LEAF_PILE, this.blockTexture(PINE_LEAVES.get()), false);
         this.ladder(PINE_LADDER);
         this.bookshelf(PINE_BOOKSHELF, PINE_PLANKS);
+        this.chiseledBookshelfBlock(CHISELED_PINE_BOOKSHELF);
         this.boards(PINE_BOARDS);
         this.chests(PINE_CHEST, TRAPPED_PINE_CHEST, this.blockTexture(PINE_PLANKS.get()));
         this.hangingSignBlocks(STRIPPED_PINE_LOG, PINE_HANGING_SIGNS);
@@ -287,7 +312,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.wall(SHALE_WALL, this.blockTexture(SHALE.get()));
         this.cubeAll(POLISHED_SHALE);
         this.stairs(POLISHED_SHALE_STAIRS, this.blockTexture(POLISHED_SHALE.get()));
-        this.slab(POLISHED_SHALE_SLAB, this.blockTexture(POLISHED_SHALE.get()));
+        this.doubleSlab(POLISHED_SHALE_SLAB, this.blockTexture(POLISHED_SHALE.get()));
         this.wall(POLISHED_SHALE_WALL, this.blockTexture(POLISHED_SHALE.get()));
         this.cubeAll(POLISHED_SHALE_BRICKS);
         this.cubeAll(ICY_POLISHED_SHALE_BRICKS);
@@ -296,11 +321,31 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.slab(POLISHED_SHALE_BRICK_SLAB, this.blockTexture(POLISHED_SHALE_BRICKS.get()));
         this.wall(POLISHED_SHALE_BRICK_WALL, this.blockTexture(POLISHED_SHALE_BRICKS.get()));
 
+        // arkose
+        this.cubeAll(ARKOSE);
+        this.stairs(ARKOSE_STAIRS, this.blockTexture(ARKOSE.get()));
+        this.slab(ARKOSE_SLAB, this.blockTexture(ARKOSE.get()));
+        this.wall(ARKOSE_WALL, this.blockTexture(ARKOSE.get()));
+        this.cubeAll(POLISHED_ARKOSE);
+        this.stairs(POLISHED_ARKOSE_STAIRS, this.blockTexture(POLISHED_ARKOSE.get()));
+        this.doubleSlab(POLISHED_ARKOSE_SLAB, this.blockTexture(POLISHED_ARKOSE.get()));
+        this.wall(POLISHED_ARKOSE_WALL, this.blockTexture(POLISHED_ARKOSE.get()));
+        this.cubeAll(ARKOSE_BRICKS);
+        this.stairs(ARKOSE_BRICK_STAIRS, this.blockTexture(ARKOSE_BRICKS.get()));
+        this.slab(ARKOSE_BRICK_SLAB, this.blockTexture(ARKOSE_BRICKS.get()));
+        this.wall(ARKOSE_BRICK_WALL, this.blockTexture(ARKOSE_BRICKS.get()));
+        this.cubeAll(ARKOSE_TILES);
+        this.stairs(ARKOSE_TILE_STAIRS, this.blockTexture(ARKOSE_TILES.get()));
+        this.slab(ARKOSE_TILE_SLAB, this.blockTexture(ARKOSE_TILES.get()));
+        this.wall(ARKOSE_TILE_WALL, this.blockTexture(ARKOSE_TILES.get()));
+        this.pillar(ARKOSE_PILLAR);
+
         // decorations
         this.wreath(HOLLY_WREATH);
         this.wreath(PINECONE_WREATH);
         this.wreath(VINE_WREATH);
         this.wreath(CHERRY_WREATH);
+        this.wreath(NIGHTSHADE_BOUQUET);
 
         MultiPartBlockStateBuilder builder = this.getMultipartBuilder(CHRISTMAS_PUDDING.get());
         builder.part().modelFile(new ModelFile.ExistingModelFile(this.modLoc("block/christmas_pudding_4"), this.models().existingFileHelper)).addModel().condition(ChristmasPuddingBlock.STATE, ChristmasPuddingBlock.PuddingStates.FOUR);
@@ -320,6 +365,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
 
         // sprouts
         this.pottedPlantWithPottedVariant(SNOWY_SPROUTS, POTTED_SNOWY_SPROUTS, TextureFolder.ITEM);
+        this.pottedPlantWithPottedVariant(SANDY_SPROUTS, POTTED_SANDY_SPROUTS, TextureFolder.ITEM);
         this.pottedPlantWithPottedVariant(GELISOL_GRASS, POTTED_GELISOL_GRASS, TextureFolder.BLOCK);
         this.pottedPlantWithPottedVariant(DRY_MOSSY_SPROUTS, POTTED_DRY_MOSSY_SPROUTS, TextureFolder.ITEM);
         this.pottedPlantWithPottedVariant(MOSSY_SPROUTS, POTTED_MOSSY_SPROUTS, TextureFolder.ITEM);
@@ -331,6 +377,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.tallPlant(YELLOW_ROSE_BUSH);
         this.tallPlant(LUPINE);
         this.tallPlant(LIONS_TAIL);
+        this.tallPlant(DESERT_LILY);
 
         this.pottedPlant(RED_ROSE, POTTED_RED_ROSE);
         this.pottedPlant(BLUE_ROSE, POTTED_BLUE_ROSE);
@@ -338,11 +385,14 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.pottedPlant(YELLOW_ROSE, POTTED_YELLOW_ROSE);
         this.pottedPlant(FOXGLOVE, POTTED_FOXGLOVE);
         this.pottedPlant(NIGHTSHADE, POTTED_NIGHTSHADE);
+        this.pottedPlant(LARKSPUR, POTTED_LARKSPUR);
+        this.pottedPlant(VERBENA, POTTED_VERBENA);
         this.pottedPlantWithPottedVariant(SNOWDROP, POTTED_SNOWDROP, TextureFolder.BLOCK);
         this.pottedPlantWithPottedVariant(MOSS_CAMPION, POTTED_MOSS_CAMPION, TextureFolder.BLOCK);
         this.pottedPlantWithPottedVariant(WILD_GINGER, POTTED_WILD_GINGER, TextureFolder.BLOCK);
         this.pottedPlantWithPottedVariant(BLUEBELLS, POTTED_BLUEBELLS, TextureFolder.BLOCK);
         this.pottedPlantWithPottedVariant(MIMOSA, POTTED_MIMOSA, TextureFolder.ITEM);
+        this.pottedPlantWithPottedVariant(BRITTLEBUSH, POTTED_BRITTLEBUSH, TextureFolder.BLOCK);
 
         // lavender
         this.getVariantBuilder(LAVENDER.get())
@@ -391,7 +441,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
                 .partialState().with(IceLanternBlock.FACING, Direction.EAST).addModels(ConfiguredModel.builder().modelFile(this.models().getExistingFile(this.modLoc("block/ice_lantern_side"))).rotationY(90).build())
                 .partialState().with(IceLanternBlock.FACING, Direction.WEST).addModels(ConfiguredModel.builder().modelFile(this.models().getExistingFile(this.modLoc("block/ice_lantern_side"))).rotationY(270).build());
         this.generatedItem(ICE_LANTERN.get(), TextureFolder.ITEM);
-        this.chain(ICE_CHAIN);
+        this.iceChain(ICE_CHAIN);
 
         // lunalite
         this.getVariantBuilder(LUNALITE.get())
@@ -492,9 +542,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.itemModel(GELISOL_PATH);
     }
 
-    // Items //
-
-    private void itemModel(RegistryObject<Block> block) {
+    private void itemModel(DeferredBlock<Block> block) {
         this.itemModels().withExistingParent(getItemName(block.get()), this.blockTexture(block.get()));
     }
 
@@ -518,13 +566,18 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.itemModels().withExistingParent(name, "item/generated").texture("layer0", this.modLoc("item/" + name)).texture("layer1", this.modLoc("item/" + name + "_overlay"));
     }
 
-    private void spawnEgg(RegistryObject<? extends Item> egg) {
+    // Blocks //
+
+    private void spawnEgg(DeferredItem<? extends Item> egg) {
         this.itemModels().withExistingParent(getItemName(egg.get()), "item/template_spawn_egg");
     }
 
-    // Blocks //
+    private void painting(ResourceKey<PaintingVariant> painting) {
+        String name = painting.location().getPath();
+        this.itemModels().withExistingParent("item/painting/" + name, "item/generated").texture("layer0", this.modLoc("item/painting/" + name));
+    }
 
-    private void hangingPinecone(RegistryObject<Block> pinecone) {
+    private void hangingPinecone(DeferredBlock<Block> pinecone) {
         String name = getItemName(pinecone.get());
         ResourceLocation texture = this.blockTexture(pinecone.get());
         ModelFile model1 = this.models().withExistingParent(name + "_1", this.modLoc("block/hanging_pinecone_template_1")).texture("texture", texture);
@@ -540,10 +593,10 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
                 .partialState().with(PineconeBlock.AMOUNT, 4).addModels(new ConfiguredModel(model4), new ConfiguredModel(model4, 0, 90, false), new ConfiguredModel(model4, 0, 180, false), new ConfiguredModel(model4, 0, 270, false));
     }
 
-    private void offFairyLight(RegistryObject<Block> pinecone) {
+    private void offFairyLight(DeferredBlock<Block> pinecone) {
         String name = getItemName(pinecone.get());
         ResourceLocation texture = this.blockTexture(pinecone.get());
-        ResourceLocation textureOff = new ResourceLocation(texture.getNamespace(), texture.getPath() + "_off");
+        ResourceLocation textureOff = ResourceLocation.tryBuild(texture.getNamespace(), texture.getPath() + "_off");
         ModelFile model1 = this.models().withExistingParent(name + "_1", this.modLoc("block/hanging_pinecone_template_1")).texture("texture", texture);
         ModelFile model2 = this.models().withExistingParent(name + "_2", this.modLoc("block/hanging_pinecone_template_2")).texture("texture", texture);
         ModelFile model3 = this.models().withExistingParent(name + "_3", this.modLoc("block/hanging_pinecone_template_3")).texture("texture", texture);
@@ -565,7 +618,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
                 .partialState().with(PineconeBlock.AMOUNT, 4).with(BlockStateProperties.LIT, false).addModels(new ConfiguredModel(modelOff4), new ConfiguredModel(modelOff4, 0, 90, false), new ConfiguredModel(modelOff4, 0, 180, false), new ConfiguredModel(modelOff4, 0, 270, false));
     }
 
-    private void wildBerryBush(RegistryObject<Block> bush) {
+    private void wildBerryBush(DeferredBlock<Block> bush) {
         String name = getBlockName(bush.get());
         Function<Integer, ModelFile> model = i -> this.models().cross(name + "_stage" + i, this.modLoc("block/" + name + "_stage" + i)).renderType("cutout");
         this.getVariantBuilder(bush.get())
@@ -575,9 +628,8 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
                 .partialState().with(WildBerryBushBlock.AGE, 3).addModels(new ConfiguredModel(model.apply(3), 0, 0, true));
     }
 
-    private void chain(RegistryObject<Block> chain) {
-        ResourceLocation texture = this.blockTexture(chain.get());
-        ModelFile model = this.models().withExistingParent(getItemName(chain.get()), this.mcLoc("block/chain")).texture("all", texture).texture("particle", texture).renderType("cutout");
+    private void iceChain(DeferredBlock<Block> chain) {
+        ModelFile model = this.models().getExistingFile(this.modLoc("block/ice_chain"));
 
         this.generatedItem(chain.get(), TextureFolder.ITEM);
         this.getVariantBuilder(chain.get())
@@ -586,19 +638,19 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
                 .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.X).modelForState().modelFile(model).rotationX(90).rotationY(90).addModel();
     }
 
-    private void petals(RegistryObject<Block> petals) {
+    private void petals(DeferredBlock<Block> petals) {
         String name = getItemName(petals.get());
         ResourceLocation texture = this.blockTexture(petals.get());
-        ResourceLocation stem = new ResourceLocation(texture.getNamespace(), texture.getPath() + "_stem");
-        ModelFile model1 = this.models().withExistingParent(name + "_1", this.mcLoc("block/flowerbed_1")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
-        ModelFile model2 = this.models().withExistingParent(name + "_2", this.mcLoc("block/flowerbed_2")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
-        ModelFile model3 = this.models().withExistingParent(name + "_3", this.mcLoc("block/flowerbed_3")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
-        ModelFile model4 = this.models().withExistingParent(name + "_4", this.mcLoc("block/flowerbed_4")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
+        ResourceLocation stem = ResourceLocation.tryBuild(texture.getNamespace(), texture.getPath() + "_stem");
+        this.models().withExistingParent(name + "_1", this.mcLoc("block/flowerbed_1")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
+        this.models().withExistingParent(name + "_2", this.mcLoc("block/flowerbed_2")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
+        this.models().withExistingParent(name + "_3", this.mcLoc("block/flowerbed_3")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
+        this.models().withExistingParent(name + "_4", this.mcLoc("block/flowerbed_4")).texture("stem", stem).texture("flowerbed", texture).renderType("cutout");
 
         this.generatedItem(petals.get(), TextureFolder.ITEM);
     }
 
-    private void dreamCatcher(RegistryObject<Block> block) {
+    private void dreamCatcher(DeferredBlock<Block> block) {
         String name = getItemName(block.get());
         Function<String, ModelFile> model = s -> this.models().cross(name + "_" + s, this.modLoc("block/" + name + "_" + s)).renderType("cutout");
 
@@ -608,25 +660,25 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
                 .partialState().with(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER).addModels(new ConfiguredModel(model.apply("bottom")));
     }
 
-    private void wreath(RegistryObject<Block> wreath) {
+    private void wreath(DeferredBlock<Block> wreath) {
         ResourceLocation texture = this.blockTexture(wreath.get());
 
         this.horizontalBlock(wreath.get(), this.models().withExistingParent(getItemName(wreath.get()), "block/ladder").texture("particle", texture).renderType("cutout").texture("texture", texture));
         this.itemModels().withExistingParent(getItemName(wreath.get()), this.modLoc("item/wreath")).texture("layer0", texture);
     }
 
-    private void iceSheet(RegistryObject<Block> block, ResourceLocation texture) {
+    private void iceSheet(DeferredBlock<Block> block, ResourceLocation texture) {
         this.paneBlockWithRenderType((IronBarsBlock) block.get(), texture, texture, "translucent");
         this.itemModels().withExistingParent(getItemName(block.get()), "item/generated").texture("layer0", texture).renderType("translucent");
     }
 
-    private void bars(RegistryObject<Block> block) {
+    private void bars(DeferredBlock<Block> block) {
         ResourceLocation texture = this.blockTexture(block.get());
         this.paneBlockWithRenderType((IronBarsBlock) block.get(), texture, texture, "cutout");
         this.generatedItem(block.get(), TextureFolder.BLOCK);
     }
 
-    private void suspiciousBlock(RegistryObject<Block> block) {
+    private void suspiciousBlock(DeferredBlock<Block> block) {
         String name = getBlockName(block.get());
 
         this.getVariantBuilder(block.get())
@@ -637,7 +689,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.itemModels().withExistingParent(name, this.modLoc("block/" + name + "_0"));
     }
 
-    private void tallPlant(RegistryObject<Block> flower) {
+    private void tallPlant(DeferredBlock<Block> flower) {
         String name = getItemName(flower.get());
         Function<String, ModelFile> model = s -> this.models().cross(name + "_" + s, this.modLoc("block/" + name + "_" + s)).renderType("cutout");
 
@@ -647,103 +699,111 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
                 .partialState().with(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER).addModels(new ConfiguredModel(model.apply("bottom")));
     }
 
-    private void pottedPlant(RegistryObject<Block> plant, RegistryObject<Block> pot) {
+    private void pottedPlant(DeferredBlock<Block> plant, DeferredBlock<Block> pot) {
         this.pot(pot, this.blockTexture(plant.get()));
         this.simpleCross(plant);
         this.generatedItem(plant.get(), TextureFolder.BLOCK);
     }
 
-    private void pottedPlantWithPottedVariant(RegistryObject<Block> plant, RegistryObject<Block> pot, TextureFolder itemFolder) {
+    private void pottedPlantWithPottedVariant(DeferredBlock<Block> plant, DeferredBlock<Block> pot, TextureFolder itemFolder) {
         this.pot(pot, this.modLoc("block/potted_" + getItemName(plant.get())));
         this.simpleCross(plant);
         this.generatedItem(plant.get(), itemFolder);
     }
 
-    private void pot(RegistryObject<Block> pot, ResourceLocation texture) {
+    private void pot(DeferredBlock<Block> pot, ResourceLocation texture) {
         ModelFile model = this.models().withExistingParent(getBlockName(pot.get()), "block/flower_pot_cross").texture("plant", texture).renderType("cutout");
         this.simpleBlock(pot.get(), model);
     }
 
-    private void carpet(RegistryObject<Block> carpet, ResourceLocation texture) {
+    private void carpet(DeferredBlock<Block> carpet, ResourceLocation texture) {
         this.simpleBlock(carpet.get(), this.models().carpet(getItemName(carpet.get()), texture));
         this.itemModel(carpet);
     }
 
-    private void trapdoor(RegistryObject<Block> trapdoor) {
+    private void trapdoor(DeferredBlock<Block> trapdoor) {
         this.trapdoorBlock((TrapDoorBlock) trapdoor.get(), this.blockTexture(trapdoor.get()), true);
         this.itemModels().withExistingParent(getItemName(trapdoor.get()), this.modLoc("block/" + getItemName(trapdoor.get()) + "_bottom"));
     }
 
-    private void trapdoorCutout(RegistryObject<Block> trapdoor) {
+    private void trapdoorCutout(DeferredBlock<Block> trapdoor) {
         this.trapdoorBlockWithRenderType((TrapDoorBlock) trapdoor.get(), this.blockTexture(trapdoor.get()), true, "cutout");
         this.itemModels().withExistingParent(getItemName(trapdoor.get()), this.modLoc("block/" + getItemName(trapdoor.get()) + "_bottom"));
     }
 
-    private void door(RegistryObject<Block> door) {
+    private void door(DeferredBlock<Block> door) {
         String name = getItemName(door.get());
         this.doorBlock((DoorBlock) door.get(), name.replace("_door", ""), this.modLoc("block/" + name + "_bottom"), this.modLoc("block/" + name + "_top"));
         this.generatedItem(door.get(), TextureFolder.ITEM);
     }
 
-    private void doorCutout(RegistryObject<Block> door) {
+    private void doorCutout(DeferredBlock<Block> door) {
         String name = getItemName(door.get());
         this.doorBlockWithRenderType((DoorBlock) door.get(), name.replace("_door", ""), this.modLoc("block/" + name + "_bottom"), this.modLoc("block/" + name + "_top"), "cutout");
         this.generatedItem(door.get(), TextureFolder.ITEM);
     }
 
-    private void button(RegistryObject<Block> button, ResourceLocation texture) {
+    private void button(DeferredBlock<Block> button, ResourceLocation texture) {
         this.buttonBlock((ButtonBlock) button.get(), texture);
         this.itemModels().buttonInventory(getItemName(button.get()), texture);
     }
 
-    private void pressurePlate(RegistryObject<Block> pressurePlate, ResourceLocation texture) {
+    private void pressurePlate(DeferredBlock<Block> pressurePlate, ResourceLocation texture) {
         this.pressurePlateBlock((PressurePlateBlock) pressurePlate.get(), texture);
         this.itemModel(pressurePlate);
     }
 
-    private void ladder(RegistryObject<Block> ladder) {
+    private void ladder(DeferredBlock<Block> ladder) {
         ResourceLocation texture = this.blockTexture(ladder.get());
 
         this.horizontalBlock(ladder.get(), this.models().withExistingParent(getItemName(ladder.get()), "block/ladder").texture("particle", texture).renderType("cutout").texture("texture", texture));
         this.generatedItem(ladder.get(), TextureFolder.BLOCK);
     }
 
-    private void fence(RegistryObject<Block> fence, ResourceLocation texture) {
+    private void fence(DeferredBlock<Block> fence, ResourceLocation texture) {
         this.fenceBlock((FenceBlock) fence.get(), texture);
         this.itemModels().fenceInventory(getItemName(fence.get()), texture);
     }
 
-    private void fenceGate(RegistryObject<Block> gate, ResourceLocation texture) {
+    private void fenceGate(DeferredBlock<Block> gate, ResourceLocation texture) {
         this.fenceGateBlock((FenceGateBlock) gate.get(), texture);
         this.itemModel(gate);
     }
 
-    private void slab(RegistryObject<Block> slab, ResourceLocation fullModel, ResourceLocation texture) {
+    private void slab(DeferredBlock<Block> slab, ResourceLocation fullModel, ResourceLocation texture) {
         this.slabBlock((SlabBlock) slab.get(), fullModel, texture);
         this.itemModel(slab);
     }
 
-    private void slab(RegistryObject<Block> slab, ResourceLocation texture) {
+    private void slab(DeferredBlock<Block> slab, ResourceLocation texture) {
         this.slabBlock((SlabBlock) slab.get(), texture, texture);
         this.itemModel(slab);
     }
 
-    private void slab(RegistryObject<Block> slab, ResourceLocation fullModel, ResourceLocation side, ResourceLocation bottom, ResourceLocation top) {
+    private void slab(DeferredBlock<Block> slab, ResourceLocation fullModel, ResourceLocation side, ResourceLocation bottom, ResourceLocation top) {
         this.slabBlock((SlabBlock) slab.get(), fullModel, side, bottom, top);
         this.itemModel(slab);
     }
 
-    private void stairs(RegistryObject<Block> stairs, ResourceLocation texture) {
+    private void doubleSlab(DeferredBlock<Block> slab, ResourceLocation texture) {
+        ResourceLocation slabTexture = this.blockTexture(slab.get());
+        String name = getBlockName(slab.get());
+
+        this.models().cubeBottomTop(name + "_double", slabTexture, texture, texture);
+        this.slab(slab, this.modLoc("block/" + name + "_double"), slabTexture, texture, texture);
+    }
+
+    private void stairs(DeferredBlock<Block> stairs, ResourceLocation texture) {
         this.stairsBlock((StairBlock) stairs.get(), texture);
         this.itemModel(stairs);
     }
 
-    private void stairs(RegistryObject<Block> stairs, ResourceLocation side, ResourceLocation bottom, ResourceLocation top) {
+    private void stairs(DeferredBlock<Block> stairs, ResourceLocation side, ResourceLocation bottom, ResourceLocation top) {
         this.stairsBlock((StairBlock) stairs.get(), side, bottom, top);
         this.itemModel(stairs);
     }
 
-    private void stairsInversion(RegistryObject<Block> block, ResourceLocation side, ResourceLocation bottom, ResourceLocation top) {
+    private void stairsInversion(DeferredBlock<Block> block, ResourceLocation side, ResourceLocation bottom, ResourceLocation top) {
         String name = getBlockName(block.get());
         ModelFile stairs = this.models().stairs(name, side, bottom, top);
         ModelFile stairsInner = this.models().stairsInner(name + "_inner", side, bottom, top);
@@ -775,12 +835,12 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         }, StairBlock.WATERLOGGED);
     }
 
-    private void wall(RegistryObject<Block> wall, ResourceLocation texture) {
+    private void wall(DeferredBlock<Block> wall, ResourceLocation texture) {
         this.wallBlock((WallBlock) wall.get(), texture);
         this.itemModels().wallInventory(getItemName(wall.get()), texture);
     }
 
-    private void wall(RegistryObject<Block> wall, ResourceLocation side, ResourceLocation bottom, ResourceLocation top) {
+    private void wall(DeferredBlock<Block> wall, ResourceLocation side, ResourceLocation bottom, ResourceLocation top) {
         String name = getBlockName(wall.get());
         ModelFile postModel = this.models().withExistingParent(name + "_post", this.modLoc("block/template_wall_post")).texture("side", side).texture("bottom", bottom).texture("top", top);
         ModelFile sideModel = this.models().withExistingParent(name + "_side", this.modLoc("block/template_wall_side")).texture("side", side).texture("bottom", bottom).texture("top", top);
@@ -790,40 +850,40 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.itemModels().withExistingParent(name, this.modLoc("block/wall_inventory")).texture("side", side).texture("bottom", bottom).texture("top", top);
     }
 
-    private void cubeAll(RegistryObject<Block> block) {
+    private void cubeAll(DeferredBlock<Block> block) {
         this.simpleBlock(block.get());
         this.itemModel(block);
     }
 
-    private void compressedBlock(RegistryObject<Block> block) {
+    private void compressedBlock(DeferredBlock<Block> block) {
         String name = getItemName(block.get());
         this.directionalBlock(block.get(), this.models().cubeBottomTop(name, this.modLoc("block/" + name + "_side"), this.modLoc("block/" + name + "_bottom"), this.modLoc("block/" + name + "_top")));
         this.itemModel(block);
     }
 
-    private void leaves(RegistryObject<Block> leaves) {
+    private void leaves(DeferredBlock<Block> leaves) {
         this.simpleBlock(leaves.get(), this.models().withExistingParent(getItemName(leaves.get()), "block/leaves").texture("all", this.blockTexture(leaves.get())));
         this.itemModel(leaves);
     }
 
-    private void overlayLeaves(RegistryObject<Block> leaves) {
+    private void overlayLeaves(DeferredBlock<Block> leaves) {
         ResourceLocation texture = this.blockTexture(leaves.get());
-        ResourceLocation overlay = new ResourceLocation(texture.getNamespace(), texture.getPath() + "_overlay");
+        ResourceLocation overlay = ResourceLocation.tryBuild(texture.getNamespace(), texture.getPath() + "_overlay");
 
         this.simpleBlock(leaves.get(), this.models().withExistingParent(getItemName(leaves.get()), "windswept:block/overlay_leaves").texture("all", texture).texture("overlay", overlay));
         this.itemModel(leaves);
     }
 
-    private void simpleCross(RegistryObject<Block> block) {
+    private void simpleCross(DeferredBlock<Block> block) {
         this.simpleBlock(block.get(), this.models().cross(getItemName(block.get()), this.blockTexture(block.get())).renderType("cutout"));
     }
 
-    private void signs(Pair<RegistryObject<BlueprintStandingSignBlock>, RegistryObject<BlueprintWallSignBlock>> signs, Supplier<Block> planks) {
+    private void signs(Pair<DeferredBlock<BlueprintStandingSignBlock>, DeferredBlock<BlueprintWallSignBlock>> signs, Supplier<Block> planks) {
         this.signBlock(signs.getFirst().get(), signs.getSecond().get(), this.blockTexture(planks.get()));
         this.generatedItem(signs.getFirst().get(), TextureFolder.ITEM);
     }
 
-    private void beehive(RegistryObject<Block> beehive) {
+    private void beehive(DeferredBlock<Block> beehive) {
         String name = getItemName(beehive.get());
         ModelFile model = this.models().orientable(name, this.modLoc("block/" + name + "_side"), this.modLoc("block/" + name + "_front"), this.modLoc("block/" + name + "_end"));
         ModelFile model_honey = this.models().orientable(name + "_honey", this.modLoc("block/" + name + "_side"), this.modLoc("block/" + name + "_front_honey"), this.modLoc("block/" + name + "_end"));
@@ -832,7 +892,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.itemModel(beehive);
     }
 
-    private void cabinet(RegistryObject<Block> cabinet) {
+    private void cabinet(DeferredBlock<Block> cabinet) {
         String name = getItemName(cabinet.get());
         ModelFile model = this.models().orientable(name, this.modLoc("block/" + name + "_side"), this.modLoc("block/" + name + "_front"), this.modLoc("block/" + name + "_end"));
         ModelFile model_open = this.models().orientable(name + "_open", this.modLoc("block/" + name + "_side"), this.modLoc("block/" + name + "_front_open"), this.modLoc("block/" + name + "_end"));
@@ -841,24 +901,24 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.itemModel(cabinet);
     }
 
-    private void pillar(RegistryObject<Block> pillar) {
+    private void pillar(DeferredBlock<Block> pillar) {
         this.axisBlock((RotatedPillarBlock) pillar.get(), this.blockTexture(pillar.get()), this.modLoc("block/" + getItemName(pillar.get()) + "_top"));
         this.itemModel(pillar);
     }
 
-    private void wood(RegistryObject<Block> log, ResourceLocation texture) {
+    // Blueprint Models //
+
+    private void wood(DeferredBlock<Block> log, ResourceLocation texture) {
         this.axisBlock((RotatedPillarBlock) log.get(), texture, texture);
         this.itemModel(log);
     }
 
-    private void bookshelf(RegistryObject<Block> bookshelf, Supplier<Block> planks) {
+    private void bookshelf(DeferredBlock<Block> bookshelf, Supplier<Block> planks) {
         this.simpleBlock(bookshelf.get(), this.models().cubeColumn(getItemName(bookshelf.get()), this.blockTexture(bookshelf.get()), this.blockTexture(planks.get())));
         this.itemModel(bookshelf);
     }
 
-    // Blueprint Models //
-
-    private void chests(RegistryObject<BlueprintChestBlock> chest, RegistryObject<BlueprintTrappedChestBlock> trapped, ResourceLocation texture) {
+    private void chests(DeferredBlock<BlueprintChestBlock> chest, DeferredBlock<BlueprintTrappedChestBlock> trapped, ResourceLocation texture) {
         ModelFile model = this.models().getBuilder(getItemName(chest.get())).texture("particle", texture);
         this.simpleBlock(chest.get(), model);
         this.simpleBlock(trapped.get(), model);
@@ -866,7 +926,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.itemModels().withExistingParent(getItemName(trapped.get()), "blueprint:item/template_chest");
     }
 
-    private void leafPile(RegistryObject<Block> leafPile, ResourceLocation texture, boolean tinted) {
+    private void leafPile(DeferredBlock<Block> leafPile, ResourceLocation texture, boolean tinted) {
         ModelFile model = this.models().withExistingParent(getItemName(leafPile.get()), "blueprint:block/" + (tinted ? "tinted_" : "") + "leaf_pile").texture("all", texture).renderType("cutout");
 
         this.itemModels().withExistingParent(getItemName(leafPile.get()), "item/generated").texture("layer0", texture);
@@ -879,8 +939,8 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
                 .part().modelFile(model).uvLock(true).rotationY(270).addModel().condition(BlockStateProperties.WEST, true).end();
     }
 
-    private void overlayLeafPile(RegistryObject<Block> leafPile, ResourceLocation texture) {
-        ResourceLocation overlay = new ResourceLocation(texture.getNamespace(), texture.getPath() + "_overlay");
+    private void overlayLeafPile(DeferredBlock<Block> leafPile, ResourceLocation texture) {
+        ResourceLocation overlay = ResourceLocation.tryBuild(texture.getNamespace(), texture.getPath() + "_overlay");
         ModelFile model = this.models().withExistingParent(getItemName(leafPile.get()), "windswept:block/overlay_leaf_pile").texture("all", texture).texture("overlay", overlay);
 
         this.itemModels().withExistingParent(getItemName(leafPile.get()), "item/generated").texture("layer0", texture).texture("layer1", overlay);
@@ -893,10 +953,10 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
                 .part().modelFile(model).uvLock(true).rotationY(270).addModel().condition(BlockStateProperties.WEST, true).end();
     }
 
-    private void boards(RegistryObject<Block> boards) {
+    private void boards(DeferredBlock<Block> boards) {
         ResourceLocation texture = this.blockTexture(boards.get());
-        ModelFile boardsModel = this.models().getBuilder(getItemName(boards.get())).parent(new ModelFile.UncheckedModelFile(new ResourceLocation(Blueprint.MOD_ID, "block/template_boards"))).texture("all", texture);
-        ModelFile boardsHorizontalModel = this.models().getBuilder(getItemName(boards.get()) + "_horizontal").parent(new ModelFile.UncheckedModelFile(new ResourceLocation(Blueprint.MOD_ID, "block/template_boards_horizontal"))).texture("all", texture);
+        ModelFile boardsModel = this.models().getBuilder(getItemName(boards.get())).parent(new ModelFile.UncheckedModelFile(ResourceLocation.tryBuild(Blueprint.MOD_ID, "block/template_boards"))).texture("all", texture);
+        ModelFile boardsHorizontalModel = this.models().getBuilder(getItemName(boards.get()) + "_horizontal").parent(new ModelFile.UncheckedModelFile(ResourceLocation.tryBuild(Blueprint.MOD_ID, "block/template_boards_horizontal"))).texture("all", texture);
 
         this.itemModel(boards);
         this.getVariantBuilder(boards.get())
@@ -905,7 +965,7 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
                 .partialState().with(RotatedPillarBlock.AXIS, Direction.Axis.X).modelForState().modelFile(boardsHorizontalModel).rotationY(270).addModel();
     }
 
-    private void thatch(RegistryObject<Block> thatch) {
+    private void thatch(DeferredBlock<Block> thatch) {
         String name = getItemName(thatch.get());
         ResourceLocation texture = this.blockTexture(thatch.get());
         ResourceLocation extrudes = this.modLoc("block/" + name + "_extrudes");
@@ -914,9 +974,11 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.itemModel(thatch);
     }
 
-    private void thatchSlab(RegistryObject<Block> thatch, ResourceLocation texture) {
+    // Util //
+
+    private void thatchSlab(DeferredBlock<Block> thatch, ResourceLocation texture) {
         String name = getItemName(thatch.get());
-        ResourceLocation extrudes = new ResourceLocation(texture.getNamespace(), texture.getPath() + "_extrudes");
+        ResourceLocation extrudes = ResourceLocation.tryBuild(texture.getNamespace(), texture.getPath() + "_extrudes");
 
         ModelFile bottom = this.models().withExistingParent(name, "blueprint:block/template_thatch_slab").texture("thatch", texture).texture("extrudes", extrudes).renderType("cutout");
         ModelFile top = this.models().withExistingParent(name + "_top", "blueprint:block/template_thatch_slab_top").texture("thatch", texture).texture("extrudes", extrudes).renderType("cutout");
@@ -925,9 +987,9 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.itemModel(thatch);
     }
 
-    private void thatchStairs(RegistryObject<Block> thatch, ResourceLocation texture) {
+    private void thatchStairs(DeferredBlock<Block> thatch, ResourceLocation texture) {
         String name = getItemName(thatch.get());
-        ResourceLocation extrudes = new ResourceLocation(texture.getNamespace(), texture.getPath() + "_extrudes");
+        ResourceLocation extrudes = ResourceLocation.tryBuild(texture.getNamespace(), texture.getPath() + "_extrudes");
 
         ModelFile stairs = this.models().withExistingParent(name, "blueprint:block/template_thatch_stairs").texture("thatch", texture).texture("extrudes", extrudes).renderType("cutout");
         ModelFile inner = this.models().withExistingParent(name + "_inner", "blueprint:block/template_thatch_stairs_inner").texture("thatch", texture).texture("extrudes", extrudes).renderType("cutout");
@@ -953,18 +1015,8 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
 
                     return ConfiguredModel.builder().modelFile(shape == StairsShape.STRAIGHT ? (half == Half.BOTTOM ? stairs : top)
                             : shape == StairsShape.INNER_LEFT || shape == StairsShape.INNER_RIGHT ? (half == Half.BOTTOM ? inner : inner_top)
-                            : (half == Half.BOTTOM ? outer : outer_top)).rotationY(yRot).uvLock(true).build();
+                              : (half == Half.BOTTOM ? outer : outer_top)).rotationY(yRot).uvLock(true).build();
                 }, StairBlock.WATERLOGGED);
-    }
-
-    // Util //
-
-    private static String getItemName(ItemLike item) {
-        return ForgeRegistries.ITEMS.getKey(item.asItem()).getPath();
-    }
-
-    private static String getBlockName(Block block) {
-        return ForgeRegistries.BLOCKS.getKey(block).getPath();
     }
 
     private enum TextureFolder {

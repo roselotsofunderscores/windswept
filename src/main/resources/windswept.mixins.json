@@ -1,13 +1,15 @@
 {
   "required": true,
   "package": "com.rosemods.windswept.core.mixin",
-  "compatibilityLevel": "JAVA_17",
-  "minVersion": "0.8",
   "refmap": "windswept.refmap.json",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
   "mixins": [
     "BeehiveBlockMixin",
+    "BlockItemMixin",
     "BlockMixin",
     "BoatMixin",
+    "BubbleColumnBlockMixin",
     "DrownedMixin",
     "EnderManMixin",
     "FlowerBlockMixin",
@@ -17,6 +19,7 @@
     "IceBlockMixin",
     "LiquidBlockMixin",
     "LivingEntityMixin",
+    "LivingEntityVisibilityMixin",
     "LlamaMixin",
     "MossBlockMixin",
     "PanicGoalMixin",
@@ -34,12 +37,13 @@
     "TemptGoalMixin",
     "TreeFeatureMixin",
     "TrunkPlacerMixin",
+    "VillagerHostilesSensorMixin",
     "ZombieMixin"
   ],
   "client": [
+    "client.EntityRenderDispatcherMixin",
     "client.GoatRendererMixin",
-    "client.HumanoidArmorLayerMixin",
-    "client.ItemInHandRendererMixin",
+    "client.HandRendererMixin",
     "client.LivingEntityRendererMixin",
     "client.RabbitRendererMixin"
   ],

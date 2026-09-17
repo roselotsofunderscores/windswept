@@ -1,0 +1,8 @@
+{
+  "asset_id": "windswept:stare",
+  "decal": false,
+  "description": {
+    "translate": "trim_pattern.windswept.stare"
+  },
+  "template_item": "windswept:stare_armor_trim_smithing_template"
+}

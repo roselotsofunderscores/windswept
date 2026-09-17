@@ -9,13 +9,17 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Noises;
 import net.minecraft.world.level.levelgen.SurfaceRules;
-import net.minecraftforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import static net.minecraft.world.level.levelgen.SurfaceRules.*;
 
 public class WindsweptChunkGeneratorModifierProvider extends ChunkGeneratorModifierProvider {
     public WindsweptChunkGeneratorModifierProvider(GatherDataEvent event, WindsweptDatapackProvider dataPack) {
         super(Windswept.MOD_ID, event.getGenerator().getPackOutput(), dataPack.getRegistryProvider());
+    }
+
+    private static ConditionSource noiseRange(float low, float high) {
+        return noiseCondition(Noises.SURFACE, low / 8.25f, high / 8.25f);
     }
 
     @Override
@@ -28,10 +32,6 @@ public class WindsweptChunkGeneratorModifierProvider extends ChunkGeneratorModif
 
         this.entry("tundra_surface_rule").selects("minecraft:overworld").addModifier(new SurfaceRuleModifier(ifTrue(abovePreliminarySurface(), ifTrue(inTundra, sequence(ifTrue(noiseRange(-2f, .5f), snowRule), sequence(ifTrue(noiseRange(1f, 1.5f), snowRule), grassRule)))), false));
         this.entry("flowering_savanna_surface_rule").selects("minecraft:overworld").addModifier(new SurfaceRuleModifier(ifTrue(abovePreliminarySurface(), ifTrue(inFloweringSavanna, sequence(ifTrue(noiseRange(-2f, .5f), coarseDirtRule), sequence(ifTrue(noiseRange(1f, 1.5f), coarseDirtRule), grassRule)))), false));
-    }
-
-    private static ConditionSource noiseRange(float low, float high) {
-        return noiseCondition(Noises.SURFACE, low / 8.25f, high / 8.25f);
     }
 
 }

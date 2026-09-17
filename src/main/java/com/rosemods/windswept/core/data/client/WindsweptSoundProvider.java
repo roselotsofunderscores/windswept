@@ -2,10 +2,10 @@ package com.rosemods.windswept.core.data.client;
 
 import com.rosemods.windswept.core.Windswept;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.common.data.SoundDefinition.Sound;
-import net.minecraftforge.common.data.SoundDefinitionsProvider;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.data.SoundDefinition.Sound;
+import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.function.Consumer;
 
@@ -22,13 +22,12 @@ public class WindsweptSoundProvider extends SoundDefinitionsProvider {
         this.register(MUSIC_DISC_SNOW, "records/snow", Sound::stream);
         this.register(MUSIC_DISC_BUMBLEBEE, "records/bumblebee", Sound::stream);
         this.register(PINECONE_NOTE, "pinecone_note", Sound::stream);
-
-        this.register(CHILLED_DEATH, "entity/chilled/death/death", 4, 1.6f);
-        this.register(CHILLED_HURT, "entity/chilled/hurt/hurt", 3, 1.5f);
-        this.register(CHILLED_AMBIENT, "entity/chilled/ambient/idle", 3, 1.3f);
+        this.register(CHILLED_DEATH, "entity/chilled/death/death", 4, 2.25f);
+        this.register(CHILLED_HURT, "entity/chilled/hurt/hurt", 3, 2.25f);
+        this.register(CHILLED_AMBIENT, "entity/chilled/ambient/idle", 3, 2f);
     }
 
-    private void register(RegistryObject<SoundEvent> soundEvent, String location, Consumer<Sound> consumer) {
+    private void register(DeferredHolder<SoundEvent, SoundEvent> soundEvent, String location, Consumer<Sound> consumer) {
         Sound sound = sound(Windswept.location(location));
         if (consumer != null)
             consumer.accept(sound);
@@ -36,7 +35,7 @@ public class WindsweptSoundProvider extends SoundDefinitionsProvider {
         this.add(soundEvent.get(), definition().with(sound));
     }
 
-    private void register(RegistryObject<SoundEvent> soundEvent, String name, int amount, float volume) {
+    private void register(DeferredHolder<SoundEvent, SoundEvent> soundEvent, String name, int amount, float volume) {
         Sound[] sounds = new Sound[amount];
 
         for (int i = 1; i <= amount; i++)

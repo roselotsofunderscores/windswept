@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "windswept:lunalite"
-  },
-  "result": "windswept:cut_lunalite_bricks"
-}

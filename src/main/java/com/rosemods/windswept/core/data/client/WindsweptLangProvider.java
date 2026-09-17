@@ -6,17 +6,15 @@ import com.rosemods.windswept.core.Windswept;
 import com.rosemods.windswept.core.registry.WindsweptAttributes;
 import com.rosemods.windswept.core.registry.WindsweptEffects;
 import com.rosemods.windswept.core.registry.WindsweptEnchantments;
-import com.rosemods.windswept.core.registry.WindsweptPaintingVariants;
-import com.rosemods.windswept.core.registry.datapack.WindsweptBiomes;
-import com.rosemods.windswept.core.registry.datapack.WindsweptDamageTypes;
-import com.rosemods.windswept.core.registry.datapack.WindsweptTrimMaterials;
+import com.rosemods.windswept.core.registry.datapack.*;
 import com.rosemods.windswept.integration.jei.WindsweptPlugin;
 import com.teamabnormals.blueprint.common.block.sign.BlueprintStandingSignBlock;
 import com.teamabnormals.blueprint.common.block.sign.BlueprintWallSignBlock;
+import net.minecraft.Util;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
@@ -26,15 +24,15 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.armortrim.TrimMaterial;
+import net.minecraft.world.item.armortrim.TrimPattern;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.data.LanguageProvider;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.codehaus.plexus.util.StringUtils;
 
 import java.util.List;
@@ -52,6 +50,14 @@ public class WindsweptLangProvider extends LanguageProvider {
         super(event.getGenerator().getPackOutput(), Windswept.MOD_ID, "en_us");
     }
 
+    private static String toUpper(DeferredHolder<?, ?> object) {
+        return toUpper(object.getId().getPath());
+    }
+
+    private static String toUpper(String string) {
+        return StringUtils.capitaliseAllWords(string.replace('_', ' '));
+    }
+
     @Override
     protected void addTranslations() {
         // Items //
@@ -60,14 +66,15 @@ public class WindsweptLangProvider extends LanguageProvider {
         this.add(PINE_BOAT.getSecond().get(), "Pine Boat with Chest");
         this.add(GOAT.get(), "Raw Chevon");
         this.add(COOKED_GOAT.get(), "Cooked Chevon");
+        this.add(STARE_ARMOR_TRIM_SMITHING_TEMPLATE.get(), "Smithing Template");
 
         this.add(HOLLY_BERRIES_ON_A_STICK.get(), "Holly Berries on a Stick");
         this.translateBannerPattern(SNOW_CHARGE_BANNER_PATTERN, "snow_charge");
         this.translateBannerPattern(SNOW_GOLEM_BANNER_PATTERN, "snow_golem");
         this.translateBannerPattern(ROSE_FLOWER_BANNER_PATTERN, "rose_flower");
-        this.translateMusicDisc(MUSIC_DISC_RAIN, "rose - rain");
-        this.translateMusicDisc(MUSIC_DISC_SNOW, "rose - snow");
-        this.translateMusicDisc(MUSIC_DISC_BUMBLEBEE, "rose - bumblebee");
+        this.translateMusicDisc(MUSIC_DISC_RAIN, "rain", "roselotsofunderscores - rain");
+        this.translateMusicDisc(MUSIC_DISC_SNOW, "snow", "roselotsofunderscores - snow");
+        this.translateMusicDisc(MUSIC_DISC_BUMBLEBEE, "bumblebee", "roselotsofunderscores - bumblebee");
         this.add(HOLLY_FURNACE_BOAT.get(), "Holly Boat with Furnace");
         this.add(CHESTNUT_FURNACE_BOAT.get(), "Chestnut Boat with Furnace");
         this.add(PINE_FURNACE_BOAT.get(), "Pine Boat with Furnace");
@@ -89,6 +96,10 @@ public class WindsweptLangProvider extends LanguageProvider {
         this.add(GINGER_ROOT_CRATE.get(), "Crate of Ginger Roots");
         this.add(WILD_BERRY_BASKET.get(), "Basket of Wild Berries");
         this.add(LIONS_TAIL.get(), "Lion's Tail");
+        this.add(CHERRY_WREATH.get(), "Spring Wreath");
+        this.add(VINE_WREATH.get(), "Summer Wreath");
+        this.add(PINECONE_WREATH.get(), "Autumn Wreath");
+        this.add(HOLLY_WREATH.get(), "Winter Wreath");
 
         // Effects //
         this.translateEffect(WindsweptEffects.THORNS, "Causes damage to enemies when they attack you.");
@@ -119,6 +130,9 @@ public class WindsweptLangProvider extends LanguageProvider {
         // Trim Materials //
         this.translateTrimMaterial(WindsweptTrimMaterials.ICICLES, "Icicles Material");
         this.translateTrimMaterial(WindsweptTrimMaterials.PINECONE, "Pinecone Material");
+
+        // Trim Patterns //
+        this.translateTrimPattern(WindsweptTrimPatterns.STARE, "Stare Armor Trim");
 
         // Paintings //
         this.translatePainting(WindsweptPaintingVariants.CLIFFSIDE, "Binome");
@@ -154,15 +168,14 @@ public class WindsweptLangProvider extends LanguageProvider {
         this.jeiInfo(SNOW_BOOTS, "Snow boots allow for faster traversal through snow, and grants the wearer the ability to walk on Powder Snow. The leather can be dyed.");
 
         // Auto Translation //
-        this.translateRegistry(ForgeRegistries.BLOCKS, Block::getDescriptionId);
-        this.translateRegistry(ForgeRegistries.ITEMS, Item::getDescriptionId);
-        this.translateRegistry(ForgeRegistries.ENTITY_TYPES, EntityType::getDescriptionId);
+        this.translateRegistry(Registries.BLOCK, Block::getDescriptionId);
+        this.translateRegistry(Registries.ITEM, Item::getDescriptionId);
+        this.translateRegistry(Registries.ENTITY_TYPE, EntityType::getDescriptionId);
     }
 
-
-    private <T> void translateRegistry(IForgeRegistry<T> registry, Function<T, String> toString) {
-        for (RegistryObject<T> object : Windswept.REGISTRY_HELPER.getSubHelper(registry).getDeferredRegister().getEntries())
-            this.add(toString.apply(object.get()), toUpper(registry, object));
+    private <T> void translateRegistry(ResourceKey<Registry<T>> registry, Function<T, String> toString) {
+        for (DeferredHolder<?, ?> object : Windswept.REGISTRY_HELPER.getSubHelper(registry).getDeferredRegister().getEntries())
+            this.add(toString.apply((T) object.get()), toUpper(object));
     }
 
     @Override
@@ -173,12 +186,12 @@ public class WindsweptLangProvider extends LanguageProvider {
         }
     }
 
-    private void translateBlock(RegistryObject<? extends Block> block) {
-        this.add(block.get(), toUpper(ForgeRegistries.BLOCKS, block));
+    private void translateBlock(DeferredBlock<? extends Block> block) {
+        this.add(block.get(), toUpper(block));
     }
 
-    private void translateEnchantment(RegistryObject<? extends Enchantment> enchantment, String name, String desc) {
-        String descId = enchantment.get().getDescriptionId();
+    private void translateEnchantment(ResourceKey<Enchantment> enchantment, String name, String desc) {
+        String descId = Util.makeDescriptionId("enchantment", enchantment.location());
         this.add(descId, name);
         this.add(descId + ".desc", desc);
     }
@@ -192,38 +205,42 @@ public class WindsweptLangProvider extends LanguageProvider {
         this.add("trim_material." + material.location().toString().replace(':', '.'), name);
     }
 
-    private void translatePainting(RegistryObject<PaintingVariant> painting, String author) {
-        String name = ForgeRegistries.PAINTING_VARIANTS.getKey(painting.get()).getPath();
+    private void translateTrimPattern(ResourceKey<TrimPattern> pattern, String name) {
+        this.add("trim_pattern." + pattern.location().toString().replace(':', '.'), name);
+    }
+
+    private void translatePainting(ResourceKey<PaintingVariant> painting, String author) {
+        String name = painting.location().getPath();
         this.add("painting." + Windswept.MOD_ID + "." + name + ".title", toUpper(name));
         this.add("painting." + Windswept.MOD_ID + "." + name + ".author", author);
     }
 
-    private void translateMusicDisc(RegistryObject<? extends Item> item, String desc) {
+    private void translateMusicDisc(DeferredHolder<? extends Item, ? extends Item> item, String name, String desc) {
         this.add(item.get(), "Music Disc");
-        this.addDescription(item, desc);
+        this.add("jukebox_song." + Windswept.MOD_ID + "." + name, desc);
     }
 
-    private void translateSign(Pair<RegistryObject<BlueprintStandingSignBlock>, RegistryObject<BlueprintWallSignBlock>> sign, String name) {
+    private void translateSign(Pair<DeferredBlock<BlueprintStandingSignBlock>, DeferredBlock<BlueprintWallSignBlock>> sign, String name) {
         this.translateBlock(sign.getFirst());
-        this.add(sign.getFirst().get().getDescriptionId().replace(name, name + "_wall"), toUpper(ForgeRegistries.BLOCKS, sign.getSecond()));
+        this.add(sign.getFirst().get().getDescriptionId().replace(name, name + "_wall"), toUpper(sign.getSecond()));
     }
 
-    private void translateAttribute(RegistryObject<? extends Attribute> attribute) {
-        this.add(attribute.get().getDescriptionId(), toUpper(ForgeRegistries.ATTRIBUTES, attribute));
+    private void translateAttribute(DeferredHolder<? extends Attribute, ? extends Attribute> attribute) {
+        this.add(attribute.get().getDescriptionId(), toUpper(attribute));
     }
 
-    private void translateEffect(RegistryObject<? extends MobEffect> effect, String desc) {
-        this.add(effect.get(), toUpper(ForgeRegistries.MOB_EFFECTS, effect));
+    private void translateEffect(DeferredHolder<? extends MobEffect, ? extends MobEffect> effect, String desc) {
+        this.add(effect.get(), toUpper(effect));
         this.add(effect.get().getDescriptionId() + ".description", desc);
     }
 
-    private void translateBannerPattern(RegistryObject<? extends Item> item, String name) {
+    private void translateBannerPattern(DeferredHolder<? extends Item, ? extends Item> item, String name) {
         String desc = toUpper(name);
         this.add(item.get(), "Banner Pattern");
         this.addDescription(item, desc);
 
         for (DyeColor dye : DyeColor.values())
-            this.add("block.minecraft.banner." + Windswept.MOD_ID + "." + name + "." + dye.getName(), toUpper(dye.getName()) + " " + desc);
+            this.add("block." + Windswept.MOD_ID + ".banner." + name + "." + dye.getName(), toUpper(dye.getName()) + " " + desc);
     }
 
     private void jeiInfo(Supplier<? extends ItemLike> item, String desc) {
@@ -236,8 +253,8 @@ public class WindsweptLangProvider extends LanguageProvider {
         this.add("death.attack." + msgId + ".player", killed.apply("%1$s", "%2$s"));
     }
 
-    private void translatePotion(RegistryObject<? extends Potion> potion, String effect) {
-        String name = ForgeRegistries.POTIONS.getKey(potion.get()).getPath();
+    private void translatePotion(DeferredHolder<? extends Potion, ? extends Potion> potion, String effect) {
+        String name = BuiltInRegistries.POTION.getKey(potion.get()).getPath();
 
         this.add("item.minecraft.potion.effect." + name, "Potion of " + effect);
         this.add("item.minecraft.splash_potion.effect." + name, "Splash Potion of " + effect);
@@ -246,16 +263,8 @@ public class WindsweptLangProvider extends LanguageProvider {
         this.add("item.caverns_and_chasms.tether_potion.effect." + name, "Tether Potion of " + effect);
     }
 
-    private void addDescription(RegistryObject<? extends ItemLike> item, String desc) {
+    private void addDescription(DeferredHolder<? extends ItemLike, ? extends ItemLike> item, String desc) {
         this.add(item.get().asItem().getDescriptionId() + ".desc", desc);
-    }
-
-    private static <T> String toUpper(IForgeRegistry<T> registry, RegistryObject<? extends T> object) {
-        return toUpper(registry.getKey(object.get()).getPath());
-    }
-
-    private static String toUpper(String string) {
-        return StringUtils.capitaliseAllWords(string.replace('_', ' '));
     }
 
 }

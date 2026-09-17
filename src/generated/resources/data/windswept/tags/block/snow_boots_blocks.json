@@ -1,0 +1,15 @@
+{
+  "values": [
+    "#minecraft:snow",
+    "windswept:snowy_sprouts",
+    "windswept:snowdrop",
+    {
+      "id": "nomansland:snow_path",
+      "required": false
+    },
+    {
+      "id": "nomansland:snowy_grass_path",
+      "required": false
+    }
+  ]
+}

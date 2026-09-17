@@ -2,27 +2,20 @@ package com.rosemods.windswept.common.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.util.function.Supplier;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 public class NightshadeFlowerBlock extends FlowerBlock {
 
-    public NightshadeFlowerBlock(Supplier<MobEffect> stewEffect, int stewEffectDuration, Properties properties) {
+    public NightshadeFlowerBlock(Holder<MobEffect> stewEffect, int stewEffectDuration, Properties properties) {
         super(stewEffect, stewEffectDuration, properties);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
-        particles(level, pos, rand);
     }
 
     public static void particles(Level level, BlockPos pos, RandomSource rand) {
@@ -36,6 +29,12 @@ public class NightshadeFlowerBlock extends FlowerBlock {
                     d1 + Direction.UP.getStepY() * d3, d2 + Direction.UP.getStepZ() * d3,
                     rand.nextGaussian() * .005D, rand.nextGaussian() * .005d, rand.nextGaussian() * .005d);
         }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
+        particles(level, pos, rand);
     }
 
 }

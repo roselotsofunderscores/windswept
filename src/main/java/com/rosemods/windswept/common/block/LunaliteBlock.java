@@ -18,6 +18,10 @@ public class LunaliteBlock extends Block {
         this.registerDefaultState(this.stateDefinition.any().setValue(TOP, true));
     }
 
+    public static boolean aboveIsLunalite(LevelAccessor level, BlockPos above) {
+        return level.getBlockState(above).is(WindsweptBlockTags.LUNALITE) && canSupportCenter(level, above, Direction.DOWN);
+    }
+
     @Override
     public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
         return state.setValue(TOP, !aboveIsLunalite(level, currentPos.above()));
@@ -31,10 +35,6 @@ public class LunaliteBlock extends Block {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(TOP);
-    }
-
-    public static boolean aboveIsLunalite(LevelAccessor level, BlockPos above) {
-        return level.getBlockState(above).is(WindsweptBlockTags.LUNALITE) && canSupportCenter(level, above, Direction.DOWN);
     }
 
 }

@@ -1,0 +1,8 @@
+{
+  "comparator_output": 13,
+  "description": {
+    "translate": "jukebox_song.windswept.snow"
+  },
+  "length_in_seconds": 121.0,
+  "sound_event": "windswept:music_disc.snow"
+}

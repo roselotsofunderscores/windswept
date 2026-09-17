@@ -6,7 +6,7 @@ import com.teamabnormals.blueprint.common.world.modification.ModdedBiomeSlice;
 import com.teamabnormals.blueprint.core.registry.BlueprintBiomes;
 import com.teamabnormals.blueprint.core.registry.BlueprintDataPackRegistries;
 import com.teamabnormals.blueprint.core.util.BiomeUtil;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Climate;
@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import static com.rosemods.windswept.core.registry.datapack.WindsweptBiomes.*;
+
 public final class WindsweptBiomeSlices {
     public static final ResourceKey<ModdedBiomeSlice> CHESTNUT_SLICE = createKey("chestnut");
     public static final ResourceKey<ModdedBiomeSlice> PINE_SLICE = createKey("pine");
@@ -33,7 +34,7 @@ public final class WindsweptBiomeSlices {
     public static final ResourceKey<Biome> TUNDRA_AREA = WindsweptBiomes.createKey("tundra_area");
     public static final ResourceKey<Biome> FLOWERING_SAVANNA_AREA = WindsweptBiomes.createKey("flowering_savanna_area");
 
-    public static void bootstrap(BootstapContext<ModdedBiomeSlice> context) {
+    public static void bootstrap(BootstrapContext<ModdedBiomeSlice> context) {
         List<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> entries = new ArrayList<>();
         new WindsweptBiomeBuilder().addBiomesToSlice(entries::add);
 

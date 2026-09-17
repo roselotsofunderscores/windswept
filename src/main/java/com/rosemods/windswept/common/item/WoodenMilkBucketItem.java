@@ -1,10 +1,8 @@
 package com.rosemods.windswept.common.item;
 
-import com.rosemods.windswept.common.capability.wrappers.WoodenBucketWrapper;
 import com.rosemods.windswept.core.WindsweptConfig;
 import com.rosemods.windswept.core.registry.WindsweptItems;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
@@ -13,10 +11,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MilkBucketItem;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.neoforged.neoforge.common.EffectCures;
 
 public class WoodenMilkBucketItem extends MilkBucketItem {
 
@@ -24,10 +21,19 @@ public class WoodenMilkBucketItem extends MilkBucketItem {
         super(properties);
     }
 
+    public static void milkAnimal(Player player, InteractionHand hand, ItemStack stack) {
+        ItemStack milkBucket = new ItemStack(WindsweptItems.WOODEN_MILK_BUCKET.get());
+        if (!player.getAbilities().instabuild)
+            milkBucket.setDamageValue(stack.getDamageValue());
+
+        player.playSound(SoundEvents.COW_MILK, 1f, 1f);
+        player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, milkBucket));
+    }
+
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
         if (!level.isClientSide)
-            entity.curePotionEffects(Items.MILK_BUCKET.getDefaultInstance());
+            entity.removeEffectsCuredBy(EffectCures.MILK);
 
         if (entity instanceof ServerPlayer serverplayer) {
             CriteriaTriggers.CONSUME_ITEM.trigger(serverplayer, stack);
@@ -56,21 +62,4 @@ public class WoodenMilkBucketItem extends MilkBucketItem {
     public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
         return WoodenBucketItem.getEmpty(itemStack, null, null);
     }
-
-    @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
-        return new WoodenBucketWrapper(stack);
-    }
-
-    // Util //
-
-    public static void milkAnimal(Player player, InteractionHand hand, ItemStack stack) {
-        ItemStack milkBucket = new ItemStack(WindsweptItems.WOODEN_MILK_BUCKET.get());
-        if (!player.getAbilities().instabuild)
-            milkBucket.setDamageValue(stack.getDamageValue());
-
-        player.playSound(SoundEvents.COW_MILK, 1f, 1f);
-        player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, milkBucket));
-    }
-
 }

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "windswept:gingerbread_cookie_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "windswept:gingerbread_cookie"
+  }
+}

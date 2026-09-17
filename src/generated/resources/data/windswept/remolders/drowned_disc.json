@@ -1,0 +1,28 @@
+{
+  "molding": "json",
+  "remolder": {
+    "type": "add",
+    "target": "pools[]",
+    "value": {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "attacker",
+          "predicate": {
+            "type": "#minecraft:skeletons"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "windswept:music_disc_rain"
+        }
+      ],
+      "name": "windswept:rain_disc",
+      "rolls": 1.0
+    }
+  },
+  "selector": "minecraft:loot_table/entities/drowned"
+}

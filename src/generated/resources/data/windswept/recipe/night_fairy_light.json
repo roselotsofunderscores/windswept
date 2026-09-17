@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "windswept:pinecone"
+    },
+    {
+      "item": "windswept:nightshade"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "windswept:night_fairy_light"
+  }
+}

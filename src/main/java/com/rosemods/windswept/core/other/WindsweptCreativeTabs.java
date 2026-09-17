@@ -2,14 +2,14 @@ package com.rosemods.windswept.core.other;
 
 import com.rosemods.windswept.core.Windswept;
 import com.teamabnormals.blueprint.core.util.item.CreativeModeTabContentsPopulator;
-import com.teamabnormals.blueprint.core.util.registry.BlockSubRegistryHelper;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.fml.ModList;
 
 import java.util.function.Predicate;
 
@@ -36,9 +36,10 @@ public final class WindsweptCreativeTabs {
                 .addItemsAfter(Ingredient.of(Blocks.MOSSY_COBBLESTONE_WALL), DRY_MOSSY_COBBLESTONE, DRY_MOSSY_COBBLESTONE_STAIRS, DRY_MOSSY_COBBLESTONE_SLAB, DRY_MOSSY_COBBLESTONE_WALL)
                 .addItemsAfter(Ingredient.of(Blocks.MOSSY_STONE_BRICK_WALL), DRY_MOSSY_STONE_BRICKS, DRY_MOSSY_STONE_BRICK_STAIRS, DRY_MOSSY_STONE_BRICK_SLAB, DRY_MOSSY_STONE_BRICK_WALL)
                 .addItemsAfter(Ingredient.of(Blocks.POLISHED_ANDESITE_SLAB), SHALE, SHALE_STAIRS, SHALE_SLAB, SHALE_WALL, POLISHED_SHALE, POLISHED_SHALE_STAIRS, POLISHED_SHALE_SLAB, POLISHED_SHALE_WALL,
-                        POLISHED_SHALE_BRICKS, CHISELED_POLISHED_SHALE_BRICKS, POLISHED_SHALE_BRICK_STAIRS, POLISHED_SHALE_BRICK_SLAB, POLISHED_SHALE_BRICK_WALL)
-                .addItemsAfter(Ingredient.of(Blocks.MUD_BRICK_WALL), PINECONE_BLOCK, PINECONE_SHINGLES, PINECONE_SHINGLE_STAIRS, PINECONE_SHINGLE_SLAB,
-                        LUNALITE, LUNALITE_STAIRS, LUNALITE_SLAB, LUNALITE_WALL, CUT_LUNALITE, CUT_LUNALITE_STAIRS, CUT_LUNALITE_SLAB, CUT_LUNALITE_WALL,
+                        POLISHED_SHALE_BRICKS, ICY_POLISHED_SHALE_BRICKS, CHISELED_POLISHED_SHALE_BRICKS, POLISHED_SHALE_BRICK_STAIRS, POLISHED_SHALE_BRICK_SLAB, POLISHED_SHALE_BRICK_WALL,
+                        ARKOSE, ARKOSE_STAIRS, ARKOSE_SLAB, ARKOSE_WALL, POLISHED_ARKOSE, POLISHED_ARKOSE_STAIRS, POLISHED_ARKOSE_SLAB, POLISHED_ARKOSE_WALL, ARKOSE_BRICKS, ARKOSE_PILLAR, ARKOSE_BRICK_STAIRS, ARKOSE_BRICK_SLAB, ARKOSE_BRICK_WALL,
+                        ARKOSE_TILES, ARKOSE_TILE_STAIRS, ARKOSE_TILE_SLAB, ARKOSE_TILE_WALL)
+                .addItemsAfter(Ingredient.of(Blocks.MUD_BRICK_WALL), LUNALITE, LUNALITE_STAIRS, LUNALITE_SLAB, LUNALITE_WALL, CUT_LUNALITE, CUT_LUNALITE_STAIRS, CUT_LUNALITE_SLAB, CUT_LUNALITE_WALL,
                         CUT_LUNALITE_BRICKS, CHISELED_CUT_LUNALITE_BRICKS, CUT_LUNALITE_BRICK_STAIRS, CUT_LUNALITE_BRICK_SLAB, CUT_LUNALITE_BRICK_WALL, SMOOTH_LUNALITE, SMOOTH_LUNALITE_STAIRS, SMOOTH_LUNALITE_SLAB)
                 .addItemsAfter(Ingredient.of(Blocks.POLISHED_BLACKSTONE_BRICK_WALL), GINGERBREAD_BLOCK, GLAZED_GINGERBREAD_BLOCK, GINGERBREAD_COOKIE_BLOCK, GINGERBREAD_DOOR,
                         GINGERBREAD_TRAPDOOR, GINGERBREAD_BRICKS, GINGERBREAD_BRICK_STAIRS, GINGERBREAD_BRICK_SLAB, GINGERBREAD_BRICK_WALL,
@@ -64,16 +65,21 @@ public final class WindsweptCreativeTabs {
                 .addItemsBefore(Ingredient.of(Blocks.CHAIN), ICE_LANTERN)
                 .addItemsAfter(Ingredient.of(Blocks.CHAIN), ICE_CHAIN)
                 .addItemsAfter(Ingredient.of(Blocks.JUKEBOX), CARVED_PINECONE_BLOCK, WILL_O_THE_WISP, ELDER_WING, ELDER_ORNAMENT, DREAM_CATCHER, FROSTBITER_TROPHY)
-                .addItemsAfter(modLoaded(Blocks.LADDER/*WindsweptConstants.BAMBOO_LADDER*/, "woodworks"), HOLLY_LADDER, CHESTNUT_LADDER, PINE_LADDER)
-                .addItemsAfter(modLoaded(Blocks.BEEHIVE/*WindsweptConstants.BAMBOO_BEEHIVE*/, "woodworks"), HOLLY_BEEHIVE, CHESTNUT_BEEHIVE, PINE_BEEHIVE)
-                .addItemsAfter(Ingredient.of(Blocks.BOOKSHELF), HOLLY_BOOKSHELF, /*CHISELED_HOLLY_BOOKSHELF, */CHESTNUT_BOOKSHELF, /*CHISELED_CHESTNUT_BOOKSHELF, */PINE_BOOKSHELF/*, CHISELED_PINE_BOOKSHELF*/)
-                .addItemsAfter(modLoaded(Blocks.CHEST/*WindsweptConstants.BAMBOO_CLOSET*/, "woodworks"), HOLLY_CHEST, CHESTNUT_CHEST, PINE_CHEST)
+                .addItemsAfter(modLoaded(Blocks.LADDER, "woodworks", "quark"), HOLLY_LADDER, CHESTNUT_LADDER, PINE_LADDER)
+                .addItemsAfter(modLoaded(Blocks.BEEHIVE, "woodworks"), HOLLY_BEEHIVE, CHESTNUT_BEEHIVE, PINE_BEEHIVE)
+                .addItemsBefore(modLoaded(Blocks.CHISELED_BOOKSHELF, "woodworks", "quark", "nomansland"), HOLLY_BOOKSHELF)
+                .addItemsBefore(modLoaded(Blocks.CHISELED_BOOKSHELF, "woodworks"), CHISELED_HOLLY_BOOKSHELF)
+                .addItemsBefore(modLoaded(Blocks.CHISELED_BOOKSHELF, "woodworks", "quark", "nomansland"), CHESTNUT_BOOKSHELF)
+                .addItemsBefore(modLoaded(Blocks.CHISELED_BOOKSHELF, "woodworks"), CHISELED_CHESTNUT_BOOKSHELF)
+                .addItemsBefore(modLoaded(Blocks.CHISELED_BOOKSHELF, "woodworks", "quark", "nomansland"), PINE_BOOKSHELF)
+                .addItemsBefore(modLoaded(Blocks.CHISELED_BOOKSHELF, "woodworks"), CHISELED_PINE_BOOKSHELF)
+                .addItemsAfter(modLoaded(Blocks.CHEST, "woodworks", "quark"), HOLLY_CHEST, CHESTNUT_CHEST, PINE_CHEST)
                 .addItemsAfter(Ingredient.of(Blocks.SUSPICIOUS_GRAVEL), SUSPICIOUS_SNOW)
 
                 .tab(COLORED_BLOCKS)
-                .addItemsAfter(Ingredient.of(Blocks.PINK_CARPET), WHITE_PINECONE_SHINGLES, LIGHT_GRAY_PINECONE_SHINGLES, GRAY_PINECONE_SHINGLES, BLACK_PINECONE_SHINGLES, BROWN_PINECONE_SHINGLES, RED_PINECONE_SHINGLES, ORANGE_PINECONE_SHINGLES, YELLOW_PINECONE_SHINGLES, LIME_PINECONE_SHINGLES, GREEN_PINECONE_SHINGLES, CYAN_PINECONE_SHINGLES, LIGHT_BLUE_PINECONE_SHINGLES, BLUE_PINECONE_SHINGLES, PURPLE_PINECONE_SHINGLES, MAGENTA_PINECONE_SHINGLES, PINK_PINECONE_SHINGLES,
-                        WHITE_PINECONE_SHINGLE_STAIRS, LIGHT_GRAY_PINECONE_SHINGLE_STAIRS, GRAY_PINECONE_SHINGLE_STAIRS, BLACK_PINECONE_SHINGLE_STAIRS, BROWN_PINECONE_SHINGLE_STAIRS, RED_PINECONE_SHINGLE_STAIRS, ORANGE_PINECONE_SHINGLE_STAIRS, YELLOW_PINECONE_SHINGLE_STAIRS, LIME_PINECONE_SHINGLE_STAIRS, GREEN_PINECONE_SHINGLE_STAIRS, CYAN_PINECONE_SHINGLE_STAIRS, LIGHT_BLUE_PINECONE_SHINGLE_STAIRS, BLUE_PINECONE_SHINGLE_STAIRS, PURPLE_PINECONE_SHINGLE_STAIRS, MAGENTA_PINECONE_SHINGLE_STAIRS, PINK_PINECONE_SHINGLE_STAIRS,
-                        WHITE_PINECONE_SHINGLE_SLAB, LIGHT_GRAY_PINECONE_SHINGLE_SLAB, GRAY_PINECONE_SHINGLE_SLAB, BLACK_PINECONE_SHINGLE_SLAB, BROWN_PINECONE_SHINGLE_SLAB, RED_PINECONE_SHINGLE_SLAB, ORANGE_PINECONE_SHINGLE_SLAB, YELLOW_PINECONE_SHINGLE_SLAB, LIME_PINECONE_SHINGLE_SLAB, GREEN_PINECONE_SHINGLE_SLAB, CYAN_PINECONE_SHINGLE_SLAB, LIGHT_BLUE_PINECONE_SHINGLE_SLAB, BLUE_PINECONE_SHINGLE_SLAB, PURPLE_PINECONE_SHINGLE_SLAB, MAGENTA_PINECONE_SHINGLE_SLAB, PINK_PINECONE_SHINGLE_SLAB)
+                .addItemsAfter(Ingredient.of(Blocks.PINK_CARPET), PINECONE_SHINGLES, WHITE_PINECONE_SHINGLES, LIGHT_GRAY_PINECONE_SHINGLES, GRAY_PINECONE_SHINGLES, BLACK_PINECONE_SHINGLES, BROWN_PINECONE_SHINGLES, RED_PINECONE_SHINGLES, ORANGE_PINECONE_SHINGLES, YELLOW_PINECONE_SHINGLES, LIME_PINECONE_SHINGLES, GREEN_PINECONE_SHINGLES, CYAN_PINECONE_SHINGLES, LIGHT_BLUE_PINECONE_SHINGLES, BLUE_PINECONE_SHINGLES, PURPLE_PINECONE_SHINGLES, MAGENTA_PINECONE_SHINGLES, PINK_PINECONE_SHINGLES,
+                        PINECONE_SHINGLE_STAIRS, WHITE_PINECONE_SHINGLE_STAIRS, LIGHT_GRAY_PINECONE_SHINGLE_STAIRS, GRAY_PINECONE_SHINGLE_STAIRS, BLACK_PINECONE_SHINGLE_STAIRS, BROWN_PINECONE_SHINGLE_STAIRS, RED_PINECONE_SHINGLE_STAIRS, ORANGE_PINECONE_SHINGLE_STAIRS, YELLOW_PINECONE_SHINGLE_STAIRS, LIME_PINECONE_SHINGLE_STAIRS, GREEN_PINECONE_SHINGLE_STAIRS, CYAN_PINECONE_SHINGLE_STAIRS, LIGHT_BLUE_PINECONE_SHINGLE_STAIRS, BLUE_PINECONE_SHINGLE_STAIRS, PURPLE_PINECONE_SHINGLE_STAIRS, MAGENTA_PINECONE_SHINGLE_STAIRS, PINK_PINECONE_SHINGLE_STAIRS,
+                        PINECONE_SHINGLE_SLAB, WHITE_PINECONE_SHINGLE_SLAB, LIGHT_GRAY_PINECONE_SHINGLE_SLAB, GRAY_PINECONE_SHINGLE_SLAB, BLACK_PINECONE_SHINGLE_SLAB, BROWN_PINECONE_SHINGLE_SLAB, RED_PINECONE_SHINGLE_SLAB, ORANGE_PINECONE_SHINGLE_SLAB, YELLOW_PINECONE_SHINGLE_SLAB, LIME_PINECONE_SHINGLE_SLAB, GREEN_PINECONE_SHINGLE_SLAB, CYAN_PINECONE_SHINGLE_SLAB, LIGHT_BLUE_PINECONE_SHINGLE_SLAB, BLUE_PINECONE_SHINGLE_SLAB, PURPLE_PINECONE_SHINGLE_SLAB, MAGENTA_PINECONE_SHINGLE_SLAB, PINK_PINECONE_SHINGLE_SLAB)
 
                 .tab(NATURAL_BLOCKS)
                 .addItemsAfter(Ingredient.of(Blocks.PODZOL), GELISOL)
@@ -90,10 +96,10 @@ public final class WindsweptCreativeTabs {
                 .addItemsBefore(modLoaded(Blocks.AZALEA_LEAVES, "woodworks"), CHESTNUT_LEAF_PILE)
                 .addItemsBefore(Ingredient.of(Blocks.AZALEA_LEAVES), PINE_LEAVES)
                 .addItemsBefore(modLoaded(Blocks.AZALEA_LEAVES, "woodworks"), PINE_LEAF_PILE)
-                .addItemsAfter(Ingredient.of(Blocks.LILY_OF_THE_VALLEY), FOXGLOVE, MOSS_CAMPION, MIMOSA, SNOWDROP, NIGHTSHADE, BLUEBELLS,
+                .addItemsAfter(Ingredient.of(Blocks.LILY_OF_THE_VALLEY), FOXGLOVE, MOSS_CAMPION, MIMOSA, BRITTLEBUSH, LARKSPUR, VERBENA, BLUEBELLS, SNOWDROP, NIGHTSHADE,
                         BLUE_ROSE, BLUE_ROSE_BUSH, RED_ROSE, RED_ROSE_BUSH, WHITE_ROSE, WHITE_ROSE_BUSH, YELLOW_ROSE, YELLOW_ROSE_BUSH)
-                .addItemsBefore(Ingredient.of(Blocks.CRIMSON_ROOTS), MOSSY_SPROUTS, DRY_MOSSY_SPROUTS, SNOWY_SPROUTS, WILD_GINGER)
-                .addItemsAfter(Ingredient.of(Blocks.SUNFLOWER), LIONS_TAIL, LUPINE)
+                .addItemsBefore(Ingredient.of(Blocks.CRIMSON_ROOTS), MOSSY_SPROUTS, DRY_MOSSY_SPROUTS, SANDY_SPROUTS, SNOWY_SPROUTS, WILD_GINGER)
+                .addItemsAfter(Ingredient.of(Blocks.SUNFLOWER), DESERT_LILY, LIONS_TAIL, LUPINE)
                 .addItemsAfter(Ingredient.of(Blocks.BAMBOO), PINECONE, PINECONE_BLOCK, ELDER_WING, ELDER_ORNAMENT, DREAM_CATCHER)
                 .addItemsAfter(Ingredient.of(Blocks.SUGAR_CANE), LAVENDER, ICICLES)
                 .addItemsAfter(Ingredient.of(Blocks.HONEY_BLOCK), PINECONE_JAM_BLOCK)
@@ -101,17 +107,17 @@ public final class WindsweptCreativeTabs {
                 .addItemsAfter(modLoaded(WindsweptConstants.SWEET_BERRY_PIPS, "berry_good"), WILD_BERRY_PIPS)
                 .addItemsAfter(Ingredient.of(Blocks.HAY_BLOCK), LAVENDER_BALE, CHESTNUT_CRATE, ROASTED_CHESTNUT_CRATE, GINGER_ROOT_CRATE, HOLLY_BERRY_BASKET, WILD_BERRY_BASKET)
                 .addItemsBefore(modLoaded(Blocks.COBWEB, "caverns_and_chasms"), FROZEN_FLESH_BLOCK)
-                .addItemsAfter(Ingredient.of(Blocks.FLOWERING_AZALEA), HOLLY_WREATH, VINE_WREATH, PINECONE_WREATH, CHERRY_WREATH)
+                .addItemsAfter(Ingredient.of(Blocks.FLOWERING_AZALEA), HOLLY_WREATH, VINE_WREATH, PINECONE_WREATH, CHERRY_WREATH, NIGHTSHADE_BOUQUET)
                 .addItemsAfter(Ingredient.of(Blocks.ACACIA_SAPLING), FLOWERING_ACACIA_SAPLING)
-                .addItemsAfter(Ingredient.of(Blocks.ACACIA_LEAVES), FLOWERING_ACACIA_LEAVES)
                 .addItemsAfter(modLoaded(Blocks.ACACIA_LEAVES, "woodworks"), FLOWERING_ACACIA_LEAF_PILE)
+                .addItemsAfter(Ingredient.of(Blocks.ACACIA_LEAVES), FLOWERING_ACACIA_LEAVES)
                 .addItemsAfter(Ingredient.of(Blocks.PINK_PETALS), YELLOW_PETALS)
 
                 .tab(REDSTONE_BLOCKS)
                 .addItemsAfter(Ingredient.of(Blocks.COMPARATOR), REDSTONE_FAIRY_LIGHT)
                 .addItemsAfter(Ingredient.of(Blocks.HONEY_BLOCK), PINECONE_JAM_BLOCK)
                 .addItemsAfter(Ingredient.of(Blocks.NOTE_BLOCK), CARVED_PINECONE_BLOCK)
-                .addItemsAfter(modLoaded(Blocks.TRAPPED_CHEST/*WindsweptConstants.TRAPPED_BAMBOO_CLOSET*/, "woodworks"), TRAPPED_HOLLY_CHEST, TRAPPED_CHESTNUT_CHEST, TRAPPED_PINE_CHEST)
+                .addItemsAfter(modLoaded(Blocks.TRAPPED_CHEST, "woodworks", "quark"), TRAPPED_HOLLY_CHEST, TRAPPED_CHESTNUT_CHEST, TRAPPED_PINE_CHEST)
 
                 .tab(COMBAT)
                 .addItemsAfter(Ingredient.of(Items.SPECTRAL_ARROW), FROST_ARROW)
@@ -124,6 +130,7 @@ public final class WindsweptCreativeTabs {
                 .addItemsAfter(Ingredient.of(Items.SNOWBALL), ICICLES, FROZEN_BRANCH)
                 .addItemsAfter(Ingredient.of(Items.PIGLIN_BANNER_PATTERN), SNOW_GOLEM_BANNER_PATTERN, SNOW_CHARGE_BANNER_PATTERN, ROSE_FLOWER_BANNER_PATTERN)
                 .addItemsAfter(Ingredient.of(Items.SNORT_POTTERY_SHERD), HOOT_POTTERY_SHERD, PLUMAGE_POTTERY_SHERD, OFFSHOOT_POTTERY_SHERD, FLAKE_POTTERY_SHERD, DRUPES_POTTERY_SHERD)
+                .addItemsAfter(Ingredient.of(Items.DUNE_ARMOR_TRIM_SMITHING_TEMPLATE), STARE_ARMOR_TRIM_SMITHING_TEMPLATE)
 
                 .tab(TOOLS_AND_UTILITIES)
                 .addItemsBefore(Ingredient.of(Items.BAMBOO_RAFT), HOLLY_BOAT.getFirst(), HOLLY_BOAT.getSecond())
@@ -156,11 +163,19 @@ public final class WindsweptCreativeTabs {
     }
 
     private static Predicate<ItemStack> modLoaded(ItemLike item, String... modids) {
-        return stack -> Ingredient.of(item).test(stack) && BlockSubRegistryHelper.areModsLoaded(modids);
+        return stack -> Ingredient.of(item).test(stack) && anyLoaded(modids);
     }
 
     public static Predicate<ItemStack> modLoaded(ResourceLocation location, String... modids) {
-        return modLoaded(ForgeRegistries.ITEMS.getValue(location), modids);
+        return stack -> anyLoaded(modids) && Ingredient.of(BuiltInRegistries.ITEM.get(location)).test(stack);
+    }
+
+    private static boolean anyLoaded(String... modIds) {
+        for (String modId : modIds)
+            if (ModList.get().isLoaded(modId))
+                return true;
+
+        return false;
     }
 
 }

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "minecraft:stone_bricks"
+    },
+    {
+      "item": "windswept:dry_moss_block"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "windswept:dry_mossy_stone_bricks"
+  }
+}

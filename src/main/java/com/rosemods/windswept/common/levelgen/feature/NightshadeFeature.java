@@ -18,6 +18,17 @@ public class NightshadeFeature extends Feature<NoneFeatureConfiguration> {
         super(NoneFeatureConfiguration.CODEC);
     }
 
+    public static boolean nextToLog(WorldGenLevel level, BlockPos pos) {
+        for (Direction dir : Direction.Plane.HORIZONTAL) {
+            BlockState state = level.getBlockState(pos.relative(dir));
+
+            if (state.is(BlockTags.LOGS) && state.hasProperty(RotatedPillarBlock.AXIS) && state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y)
+                return true;
+        }
+
+        return false;
+    }
+
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         BlockPos origin = context.origin();
@@ -38,17 +49,6 @@ public class NightshadeFeature extends Feature<NoneFeatureConfiguration> {
                 }
 
         return generated;
-    }
-
-    public static boolean nextToLog(WorldGenLevel level, BlockPos pos) {
-        for (Direction dir : Direction.Plane.HORIZONTAL) {
-            BlockState state = level.getBlockState(pos.relative(dir));
-
-            if (state.is(BlockTags.LOGS) && state.hasProperty(RotatedPillarBlock.AXIS) && state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y)
-                return true;
-        }
-
-        return false;
     }
 
 }

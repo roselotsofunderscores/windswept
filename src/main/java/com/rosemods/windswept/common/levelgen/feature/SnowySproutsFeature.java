@@ -28,9 +28,11 @@ public class SnowySproutsFeature extends Feature<NoneFeatureConfiguration> {
             for (int z = -5; z <= 5; z++)
                 for (int y = -2; y <= 2; y++) {
                     BlockPos pos = origin.offset(x, y, z);
+                    BlockState below = level.getBlockState(pos.below());
 
                     if ((level.isEmptyBlock(pos) || level.getBlockState(pos).is(Blocks.SNOW)) && pos.getY() < level.getMaxBuildHeight()
-                            && BluebellsFeature.shouldPlace(x, z, rand) && state.canSurvive(level, pos) && level.getBlockState(pos.below()).is(Blocks.SNOW_BLOCK)) {
+                            && BluebellsFeature.shouldPlace(x, z, rand) && state.canSurvive(level, pos)
+                            && (below.is(Blocks.SNOW_BLOCK) || below.is(Blocks.SNOW))) {
                         level.setBlock(pos, rand.nextInt(8) == 0 ? snowdrop : state, 2);
                         generated = true;
                     }

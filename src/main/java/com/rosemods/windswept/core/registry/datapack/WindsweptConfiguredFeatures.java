@@ -11,7 +11,7 @@ import com.rosemods.windswept.core.registry.WindsweptFeatures;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.TreePlacements;
@@ -23,6 +23,7 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PinkPetalsBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature;
@@ -32,6 +33,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.AcaciaFoliagePl
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BushFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedBlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.level.levelgen.feature.treedecorators.BeehiveDecorator;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.ForkingTrunkPlacer;
@@ -39,6 +41,7 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlac
 import net.minecraft.world.level.levelgen.placement.CaveSurface;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
+import net.neoforged.neoforge.common.Tags;
 
 import java.util.List;
 
@@ -88,8 +91,14 @@ public final class WindsweptConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> GELISOL_PATCH = createKey("gelisol_patch_large");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SNOWY_GELISOL = createKey("snowy_gelisol");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SHALE = createKey("shale");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ARKOSE = createKey("arkose");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SANDY_SPROUTS = createKey("sandy_sprouts");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BRITTLEBUSHES = createKey("brittlebushes");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> LARKSPURS = createKey("larkspurs");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> VERBENAS = createKey("verbena");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> DESERT_LILIES = createKey("desert_lilies");
 
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<PlacedFeature> placed = context.lookup(Registries.PLACED_FEATURE);
         HolderGetter<ConfiguredFeature<?, ?>> configured = context.lookup(Registries.CONFIGURED_FEATURE);
 
@@ -100,9 +109,9 @@ public final class WindsweptConfiguredFeatures {
         context.register(YELLOW_ROSE, new ConfiguredFeature<>(Feature.NO_BONEMEAL_FLOWER, Configs.createPlantPatch(48, new SimpleBlockConfiguration(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(WindsweptBlocks.YELLOW_ROSE.get().defaultBlockState(), 3).add(WindsweptBlocks.YELLOW_ROSE_BUSH.get().defaultBlockState(), 1))))));
         context.register(FOXGLOVE, new ConfiguredFeature<>(Feature.FLOWER, Configs.createPlantPatch(64, WindsweptBlocks.FOXGLOVE.get().defaultBlockState())));
         SimpleWeightedRandomList.Builder<BlockState> builder = SimpleWeightedRandomList.builder();
-        for(int i = 1; i <= 4; ++i)
-            for(Direction direction : Direction.Plane.HORIZONTAL)
-                builder.add(WindsweptBlocks.YELLOW_PETALS.get().defaultBlockState().setValue(PinkPetalsBlock.AMOUNT, Integer.valueOf(i)).setValue(PinkPetalsBlock.FACING, direction), 1);
+        for (int i = 1; i <= 4; ++i)
+            for (Direction direction : Direction.Plane.HORIZONTAL)
+                builder.add(WindsweptBlocks.YELLOW_PETALS.get().defaultBlockState().setValue(PinkPetalsBlock.AMOUNT, i).setValue(PinkPetalsBlock.FACING, direction), 1);
 
         context.register(YELLOW_PETALS, new ConfiguredFeature<>(Feature.FLOWER, new RandomPatchConfiguration(96, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(new WeightedStateProvider(builder))))));
         context.register(FERNS, new ConfiguredFeature<>(Feature.FLOWER, FeatureUtils.simpleRandomPatchConfiguration(4, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.FERN))))));
@@ -132,15 +141,21 @@ public final class WindsweptConfiguredFeatures {
         context.register(PINE_FALLEN_LOG, new ConfiguredFeature<>(WindsweptFeatures.FALLEN_LOG.get(), new SimpleBlockConfiguration(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(WindsweptBlocks.WEATHERED_PINE_LOG.get().defaultBlockState(), 3).add(WindsweptBlocks.PINE_LOG.get().defaultBlockState(), 1)))));
         context.register(DRY_MOSS_ROCK, new ConfiguredFeature<>(Feature.FOREST_ROCK, new BlockStateConfiguration(WindsweptBlocks.DRY_MOSSY_COBBLESTONE.get().defaultBlockState())));
         context.register(DRY_MOSS_VEGETATION, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK, Configs.createDryMossVegetation()));
-        context.register(DRY_MOSS_PATCH_LARGE, new ConfiguredFeature<>(Feature.VEGETATION_PATCH, new VegetationPatchConfiguration(BlockTags.DIRT, BlockStateProvider.simple(WindsweptBlocks.DRY_MOSS_BLOCK.get()), PlacementUtils.inlinePlaced(configured.getOrThrow(DRY_MOSS_VEGETATION)), CaveSurface.FLOOR, ConstantInt.of(1), 0f, 5, .8f, UniformInt.of(4, 7), .45f)));
+        context.register(DRY_MOSS_PATCH_LARGE, new ConfiguredFeature<>(Feature.VEGETATION_PATCH, new VegetationPatchConfiguration(BlockTags.DIRT, BlockStateProvider.simple(WindsweptBlocks.DRY_MOSS_BLOCK.get()), PlacementUtils.inlinePlaced(configured.getOrThrow(DRY_MOSS_VEGETATION)), CaveSurface.FLOOR, ConstantInt.of(1), 0f, 5, .8f, UniformInt.of(2, 3), .45f)));
         context.register(DRY_MOSS_PATCH_SMALL, new ConfiguredFeature<>(Feature.VEGETATION_PATCH, new VegetationPatchConfiguration(BlockTags.MOSS_REPLACEABLE, BlockStateProvider.simple(WindsweptBlocks.DRY_MOSS_BLOCK.get()), PlacementUtils.inlinePlaced(configured.getOrThrow(DRY_MOSS_VEGETATION)), CaveSurface.FLOOR, ConstantInt.of(1), 0f, 5, .6f, UniformInt.of(1, 2), .75f)));
         context.register(MOSS_VEGETATION, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK, Configs.createMossVegetation()));
         context.register(MOSS_PATCH, new ConfiguredFeature<>(Feature.VEGETATION_PATCH, new VegetationPatchConfiguration(BlockTags.MOSS_REPLACEABLE, BlockStateProvider.simple(Blocks.MOSS_BLOCK), PlacementUtils.inlinePlaced(configured.getOrThrow(MOSS_VEGETATION)), CaveSurface.FLOOR, ConstantInt.of(1), 0f, 5, .8f, UniformInt.of(4, 7), .3f)));
         context.register(MOSS_PATCH_BONEMEAL, new ConfiguredFeature<>(Feature.VEGETATION_PATCH, new VegetationPatchConfiguration(BlockTags.MOSS_REPLACEABLE, BlockStateProvider.simple(Blocks.MOSS_BLOCK), PlacementUtils.inlinePlaced(configured.getOrThrow(MOSS_VEGETATION)), CaveSurface.FLOOR, ConstantInt.of(1), 0f, 5, .6f, UniformInt.of(1, 2), .75f)));
         context.register(GELISOL_VEGETATION, new ConfiguredFeature<>(Feature.SIMPLE_BLOCK, Configs.createGelisolVegetation()));
-        context.register(GELISOL_PATCH, new ConfiguredFeature<>(Feature.VEGETATION_PATCH, new VegetationPatchConfiguration(BlockTags.DIRT, BlockStateProvider.simple(WindsweptBlocks.GELISOL.get()), PlacementUtils.inlinePlaced(configured.getOrThrow(GELISOL_VEGETATION)), CaveSurface.FLOOR, ConstantInt.of(1), 0f, 5, .8f, UniformInt.of(4, 7), .45f)));
+        context.register(GELISOL_PATCH, new ConfiguredFeature<>(Feature.VEGETATION_PATCH, new VegetationPatchConfiguration(BlockTags.DIRT, BlockStateProvider.simple(WindsweptBlocks.GELISOL.get()), PlacementUtils.inlinePlaced(configured.getOrThrow(GELISOL_VEGETATION)), CaveSurface.FLOOR, ConstantInt.of(1), 0f, 5, .8f, UniformInt.of(2, 3), .45f)));
         context.register(SNOWY_GELISOL, new ConfiguredFeature<>(WindsweptFeatures.SNOWY_GELISOL.get(), NoneFeatureConfiguration.NONE));
         context.register(SHALE, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(new TagMatchTest(BlockTags.BASE_STONE_OVERWORLD), WindsweptBlocks.SHALE.get().defaultBlockState(), 64)));
+        context.register(ARKOSE, new ConfiguredFeature<>(Feature.DISK, new DiskConfiguration(RuleBasedBlockStateProvider.simple(WindsweptBlocks.ARKOSE.get()), BlockPredicate.matchesTag(Tags.Blocks.SANDS_COLORLESS), UniformInt.of(3, 6), 2)));
+        context.register(SANDY_SPROUTS, new ConfiguredFeature<>(Feature.RANDOM_PATCH, FeatureUtils.simpleRandomPatchConfiguration(22, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(WindsweptBlocks.SANDY_SPROUTS.get()))))));
+        context.register(BRITTLEBUSHES, new ConfiguredFeature<>(Feature.FLOWER, Configs.createPlantPatch(24, WindsweptBlocks.BRITTLEBUSH.get().defaultBlockState())));
+        context.register(LARKSPURS, new ConfiguredFeature<>(Feature.FLOWER, Configs.createPlantPatch(6, WindsweptBlocks.LARKSPUR.get().defaultBlockState())));
+        context.register(VERBENAS, new ConfiguredFeature<>(Feature.FLOWER, Configs.createPlantPatch(6, WindsweptBlocks.VERBENA.get().defaultBlockState())));
+        context.register(DESERT_LILIES, new ConfiguredFeature<>(DESERT_LILY_PATCH.get(), NoneFeatureConfiguration.NONE));
     }
 
     private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {

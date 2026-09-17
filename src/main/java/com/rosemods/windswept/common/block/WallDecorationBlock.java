@@ -5,7 +5,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.LadderBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class WallDecorationBlock extends LadderBlock {
+public class WallDecorationBlock extends LadderBlock { // i should change this
     public WallDecorationBlock(Properties properties) {
         super(properties);
     }

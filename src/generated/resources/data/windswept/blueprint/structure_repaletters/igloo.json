@@ -1,0 +1,90 @@
+{
+  "repaletter": [
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:snow_block",
+      "replaces_with": "windswept:snow_bricks"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:oak_wall_sign",
+      "replaces_with": "windswept:holly_wall_sign"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:potted_cactus",
+      "replaces_with": "windswept:potted_white_rose"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:spruce_slab",
+      "replaces_with": "windswept:holly_slab"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:spruce_stairs",
+      "replaces_with": "windswept:holly_stairs"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:mossy_stone_bricks",
+      "replaces_with": "windswept:chiseled_icicle_block"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:infested_mossy_stone_bricks",
+      "replaces_with": "windswept:chiseled_icicle_block"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:oak_trapdoor",
+      "replaces_with": "windswept:holly_trapdoor"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:polished_andesite",
+      "replaces_with": "minecraft:gold_block"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:iron_bars",
+      "replaces_with": "windswept:icicle_bars"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:stone_bricks",
+      "replaces_with": "windswept:packed_ice_bricks"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:infested_stone_bricks",
+      "replaces_with": "windswept:packed_ice_bricks"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:chiseled_stone_bricks",
+      "replaces_with": "windswept:chiseled_packed_ice_bricks"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:infested_chiseled_stone_bricks",
+      "replaces_with": "windswept:chiseled_packed_ice_bricks"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:cracked_stone_bricks",
+      "replaces_with": "minecraft:packed_ice"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:infested_cracked_stone_bricks",
+      "replaces_with": "minecraft:packed_ice"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:redstone_torch",
+      "replaces_with": "windswept:ice_lantern"
+    }
+  ],
+  "structures": "minecraft:igloo"
+}

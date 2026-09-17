@@ -1,0 +1,19 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "woodworks"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "windswept:chestnut_leaves"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "windswept:chestnut_leaf_pile"
+  }
+}

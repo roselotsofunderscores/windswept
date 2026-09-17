@@ -1,0 +1,23 @@
+{
+  "values": [
+    "windswept:blue_ice_brick_wall",
+    "windswept:snow_brick_wall",
+    "windswept:packed_ice_brick_wall",
+    "windswept:dry_mossy_cobblestone_wall",
+    "windswept:dry_mossy_stone_brick_wall",
+    "windswept:shale_wall",
+    "windswept:polished_shale_wall",
+    "windswept:polished_shale_brick_wall",
+    "windswept:lunalite_wall",
+    "windswept:cut_lunalite_wall",
+    "windswept:cut_lunalite_brick_wall",
+    "windswept:gingerbread_brick_wall",
+    "windswept:glazed_gingerbread_brick_wall",
+    "windswept:dry_mossy_cobblestone_brick_wall",
+    "windswept:dry_mossy_cobblestone_tile_wall",
+    "windswept:arkose_wall",
+    "windswept:arkose_brick_wall",
+    "windswept:polished_arkose_wall",
+    "windswept:arkose_tile_wall"
+  ]
+}

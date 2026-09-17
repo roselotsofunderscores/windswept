@@ -2,23 +2,20 @@ package com.rosemods.windswept.core.other.events;
 
 import com.google.common.collect.ImmutableMap;
 import com.rosemods.windswept.core.Windswept;
-import com.rosemods.windswept.core.other.WindsweptVillagerTypes;
 import com.rosemods.windswept.core.registry.WindsweptBlocks;
 import com.rosemods.windswept.core.registry.WindsweptItems;
 import com.teamabnormals.blueprint.core.util.TradeUtil;
 import com.teamabnormals.blueprint.core.util.TradeUtil.BlueprintTrade;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.npc.VillagerType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.event.village.VillagerTradesEvent;
-import net.minecraftforge.event.village.WandererTradesEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.village.VillagerTradesEvent;
+import net.neoforged.neoforge.event.village.WandererTradesEvent;
 
 import java.util.HashMap;
 
@@ -28,12 +25,12 @@ public class WindsweptTradeEvents {
     @SubscribeEvent
     public static void wandererTrades(WandererTradesEvent event) {
         TradeUtil.addWandererTrades(event,
-                new BlueprintTrade(5, WindsweptBlocks.HOLLY_SAPLING.get().asItem(), 1, 8, 1),
-                new BlueprintTrade(5, WindsweptBlocks.CHESTNUT_SAPLING.get().asItem(), 1, 8, 1),
-                new BlueprintTrade(5, WindsweptBlocks.PINE_SAPLING.get().asItem(), 1, 8, 1),
+                new BlueprintTrade(5, WindsweptBlocks.HOLLY_SAPLING.asItem(), 1, 8, 1),
+                new BlueprintTrade(5, WindsweptBlocks.CHESTNUT_SAPLING.asItem(), 1, 8, 1),
+                new BlueprintTrade(5, WindsweptBlocks.PINE_SAPLING.asItem(), 1, 8, 1),
                 new BlueprintTrade(1, WindsweptItems.WILD_BERRIES.get(), 4, 12, 10),
                 new BlueprintTrade(1, WindsweptItems.HOLLY_BERRIES.get(), 1, 4, 10),
-                new BlueprintTrade(1, WindsweptBlocks.PINECONE.get().asItem(), 1, 4, 10),
+                new BlueprintTrade(1, WindsweptBlocks.PINECONE.asItem(), 1, 4, 10),
                 new BlueprintTrade(1, WindsweptItems.ROASTED_CHESTNUTS.get(), 1, 4, 10));
     }
 

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_arkose_tiles": {
+      "conditions": {
+        "items": [
+          {
+            "items": "windswept:arkose_tiles"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "windswept:arkose_pillar_from_arkose_tiles_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_arkose_tiles"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "windswept:arkose_pillar_from_arkose_tiles_stonecutting"
+    ]
+  }
+}

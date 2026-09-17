@@ -13,12 +13,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraftforge.fml.ModList;
+import net.neoforged.fml.ModList;
 
 public class LavenderFeature extends Feature<NoneFeatureConfiguration> {
 
     public LavenderFeature() {
         super(NoneFeatureConfiguration.CODEC);
+    }
+
+    private static Block getTallGrass(RandomSource rand) {
+        return rand.nextInt(4) == 0 && ModList.get().isLoaded("environmental")
+                ? WindsweptConstants.getBlock("environmental", "giant_tall_grass") : Blocks.TALL_GRASS;
     }
 
     @Override
@@ -46,11 +51,6 @@ public class LavenderFeature extends Feature<NoneFeatureConfiguration> {
                 }
 
         return generated;
-    }
-
-    private static Block getTallGrass(RandomSource rand) {
-        return rand.nextInt(4) == 0 && ModList.get().isLoaded("environmental")
-                ? WindsweptConstants.getBlock("environmental", "giant_tall_grass") : Blocks.TALL_GRASS;
     }
 
 }

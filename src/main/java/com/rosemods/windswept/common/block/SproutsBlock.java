@@ -1,5 +1,6 @@
 package com.rosemods.windswept.common.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -10,13 +11,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.IForgeShearable;
+import net.neoforged.neoforge.common.IShearable;
 
-public class SproutsBlock extends BushBlock implements IForgeShearable {
+public class SproutsBlock extends BushBlock implements IShearable {
+    public static final MapCodec<SproutsBlock> CODEC = simpleCodec(SproutsBlock::new);
     protected static final VoxelShape SHAPE = Block.box(2f, 0f, 2f, 14f, 4.5f, 14f);
 
     public SproutsBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected MapCodec<? extends BushBlock> codec() {
+        return CODEC;
     }
 
     @Override

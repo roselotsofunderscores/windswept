@@ -1,20 +1,19 @@
 package com.rosemods.windswept.core;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
-@EventBusSubscriber(modid = Windswept.MOD_ID)
-public class WindsweptConfig {
+import java.util.List;
+
+public final class WindsweptConfig {
     public static final Common COMMON;
     public static final Client CLIENT;
-    public static final ForgeConfigSpec COMMON_SPEC;
-    public static final ForgeConfigSpec CLIENT_SPEC;
+    public static final ModConfigSpec COMMON_SPEC;
+    public static final ModConfigSpec CLIENT_SPEC;
 
     static {
-        final Pair<Common, ForgeConfigSpec> commonSpecPair = new ForgeConfigSpec.Builder().configure(Common::new);
-        final Pair<Client, ForgeConfigSpec> clientSpecPair = new ForgeConfigSpec.Builder().configure(Client::new);
+        final Pair<Common, ModConfigSpec> commonSpecPair = new ModConfigSpec.Builder().configure(Common::new);
+        final Pair<Client, ModConfigSpec> clientSpecPair = new ModConfigSpec.Builder().configure(Client::new);
 
         COMMON = commonSpecPair.getLeft();
         CLIENT = clientSpecPair.getLeft();
@@ -23,18 +22,19 @@ public class WindsweptConfig {
     }
 
     public static class Common {
-        public final ConfigValue<Integer> woodenBucketDurabilty;
-        public final ConfigValue<Double> bumblebeeDiscChance;
-        public final ConfigValue<Boolean> iceBoatNerf;
-        public final ConfigValue<Boolean> birchBranches;
-        public final ConfigValue<Boolean> strays;
-        public final ConfigValue<Boolean> roots;
-        public final ConfigValue<Boolean> biggerFlowerHitbox;
-        public final ConfigValue<Boolean> rabbitLitters;
-        public final ConfigValue<Boolean> rainWashSnow;
-        public final ConfigValue<Boolean> freezingWater;
+        public final ModConfigSpec.ConfigValue<Integer> woodenBucketDurabilty;
+        public final ModConfigSpec.ConfigValue<Double> bumblebeeDiscChance;
+        public final ModConfigSpec.ConfigValue<Boolean> iceBoatNerf;
+        public final ModConfigSpec.ConfigValue<Boolean> birchBranches;
+        public final ModConfigSpec.ConfigValue<Boolean> strays;
+        public final ModConfigSpec.ConfigValue<Boolean> roots;
+        public final ModConfigSpec.ConfigValue<Boolean> biggerFlowerHitbox;
+        public final ModConfigSpec.ConfigValue<Boolean> rabbitLitters;
+        public final ModConfigSpec.ConfigValue<Boolean> rainWashSnow;
+        public final ModConfigSpec.ConfigValue<Boolean> freezingWater;
+        public final ModConfigSpec.ConfigValue<List<? extends String>> dryNetherBlocks;
 
-        private Common(ForgeConfigSpec.Builder builder) {
+        private Common(ModConfigSpec.Builder builder) {
             builder.comment("Windswept Content Tweaks").push("content");
             this.woodenBucketDurabilty = builder.comment("How much durability Wooden Buckets should have").defineInRange("Wooden Bucket Durability", 24, 1, 1000);
             this.bumblebeeDiscChance = builder.comment("The chance that the Bumblebee Music Disc should drop from Beehives and Bee Nests").defineInRange("Bumblebee Disc Chance", .01d, 0d, 1d);
@@ -48,6 +48,29 @@ public class WindsweptConfig {
             this.rabbitLitters = builder.comment("If Rabbits should have litters of 1-3").define("Rabbit Litters", true);
             this.rainWashSnow = builder.comment("If Rain should wash away Snow Layers").define("Rain Wash Away Snow", true);
             this.freezingWater = builder.comment("If Water in Snowy Biomes should slowly give the Frost Effect").define("Freezing Water", true);
+            this.dryNetherBlocks = builder.comment("Customisable List of Blocks That should Dry Out in when Placed in the Nether").defineListAllowEmpty(List.of("Dry Nether Blocks"), () -> List.of(
+                    "minecraft:moss_block=windswept:dry_moss_block",
+                    "minecraft:moss_carpet=windswept:dry_moss_carpet",
+                    "windswept:mossy_sprouts=windswept:dry_mossy_sprouts",
+                    "minecraft:mossy_stone_bricks=windswept:dry_mossy_stone_bricks",
+                    "minecraft:mossy_stone_brick_stairs=windswept:dry_mossy_stone_brick_stairs",
+                    "minecraft:mossy_stone_brick_slab=windswept:dry_mossy_stone_brick_slab",
+                    "minecraft:mossy_stone_brick_wall=windswept:dry_mossy_stone_brick_wall",
+                    "minecraft:mossy_cobblestone=windswept:dry_mossy_cobblestone",
+                    "minecraft:mossy_cobblestone_stairs=windswept:dry_mossy_cobblestone_stairs",
+                    "minecraft:mossy_cobblestone_slab=windswept:dry_mossy_cobblestone_slab",
+                    "minecraft:mossy_cobblestone_wall=windswept:dry_mossy_cobblestone_wall",
+                    "caverns_and_chasms:mossy_cobblestone_bricks=windswept:dry_mossy_cobblestone_bricks",
+                    "caverns_and_chasms:mossy_cobblestone_brick_stairs=windswept:dry_mossy_cobblestone_brick_stairs",
+                    "caverns_and_chasms:mossy_cobblestone_brick_slab=windswept:dry_mossy_cobblestone_brick_slab",
+                    "caverns_and_chasms:mossy_cobblestone_brick_wall=windswept:dry_mossy_cobblestone_brick_wall",
+                    "caverns_and_chasms:mossy_cobblestone_tiles=windswept:dry_mossy_cobblestone_tiles",
+                    "caverns_and_chasms:mossy_cobblestone_tile_stairs=windswept:dry_mossy_cobblestone_tile_stairs",
+                    "caverns_and_chasms:mossy_cobblestone_tile_slab=windswept:dry_mossy_cobblestone_tile_slab",
+                    "caverns_and_chasms:mossy_cobblestone_tile_wall=windswept:dry_mossy_cobblestone_tile_wall"
+                        ),
+                            obj -> obj instanceof String s && s.contains("=")
+                    );
             builder.pop();
 
             builder.comment("Tweaks to Windswept Worldgen").push("worldgen");
@@ -58,10 +81,10 @@ public class WindsweptConfig {
     }
 
     public static class Client {
-        public final ConfigValue<Boolean> powderSnowParticles;
-        public final ConfigValue<Boolean> largerRabbits;
+        public final ModConfigSpec.ConfigValue<Boolean> powderSnowParticles;
+        public final ModConfigSpec.ConfigValue<Boolean> largerRabbits;
 
-        public Client(ForgeConfigSpec.Builder builder) {
+        public Client(ModConfigSpec.Builder builder) {
             builder.push("particles");
             this.powderSnowParticles = builder.comment("If Powder Snow should drop snow Particles if there is no block below").define("Powder Snow Particles", true);
             builder.pop();

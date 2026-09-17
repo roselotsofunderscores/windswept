@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:dirt"
+    },
+    {
+      "item": "windswept:ginger_root"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "windswept:ginger_soil"
+  }
+}

@@ -1,11 +1,13 @@
 package com.rosemods.windswept.common.entity;
 
+import com.rosemods.windswept.common.entity.ai.ChilledPathNavigation;
 import com.rosemods.windswept.core.other.WindsweptConstants;
 import com.rosemods.windswept.core.other.tags.WindsweptBiomeTags;
 import com.rosemods.windswept.core.registry.WindsweptBlocks;
 import com.rosemods.windswept.core.registry.WindsweptEnchantments;
 import com.rosemods.windswept.core.registry.WindsweptItems;
 import com.rosemods.windswept.core.registry.WindsweptSounds;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -18,18 +20,37 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.ModList;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.neoforged.fml.ModList;
 
 public class Chilled extends Zombie {
 
     public Chilled(EntityType<? extends Zombie> type, Level level) {
         super(type, level);
+    }
+
+    private static ItemStack randomDurability(RandomSource random, Item item) {
+        ItemStack stack = item.getDefaultInstance();
+        stack.setDamageValue(random.nextInt(1, stack.getMaxDamage()));
+
+        return stack;
+    }
+
+    public static AttributeSupplier.Builder createChilledAttributes() {
+        return Monster.createMonsterAttributes()
+                .add(Attributes.FOLLOW_RANGE, 35f)
+                .add(Attributes.MOVEMENT_SPEED, .23f)
+                .add(Attributes.ATTACK_DAMAGE, 3f)
+                .add(Attributes.ARMOR, 2f)
+                .add(Attributes.KNOCKBACK_RESISTANCE, .5f)
+                .add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
     }
 
     @Override
@@ -64,12 +85,17 @@ public class Chilled extends Zombie {
 
     @Override
     public boolean doHurtTarget(Entity entity) {
-        if (super.doHurtTarget(entity) && entity instanceof LivingEntity livingEntity) {
+        if (super.doHurtTarget(entity) && entity instanceof LivingEntity livingEntity && !livingEntity.level().isClientSide) {
             livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + 100);
             return true;
         }
 
         return false;
+    }
+
+    @Override
+    protected PathNavigation createNavigation(Level level) {
+        return new ChilledPathNavigation(this, level);
     }
 
     @Override
@@ -95,7 +121,7 @@ public class Chilled extends Zombie {
         }
 
         if (rand.nextFloat() < .1f && this.level().getBiome(this.blockPosition()).is(WindsweptBiomeTags.IS_PINE_BARRENS)) {
-            this.setItemSlot(EquipmentSlot.HEAD, WindsweptBlocks.CARVED_PINECONE_BLOCK.get().asItem().getDefaultInstance());
+            this.setItemSlot(EquipmentSlot.HEAD, WindsweptBlocks.CARVED_PINECONE_BLOCK.asItem().getDefaultInstance());
             this.armorDropChances[EquipmentSlot.HEAD.getIndex()] = .5f;
         }
 
@@ -122,20 +148,13 @@ public class Chilled extends Zombie {
         }
     }
 
-    private static ItemStack randomDurability(RandomSource random, Item item) {
-        ItemStack stack = item.getDefaultInstance();
-        stack.setDamageValue(random.nextInt(1, stack.getMaxDamage()));
-
-        return stack;
-    }
-
     @Override
-    protected void enchantSpawnedArmor(RandomSource rand, float difficulty, EquipmentSlot slot) {
+    protected void enchantSpawnedArmor(ServerLevelAccessor level, RandomSource random, EquipmentSlot slot, DifficultyInstance difficulty) {
         ItemStack stack = this.getItemBySlot(slot);
-        if (!stack.isEmpty() && this.random.nextFloat() < .5f * difficulty)
-            stack.enchant(WindsweptEnchantments.SLIPPING_CURSE.get(), 0);
+        if (!stack.isEmpty() && this.random.nextFloat() < .5f && slot == EquipmentSlot.FEET)
+            stack.enchant(level.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolderOrThrow(WindsweptEnchantments.SLIPPING_CURSE), 0);
         else
-            super.enchantSpawnedArmor(rand, difficulty, slot);
+            super.enchantSpawnedArmor(level, random, slot, difficulty);
     }
 
     @Override
@@ -144,16 +163,6 @@ public class Chilled extends Zombie {
 
         if (!this.isSilent())
             this.level().levelEvent(null, 1041, this.blockPosition(), 0);
-    }
-
-    public static AttributeSupplier.Builder createChilledAttributes() {
-        return Monster.createMonsterAttributes()
-                .add(Attributes.FOLLOW_RANGE, 35f)
-                .add(Attributes.MOVEMENT_SPEED, .23f)
-                .add(Attributes.ATTACK_DAMAGE, 3f)
-                .add(Attributes.ARMOR, 2f)
-                .add(Attributes.KNOCKBACK_RESISTANCE, .5f)
-                .add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
     }
 
 }

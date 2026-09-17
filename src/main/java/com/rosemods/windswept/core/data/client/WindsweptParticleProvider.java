@@ -2,9 +2,9 @@ package com.rosemods.windswept.core.data.client;
 
 import com.rosemods.windswept.core.Windswept;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import static com.rosemods.windswept.core.registry.WindsweptParticleTypes.*;
 
@@ -21,8 +21,8 @@ public class WindsweptParticleProvider extends ParticleProvider {
         this.add(ACACIA_LEAVES, 12);
     }
 
-    private <T extends ParticleType<?>> void add(RegistryObject<T> particle, int amount) {
-        String name = ForgeRegistries.PARTICLE_TYPES.getKey(particle.get()).getPath();
+    private <T extends ParticleType<?>> void add(DeferredHolder<ParticleType<?>, T> particle, int amount) {
+        String name = BuiltInRegistries.PARTICLE_TYPE.getKey(particle.get()).getPath();
         String[] textures = new String[amount];
 
         for (int i = 0; i < amount; i++)

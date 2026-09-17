@@ -1,0 +1,35 @@
+{
+  "repaletter": [
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:potted_cactus",
+      "replaces_with": "windswept:potted_brittlebush"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:sea_pickle",
+      "replaces_with": "windswept:potted_verbena"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:potted_dead_bush",
+      "replaces_with": "windswept:potted_sandy_sprouts"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:terracotta",
+      "replaces_with": "windswept:arkose_tiles"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:smooth_sandstone_stairs",
+      "replaces_with": "windswept:arkose_brick_stairs"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:cobblestone",
+      "replaces_with": "windswept:arkose"
+    }
+  ],
+  "structures": "minecraft:village_desert"
+}

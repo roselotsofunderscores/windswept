@@ -13,16 +13,12 @@
                   "predicate": {
                     "equipment": {
                       "feet": {
-                        "items": [
-                          "windswept:snow_boots"
-                        ]
+                        "items": "windswept:snow_boots"
                       }
                     },
                     "stepping_on": {
                       "block": {
-                        "blocks": [
-                          "minecraft:powder_snow"
-                        ]
+                        "blocks": "minecraft:powder_snow"
                       }
                     }
                   }
@@ -40,7 +36,8 @@
               "windswept:snow_boots"
             ]
           }
-        ]
+        ],
+        "should_replace_requirements": false
       }
     }
   ],

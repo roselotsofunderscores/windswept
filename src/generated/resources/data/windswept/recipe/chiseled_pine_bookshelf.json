@@ -1,0 +1,28 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "woodworks"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "wooden_chiseled_bookshelves",
+  "key": {
+    "#": {
+      "item": "windswept:pine_planks"
+    },
+    "S": {
+      "item": "windswept:pine_slab"
+    }
+  },
+  "pattern": [
+    "###",
+    "SSS",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "windswept:chiseled_pine_bookshelf"
+  }
+}

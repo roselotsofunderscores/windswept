@@ -6,10 +6,9 @@ import com.rosemods.windswept.core.other.tags.WindsweptEntityTypeTags;
 import com.teamabnormals.blueprint.core.other.tags.BlueprintEntityTypeTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import static com.rosemods.windswept.core.registry.WindsweptEntityTypes.*;
 
@@ -22,6 +21,7 @@ public class WindsweptEntityTagProvider extends EntityTypeTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(WindsweptEntityTypeTags.CONVERT_TO_CHILLED).add(EntityType.ZOMBIE, EntityType.HUSK, EntityType.DROWNED);
+        this.tag(EntityTypeTags.ZOMBIES).add(CHILLED.get());
         this.tag(BlueprintEntityTypeTags.MILKABLE).add(FROSTBITER.get());
         this.tag(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS).add(CHILLED.get(), FROSTBITER.get(), EntityType.GOAT);
         this.tag(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES).add(CHILLED.get(), FROSTBITER.get());

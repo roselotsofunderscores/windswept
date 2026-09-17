@@ -12,12 +12,17 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 
 public class IciclesFeature extends Feature<NoneFeatureConfiguration> {
 
     public IciclesFeature() {
         super(NoneFeatureConfiguration.CODEC);
+    }
+
+    private static boolean canPlaceOn(WorldGenLevel level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        return (state.is(BlockTags.ICE) && !state.is(Blocks.ICE) && !state.is(WindsweptBlocks.ICICLES.get())) || state.is(Tags.Blocks.STONES);
     }
 
     @Override
@@ -31,8 +36,18 @@ public class IciclesFeature extends Feature<NoneFeatureConfiguration> {
         RandomSource rand = context.random();
         boolean generated = false;
 
+        int originChunkX = origin.getX() >> 4;
+        int originChunkZ = origin.getZ() >> 4;
+
         for (int x = -5; x <= 5; ++x)
-            for (int z = -5; z <= 5; ++z)
+            for (int z = -5; z <= 5; ++z) {
+                BlockPos columnPos = origin.offset(x, 0, z);
+                int chunkX = columnPos.getX() >> 4;
+                int chunkZ = columnPos.getZ() >> 4;
+
+                if (chunkX != originChunkX || chunkZ != originChunkZ)
+                    continue;
+
                 for (int y = -5; y <= 3; ++y) {
                     BlockPos pos = origin.offset(x, y, z);
 
@@ -52,13 +67,9 @@ public class IciclesFeature extends Feature<NoneFeatureConfiguration> {
                         generated = true;
                     }
                 }
+            }
 
         return generated;
-    }
-
-    private static boolean canPlaceOn(WorldGenLevel level, BlockPos pos) {
-        BlockState state = level.getBlockState(pos);
-        return (state.is(BlockTags.ICE) && !state.is(Blocks.ICE) && !state.is(WindsweptBlocks.ICICLES.get())) || state.is(Tags.Blocks.STONE);
     }
 
 }

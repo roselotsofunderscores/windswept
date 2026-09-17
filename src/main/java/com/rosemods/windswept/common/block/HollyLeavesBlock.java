@@ -9,16 +9,31 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 public class HollyLeavesBlock extends LeavesBlock {
     private static final VoxelShape AABB = box(1f, 0f, 1f, 15f, 15f, 15f);
 
     public HollyLeavesBlock(Properties properties) {
         super(properties);
+    }
+
+    public static void entityInside(float damage, Entity entity, Level level) {
+        if (!level.isClientSide && (entity.xOld != entity.getX() || entity.zOld != entity.getZ()) && ((entity instanceof Player player && !player.isCrouching()) || entity instanceof Villager)) {
+            double d0 = Math.abs(entity.getX() - entity.xOld);
+            double d1 = Math.abs(entity.getZ() - entity.zOld);
+
+            if (d0 >= .003d || d1 >= .003d) {
+                Vec3 motion = entity.getDeltaMovement();
+                entity.hurt(entity.damageSources().source(WindsweptDamageTypes.HOLLY_LEAVES), damage);
+                entity.setDeltaMovement(motion);
+                entity.hurtMarked = false;
+            }
+        }
     }
 
     @Override
@@ -35,16 +50,6 @@ public class HollyLeavesBlock extends LeavesBlock {
     @OnlyIn(Dist.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter getter, BlockPos pos) {
         return .2f;
-    }
-
-    public static void entityInside(float damage, Entity entity, Level level) {
-        if (!level.isClientSide && (entity.xOld != entity.getX() || entity.zOld != entity.getZ()) && ((entity instanceof Player player && !player.isCrouching()) || entity instanceof Villager)) {
-            double d0 = Math.abs(entity.getX() - entity.xOld);
-            double d1 = Math.abs(entity.getZ() - entity.zOld);
-
-            if (d0 >= .003d || d1 >= .003d)
-                entity.hurt(entity.damageSources().source(WindsweptDamageTypes.HOLLY_LEAVES), damage);
-        }
     }
 
 }

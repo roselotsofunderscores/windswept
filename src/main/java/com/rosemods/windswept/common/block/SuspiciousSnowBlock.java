@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class SuspiciousSnowBlock extends BrushableBlock {
     public SuspiciousSnowBlock(Properties properties) {
-        super(Blocks.SNOW_BLOCK, properties, SoundEvents.BRUSH_SAND, SoundEvents.BRUSH_SAND_COMPLETED);
+        super(Blocks.SNOW_BLOCK, SoundEvents.BRUSH_SAND, SoundEvents.BRUSH_SAND_COMPLETED, properties);
     }
 
     @Override

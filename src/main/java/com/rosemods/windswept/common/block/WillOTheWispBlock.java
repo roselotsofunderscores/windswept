@@ -1,5 +1,6 @@
 package com.rosemods.windswept.common.block;
 
+import com.mojang.serialization.MapCodec;
 import com.rosemods.windswept.common.block_entity.WillOTheWispBlockEntity;
 import com.rosemods.windswept.core.registry.WindsweptBlockEntities;
 import com.rosemods.windswept.core.registry.WindsweptParticleTypes;
@@ -10,7 +11,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -19,13 +19,28 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
 
 public class WillOTheWispBlock extends HorizontalDirectionalBlock implements EntityBlock {
+    public static final MapCodec<WillOTheWispBlock> CODEC = simpleCodec(WillOTheWispBlock::new);
+
     public WillOTheWispBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+    }
+
+    @Nullable
+    @SuppressWarnings("unchecked")
+    private static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTicker(BlockEntityType<A> type, BlockEntityType<E> expectedType, BlockEntityTicker<? super E> ticker) {
+        return type == expectedType ? (BlockEntityTicker<A>) ticker : null;
+    }
+
+    @Override
+    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -43,9 +58,10 @@ public class WillOTheWispBlock extends HorizontalDirectionalBlock implements Ent
         return new WillOTheWispBlockEntity(pos, state);
     }
 
+    @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return !level.isClientSide ? BaseEntityBlock.createTickerHelper(type, WindsweptBlockEntities.WILL_O_THE_WISP.get(), WillOTheWispBlockEntity::tick) : null;
+        return !level.isClientSide ? createTicker(type, WindsweptBlockEntities.WILL_O_THE_WISP.get(), WillOTheWispBlockEntity::tick) : null;
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -1,0 +1,36 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:or",
+      "values": [
+        {
+          "type": "neoforge:mod_loaded",
+          "modid": "woodworks"
+        },
+        {
+          "type": "neoforge:mod_loaded",
+          "modid": "quark"
+        }
+      ]
+    }
+  ],
+  "priority": 50,
+  "repaletter": [
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:chest",
+      "replaces_with": "windswept:holly_chest"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:bookshelf",
+      "replaces_with": "windswept:holly_bookshelf"
+    },
+    {
+      "type": "blueprint:simple",
+      "replaces_block": "minecraft:ladder",
+      "replaces_with": "windswept:holly_ladder"
+    }
+  ],
+  "structures": "windswept:village_frozen"
+}

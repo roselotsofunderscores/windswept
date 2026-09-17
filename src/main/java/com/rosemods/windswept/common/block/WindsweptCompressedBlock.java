@@ -1,6 +1,5 @@
 package com.rosemods.windswept.common.block;
 
-import com.rosemods.windswept.core.other.WindsweptConstants;
 import com.teamabnormals.blueprint.common.block.BlueprintDirectionalBlock;
 import com.teamabnormals.blueprint.core.util.registry.ItemSubRegistryHelper;
 import net.minecraft.world.item.context.BlockPlaceContext;

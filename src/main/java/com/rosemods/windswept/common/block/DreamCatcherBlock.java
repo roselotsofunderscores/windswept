@@ -11,11 +11,9 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -49,24 +47,11 @@ public class DreamCatcherBlock extends DoublePlantBlock {
     }
 
     @Override
-    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        if (!level.isClientSide)
-            if (player.isCreative()) {
-                if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
-                    BlockPos blockpos = pos.above();
-                    BlockState blockstate = level.getBlockState(blockpos);
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide && (player.isCreative() || !player.hasCorrectToolForDrops(state, level, pos)))
+            preventDropFromBottomPart(level, pos, state, player);
 
-                    if (blockstate.is(state.getBlock()) && blockstate.getValue(HALF) == DoubleBlockHalf.UPPER) {
-                        level.setBlock(blockpos, Blocks.AIR.defaultBlockState(), 35);
-                        level.levelEvent(player, 2001, blockpos, Block.getId(blockstate));
-                    }
-                }
-            } else
-                dropResources(state, level, pos, null, player, player.getMainHandItem());
-
-
-        this.spawnDestroyParticles(level, player, pos, state);
-        level.gameEvent(GameEvent.BLOCK_DESTROY, pos, GameEvent.Context.of(player, state));
+        return super.playerWillDestroy(level, pos, state, player);
     }
 
 }

@@ -1,8 +1,0 @@
-{
-  "repaletter": {
-    "type": "blueprint:simple",
-    "replaces_block": "minecraft:spruce_door",
-    "replaces_with": "windswept:chestnut_door"
-  },
-  "structures": "minecraft:village_snowy"
-}

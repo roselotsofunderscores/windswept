@@ -1,8 +1,0 @@
-{
-  "repaletter": {
-    "type": "blueprint:simple",
-    "replaces_block": "minecraft:iron_bars",
-    "replaces_with": "windswept:icicle_bars"
-  },
-  "structures": "minecraft:igloo"
-}

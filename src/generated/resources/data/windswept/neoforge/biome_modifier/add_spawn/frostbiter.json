@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#c:is_snowy",
+  "spawners": {
+    "type": "windswept:frostbiter",
+    "maxCount": 3,
+    "minCount": 1,
+    "weight": 3
+  }
+}
