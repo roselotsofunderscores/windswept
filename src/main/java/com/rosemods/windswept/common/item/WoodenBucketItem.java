@@ -6,14 +6,18 @@ import com.rosemods.windswept.core.registry.WindsweptItems;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -30,7 +34,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
-public class WoodenBucketItem extends BucketItem {
+public class WoodenBucketItem extends BucketItem implements Equipable {
     private final Supplier<? extends Fluid> contentSupplier;
 
     public WoodenBucketItem(Supplier<? extends Fluid> supplier, Properties builder) {
@@ -42,23 +46,22 @@ public class WoodenBucketItem extends BucketItem {
         ItemStack bucket = new ItemStack(WindsweptItems.WOODEN_BUCKET.get());
         bucket.setDamageValue(handStack.getDamageValue());
 
-        if (handStack.has(DataComponents.ENCHANTMENTS)) {
+        if (handStack.has(DataComponents.ENCHANTMENTS))
             bucket.set(DataComponents.ENCHANTMENTS, handStack.get(DataComponents.ENCHANTMENTS));
-        }
+
 
         if (player != null) {
             EquipmentSlot slot = hand == InteractionHand.OFF_HAND ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND;
             bucket.hurtAndBreak(1, player, slot);
 
-            if (player.getAbilities().instabuild) {
+            if (player.getAbilities().instabuild)
                 return handStack;
-            }
         } else {
             int newDamage = bucket.getDamageValue() + 1;
             bucket.setDamageValue(newDamage);
-            if (newDamage >= bucket.getMaxDamage()) {
+
+            if (newDamage >= bucket.getMaxDamage())
                 bucket.setCount(0);
-            }
         }
 
         return bucket;
@@ -67,9 +70,8 @@ public class WoodenBucketItem extends BucketItem {
     public static ItemStack getFilled(ItemStack handStack, ItemLike filled, @Nullable Player player) {
         ItemStack bucket = new ItemStack(filled);
 
-        if (handStack.has(DataComponents.ENCHANTMENTS)) {
+        if (handStack.has(DataComponents.ENCHANTMENTS))
             bucket.set(DataComponents.ENCHANTMENTS, handStack.get(DataComponents.ENCHANTMENTS));
-        }
 
         if (player == null || !player.getAbilities().instabuild)
             bucket.setDamageValue(handStack.getDamageValue());
@@ -139,6 +141,16 @@ public class WoodenBucketItem extends BucketItem {
     @Override
     public EquipmentSlot getEquipmentSlot(ItemStack stack) {
         return this.isEmpty() ? EquipmentSlot.HEAD : null;
+    }
+
+    @Override
+    public EquipmentSlot getEquipmentSlot() {
+        return this.isEmpty() ? EquipmentSlot.HEAD : EquipmentSlot.MAINHAND;
+    }
+
+    @Override
+    public Holder<SoundEvent> getEquipSound() {
+        return SoundEvents.ARMOR_EQUIP_GENERIC;
     }
 
     @Override
