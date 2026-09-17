@@ -132,7 +132,7 @@ public final class WindsweptBlocks {
     public static final DeferredBlock<Block> DRY_MOSS_BLOCK = BLOCKS.createBlock("dry_moss_block", () -> new DryMossBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.MOSS_BLOCK)));
 
     public static final DeferredBlock<Block> GELISOL_GRASS = BLOCKS.createBlock("gelisol_grass", () -> new SproutsBlock(Properties.SPROUTS));
-    public static final DeferredBlock<Block> GELISOL = BLOCKS.createBlock("gelisol", () -> new GelisolBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PODZOL)));
+    public static final DeferredBlock<Block> GELISOL = BLOCKS.createBlock("gelisol", () -> new GelisolBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.PODZOL).randomTicks()));
     public static final DeferredBlock<Block> GELISOL_PATH = BLOCKS.createBlock("gelisol_path", () -> new DirtPathBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT_PATH)));
 
     public static final DeferredBlock<Block> RED_ROSE = BLOCKS.createBlock("red_rose", () -> new RoseFlowerBlock(WindsweptBlocks.RED_ROSE_BUSH, MobEffects.WITHER, 5, PropertyUtil.flower()));
