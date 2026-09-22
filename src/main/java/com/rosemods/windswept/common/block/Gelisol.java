@@ -21,7 +21,9 @@ public interface Gelisol {
         BlockPos abovePos = pos.above();
         BlockState aboveState = level.getBlockState(abovePos);
 
-        if (aboveState.getFluidState().getAmount() == 8) {
+        if (aboveState.is(Blocks.SNOW) && aboveState.getValue(SnowLayerBlock.LAYERS) == 1) {
+            return true;
+        } else if (aboveState.getFluidState().getAmount() == 8) {
             return false;
         } else {
             int light = LightEngine.getLightBlockInto(level, state, pos, aboveState, abovePos, Direction.UP, aboveState.getLightBlock(level, abovePos));
