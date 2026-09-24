@@ -57,7 +57,6 @@ public class WindsweptModelProvider extends BlueprintBlockStateProvider {
         this.generatedItem(PINE_BOAT.getFirst().get(), TextureFolder.ITEM);
         this.generatedItem(PINE_BOAT.getSecond().get(), TextureFolder.ITEM);
         this.generatedItem(HOLLY_BERRIES.get(), TextureFolder.ITEM);
-        this.generatedItem(WOODEN_BUCKET.get(), TextureFolder.ITEM);
         this.generatedItem(WOODEN_MILK_BUCKET.get(), TextureFolder.ITEM);
         this.generatedItem(WOODEN_POWDER_SNOW_BUCKET.get(), TextureFolder.ITEM);
         this.generatedItem(WOODEN_WATER_BUCKET.get(), TextureFolder.ITEM);
